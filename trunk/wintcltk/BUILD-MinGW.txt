@@ -1,10 +1,10 @@
 # BUILD-MinGW.txt
 #
-# $CVS$
-#
 # WinTclTk Building Instructions using MinGW
 # Copyright (c) 2006 Martin Matuska
 # 
+# $CVSHeader$
+#
 -------------------------------------------------------------
 Compilation requirements:
 -------------------------------------------------------------

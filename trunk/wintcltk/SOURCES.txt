@@ -1,9 +1,9 @@
 # SOURCES.txt
 #
-# $CVS$
-#
-# WinTclTk
+# WinTclTk Source Downloading Instructions
 # Copyright (c) 2006 Martin Matuska
+#
+# $CVSHeader$
 # 
 ----------------------------------------------------------------------
 Downloading sources automatically:

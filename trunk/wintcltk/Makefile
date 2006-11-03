@@ -1,6 +1,6 @@
 #!/bin/sh
 #
-# $CVS$
+# $CVSHeader$
 #
 # WinTclTk Makefile 
 # Copyright (c) 2006 Martin Matuska

@@ -1,3 +1,11 @@
+# README.txt
+#
+# WinTclTk README
+# Copyright (c) 2006 Martin Matuska
+#
+# $CVSHeader$
+# 
+
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
 Version 0.1
 
