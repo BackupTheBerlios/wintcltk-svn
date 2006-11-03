@@ -16,6 +16,7 @@ TWAPI_VERSION=1.0b0
 ASED_VERSION=3.0b16
 
 XOTCL_LIBVER=152
+TKLIB_SHORT=0.4
 ASED_DIR=ased3.0
 
 SOURCEFORGE_MIRROR?=heanet
@@ -139,8 +140,8 @@ tklib-${TKLIB_VERSION}/Makefile:
 
 build-tklib: configure-tklib 
 
-install-tklib: build-tklib ${PREFIX}/lib/tklib${TKLIB_VERSION}/pkgIndex.tcl 
-${PREFIX}/lib/tklib${TKLIB_VERSION}/pkgIndex.tcl:
+install-tklib: build-tklib ${PREFIX}/lib/tklib${TKLIB_SHORT}/pkgIndex.tcl 
+${PREFIX}/lib/tklib${TKLIB_SHORT}/pkgIndex.tcl:
 	@cd tklib-${TKLIB_VERSION} && make install-libraries
 
 fetch-bwidget: BWidget-${BWIDGET_VERSION}.tar.gz 
