@@ -3,7 +3,7 @@
 # WinTclTk Source Downloading Instructions
 # Copyright (c) 2006 Martin Matuska
 #
-# $CVSHeader$
+# $Id$
 # 
 ----------------------------------------------------------------------
 Downloading sources automatically:

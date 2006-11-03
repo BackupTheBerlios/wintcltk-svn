@@ -3,7 +3,7 @@
 # WinTclTk README
 # Copyright (c) 2006 Martin Matuska
 #
-# $CVSHeader$
+# $Id$
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows

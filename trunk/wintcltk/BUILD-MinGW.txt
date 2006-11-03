@@ -3,7 +3,7 @@
 # WinTclTk Building Instructions using MinGW
 # Copyright (c) 2006 Martin Matuska
 # 
-# $CVSHeader$
+# $Id$
 #
 -------------------------------------------------------------
 Compilation requirements:
