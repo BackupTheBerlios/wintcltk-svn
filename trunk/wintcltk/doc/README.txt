@@ -13,8 +13,7 @@ This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
 It includes the following packages:
 
-Tcl	8.4.14
-Tk	8.4.14
+Tcl/Tk	8.4.14
 XOTcl	1.5.2
 tcllib	1.9
 tklib	0.4.1
