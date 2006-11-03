@@ -1,0 +1,7 @@
+#
+# WinTclTk ChangeLog
+#
+# $Id$
+#
+2006-11-03 Martin Matuska <martin at matuska.org>
+	* initial release 0.1
