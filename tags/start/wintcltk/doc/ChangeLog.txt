@@ -1,0 +1,2 @@
+2006-11-02 Martin Matuska <martin@matuska.org>
+	* initial release 0.1
