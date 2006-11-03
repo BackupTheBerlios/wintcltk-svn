@@ -1,8 +1,8 @@
 ; WinTclTk.nsi
-;
-; $CVS$
 ; 
 ; Copyright (c) 2006 Martin Matuska
+;
+; $Id$
 ;
 !include "MUI.nsh"
 

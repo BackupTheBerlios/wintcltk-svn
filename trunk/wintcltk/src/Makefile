@@ -1,10 +1,9 @@
 #!/bin/sh
 #
-# $CVS$
-#
-# WinTclTk 
+# WinTclTk Makefile 
 # Copyright (c) 2006 Martin Matuska
 #
+# $Id$
 #
 WINTCLTK_VERSION=0.1
 #
