@@ -359,8 +359,9 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   WriteRegStr HKLM SOFTWARE\WinTclTk "Install_Dir" "$INSTDIR"
   
   ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayName" "WinTclTk"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayName" "WinTclTk ${VERSION}"
   WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayIcon" "$INSTDIR\bin\tclsh84.exe"
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoModify" 1
   WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoRepair" 1
   WriteUninstaller "uninstall.exe"
@@ -2206,6 +2207,8 @@ SectionEnd
 
 Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
   Sectionin 1
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=XOTclIDE-license "..\src\xotclIDE-0.80\LICENSE"
   SetOutPath $INSTDIR\doc\packages\xotclIDE
   File "..\src\xotclIDE-0.80\docs\appdeployer.png"
   File "..\src\xotclIDE-0.80\docs\breakpointedit.png"
@@ -4197,6 +4200,7 @@ Section "Uninstall"
   Delete $INSTDIR\doc\licenses\tklib-license.txt
   Delete $INSTDIR\doc\licenses\TWAPI-license.lnk
   Delete $INSTDIR\doc\licenses\XOTcl-license
+  Delete $INSTDIR\doc\licenses\XOTclIDE-license
   Delete $INSTDIR\doc\packages\bwidget\ArrowButton.html
   Delete $INSTDIR\doc\packages\bwidget\Button.html
   Delete $INSTDIR\doc\packages\bwidget\ButtonBox.html
