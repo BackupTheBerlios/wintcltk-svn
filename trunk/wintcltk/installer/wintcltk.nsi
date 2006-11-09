@@ -9,15 +9,16 @@
 ;--------------------------------
 ;General
 
-!define VERSION "0.1"
+!define VERSION "0.2"
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
+!define XOTCL_VERSION "1.5.2"
 !define TCLLIB_VERSION "1.9"
 !define TKLIB_VERSION "0.4.1"
 !define BWIDGET_VERSION "1.8.0"
-!define XOTCL_VERSION "1.5.2"
 !define TWAPI_VERSION "1.0b0"
 !define ASED_VERSION "3.0b16"
+!define XOTCLIDE_VERSION "0.80"
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
 !endif
@@ -40,7 +41,7 @@ InstallDirRegKey HKLM "Software\WinTclTk" "Install_Dir"
 
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the WinTclTk ${VERSION} Setup Wizard"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk ${VERSION}.\r\n\r\nIf you have previously installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\ntcllib ${TCLLIB_VERSION}\r\ntklib ${TKLIB_VERSION}\r\nBWidget ${BWIDGET_VERSION}\r\nXOTcl ${XOTCL_VERSION}\r\nTWAPI ${TWAPI_VERSION}\r\nASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk ${VERSION}.\r\n\r\nIf you have previously installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\ntcllib ${TCLLIB_VERSION}\r\ntklib ${TKLIB_VERSION}\r\nBWidget ${BWIDGET_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}\r\nTWAPI ${TWAPI_VERSION}\r\nASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
@@ -372,6 +373,156 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   CreateShortCut "$SMPROGRAMS\WinTclTk\Wish.lnk" "$INSTDIR\bin\wish84.exe" "" "$INSTDIR\bin\wish84.exe" 0
   SetOutPath $INSTDIR\doc
   CreateShortCut "$SMPROGRAMS\WinTclTk\Docs.lnk" "$INSTDIR\doc" "" "$INSTDIR\doc" 0
+SectionEnd
+
+Section "XOTcl ${XOTCL_VERSION}" xotcl
+  Sectionin 1
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=XOTcl-license "..\build\lib\xotcl1.5.2\COPYRIGHT"
+  SetOutPath $INSTDIR\doc\packages\xotcl
+  File "..\src\xotcl-1.5.2\doc\adapter-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\adapterExample-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\cascaded-message-filter.gif"
+  File "..\src\xotcl-1.5.2\doc\changeXOTclVersion-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\composite-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\compositeExample-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\features.gif"
+  File "..\src\xotcl-1.5.2\doc\filter-inheritance.gif"
+  File "..\src\xotcl-1.5.2\doc\forwardtest-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\ftp-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\htmllib-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\index.html"
+  File "..\src\xotcl-1.5.2\doc\JufGdbmStorage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\langRef-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\langRef-xotcl.pdf"
+  File "..\src\xotcl-1.5.2\doc\langRef.xotcl"
+  File "..\src\xotcl-1.5.2\doc\link-checker-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\logo-100.jpg"
+  File "..\src\xotcl-1.5.2\doc\make-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\makeDoc-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\MemStorage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\metadataAnalyzer-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\mixinStrategy-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\MultiStorage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\next-path-mixin-movement.gif"
+  File "..\src\xotcl-1.5.2\doc\next-path.gif"
+  File "..\src\xotcl-1.5.2\doc\obj_class_system.gif"
+  File "..\src\xotcl-1.5.2\doc\observer-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\package-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\parameter-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\Persistence-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\persistenceExample-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\pinger-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\pkgIndex.tcl"
+  File "..\src\xotcl-1.5.2\doc\Script-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\secure-webclient-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\secure-webserver-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\Serializer-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\simpleFilters-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\slottest-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\soccerClub-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\speedtest-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\staticMetadata-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\Storage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\TclGdbmStorage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\test-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\testo-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\testx-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\TextFileStorage-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\TODO"
+  File "..\src\xotcl-1.5.2\doc\trace-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\tutorial.html"
+  File "..\src\xotcl-1.5.2\doc\tutorial.pdf"
+  File "..\src\xotcl-1.5.2\doc\UNIVERSAL-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\upvarcompat-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\webclient-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\webserver-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\xo-daemon.html"
+  File "..\src\xotcl-1.5.2\doc\xo-whichPkg.html"
+  File "..\src\xotcl-1.5.2\doc\xocomm-test.html"
+  File "..\src\xotcl-1.5.2\doc\xodoc-xotcl.html"
+  File "..\src\xotcl-1.5.2\doc\xotcl-doc.css"
+  SetOutPath $INSTDIR\include
+  File "..\build\include\xotcl.h"
+  File "..\build\include\xotclDecls.h"
+  File "..\build\include\xotclInt.h"
+  File "..\build\include\xotclIntDecls.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\xotclConfig.sh"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2
+  File "..\build\lib\xotcl1.5.2\COPYRIGHT"
+  File "..\build\lib\xotcl1.5.2\libxotclstub152.a"
+  File "..\build\lib\xotcl1.5.2\pkgIndex.tcl"
+  File "..\build\lib\xotcl1.5.2\xotcl152.dll"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps
+  File "..\build\lib\xotcl1.5.2\apps\COPYRIGHT"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\comm
+  File "..\build\lib\xotcl1.5.2\apps\comm\client.pem"
+  File "..\build\lib\xotcl1.5.2\apps\comm\filename.crt"
+  File "..\build\lib\xotcl1.5.2\apps\comm\filename.key"
+  File "..\build\lib\xotcl1.5.2\apps\comm\ftp.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\get-regression-nb.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\get-regression.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\link-checker.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\secure-webclient.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\secure-webserver.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\server.key"
+  File "..\build\lib\xotcl1.5.2\apps\comm\server.pem"
+  File "..\build\lib\xotcl1.5.2\apps\comm\test-tls-client.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\test-tls-server.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\webclient.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\comm\webserver.xotcl"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\scripts
+  File "..\build\lib\xotcl1.5.2\apps\scripts\adapter.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\adapterExample.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\composite.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\compositeExample.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\observer.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\parameter.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\pinger.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\simpleFilters.xotcl"
+  File "..\build\lib\xotcl1.5.2\apps\scripts\soccerClub.xotcl"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\utils
+  File "..\build\lib\xotcl1.5.2\apps\utils\xo-daemon"
+  File "..\build\lib\xotcl1.5.2\apps\utils\xo-whichPkg"
+  File "..\build\lib\xotcl1.5.2\apps\utils\xotclsh"
+  File "..\build\lib\xotcl1.5.2\apps\utils\xotclsh.in"
+  File "..\build\lib\xotcl1.5.2\apps\utils\xowish"
+  File "..\build\lib\xotcl1.5.2\apps\utils\xowish.in"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\comm
+  File "..\build\lib\xotcl1.5.2\comm\Access.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Connection.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Dav.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Ftp.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Httpd.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Imap.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Ldap.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\Mime.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\PCache.xotcl"
+  File "..\build\lib\xotcl1.5.2\comm\pkgIndex.tcl"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\lib
+  File "..\build\lib\xotcl1.5.2\lib\changeXOTclVersion.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\htmllib.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\make.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\makeDoc.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\metadataAnalyzer.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\mixinStrategy.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\package.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\pkgIndex.tcl"
+  File "..\build\lib\xotcl1.5.2\lib\Script.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\staticMetadata.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\test.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\trace.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\upvarcompat.xotcl"
+  File "..\build\lib\xotcl1.5.2\lib\wafecompat.tcl"
+  File "..\build\lib\xotcl1.5.2\lib\xodoc.xotcl"
+  SetOutPath $INSTDIR\lib\xotcl1.5.2\serialize
+  File "..\build\lib\xotcl1.5.2\serialize\pkgIndex.tcl"
+  File "..\build\lib\xotcl1.5.2\serialize\RecoveryPoint.xotcl"
+  File "..\build\lib\xotcl1.5.2\serialize\ScriptCreator.xotcl"
+  File "..\build\lib\xotcl1.5.2\serialize\Serializer.xotcl"
+  SetOutPath $INSTDIR\doc\packages\xotcl
+  CreateShortCut "$INSTDIR\doc\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\xotcl\index.html" "" "$INSTDIR\doc\packages\xotcl\index.html" 0
 SectionEnd
 
 Section "Tcllib ${TCLLIB_VERSION}" tcllib
@@ -1114,156 +1265,6 @@ Section "BWidget ${BWIDGET_VERSION}" bwidget
   CreateShortCut "$INSTDIR\doc\BWidget Documentation.lnk" "$INSTDIR\doc\packages\bwidget\index.html" "" "$INSTDIR\doc\packages\bwidget\index.html" 0
   SetOutPath $INSTDIR\lib\BWidget1.8.0
   CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget1.8.0\LICENSE.txt" "" "$INSTDIRlib\BWidget-1.8.0\LICENSE.txt" 0
-SectionEnd
-
-Section "XOTcl ${XOTCL_VERSION}" xotcl
-  Sectionin 1
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=XOTcl-license "..\build\lib\xotcl1.5.2\COPYRIGHT"
-  SetOutPath $INSTDIR\doc\packages\xotcl
-  File "..\src\xotcl-1.5.2\doc\adapter-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\adapterExample-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\cascaded-message-filter.gif"
-  File "..\src\xotcl-1.5.2\doc\changeXOTclVersion-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\composite-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\compositeExample-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\features.gif"
-  File "..\src\xotcl-1.5.2\doc\filter-inheritance.gif"
-  File "..\src\xotcl-1.5.2\doc\forwardtest-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\ftp-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\htmllib-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\index.html"
-  File "..\src\xotcl-1.5.2\doc\JufGdbmStorage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\langRef-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\langRef-xotcl.pdf"
-  File "..\src\xotcl-1.5.2\doc\langRef.xotcl"
-  File "..\src\xotcl-1.5.2\doc\link-checker-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\logo-100.jpg"
-  File "..\src\xotcl-1.5.2\doc\make-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\makeDoc-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\MemStorage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\metadataAnalyzer-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\mixinStrategy-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\MultiStorage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\next-path-mixin-movement.gif"
-  File "..\src\xotcl-1.5.2\doc\next-path.gif"
-  File "..\src\xotcl-1.5.2\doc\obj_class_system.gif"
-  File "..\src\xotcl-1.5.2\doc\observer-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\package-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\parameter-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\Persistence-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\persistenceExample-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\pinger-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\pkgIndex.tcl"
-  File "..\src\xotcl-1.5.2\doc\Script-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\secure-webclient-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\secure-webserver-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\Serializer-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\simpleFilters-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\slottest-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\soccerClub-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\speedtest-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\staticMetadata-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\Storage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\TclGdbmStorage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\test-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\testo-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\testx-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\TextFileStorage-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\TODO"
-  File "..\src\xotcl-1.5.2\doc\trace-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\tutorial.html"
-  File "..\src\xotcl-1.5.2\doc\tutorial.pdf"
-  File "..\src\xotcl-1.5.2\doc\UNIVERSAL-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\upvarcompat-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\webclient-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\webserver-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\xo-daemon.html"
-  File "..\src\xotcl-1.5.2\doc\xo-whichPkg.html"
-  File "..\src\xotcl-1.5.2\doc\xocomm-test.html"
-  File "..\src\xotcl-1.5.2\doc\xodoc-xotcl.html"
-  File "..\src\xotcl-1.5.2\doc\xotcl-doc.css"
-  SetOutPath $INSTDIR\include
-  File "..\build\include\xotcl.h"
-  File "..\build\include\xotclDecls.h"
-  File "..\build\include\xotclInt.h"
-  File "..\build\include\xotclIntDecls.h"
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\xotclConfig.sh"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2
-  File "..\build\lib\xotcl1.5.2\COPYRIGHT"
-  File "..\build\lib\xotcl1.5.2\libxotclstub152.a"
-  File "..\build\lib\xotcl1.5.2\pkgIndex.tcl"
-  File "..\build\lib\xotcl1.5.2\xotcl152.dll"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps
-  File "..\build\lib\xotcl1.5.2\apps\COPYRIGHT"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\comm
-  File "..\build\lib\xotcl1.5.2\apps\comm\client.pem"
-  File "..\build\lib\xotcl1.5.2\apps\comm\filename.crt"
-  File "..\build\lib\xotcl1.5.2\apps\comm\filename.key"
-  File "..\build\lib\xotcl1.5.2\apps\comm\ftp.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\get-regression-nb.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\get-regression.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\link-checker.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\secure-webclient.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\secure-webserver.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\server.key"
-  File "..\build\lib\xotcl1.5.2\apps\comm\server.pem"
-  File "..\build\lib\xotcl1.5.2\apps\comm\test-tls-client.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\test-tls-server.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\webclient.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\comm\webserver.xotcl"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\scripts
-  File "..\build\lib\xotcl1.5.2\apps\scripts\adapter.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\adapterExample.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\composite.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\compositeExample.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\observer.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\parameter.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\pinger.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\simpleFilters.xotcl"
-  File "..\build\lib\xotcl1.5.2\apps\scripts\soccerClub.xotcl"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\apps\utils
-  File "..\build\lib\xotcl1.5.2\apps\utils\xo-daemon"
-  File "..\build\lib\xotcl1.5.2\apps\utils\xo-whichPkg"
-  File "..\build\lib\xotcl1.5.2\apps\utils\xotclsh"
-  File "..\build\lib\xotcl1.5.2\apps\utils\xotclsh.in"
-  File "..\build\lib\xotcl1.5.2\apps\utils\xowish"
-  File "..\build\lib\xotcl1.5.2\apps\utils\xowish.in"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\comm
-  File "..\build\lib\xotcl1.5.2\comm\Access.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Connection.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Dav.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Ftp.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Httpd.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Imap.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Ldap.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\Mime.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\PCache.xotcl"
-  File "..\build\lib\xotcl1.5.2\comm\pkgIndex.tcl"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\lib
-  File "..\build\lib\xotcl1.5.2\lib\changeXOTclVersion.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\htmllib.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\make.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\makeDoc.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\metadataAnalyzer.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\mixinStrategy.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\package.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\pkgIndex.tcl"
-  File "..\build\lib\xotcl1.5.2\lib\Script.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\staticMetadata.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\test.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\trace.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\upvarcompat.xotcl"
-  File "..\build\lib\xotcl1.5.2\lib\wafecompat.tcl"
-  File "..\build\lib\xotcl1.5.2\lib\xodoc.xotcl"
-  SetOutPath $INSTDIR\lib\xotcl1.5.2\serialize
-  File "..\build\lib\xotcl1.5.2\serialize\pkgIndex.tcl"
-  File "..\build\lib\xotcl1.5.2\serialize\RecoveryPoint.xotcl"
-  File "..\build\lib\xotcl1.5.2\serialize\ScriptCreator.xotcl"
-  File "..\build\lib\xotcl1.5.2\serialize\Serializer.xotcl"
-  SetOutPath $INSTDIR\doc\packages\xotcl
-  CreateShortCut "$INSTDIR\doc\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\xotcl\index.html" "" "$INSTDIR\doc\packages\xotcl\index.html" 0
 SectionEnd
 
 Section "TWAPI ${TWAPI_VERSION}" twapi
@@ -2090,90 +2091,6 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "..\build\ased3.0\lang\russian_win.msg"
   File "..\build\ased3.0\lang\russian_win.txt"
   SetOutPath $INSTDIR\ased3.0\lib
-  SetOutPath $INSTDIR\ased3.0\lib\bwidget1.7
-  File "..\build\ased3.0\lib\bwidget1.7\arrow.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\bitmap.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\button.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\buttonbox.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\color.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\combobox.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\dialog.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\dragsite.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\dropsite.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\dynhelp.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\entry.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\font.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\init.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\label.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\labelentry.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\labelframe.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\listbox.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\mainframe.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\messagedlg.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\notebook.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\pagesmgr.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\panedw.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\panelframe.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\passwddlg.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\pkgIndex.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\progressbar.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\progressdlg.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\scrollframe.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\scrollview.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\scrollw.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\separator.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\spinbox.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\statusbar.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\titleframe.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\tree.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\utils.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\widget.tcl"
-  File "..\build\ased3.0\lib\bwidget1.7\xpm2image.tcl"
-  SetOutPath $INSTDIR\ased3.0\lib\bwidget1.7\images
-  File "..\build\ased3.0\lib\bwidget1.7\images\bold.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\copy.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\cut.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\dragfile.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\dragicon.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\error.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\file.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\folder.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\hourglass.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\info.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\italic.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\minus.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\new.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\opcopy.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\open.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\openfold.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\oplink.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\opmove.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\overstrike.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\palette.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\passwd.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\paste.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\plus.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\print.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\question.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\redo.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\save.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\target.xbm"
-  File "..\build\ased3.0\lib\bwidget1.7\images\underline.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\undo.gif"
-  File "..\build\ased3.0\lib\bwidget1.7\images\warning.gif"
-  SetOutPath $INSTDIR\ased3.0\lib\bwidget1.7\lang
-  File "..\build\ased3.0\lib\bwidget1.7\lang\de.rc"
-  File "..\build\ased3.0\lib\bwidget1.7\lang\en.rc"
-  File "..\build\ased3.0\lib\bwidget1.7\lang\es.rc"
-  File "..\build\ased3.0\lib\bwidget1.7\lang\fr.rc"
-  SetOutPath $INSTDIR\ased3.0\lib\cmdline
-  File "..\build\ased3.0\lib\cmdline\ChangeLog"
-  File "..\build\ased3.0\lib\cmdline\cmdline.man"
-  File "..\build\ased3.0\lib\cmdline\cmdline.tcl"
-  File "..\build\ased3.0\lib\cmdline\cmdline.test"
-  File "..\build\ased3.0\lib\cmdline\pkgIndex.tcl"
-  File "..\build\ased3.0\lib\cmdline\typedCmdline.tcl"
-  File "..\build\ased3.0\lib\cmdline\typedCmdline.test"
   SetOutPath $INSTDIR\ased3.0\lib\ctext3.0
   File "..\build\ased3.0\lib\ctext3.0\ctext.tcl"
   File "..\build\ased3.0\lib\ctext3.0\LICENSE.txt"
@@ -2181,12 +2098,6 @@ Section "ASED IDE ${ASED_VERSION}" ased
   SetOutPath $INSTDIR\ased3.0\lib\dialogwin
   File "..\build\ased3.0\lib\dialogwin\dialogwin.tcl"
   File "..\build\ased3.0\lib\dialogwin\pkgIndex.tcl"
-  SetOutPath $INSTDIR\ased3.0\lib\fileutil
-  File "..\build\ased3.0\lib\fileutil\ChangeLog"
-  File "..\build\ased3.0\lib\fileutil\fileutil.man"
-  File "..\build\ased3.0\lib\fileutil\fileutil.tcl"
-  File "..\build\ased3.0\lib\fileutil\fileutil.test"
-  File "..\build\ased3.0\lib\fileutil\pkgIndex.tcl"
   SetOutPath $INSTDIR\ased3.0\lib\helpviewer
   File "..\build\ased3.0\lib\helpviewer\de.msg"
   File "..\build\ased3.0\lib\helpviewer\fr.msg"
@@ -2201,148 +2112,9 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "..\build\ased3.0\lib\helpviewer\images\fletxa_e.gif"
   File "..\build\ased3.0\lib\helpviewer\images\quit.gif"
   File "..\build\ased3.0\lib\helpviewer\images\save.gif"
-  SetOutPath $INSTDIR\ased3.0\lib\htmlparse
-  File "..\build\ased3.0\lib\htmlparse\ChangeLog"
-  File "..\build\ased3.0\lib\htmlparse\htmlparse.man"
-  File "..\build\ased3.0\lib\htmlparse\htmlparse.tcl"
-  File "..\build\ased3.0\lib\htmlparse\htmlparse.test"
-  File "..\build\ased3.0\lib\htmlparse\pkgIndex.tcl"
-  SetOutPath $INSTDIR\ased3.0\lib\snit
-  File "..\build\ased3.0\lib\snit\ChangeLog"
-  File "..\build\ased3.0\lib\snit\dictionary.txt"
-  File "..\build\ased3.0\lib\snit\faq.html"
-  File "..\build\ased3.0\lib\snit\license.txt"
-  File "..\build\ased3.0\lib\snit\pkgIndex.tcl"
-  File "..\build\ased3.0\lib\snit\README.txt"
-  File "..\build\ased3.0\lib\snit\roadmap.txt"
-  File "..\build\ased3.0\lib\snit\snit.html"
-  File "..\build\ased3.0\lib\snit\snit.man"
-  File "..\build\ased3.0\lib\snit\snit.tcl"
-  File "..\build\ased3.0\lib\snit\snit.test"
-  File "..\build\ased3.0\lib\snit\snitfaq.man"
-  SetOutPath $INSTDIR\ased3.0\lib\struct
-  File "..\build\ased3.0\lib\struct\ChangeLog"
-  File "..\build\ased3.0\lib\struct\graph.man"
-  File "..\build\ased3.0\lib\struct\graph.tcl"
-  File "..\build\ased3.0\lib\struct\graph.test"
-  File "..\build\ased3.0\lib\struct\list.tcl"
-  File "..\build\ased3.0\lib\struct\list.test"
-  File "..\build\ased3.0\lib\struct\matrix.man"
-  File "..\build\ased3.0\lib\struct\matrix.tcl"
-  File "..\build\ased3.0\lib\struct\matrix.test"
-  File "..\build\ased3.0\lib\struct\pkgIndex.tcl"
-  File "..\build\ased3.0\lib\struct\pool.html"
-  File "..\build\ased3.0\lib\struct\pool.man"
-  File "..\build\ased3.0\lib\struct\pool.tcl"
-  File "..\build\ased3.0\lib\struct\pooltest.tcl"
-  File "..\build\ased3.0\lib\struct\prioqueue.man"
-  File "..\build\ased3.0\lib\struct\prioqueue.tcl"
-  File "..\build\ased3.0\lib\struct\prioqueue.test"
-  File "..\build\ased3.0\lib\struct\queue.man"
-  File "..\build\ased3.0\lib\struct\queue.tcl"
-  File "..\build\ased3.0\lib\struct\queue.test"
-  File "..\build\ased3.0\lib\struct\record.html"
-  File "..\build\ased3.0\lib\struct\record.man"
-  File "..\build\ased3.0\lib\struct\record.tcl"
-  File "..\build\ased3.0\lib\struct\record.test"
-  File "..\build\ased3.0\lib\struct\sets.tcl"
-  File "..\build\ased3.0\lib\struct\sets.test"
-  File "..\build\ased3.0\lib\struct\skiplist.man"
-  File "..\build\ased3.0\lib\struct\skiplist.tcl"
-  File "..\build\ased3.0\lib\struct\skiplist.test"
-  File "..\build\ased3.0\lib\struct\stack.man"
-  File "..\build\ased3.0\lib\struct\stack.tcl"
-  File "..\build\ased3.0\lib\struct\stack.test"
-  File "..\build\ased3.0\lib\struct\struct.tcl"
-  File "..\build\ased3.0\lib\struct\struct_list.man"
-  File "..\build\ased3.0\lib\struct\struct_set.man"
-  File "..\build\ased3.0\lib\struct\struct_tree.man"
-  File "..\build\ased3.0\lib\struct\tree.bench"
-  File "..\build\ased3.0\lib\struct\tree.tcl"
-  File "..\build\ased3.0\lib\struct\tree.test"
   SetOutPath $INSTDIR\ased3.0\lib\supergrid
   File "..\build\ased3.0\lib\supergrid\pkgIndex.tcl"
   File "..\build\ased3.0\lib\supergrid\supergrid.tcl"
-  SetOutPath $INSTDIR\ased3.0\lib\tcl8.4
-  SetOutPath $INSTDIR\ased3.0\lib\tcl8.4\encoding
-  File "..\build\ased3.0\lib\tcl8.4\encoding\ascii.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\big5.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1250.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1251.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1252.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1253.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1254.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1255.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1256.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1257.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp1258.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp437.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp737.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp775.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp850.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp852.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp855.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp857.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp860.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp861.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp862.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp863.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp864.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp865.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp866.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp869.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp874.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp932.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp936.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp949.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\cp950.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\dingbats.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\ebcdic.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\euc-cn.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\euc-jp.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\euc-kr.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\gb12345.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\gb1988.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\gb2312-raw.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\gb2312.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso2022-jp.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso2022-kr.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso2022.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-1.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-10.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-13.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-14.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-15.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-16.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-2.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-3.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-4.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-5.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-6.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-7.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-8.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\iso8859-9.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\jis0201.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\jis0208.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\jis0212.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\koi8-r.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\koi8-u.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\ksc5601.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macCentEuro.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macCroatian.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macCyrillic.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macDingbats.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macGreek.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macIceland.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macJapan.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macRoman.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macRomania.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macThai.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macTurkish.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\macUkraine.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\shiftjis.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\symbol.enc"
-  File "..\build\ased3.0\lib\tcl8.4\encoding\tis-620.enc"
   SetOutPath $INSTDIR\ased3.0\lib\tkhtml2.0
   File "..\build\ased3.0\lib\tkhtml2.0\COPYING.html"
   File "..\build\ased3.0\lib\tkhtml2.0\COPYRIGHT"
@@ -2429,6 +2201,135 @@ Section "ASED IDE ${ASED_VERSION}" ased
   CreateShortCut "$INSTDIR\doc\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
   SetOutPath $INSTDIR
   CreateShortCut "$SMPROGRAMS\WinTclTk\ASED TclTk IDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\ased.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
+  CreateShortCut "$SMPROGRAMS\WinTclTk\tkcon.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\tools\tkcon\tkcon.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
+SectionEnd
+
+Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
+  Sectionin 1
+  SetOutPath $INSTDIR\doc\packages\xotclIDE
+  File "..\src\xotclIDE-0.80\docs\appdeployer.png"
+  File "..\src\xotclIDE-0.80\docs\breakpointedit.png"
+  File "..\src\xotclIDE-0.80\docs\breakpointslist.png"
+  File "..\src\xotclIDE-0.80\docs\ch01.html"
+  File "..\src\xotclIDE-0.80\docs\ch01s02.html"
+  File "..\src\xotclIDE-0.80\docs\ch01s03.html"
+  File "..\src\xotclIDE-0.80\docs\ch01s04.html"
+  File "..\src\xotclIDE-0.80\docs\ch02.html"
+  File "..\src\xotclIDE-0.80\docs\ch02s02.html"
+  File "..\src\xotclIDE-0.80\docs\ch03.html"
+  File "..\src\xotclIDE-0.80\docs\ch03s02.html"
+  File "..\src\xotclIDE-0.80\docs\ch03s03.html"
+  File "..\src\xotclIDE-0.80\docs\ch03s04.html"
+  File "..\src\xotclIDE-0.80\docs\ch03s05.html"
+  File "..\src\xotclIDE-0.80\docs\ch04.html"
+  File "..\src\xotclIDE-0.80\docs\ch04s02.html"
+  File "..\src\xotclIDE-0.80\docs\ch04s03.html"
+  File "..\src\xotclIDE-0.80\docs\ch04s04.html"
+  File "..\src\xotclIDE-0.80\docs\ch04s05.html"
+  File "..\src\xotclIDE-0.80\docs\ch04s06.html"
+  File "..\src\xotclIDE-0.80\docs\ch05.html"
+  File "..\src\xotclIDE-0.80\docs\ch05s02.html"
+  File "..\src\xotclIDE-0.80\docs\changes.png"
+  File "..\src\xotclIDE-0.80\docs\codestructure.png"
+  File "..\src\xotclIDE-0.80\docs\commentsScanner.png"
+  File "..\src\xotclIDE-0.80\docs\compbrowser.png"
+  File "..\src\xotclIDE-0.80\docs\compbrowser_fstep.png"
+  File "..\src\xotclIDE-0.80\docs\confbrowser.png"
+  File "..\src\xotclIDE-0.80\docs\configmap.png"
+  File "..\src\xotclIDE-0.80\docs\debugger.png"
+  File "..\src\xotclIDE-0.80\docs\errorstack.png"
+  File "..\src\xotclIDE-0.80\docs\evalinspect.png"
+  File "..\src\xotclIDE-0.80\docs\evalprint.png"
+  File "..\src\xotclIDE-0.80\docs\evalsubstitute.png"
+  File "..\src\xotclIDE-0.80\docs\extdebugger.png"
+  File "..\src\xotclIDE-0.80\docs\firstconfigmap.png"
+  File "..\src\xotclIDE-0.80\docs\index.html"
+  File "..\src\xotclIDE-0.80\docs\inspector.png"
+  File "..\src\xotclIDE-0.80\docs\inspectret.png"
+  File "..\src\xotclIDE-0.80\docs\invokeProcDialog.png"
+  File "..\src\xotclIDE-0.80\docs\kitdeployer.png"
+  File "..\src\xotclIDE-0.80\docs\LoadPackage.png"
+  File "..\src\xotclIDE-0.80\docs\parenthesis.png"
+  File "..\src\xotclIDE-0.80\docs\saveComponents.png"
+  File "..\src\xotclIDE-0.80\docs\syntaxchecker.png"
+  File "..\src\xotclIDE-0.80\docs\syntaxedit.png"
+  File "..\src\xotclIDE-0.80\docs\syntaxhighlighting.png"
+  File "..\src\xotclIDE-0.80\docs\tracker.png"
+  File "..\src\xotclIDE-0.80\docs\tutFirstProc.png"
+  File "..\src\xotclIDE-0.80\docs\tut_cbrowser.png"
+  File "..\src\xotclIDE-0.80\docs\tut_createinstance.png"
+  File "..\src\xotclIDE-0.80\docs\tut_instancemethod.png"
+  File "..\src\xotclIDE-0.80\docs\tut_instancevar.png"
+  File "..\src\xotclIDE-0.80\docs\tut_sampleapp.png"
+  File "..\src\xotclIDE-0.80\docs\variabletracker.png"
+  File "..\src\xotclIDE-0.80\docs\versionsystem.png"
+  File "..\src\xotclIDE-0.80\docs\versionsystem_er.png"
+  File "..\src\xotclIDE-0.80\docs\workspace.png"
+  File "..\src\xotclIDE-0.80\docs\xotclidesmalltalk.png"
+  SetOutPath $INSTDIR\lib\xotclIDE
+  File "..\build\lib\xotclIDE\CompLoader.tcl"
+  File "..\build\lib\xotclIDE\ideBase.tcl"
+  File "..\build\lib\xotclIDE\IDEBaseGUI.xotcl"
+  File "..\build\lib\xotclIDE\ideBgError.tcl"
+  File "..\build\lib\xotclIDE\IDEConfiguration.xotcl"
+  File "..\build\lib\xotclIDE\ideCore.tcl"
+  File "..\build\lib\xotclIDE\IDECore.xotcl"
+  File "..\build\lib\xotclIDE\IDEDebug.xotcl"
+  File "..\build\lib\xotclIDE\IDEDocumentation.xotcl"
+  File "..\build\lib\xotclIDE\IDEEditor.xotcl"
+  File "..\build\lib\xotclIDE\IDEErrorReporter.xotcl"
+  File "..\build\lib\xotclIDE\IDEFileBrowser.xotcl"
+  File "..\build\lib\xotclIDE\IDEInternationalizationHelper.xotcl"
+  File "..\build\lib\xotclIDE\IDEKitDeployer.xotcl"
+  File "..\build\lib\xotclIDE\IDEPersistence.xotcl"
+  File "..\build\lib\xotclIDE\IDEPersistenceAdd.xotcl"
+  File "..\build\lib\xotclIDE\IDEPersistenceGUI.xotcl"
+  File "..\build\lib\xotclIDE\IDEPersistenceTests.xotcl"
+  File "..\build\lib\xotclIDE\IDERegexpBrowser.xotcl"
+  File "..\build\lib\xotclIDE\IDERepositoryImporter.xotcl"
+  File "..\build\lib\xotclIDE\IDEScriptEditor.xotcl"
+  File "..\build\lib\xotclIDE\IDESQLBrowser.xotcl"
+  File "..\build\lib\xotclIDE\IDEStart.xotcl"
+  File "..\build\lib\xotclIDE\IDETclParser.xotcl"
+  File "..\build\lib\xotclIDE\IDETestFramework.xotcl"
+  File "..\build\lib\xotclIDE\idetests.cfmap"
+  File "..\build\lib\xotclIDE\IDETests.xotcl"
+  File "..\build\lib\xotclIDE\IDETkWinInspector.xotcl"
+  File "..\build\lib\xotclIDE\IDEUpdater.xotcl"
+  File "..\build\lib\xotclIDE\IDEVCInstaller.xotcl"
+  File "..\build\lib\xotclIDE\IDEView.xotcl"
+  File "..\build\lib\xotclIDE\IDEWikiReaper.xotcl"
+  File "..\build\lib\xotclIDE\initDB.tcl"
+  File "..\build\lib\xotclIDE\installVC.tcl"
+  File "..\build\lib\xotclIDE\pkgIndex.tcl"
+  File "..\build\lib\xotclIDE\pluginslist.txt"
+  File "..\build\lib\xotclIDE\Sample.cfmap"
+  File "..\build\lib\xotclIDE\SampleComponent.xotcl"
+  File "..\build\lib\xotclIDE\schema_access.sql"
+  File "..\build\lib\xotclIDE\schema_metakit.sql"
+  File "..\build\lib\xotclIDE\schema_mysql.sql"
+  File "..\build\lib\xotclIDE\schema_odbc.sql"
+  File "..\build\lib\xotclIDE\schema_postgres.sql"
+  File "..\build\lib\xotclIDE\schema_sqlite.sql"
+  File "..\build\lib\xotclIDE\START.tcl"
+  File "..\build\lib\xotclIDE\xdobry_access.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_mssql.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_mysql.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_odbc.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_oratcl.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_pgsql.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_sql.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_sqlDebug.xotcl"
+  File "..\build\lib\xotclIDE\xdobry_sqlite.xotcl"
+  File "..\build\lib\xotclIDE\xometakit.xotcl"
+  File "..\build\lib\xotclIDE\XotclIDE.tcl"
+  File "..\build\lib\xotclIDE\XOTclIDE.xotcl"
+  File "..\build\lib\xotclIDE\XotclIDEDB.tcl"
+  File "..\build\lib\xotclIDE\XotclIDEFromDB.tcl"
+  SetOutPath $INSTDIR
+  CreateShortCut "$SMPROGRAMS\WinTclTk\XOTclIDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\lib\xotclIDE\xotclIDE.tcl$\"" "$INSTDIR\bin\tclsh84.exe" 0
+  SetOutPath $INSTDIR\doc\packages\xotclIDE
+  CreateShortCut "$INSTDIR\doc\XOTclIDE Documentation.lnk" "$INSTDIR\doc\packages\xotclIDE\index.html" "" "$INSTDIR\doc\packages\xotclIDE\index.html" 0
 SectionEnd
 
 Section "-Register .tcl extension" regext
@@ -4128,96 +4029,11 @@ Section "Uninstall"
   Delete $INSTDIR\ased3.0\lang\russian_koi8.txt
   Delete $INSTDIR\ased3.0\lang\russian_win.msg
   Delete $INSTDIR\ased3.0\lang\russian_win.txt
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\arrow.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\bitmap.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\button.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\buttonbox.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\color.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\combobox.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\dialog.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\dragsite.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\dropsite.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\dynhelp.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\entry.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\font.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\init.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\label.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\labelentry.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\labelframe.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\listbox.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\mainframe.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\messagedlg.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\notebook.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\pagesmgr.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\panedw.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\panelframe.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\passwddlg.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\progressbar.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\progressdlg.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\scrollframe.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\scrollview.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\scrollw.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\separator.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\spinbox.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\statusbar.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\titleframe.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\tree.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\utils.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\widget.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\xpm2image.tcl
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\bold.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\copy.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\cut.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\dragfile.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\dragicon.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\error.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\file.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\folder.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\hourglass.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\info.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\italic.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\minus.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\new.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\opcopy.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\open.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\openfold.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\oplink.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\opmove.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\overstrike.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\palette.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\passwd.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\paste.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\plus.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\print.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\question.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\redo.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\save.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\target.xbm
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\underline.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\undo.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\images\warning.gif
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\lang\de.rc
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\lang\en.rc
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\lang\es.rc
-  Delete $INSTDIR\ased3.0\lib\bwidget1.7\lang\fr.rc
-  Delete $INSTDIR\ased3.0\lib\cmdline\ChangeLog
-  Delete $INSTDIR\ased3.0\lib\cmdline\cmdline.man
-  Delete $INSTDIR\ased3.0\lib\cmdline\cmdline.tcl
-  Delete $INSTDIR\ased3.0\lib\cmdline\cmdline.test
-  Delete $INSTDIR\ased3.0\lib\cmdline\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\cmdline\typedCmdline.tcl
-  Delete $INSTDIR\ased3.0\lib\cmdline\typedCmdline.test
   Delete $INSTDIR\ased3.0\lib\ctext3.0\ctext.tcl
   Delete $INSTDIR\ased3.0\lib\ctext3.0\LICENSE.txt
   Delete $INSTDIR\ased3.0\lib\ctext3.0\pkgIndex.tcl
   Delete $INSTDIR\ased3.0\lib\dialogwin\dialogwin.tcl
   Delete $INSTDIR\ased3.0\lib\dialogwin\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\fileutil\ChangeLog
-  Delete $INSTDIR\ased3.0\lib\fileutil\fileutil.man
-  Delete $INSTDIR\ased3.0\lib\fileutil\fileutil.tcl
-  Delete $INSTDIR\ased3.0\lib\fileutil\fileutil.test
-  Delete $INSTDIR\ased3.0\lib\fileutil\pkgIndex.tcl
   Delete $INSTDIR\ased3.0\lib\helpviewer\de.msg
   Delete $INSTDIR\ased3.0\lib\helpviewer\fr.msg
   Delete $INSTDIR\ased3.0\lib\helpviewer\helpviewer.tcl
@@ -4230,142 +4046,8 @@ Section "Uninstall"
   Delete $INSTDIR\ased3.0\lib\helpviewer\images\fletxa_e.gif
   Delete $INSTDIR\ased3.0\lib\helpviewer\images\quit.gif
   Delete $INSTDIR\ased3.0\lib\helpviewer\images\save.gif
-  Delete $INSTDIR\ased3.0\lib\htmlparse\ChangeLog
-  Delete $INSTDIR\ased3.0\lib\htmlparse\htmlparse.man
-  Delete $INSTDIR\ased3.0\lib\htmlparse\htmlparse.tcl
-  Delete $INSTDIR\ased3.0\lib\htmlparse\htmlparse.test
-  Delete $INSTDIR\ased3.0\lib\htmlparse\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\snit\ChangeLog
-  Delete $INSTDIR\ased3.0\lib\snit\dictionary.txt
-  Delete $INSTDIR\ased3.0\lib\snit\faq.html
-  Delete $INSTDIR\ased3.0\lib\snit\license.txt
-  Delete $INSTDIR\ased3.0\lib\snit\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\snit\README.txt
-  Delete $INSTDIR\ased3.0\lib\snit\roadmap.txt
-  Delete $INSTDIR\ased3.0\lib\snit\snit.html
-  Delete $INSTDIR\ased3.0\lib\snit\snit.man
-  Delete $INSTDIR\ased3.0\lib\snit\snit.tcl
-  Delete $INSTDIR\ased3.0\lib\snit\snit.test
-  Delete $INSTDIR\ased3.0\lib\snit\snitfaq.man
-  Delete $INSTDIR\ased3.0\lib\struct\ChangeLog
-  Delete $INSTDIR\ased3.0\lib\struct\graph.man
-  Delete $INSTDIR\ased3.0\lib\struct\graph.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\graph.test
-  Delete $INSTDIR\ased3.0\lib\struct\list.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\list.test
-  Delete $INSTDIR\ased3.0\lib\struct\matrix.man
-  Delete $INSTDIR\ased3.0\lib\struct\matrix.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\matrix.test
-  Delete $INSTDIR\ased3.0\lib\struct\pkgIndex.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\pool.html
-  Delete $INSTDIR\ased3.0\lib\struct\pool.man
-  Delete $INSTDIR\ased3.0\lib\struct\pool.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\pooltest.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\prioqueue.man
-  Delete $INSTDIR\ased3.0\lib\struct\prioqueue.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\prioqueue.test
-  Delete $INSTDIR\ased3.0\lib\struct\queue.man
-  Delete $INSTDIR\ased3.0\lib\struct\queue.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\queue.test
-  Delete $INSTDIR\ased3.0\lib\struct\record.html
-  Delete $INSTDIR\ased3.0\lib\struct\record.man
-  Delete $INSTDIR\ased3.0\lib\struct\record.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\record.test
-  Delete $INSTDIR\ased3.0\lib\struct\sets.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\sets.test
-  Delete $INSTDIR\ased3.0\lib\struct\skiplist.man
-  Delete $INSTDIR\ased3.0\lib\struct\skiplist.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\skiplist.test
-  Delete $INSTDIR\ased3.0\lib\struct\stack.man
-  Delete $INSTDIR\ased3.0\lib\struct\stack.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\stack.test
-  Delete $INSTDIR\ased3.0\lib\struct\struct.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\struct_list.man
-  Delete $INSTDIR\ased3.0\lib\struct\struct_set.man
-  Delete $INSTDIR\ased3.0\lib\struct\struct_tree.man
-  Delete $INSTDIR\ased3.0\lib\struct\tree.bench
-  Delete $INSTDIR\ased3.0\lib\struct\tree.tcl
-  Delete $INSTDIR\ased3.0\lib\struct\tree.test
   Delete $INSTDIR\ased3.0\lib\supergrid\pkgIndex.tcl
   Delete $INSTDIR\ased3.0\lib\supergrid\supergrid.tcl
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\ascii.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\big5.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1250.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1251.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1252.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1253.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1254.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1255.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1256.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1257.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp1258.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp437.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp737.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp775.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp850.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp852.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp855.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp857.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp860.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp861.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp862.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp863.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp864.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp865.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp866.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp869.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp874.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp932.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp936.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp949.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\cp950.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\dingbats.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\ebcdic.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\euc-cn.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\euc-jp.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\euc-kr.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\gb12345.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\gb1988.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\gb2312-raw.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\gb2312.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso2022-jp.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso2022-kr.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso2022.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-1.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-10.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-13.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-14.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-15.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-16.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-2.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-3.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-4.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-5.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-6.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-7.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-8.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\iso8859-9.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\jis0201.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\jis0208.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\jis0212.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\koi8-r.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\koi8-u.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\ksc5601.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macCentEuro.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macCroatian.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macCyrillic.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macDingbats.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macGreek.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macIceland.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macJapan.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macRoman.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macRomania.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macThai.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macTurkish.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\macUkraine.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\shiftjis.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\symbol.enc
-  Delete $INSTDIR\ased3.0\lib\tcl8.4\encoding\tis-620.enc
   Delete $INSTDIR\ased3.0\lib\tkhtml2.0\COPYING.html
   Delete $INSTDIR\ased3.0\lib\tkhtml2.0\COPYRIGHT
   Delete $INSTDIR\ased3.0\lib\tkhtml2.0\libTkHtml.dll
@@ -4441,12 +4123,72 @@ Section "Uninstall"
   Delete $INSTDIR\ased3.0\tools\tkdiff\tkdiff.tcl
   Delete $INSTDIR\ased3.0\tools\visualregexp\README
   Delete $INSTDIR\ased3.0\tools\visualregexp\visual_regexp.tcl
+  Delete $INSTDIR\lib\xotclIDE\CompLoader.tcl
+  Delete $INSTDIR\lib\xotclIDE\ideBase.tcl
+  Delete $INSTDIR\lib\xotclIDE\IDEBaseGUI.xotcl
+  Delete $INSTDIR\lib\xotclIDE\ideBgError.tcl
+  Delete $INSTDIR\lib\xotclIDE\IDEConfiguration.xotcl
+  Delete $INSTDIR\lib\xotclIDE\ideCore.tcl
+  Delete $INSTDIR\lib\xotclIDE\IDECore.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEDebug.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEDocumentation.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEEditor.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEErrorReporter.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEFileBrowser.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEInternationalizationHelper.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEKitDeployer.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEPersistence.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEPersistenceAdd.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEPersistenceGUI.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEPersistenceTests.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDERegexpBrowser.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDERepositoryImporter.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEScriptEditor.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDESQLBrowser.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEStart.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDETclParser.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDETestFramework.xotcl
+  Delete $INSTDIR\lib\xotclIDE\idetests.cfmap
+  Delete $INSTDIR\lib\xotclIDE\IDETests.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDETkWinInspector.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEUpdater.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEVCInstaller.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEView.xotcl
+  Delete $INSTDIR\lib\xotclIDE\IDEWikiReaper.xotcl
+  Delete $INSTDIR\lib\xotclIDE\initDB.tcl
+  Delete $INSTDIR\lib\xotclIDE\installVC.tcl
+  Delete $INSTDIR\lib\xotclIDE\pkgIndex.tcl
+  Delete $INSTDIR\lib\xotclIDE\pluginslist.txt
+  Delete $INSTDIR\lib\xotclIDE\Sample.cfmap
+  Delete $INSTDIR\lib\xotclIDE\SampleComponent.xotcl
+  Delete $INSTDIR\lib\xotclIDE\schema_access.sql
+  Delete $INSTDIR\lib\xotclIDE\schema_metakit.sql
+  Delete $INSTDIR\lib\xotclIDE\schema_mysql.sql
+  Delete $INSTDIR\lib\xotclIDE\schema_odbc.sql
+  Delete $INSTDIR\lib\xotclIDE\schema_postgres.sql
+  Delete $INSTDIR\lib\xotclIDE\schema_sqlite.sql
+  Delete $INSTDIR\lib\xotclIDE\START.tcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_access.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_mssql.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_mysql.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_odbc.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_oratcl.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_pgsql.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_sql.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_sqlDebug.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xdobry_sqlite.xotcl
+  Delete $INSTDIR\lib\xotclIDE\xometakit.xotcl
+  Delete $INSTDIR\lib\xotclIDE\XotclIDE.tcl
+  Delete $INSTDIR\lib\xotclIDE\XOTclIDE.xotcl
+  Delete $INSTDIR\lib\xotclIDE\XotclIDEDB.tcl
+  Delete $INSTDIR\lib\xotclIDE\XotclIDEFromDB.tcl
   Delete $INSTDIR\doc\ChangeLog.txt
   Delete $INSTDIR\doc\README.htm
   Delete $INSTDIR\doc\README.txt
   Delete $INSTDIR\doc\LICENSE.txt
   Delete "$INSTDIR\doc\BWidget Documentation.lnk"
   Delete "$INSTDIR\doc\XOTcl Documentation.lnk"
+  Delete "$INSTDIR\doc\XOTclIDE Documentation.lnk"
   Delete "$INSTDIR\doc\TWAPI Documentation.lnk"
   Delete $INSTDIR\doc\licenses\ased-license.lnk
   Delete $INSTDIR\doc\licenses\BWidget-license.lnk
@@ -4557,6 +4299,65 @@ Section "Uninstall"
   Delete $INSTDIR\doc\packages\xotcl\xocomm-test.html
   Delete $INSTDIR\doc\packages\xotcl\xodoc-xotcl.html
   Delete $INSTDIR\doc\packages\xotcl\xotcl-doc.css
+  Delete $INSTDIR\doc\packages\xotclIDE\appdeployer.png
+  Delete $INSTDIR\doc\packages\xotclIDE\breakpointedit.png
+  Delete $INSTDIR\doc\packages\xotclIDE\breakpointslist.png
+  Delete $INSTDIR\doc\packages\xotclIDE\ch01.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch01s02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch01s03.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch01s04.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch02s02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch03.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch03s02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch03s03.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch03s04.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch03s05.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04s02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04s03.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04s04.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04s05.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch04s06.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch05.html
+  Delete $INSTDIR\doc\packages\xotclIDE\ch05s02.html
+  Delete $INSTDIR\doc\packages\xotclIDE\changes.png
+  Delete $INSTDIR\doc\packages\xotclIDE\codestructure.png
+  Delete $INSTDIR\doc\packages\xotclIDE\commentsScanner.png
+  Delete $INSTDIR\doc\packages\xotclIDE\compbrowser.png
+  Delete $INSTDIR\doc\packages\xotclIDE\compbrowser_fstep.png
+  Delete $INSTDIR\doc\packages\xotclIDE\confbrowser.png
+  Delete $INSTDIR\doc\packages\xotclIDE\configmap.png
+  Delete $INSTDIR\doc\packages\xotclIDE\debugger.png
+  Delete $INSTDIR\doc\packages\xotclIDE\errorstack.png
+  Delete $INSTDIR\doc\packages\xotclIDE\evalinspect.png
+  Delete $INSTDIR\doc\packages\xotclIDE\evalprint.png
+  Delete $INSTDIR\doc\packages\xotclIDE\evalsubstitute.png
+  Delete $INSTDIR\doc\packages\xotclIDE\extdebugger.png
+  Delete $INSTDIR\doc\packages\xotclIDE\firstconfigmap.png
+  Delete $INSTDIR\doc\packages\xotclIDE\index.html
+  Delete $INSTDIR\doc\packages\xotclIDE\inspector.png
+  Delete $INSTDIR\doc\packages\xotclIDE\inspectret.png
+  Delete $INSTDIR\doc\packages\xotclIDE\invokeProcDialog.png
+  Delete $INSTDIR\doc\packages\xotclIDE\kitdeployer.png
+  Delete $INSTDIR\doc\packages\xotclIDE\LoadPackage.png
+  Delete $INSTDIR\doc\packages\xotclIDE\parenthesis.png
+  Delete $INSTDIR\doc\packages\xotclIDE\saveComponents.png
+  Delete $INSTDIR\doc\packages\xotclIDE\syntaxchecker.png
+  Delete $INSTDIR\doc\packages\xotclIDE\syntaxedit.png
+  Delete $INSTDIR\doc\packages\xotclIDE\syntaxhighlighting.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tracker.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tutFirstProc.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tut_cbrowser.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tut_createinstance.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tut_instancemethod.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tut_instancevar.png
+  Delete $INSTDIR\doc\packages\xotclIDE\tut_sampleapp.png
+  Delete $INSTDIR\doc\packages\xotclIDE\variabletracker.png
+  Delete $INSTDIR\doc\packages\xotclIDE\versionsystem.png
+  Delete $INSTDIR\doc\packages\xotclIDE\versionsystem_er.png
+  Delete $INSTDIR\doc\packages\xotclIDE\workspace.png
+  Delete $INSTDIR\doc\packages\xotclIDE\xotclidesmalltalk.png
 
   ; Remove shortcuts, if any
   SetShellVarContext all
@@ -4701,6 +4502,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\twapi1.0b0\doc"
   RMDir "$INSTDIR\lib\twapi1.0b0\tests"
   RMDir "$INSTDIR\lib\twapi1.0b0"
+  RMDir "$INSTDIR\lib\xotclIDE"
   RMDir "$INSTDIR\lib"
   RMDir "$INSTDIR\ased3.0\help\ASED"
   RMDir "$INSTDIR\ased3.0\help\BWidget"
@@ -4723,21 +4525,11 @@ Section "Uninstall"
   RMDir "$INSTDIR\ased3.0\highlighters"
   RMDir "$INSTDIR\ased3.0\images"
   RMDir "$INSTDIR\ased3.0\lang"
-  RMDir "$INSTDIR\ased3.0\lib\bwidget1.7\images"
-  RMDir "$INSTDIR\ased3.0\lib\bwidget1.7\lang"
-  RMDir "$INSTDIR\ased3.0\lib\bwidget1.7"
-  RMDir "$INSTDIR\ased3.0\lib\cmdline"
   RMDir "$INSTDIR\ased3.0\lib\ctext3.0"
   RMDir "$INSTDIR\ased3.0\lib\dialogwin"
-  RMDir "$INSTDIR\ased3.0\lib\fileutil"
   RMDir "$INSTDIR\ased3.0\lib\helpviewer\images"
   RMDir "$INSTDIR\ased3.0\lib\helpviewer"
-  RMDir "$INSTDIR\ased3.0\lib\htmlparse"
-  RMDir "$INSTDIR\ased3.0\lib\snit"
-  RMDir "$INSTDIR\ased3.0\lib\struct"
   RMDir "$INSTDIR\ased3.0\lib\supergrid"
-  RMDir "$INSTDIR\ased3.0\lib\tcl8.4\encoding"
-  RMDir "$INSTDIR\ased3.0\lib\tcl8.4"
   RMDir "$INSTDIR\ased3.0\lib\tkhtml2.0"
   RMDir "$INSTDIR\ased3.0\lib"
   RMDir "$INSTDIR\ased3.0\tools\binaries\windows"
@@ -4753,6 +4545,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\bwidget"
   RMDir "$INSTDIR\doc\packages\twapi"
   RMDir "$INSTDIR\doc\packages\xotcl"
+  RMDir "$INSTDIR\doc\packages\xotclIDE"
   RMDir "$INSTDIR\doc\packages"
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR"
@@ -4763,27 +4556,32 @@ SectionEnd
 ; Section Descriptions
 
 LangString DESC_tcltk ${LANG_ENGLISH} "Base Tcl/Tk distribution"
+LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extension for Tcl"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
 LangString DESC_bwidget ${LANG_ENGLISH} "High-level widget set for Tcl/Tk"
-LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extension for Tcl"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
-LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes Tcl/Tk tutorials and documentation"
+LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
+LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk} $(DESC_tcltk)
+  !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
   !insertmacro MUI_DESCRIPTION_TEXT ${bwidget} $(DESC_bwidget)
-  !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${twapi} $(DESC_twapi)
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
+  !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 Function .onInit
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "options.ini"
+  SectionSetFlags ${xotcl} 17
+  SectionSetFlags ${bwidget} 17
+  SectionSetFlags ${tcllib} 17
 FunctionEnd
 
 LangString TEXT_OPTIONS_TITLE ${LANG_ENGLISH} "Installation Options"
@@ -4807,4 +4605,26 @@ Function readOptions
    SectionSetFlags regext 0
 FunctionEnd
 
-
+Function .onSelChange
+   SectionGetFlags ${xotclide} $1
+   SectionGetFlags ${xotcl} $2
+   IntCmp $1 1 0 +3 0
+   SectionSetFlags ${xotcl} 17
+   Goto +4
+   IntCmp $2 17 0 +3 0
+   IntOp $0 $2 - 16 
+   SectionSetFlags ${xotcl} $0
+   SectionGetFlags ${ased} $1
+   SectionGetFlags ${bwidget} $2
+   SectionGetFlags ${tcllib} $3
+   IntCmp $1 1 0 +4 0
+   SectionSetFlags ${bwidget} 17
+   SectionSetFlags ${tcllib} 17
+   Goto +7
+   IntCmp $2 17 0 +3 0
+   IntOp $0 $2 - 16
+   SectionSetFlags ${bwidget} $0
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $3 - 16
+   SectionSetFlags ${tcllib} $0
+FunctionEnd
