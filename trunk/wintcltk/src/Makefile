@@ -14,8 +14,10 @@ TKLIB_VERSION=0.4.1
 BWIDGET_VERSION=1.8.0
 TWAPI_VERSION=1.0b0
 ASED_VERSION=3.0b16
+XOTCLIDE_VERSION=0.80
 
 XOTCL_LIBVER=152
+XOTCLIDE_FILEVER=0.80-0
 TKLIB_SHORT=0.4
 ASED_DIR=ased3.0
 
@@ -28,11 +30,11 @@ PREFIX=${CURDIR}/../build
 
 
 all: install
-build: build-tcl build-tk build-xotcl build-tcllib build-tklib build-bwidget build-twapi build-ased
-install: install-tcl install-tk install-xotcl install-tcllib install-tklib install-bwidget install-twapi install-ased
+build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-twapi build-ased
+install: install-tcl install-tk install-xotcl install-xotclide install-tcllib install-tklib install-bwidget install-twapi install-ased
 uninstall: remove-build
-clean: clean-tcl clean-tk clean-xotcl clean-tcllib clean-tklib clean-bwidget clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tcllib distclean-tklib distclean-bwidget distclean-twapi distclean-ased
+clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-twapi distclean-ased
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
@@ -191,6 +193,7 @@ ${ASED_DIR}:
 	@md5sum -c md5sums/ased${ASED_VERSION}.zip.md5 || exit 1
 	@[ -x "${UNZIP}" ] || ( echo "You require unzip to extract this source. See SOURCES.txt for more information."; exit 1 ) 
 	@${UNZIP} ased${ASED_VERSION}.zip
+	@cd ${ASED_DIR} && patch < ../patches/ased${ASED_VERSION}.patch
 
 configure-ased: extract-ased
 build-ased: configure-ased
@@ -198,6 +201,28 @@ build-ased: configure-ased
 install-ased: build-ased ${PREFIX}/${ASED_DIR}/ased.tcl
 ${PREFIX}/${ASED_DIR}/ased.tcl:
 	@cp -Rp ${ASED_DIR} ${PREFIX}
+
+fetch-xotclide: xotclIDE-${XOTCLIDE_FILEVER}.tar.gz xotclide_doc.tar.gz 
+xotclIDE-${XOTCLIDE_FILEVER}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@wget "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
+xotclide_doc.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@wget "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
+
+extract-xotclide: fetch-xotclide xotclide-${XOTCLIDE_VERSION} 
+xotclide-${XOTCLIDE_VERSION}:
+	@md5sum -c md5sums/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz.md5 || exit 1
+	@md5sum -c md5sums/xotclide_doc.tar.gz.md5 || exit 1
+	@-tar xfz xotclIDE-${XOTCLIDE_FILEVER}.tar.gz
+	@-cd xotclide-${XOTCLIDE_VERSION}/docs && tar xfz ../../xotclide_doc.tar.gz 
+
+configure-xotclide: install-xotcl extract-xotclide 
+build-xotclide: configure-xotclide
+
+install-xotclide: build-xotclide ${PREFIX}/lib/xotclIDE
+${PREFIX}/lib/xotclIDE:
+	@cd xotclide-${XOTCLIDE_VERSION} && rm -f install && make install PREFIX=${PREFIX}
 
 uninstall-tcl:
 	@-cd ${PREFIX}/bin && rm tcl*.dll tclsh*.exe
@@ -227,6 +252,9 @@ uninstall-twapi:
 
 uninstall-ased:
 	@-cd ${PREFIX} && rm -rf ${ASED_DIR}
+
+uninstall-xotclide:
+	@-cd ${PREFIX} && rm -rf lib/xotclIDE
 
 clean-tcl:
 	@-cd tcl${TCLTK_VERSION}/win && make clean
@@ -273,6 +301,7 @@ clean-ased:
 distclean-ased:
 	@-rm -rf ${ASED_DIR}
 
-remove-build: 
-	@-rm -rf ${PREFIX} 
+clean-xotclide:
 
+distclean-xotclide:
+	@-rm -rf xotclIDE-${XOTCLIDE_VERSION}
