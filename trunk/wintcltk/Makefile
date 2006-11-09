@@ -5,7 +5,7 @@
 #
 # $Id$
 #
-WINTCLTK_VERSION=0.1
+WINTCLTK_VERSION=0.2
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
@@ -22,6 +22,8 @@ clean:
 	@cd src && make clean
 distclean:
 	@cd src && make distclean
+buildclean:
+	@rm -rf build
 tcl:
 	@cd src && make install-tcl
 tk:
@@ -38,6 +40,8 @@ twapi:
 	@cd src && make install-twapi
 ased:
 	@cd src && make install-ased
+xotclide:
+	@cd src && make install-xotclide
 
 installer: install ${INSTALLER}
 ${INSTALLER}:
