@@ -50,3 +50,6 @@ http://prdownloads.sourceforge.net/twapi/twapi-1.0b0.zip
 
 ASED:
 http://www.mms-forum.de/ased/ased3.0b16.zip
+
+XOTclIDE:
+http://www.xdobry.de/xotclIDE/xotclIDE-0.80-0.tar.gz
