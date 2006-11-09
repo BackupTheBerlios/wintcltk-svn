@@ -1,0 +1,16 @@
+#
+# WinTclTk ChangeLog
+#
+# $Id$
+#
+2006-11-09 Martin Matuska <martin at matuska.org>
+	* added package xotclIDE
+	* ASED changes:
+	    - ASED now depends on BWidget and tcllib
+	    - reduced size by dependencies
+	    - added direct shortcut to tkcon	    
+	* various small bugfixes
+        * release 0.2
+
+2006-11-03 Martin Matuska <martin at matuska.org>
+	* initial release 0.1
