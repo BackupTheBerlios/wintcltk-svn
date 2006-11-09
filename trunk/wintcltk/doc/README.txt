@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.1
+Version 0.2
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
@@ -20,6 +20,7 @@ tklib	0.4.1
 BWidget	1.8.0
 TWAPI	1.0b0
 ASED	3.0.b16
+XOTclIDE 0.80
 
 The binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped.
@@ -37,6 +38,7 @@ XOTcl: http://media.wu-wien.ac.at
 Tcllib,Tklib,BWidget: http://tcllib.sourceforge.net/
 TWAPI: http://twapi.sourceforge.net
 ASED: http://www.mms-forum.de/ased/asedhome.htm
+XOTclIDE: http://www.xdobry.de/xotclIDE
 
 --
 Martin Matuska <martin at matuska dot org>
