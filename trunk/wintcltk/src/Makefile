@@ -24,7 +24,7 @@ SOURCEFORGE_MIRROR?=heanet
 WGET?=$(shell which wget)
 UNZIP?=$(shell which unzip)
 CURDIR=$(shell pwd)
-PREFIX=../build
+PREFIX=${CURDIR}/../build
 
 
 all: install
