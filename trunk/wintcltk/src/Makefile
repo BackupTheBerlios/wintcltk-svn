@@ -5,8 +5,6 @@
 #
 # $Id$
 #
-WINTCLTK_VERSION=0.1
-#
 TCLTK_VERSION=8.4.14
 XOTCL_VERSION=1.5.2
 TCLLIB_VERSION=1.9
@@ -32,7 +30,7 @@ PREFIX=../build
 all: install
 build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-twapi build-ased
 install: install-tcl install-tk install-xotcl install-xotclide install-tcllib install-tklib install-bwidget install-twapi install-ased
-uninstall: remove-build
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-twapi uninstall-ased 
 clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-twapi clean-ased
 distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-twapi distclean-ased
 
