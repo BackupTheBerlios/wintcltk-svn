@@ -38,7 +38,7 @@ http://prdownloads.sourceforge.net/tcl/tcl8.4.14-src.tar.gz
 http://prdownloads.sourceforge.net/tcl/tk8.4.14-src.tar.gz
 
 XOTcl:
-http://media.wu-wien.ac.at/download/xotcl-1.5.2.tar.gz
+http://media.wu-wien.ac.at/download/xotcl-1.5.3.tar.gz
 
 Tcllib/Tklib/BWidget:
 http://prdownloads.sourceforge.net/tcllib/tcllib-1.9.tar.gz
