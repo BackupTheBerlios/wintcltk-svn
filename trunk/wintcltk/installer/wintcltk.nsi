@@ -16,7 +16,7 @@
 !define TCLLIB_VERSION "1.9"
 !define TKLIB_VERSION "0.4.1"
 !define BWIDGET_VERSION "1.8.0"
-!define TWAPI_VERSION "1.0b0"
+!define TWAPI_VERSION "1.0.2"
 !define ASED_VERSION "3.0b16"
 !define XOTCLIDE_VERSION "0.80"
 
@@ -1275,60 +1275,60 @@ SectionEnd
 Section "TWAPI ${TWAPI_VERSION}" twapi
   Sectionin 1
   SetOutPath $INSTDIR\doc\packages\twapi
-  File "..\build\lib\twapi1.0b0\doc\readme.txt"
-  File "..\build\lib\twapi1.0b0\doc\twapi.chm"
-  SetOutPath $INSTDIR\lib\twapi1.0b0
-  File "..\build\lib\twapi1.0b0\clipboard.tcl"
-  File "..\build\lib\twapi1.0b0\com.tcl"
-  File "..\build\lib\twapi1.0b0\console.tcl"
-  File "..\build\lib\twapi1.0b0\desktop.tcl"
-  File "..\build\lib\twapi1.0b0\disk.tcl"
-  File "..\build\lib\twapi1.0b0\eventlog.tcl"
-  File "..\build\lib\twapi1.0b0\LICENSE"
-  File "..\build\lib\twapi1.0b0\network.tcl"
-  File "..\build\lib\twapi1.0b0\nls.tcl"
-  File "..\build\lib\twapi1.0b0\osinfo.tcl"
-  File "..\build\lib\twapi1.0b0\pdh.tcl"
-  File "..\build\lib\twapi1.0b0\pkgIndex.tcl"
-  File "..\build\lib\twapi1.0b0\printer.tcl"
-  File "..\build\lib\twapi1.0b0\process.tcl"
-  File "..\build\lib\twapi1.0b0\security.tcl"
-  File "..\build\lib\twapi1.0b0\services.tcl"
-  File "..\build\lib\twapi1.0b0\share.tcl"
-  File "..\build\lib\twapi1.0b0\shell.tcl"
-  File "..\build\lib\twapi1.0b0\synch.tcl"
-  File "..\build\lib\twapi1.0b0\twapi.dll"
-  File "..\build\lib\twapi1.0b0\twapi.tcl"
-  File "..\build\lib\twapi1.0b0\twapicallback.dll"
-  File "..\build\lib\twapi1.0b0\ui.tcl"
-  SetOutPath $INSTDIR\lib\twapi1.0b0\tests
-  File "..\build\lib\twapi1.0b0\tests\all.tcl"
-  File "..\build\lib\twapi1.0b0\tests\clipboard.test"
-  File "..\build\lib\twapi1.0b0\tests\console.test"
-  File "..\build\lib\twapi1.0b0\tests\disk.test"
-  File "..\build\lib\twapi1.0b0\tests\disk.vbs"
-  File "..\build\lib\twapi1.0b0\tests\eventlog.test"
-  File "..\build\lib\twapi1.0b0\tests\network.test"
-  File "..\build\lib\twapi1.0b0\tests\nls.test"
-  File "..\build\lib\twapi1.0b0\tests\osinfo.test"
-  File "..\build\lib\twapi1.0b0\tests\osinfo.vbs"
-  File "..\build\lib\twapi1.0b0\tests\parseargs.test"
-  File "..\build\lib\twapi1.0b0\tests\process.test"
-  File "..\build\lib\twapi1.0b0\tests\process.vbs"
-  File "..\build\lib\twapi1.0b0\tests\security.test"
-  File "..\build\lib\twapi1.0b0\tests\services.test"
-  File "..\build\lib\twapi1.0b0\tests\services.vbs"
-  File "..\build\lib\twapi1.0b0\tests\share.test"
-  File "..\build\lib\twapi1.0b0\tests\share.vbs"
-  File "..\build\lib\twapi1.0b0\tests\shell.test"
-  File "..\build\lib\twapi1.0b0\tests\testutil.tcl"
-  File "..\build\lib\twapi1.0b0\tests\thread.vbs"
-  File "..\build\lib\twapi1.0b0\tests\try.test"
-  File "..\build\lib\twapi1.0b0\tests\ui.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\doc\readme.txt"
+  File "..\build\lib\twapi${TWAPI_VERSION}\doc\twapi.chm"
+  SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
+  File "..\build\lib\twapi${TWAPI_VERSION}\clipboard.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\com.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\console.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\desktop.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\disk.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\eventlog.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\LICENSE"
+  File "..\build\lib\twapi${TWAPI_VERSION}\network.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\nls.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\osinfo.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\pdh.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\pkgIndex.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\printer.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\process.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\security.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\services.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\share.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\shell.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\synch.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\twapi.dll"
+  File "..\build\lib\twapi${TWAPI_VERSION}\twapi.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\twapicallback.dll"
+  File "..\build\lib\twapi${TWAPI_VERSION}\ui.tcl"
+  SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}\tests
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\all.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\clipboard.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\console.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\disk.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\disk.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\eventlog.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\network.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\nls.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\osinfo.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\osinfo.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\parseargs.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\process.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\process.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\security.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\services.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\services.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\share.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\share.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\shell.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\testutil.tcl"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\thread.vbs"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\try.test"
+  File "..\build\lib\twapi${TWAPI_VERSION}\tests\ui.test"
   SetOutPath $INSTDIR\doc\packages\twapi
   CreateShortCut "$INSTDIR\doc\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\twapi\twapi.chm" "" "$INSTDIR\doc\packages\twapi\twapi.chm" 0
-  SetOutPath $INSTDIR\lib\twapi1.0b0
-  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi1.0b0LICENSE" "" "$INSTDIR\lib\twapi1.0b0LICENSE" 0
+  SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
+  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}LICENSE" 0
 SectionEnd
 
 Section "ASED IDE ${ASED_VERSION}" ased
@@ -3250,52 +3250,52 @@ Section "Uninstall"
   Delete $INSTDIR\lib\xotcl${XOTCL_VERSION}\serialize\Serializer.xotcl
   Delete $INSTDIR\lib\xotcl${XOTCL_VERSION}\xotcl${XOTCL_LIBVER}.dll
   Delete $INSTDIR\lib\xotclConfig.sh
-  Delete $INSTDIR\lib\twapi1.0b0\clipboard.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\com.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\console.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\desktop.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\disk.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\eventlog.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\LICENSE
-  Delete $INSTDIR\lib\twapi1.0b0\network.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\nls.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\osinfo.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\pdh.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\pkgIndex.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\printer.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\process.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\security.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\services.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\share.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\shell.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\synch.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\twapi.dll
-  Delete $INSTDIR\lib\twapi1.0b0\twapi.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\twapicallback.dll
-  Delete $INSTDIR\lib\twapi1.0b0\ui.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\tests\all.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\tests\clipboard.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\console.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\disk.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\disk.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\eventlog.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\network.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\nls.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\osinfo.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\osinfo.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\parseargs.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\process.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\process.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\security.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\services.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\services.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\share.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\share.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\shell.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\testutil.tcl
-  Delete $INSTDIR\lib\twapi1.0b0\tests\thread.vbs
-  Delete $INSTDIR\lib\twapi1.0b0\tests\try.test
-  Delete $INSTDIR\lib\twapi1.0b0\tests\ui.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\clipboard.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\com.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\console.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\desktop.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\disk.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\eventlog.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\network.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\nls.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\osinfo.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\pdh.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\pkgIndex.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\printer.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\process.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\security.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\services.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\share.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\shell.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\synch.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\twapi.dll
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\twapi.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\twapicallback.dll
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\ui.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\all.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\clipboard.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\console.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\disk.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\disk.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\eventlog.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\network.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\nls.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\osinfo.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\osinfo.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\parseargs.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\process.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\process.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\security.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\services.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\services.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\share.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\share.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\shell.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\testutil.tcl
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\thread.vbs
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\try.test
+  Delete $INSTDIR\lib\twapi${TWAPI_VERSION}\tests\ui.test
   Delete $INSTDIR\ased3.0\ased.bat
   Delete $INSTDIR\ased3.0\ased.gif
   Delete $INSTDIR\ased3.0\ased.tcl
@@ -4507,9 +4507,9 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\serialize"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
-  RMDir "$INSTDIR\lib\twapi1.0b0\doc"
-  RMDir "$INSTDIR\lib\twapi1.0b0\tests"
-  RMDir "$INSTDIR\lib\twapi1.0b0"
+  RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\doc"
+  RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\tests"
+  RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}"
   RMDir "$INSTDIR\lib\xotclIDE"
   RMDir "$INSTDIR\lib"
   RMDir "$INSTDIR\ased3.0\help\ASED"

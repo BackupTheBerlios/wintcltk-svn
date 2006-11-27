@@ -18,7 +18,7 @@ XOTcl	1.5.3
 tcllib	1.9
 tklib	0.4.1
 BWidget	1.8.0
-TWAPI	1.0b0
+TWAPI	1.0.2
 ASED	3.0.b16
 XOTclIDE 0.80
 
