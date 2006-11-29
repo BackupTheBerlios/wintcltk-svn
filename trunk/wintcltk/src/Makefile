@@ -13,26 +13,30 @@ BWIDGET_VERSION=1.8.0
 TWAPI_VERSION=1.0.2
 ASED_VERSION=3.0b16
 XOTCLIDE_VERSION=0.80
+MKZIPLIB_VERSION=1.0
 
 XOTCL_LIBVER=153
 XOTCLIDE_FILEVER=0.80-0
 TKLIB_SHORT=0.4
+MKZIPLIB_SHORT=10
 ASED_DIR=ased3.0
 
 SOURCEFORGE_MIRROR?=heanet
 
 WGET?=$(shell which wget)
 UNZIP?=$(shell which unzip)
+ZLIB?=$(shell which zlib1.dll)
 CURDIR=$(shell pwd)
 PREFIX=${CURDIR}/../build
 
 
 all: install
-build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-twapi build-ased
-install: install-tcl install-tk install-xotcl install-xotclide install-tcllib install-tklib install-bwidget install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-twapi distclean-ased
+build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-mkziplib build-twapi build-ased
+install: install-tcl install-tk install-xotcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
+
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
@@ -222,6 +226,30 @@ install-xotclide: build-xotclide ${PREFIX}/lib/xotclIDE
 ${PREFIX}/lib/xotclIDE:
 	@cd xotclide-${XOTCLIDE_VERSION} && rm -f install && make install PREFIX=${PREFIX}
 
+fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip 
+mkziplib${MKZIPLIB_SHORT}.zip:
+	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@wget "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
+
+extract-mkziplib: fetch-mkziplib mkZiplib${MKZIPLIB_VERSION}/Makefile
+mkZiplib${MKZIPLIB_VERSION}/Makefile:
+	@md5sum -c md5sums/mkZiplib${MKZIPLIB_SHORT}.zip.md5 || exit 1
+	@unzip mkZiplib${MKZIPLIB_SHORT}.zip
+	@-cd mkZiplib${MKZIPLIB_VERSION} && rm -f *.dll *.exe
+	@-cd mkZiplib${MKZIPLIB_VERSION} && patch -p1 < ../patches/mkZiplib.patch
+
+configure-mkziplib: extract-mkziplib
+
+build-mkziplib: configure-mkziplib mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll 
+mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll:
+	@cd mkZiplib${MKZIPLIB_VERSION} && make strip
+
+install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl
+${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
+	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cp ${ZLIB} ${PREFIX}/bin
+	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+
 uninstall-tcl:
 	@-cd ${PREFIX}/bin && rm tcl*.dll tclsh*.exe
 	@-cd ${PREFIX}/lib && rm -rf dde1.2 libtclstub*.a tcl* libtcl*.a reg1.1 tclConfig.sh
@@ -253,6 +281,9 @@ uninstall-ased:
 
 uninstall-xotclide:
 	@-cd ${PREFIX} && rm -rf lib/xotclIDE
+
+uninstall-mkziplib:
+	@-cd ${PREFIX} && rm -rf bin/zlib1.dll lib/mkZiplib${MKZIPLIB_VERSION}
 
 clean-tcl:
 	@-cd tcl${TCLTK_VERSION}/win && make clean
@@ -303,3 +334,9 @@ clean-xotclide:
 
 distclean-xotclide:
 	@-rm -rf xotclIDE-${XOTCLIDE_VERSION}
+
+clean-mkziplib:
+	@-cd mkziplib${MKZIPLIB_VERSION} && rm -f *.o *.dll *.exe
+
+distclean-mkziplib:
+	@-rm -rf mkziplib${MKZIPLIB_VERSION}

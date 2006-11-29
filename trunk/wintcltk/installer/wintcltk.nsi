@@ -9,7 +9,9 @@
 ;--------------------------------
 ;General
 
-!define VERSION "0.2.1"
+!ifndef VERSION
+	!define VERSION "0.2.1"
+!endif
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
 !define XOTCL_VERSION "1.5.3"
@@ -19,9 +21,11 @@
 !define TWAPI_VERSION "1.0.2"
 !define ASED_VERSION "3.0b16"
 !define XOTCLIDE_VERSION "0.80"
+!define MKZIPLIB_VERSION "1.0"
 
 !define XOTCL_LIBVER "153"
 !define TKLIB_SHORTVER "0.4"
+!define MKZIPLIB_SHORTVER "10"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -45,7 +49,7 @@ InstallDirRegKey HKLM "Software\WinTclTk" "Install_Dir"
 
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the WinTclTk ${VERSION} Setup Wizard"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk ${VERSION}.\r\n\r\nIf you have previously installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\ntcllib ${TCLLIB_VERSION}\r\ntklib ${TKLIB_VERSION}\r\nBWidget ${BWIDGET_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}\r\nTWAPI ${TWAPI_VERSION}\r\nASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\ntcllib ${TCLLIB_VERSION}\r\ntklib ${TKLIB_VERSION}\r\nBWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}\r\nTWAPI ${TWAPI_VERSION}\r\nASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
@@ -1272,6 +1276,20 @@ Section "BWidget ${BWIDGET_VERSION}" bwidget
   CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
 SectionEnd
 
+Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
+  Sectionin 1
+  SetOutPath $INSTDIR\doc\licenses
+  File "..\doc\licenses\mkZiplib-license.txt"
+  SetOutPath $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}
+  File "..\build\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib${MKZIPLIB_SHORTVER}.dll"
+  File "..\build\lib\mkZiplib${MKZIPLIB_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\zlib1.dll"
+  SetOutPath $INSTDIR\doc\packages\mkZiplib
+  File /oname=index.html "..\src\mkZiplib${MKZIPLIB_VERSION}\mkZiplib${MKZIPLIB_SHORTVER}.htm"
+  CreateShortCut "$INSTDIR\doc\mkZiplib Documentation.lnk" "$INSTDIR\doc\packages\mkZiplib\index.html" "" "$INSTDIR\doc\packages\mkZiplib\index.html" 0
+SectionEnd
+
 Section "TWAPI ${TWAPI_VERSION}" twapi
   Sectionin 1
   SetOutPath $INSTDIR\doc\packages\twapi
@@ -2360,6 +2378,7 @@ Section "Uninstall"
   Delete $INSTDIR\bin\tclsh84.exe
   Delete $INSTDIR\bin\tk84.dll
   Delete $INSTDIR\bin\wish84.exe
+  Delete $INSTDIR\bin\zlib1.dll
   Delete $INSTDIR\uninstall.exe
   Delete $INSTDIR\include\tcl.h
   Delete $INSTDIR\include\tclDecls.h
@@ -2473,6 +2492,8 @@ Section "Uninstall"
   Delete $INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang\es.rc
   Delete $INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang\fr.rc
   Delete $INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests\entry.test
+  Delete $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib${MKZIPLIB_SHORTVER}.dll
+  Delete $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}\pkgIndex.tcl
   Delete $INSTDIR\lib\dde1.2\pkgIndex.tcl
   Delete $INSTDIR\lib\dde1.2\tcldde12.dll
   Delete $INSTDIR\lib\reg1.1\pkgIndex.tcl
@@ -4197,11 +4218,13 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\XOTcl Documentation.lnk"
   Delete "$INSTDIR\doc\XOTclIDE Documentation.lnk"
   Delete "$INSTDIR\doc\TWAPI Documentation.lnk"
+  Delete "$INSTDIR\doc\mkZiplib Documentation.lnk"
   Delete $INSTDIR\doc\licenses\ased-license.lnk
   Delete $INSTDIR\doc\licenses\BWidget-license.lnk
   Delete $INSTDIR\doc\licenses\tcllib-license.txt
   Delete $INSTDIR\doc\licenses\TclTk-license.txt
   Delete $INSTDIR\doc\licenses\tklib-license.txt
+  Delete $INSTDIR\doc\licenses\mkZiplib-license.txt
   Delete $INSTDIR\doc\licenses\TWAPI-license.lnk
   Delete $INSTDIR\doc\licenses\XOTcl-license
   Delete $INSTDIR\doc\licenses\XOTclIDE-license
@@ -4243,6 +4266,7 @@ Section "Uninstall"
   Delete $INSTDIR\doc\packages\bwidget\TitleFrame.html
   Delete $INSTDIR\doc\packages\bwidget\Tree.html
   Delete $INSTDIR\doc\packages\bwidget\Widget.html
+  Delete $INSTDIR\doc\packages\mkZiplib\index.html
   Delete $INSTDIR\doc\packages\twapi\readme.txt
   Delete $INSTDIR\doc\packages\twapi\twapi.chm
   Delete $INSTDIR\doc\packages\xotcl\adapter-xotcl.html
@@ -4384,6 +4408,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang"
   RMDir "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests"
   RMDir "$INSTDIR\lib\BWidget${BWIDGET_VERSION}"
+  RMDir "$INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}"
   RMDir "$INSTDIR\lib\reg1.1"
   RMDir "$INSTDIR\lib\dde1.2"
   RMDir "$INSTDIR\lib\tcl8.4\encoding"
@@ -4551,9 +4576,10 @@ Section "Uninstall"
   RMDir "$INSTDIR\ased3.0"
   RMDir "$INSTDIR\doc\licenses"
   RMDir "$INSTDIR\doc\packages\bwidget"
+  RMDir "$INSTDIR\doc\packages\mkZiplib"
   RMDir "$INSTDIR\doc\packages\twapi"
   RMDir "$INSTDIR\doc\packages\xotcl"
-  RMDir "$INSTDIR\doc\packages\xotclIDE"
+  RMDir "$INSTDIR\doc\packages\xotclide"
   RMDir "$INSTDIR\doc\packages"
   RMDir "$INSTDIR\doc"
   RMDir "$INSTDIR"
@@ -4568,6 +4594,7 @@ LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extens
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
 LangString DESC_bwidget ${LANG_ENGLISH} "High-level widget set for Tcl/Tk"
+LangString DESC_mkziplib ${LANG_ENGLISH} "Gzip and zip compression library for Tcl/Tk"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
@@ -4579,6 +4606,7 @@ LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
   !insertmacro MUI_DESCRIPTION_TEXT ${bwidget} $(DESC_bwidget)
+  !insertmacro MUI_DESCRIPTION_TEXT ${mkziplib} $(DESC_mkziplib)
   !insertmacro MUI_DESCRIPTION_TEXT ${twapi} $(DESC_twapi)
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)

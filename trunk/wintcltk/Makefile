@@ -5,7 +5,7 @@
 #
 # $Id$
 #
-WINTCLTK_VERSION=0.2.1
+WINTCLTK_VERSION=0.2.2
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
@@ -46,7 +46,7 @@ xotclide:
 installer: install ${INSTALLER}
 ${INSTALLER}:
 	@[ -x ${MAKENSIS} ] || ( echo "Counld not find ${MAKENSIS}, please install NSIS or point the MAKENSIS environment variable to makensis.exe"; exit 1 ) 
-	@cd installer && ${MAKENSIS} //DOUTFILE=\"..\\${INSTALLER}\" wintcltk.nsi \
+	@cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" wintcltk.nsi \
 
 clean-installer:
 	-rm ${INSTALLER}

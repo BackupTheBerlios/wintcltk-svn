@@ -45,6 +45,9 @@ http://prdownloads.sourceforge.net/tcllib/tcllib-1.9.tar.gz
 http://prdownloads.sourceforge.net/tcllib/tklib-0.4.1.tar.gz
 http://prdownloads.sourceforge.net/tcllib/BWidget-1.8.0.tar.gz
 
+mkZiplib:
+http://mkextensions.sourceforge.net/mkZiplib10.zip
+
 TWAPI:
 http://prdownloads.sourceforge.net/twapi/twapi-1.0.2.zip
 

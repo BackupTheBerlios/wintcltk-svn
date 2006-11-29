@@ -3,6 +3,9 @@
 #
 # $Id$
 #
+2006-11-29 Martin Matuska <martin at matuska.org>
+	* added package mkZiplib
+
 2006-11-27 Martin Matuska <martin at matuska.org>
 	* TWAPI updated to 1.0.2
 	* XOTcl updated to 1.5.3
