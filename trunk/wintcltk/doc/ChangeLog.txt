@@ -3,6 +3,9 @@
 #
 # $Id$
 #
+2006-12-05 Martin Matuska <martin at matuska.org>
+	* release 0.2.2
+
 2006-11-29 Martin Matuska <martin at matuska.org>
 	* added package mkZiplib
 
