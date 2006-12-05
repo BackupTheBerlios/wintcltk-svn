@@ -1,0 +1,11 @@
+--- ased.tcl.orig	Sat Nov 27 15:44:26 2004
++++ ased.tcl	Thu Nov  9 13:26:44 2006
+@@ -166,7 +166,7 @@
+     # normal start of ASED
+     set libDir [file join $ASEDsRootDir lib]
+     set auto_path [linsert $auto_path 0 "$libDir"]
+-    package require -exact BWidget 1.7
++    package require -exact BWidget 1.8
+     Bitmap::get cut
+     # this used for loading Bitmap namespace into the interpetator
+     namespace eval Bitmap {

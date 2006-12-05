@@ -1,0 +1,33 @@
+# BUILD-MinGW.txt
+#
+# WinTclTk Building Instructions using MinGW
+# Copyright (c) 2006 Martin Matuska
+# 
+# $Id$
+#
+-------------------------------------------------------------
+Compilation requirements:
+-------------------------------------------------------------
+
+MinGW MSYS Package, recommended version 1.0.10:
+URL: http://prdownloads.sf.net/mingw/MSYS-1.0.10.exe
+
+MinGW GCC, recommended from package version 5.0.3:
+URL: http://prdownloads.sourceforge.net/mingw/MinGW-5.0.3.exe
+
+-------------------------------------------------------------
+To compile the WinTclTk installer, you require:
+-------------------------------------------------------------
+
+NSIS Installer
+URL: http://nsis.sourceforge.net/Download
+
+-------------------------------------------------------------
+Compilation instructions:
+-------------------------------------------------------------
+
+1. Please read SOURCES.txt (in this directory)
+2. Start the MSYS shell
+3. Change to the directory where this file resides
+4. To compile all sources, type "make install"
+5. To compile and create the executable installer, type "make"
