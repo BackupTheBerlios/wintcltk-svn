@@ -36,7 +36,8 @@ install: install-tcl install-tk install-xotcl install-xotclide install-tcllib in
 uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
 clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
 distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
-
+allclean: distclean
+	@rm *.tar.gz *.zip
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:

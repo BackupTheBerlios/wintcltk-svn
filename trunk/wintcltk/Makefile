@@ -10,8 +10,9 @@ WINTCLTK_VERSION=0.2.2
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
 MAKENSIS?=${PROGRAMFILES}/NSIS/makensis.exe
+ZIP?=$(shell which zip)
 
-all: installer
+all: installer 
 build:
 	@cd src && make build
 install:
@@ -20,33 +21,35 @@ uninstall:
 	@cd src && make uninstall
 clean:
 	@cd src && make clean
-distclean:
-	@cd src && make distclean
 buildclean:
 	@rm -rf build
-tcl:
-	@cd src && make install-tcl
-tk:
-	@cd src && make install-tk
-xotcl:
-	@cd src && make install-xotcl
-tcllib:
-	@cd src && make install-tcllib
-tklib:
-	@cd src && make install-tklib
-bwidget:
-	@cd src && make install-bwidget
-twapi:
-	@cd src && make install-twapi
-ased:
-	@cd src && make install-ased
-xotclide:
-	@cd src && make install-xotclide
+sourceclean:
+	@rm -rf wintcltk-${WINTCLTK_VERSION} wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}.zip
+installerclean:
+	@rm -f ${INSTALLER} 
+releaseclean: sourceclean installerclean
+distclean: releaseclean buildclean 
+	@cd src && make distclean
+allclean: distclean
+	@cd src && make allclean
 
 installer: install ${INSTALLER}
 ${INSTALLER}:
 	@[ -x ${MAKENSIS} ] || ( echo "Counld not find ${MAKENSIS}, please install NSIS or point the MAKENSIS environment variable to makensis.exe"; exit 1 ) 
 	@cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" wintcltk.nsi \
 
-clean-installer:
-	-rm ${INSTALLER}
+release: installer wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}.zip
+
+wintcltk-${WINTCLTK_VERSION}:
+	@mkdir -p wintcltk-${WINTCLTK_VERSION}/src
+	@cp -rf BUILD-* SOURCES.* Makefile doc wintcltk-${WINTCLTK_VERSION}
+	@cp -rf src/Makefile src/md5sums src/patches wintcltk-${WINTCLTK_VERSION}/src 
+
+
+wintcltk-${WINTCLTK_VERSION}.tar.gz: wintcltk-${WINTCLTK_VERSION}
+	@tar cz --exclude CVS -f wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}
+
+wintcltk-${WINTCLTK_VERSION}.zip: wintcltk-${WINTCLTK_VERSION}
+	@[ -x "${ZIP}" ] || ( echo "You require zip to create the source release in zip format. See SOURCES.txt for more information."; exit 1 ) 
+	@zip -r wintcltk-${WINTCLTK_VERSION}.zip wintcltk-${WINTCLTK_VERSION} -x '*/CVS/*' > /dev/null 2>&1
+
