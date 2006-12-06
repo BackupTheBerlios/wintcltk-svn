@@ -29,6 +29,7 @@ ZLIB?=$(shell which zlib1.dll)
 CURDIR=$(shell pwd)
 PREFIX=${CURDIR}/../build
 
+MESSAGE_WGET="You require wget to auto-download the sources. See SOURCES.txt for more information."
 
 all: install
 build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-mkziplib build-twapi build-ased
@@ -41,7 +42,7 @@ allclean: distclean
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tcl${TCLTK_VERSION}-src.tar.gz"
 
 extract-tcl: fetch-tcl tcl${TCLTK_VERSION} 
@@ -63,7 +64,7 @@ ${PREFIX}/lib/tclConfig.sh:
 
 fetch-tk: tk${TCLTK_VERSION}-src.tar.gz 
 tk${TCLTK_VERSION}-src.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tk${TCLTK_VERSION}-src.tar.gz"
 
 extract-tk: fetch-tk tk${TCLTK_VERSION} 
@@ -86,7 +87,7 @@ ${PREFIX}/lib/tkConfig.sh:
 
 fetch-xotcl: xotcl-${XOTCL_VERSION}.tar.gz 
 xotcl-${XOTCL_VERSION}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://media.wu-wien.ac.at/download/xotcl-${XOTCL_VERSION}.tar.gz"
 
 extract-xotcl: fetch-xotcl xotcl-${XOTCL_VERSION} 
@@ -111,7 +112,7 @@ ${PREFIX}/lib/xotclConfig.sh:
 
 fetch-tcllib: tcllib-${TCLLIB_VERSION}.tar.gz 
 tcllib-${TCLLIB_VERSION}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcllib/tcllib-${TCLLIB_VERSION}.tar.gz"
 
 extract-tcllib: fetch-tcllib tcllib-${TCLLIB_VERSION} 
@@ -131,7 +132,7 @@ ${PREFIX}/lib/tcllib${TCLLIB_VERSION}/pkgIndex.tcl:
 
 fetch-tklib: tklib-${TKLIB_VERSION}.tar.gz 
 tklib-${TKLIB_VERSION}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcllib/tklib-${TKLIB_VERSION}.tar.gz"
 
 extract-tklib: fetch-tklib tklib-${TKLIB_VERSION} 
@@ -151,7 +152,7 @@ ${PREFIX}/lib/tklib${TKLIB_SHORT}/pkgIndex.tcl:
 
 fetch-bwidget: BWidget-${BWIDGET_VERSION}.tar.gz 
 BWidget-${BWIDGET_VERSION}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcllib/BWidget-${BWIDGET_VERSION}.tar.gz"
 
 extract-bwidget: fetch-bwidget BWidget-${BWIDGET_VERSION} 
@@ -169,7 +170,7 @@ ${PREFIX}/lib/BWidget${BWIDGET_VERSION}/pkgIndex.tcl:
 
 fetch-twapi: twapi-${TWAPI_VERSION}.zip 
 twapi-${TWAPI_VERSION}.zip:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/twapi/twapi-${TWAPI_VERSION}.zip"
 
 extract-twapi: fetch-twapi twapi 
@@ -188,7 +189,7 @@ ${PREFIX}/lib/twapi${TWAPI_VERSION}/pkgIndex.tcl:
 
 fetch-ased: ased${ASED_VERSION}.zip 
 ased${ASED_VERSION}.zip:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@${WGET} "http://www.mms-forum.de/ased/ased${ASED_VERSION}.zip"
 
 extract-ased: fetch-ased ${ASED_DIR} 
@@ -207,7 +208,7 @@ ${PREFIX}/${ASED_DIR}/ased.tcl:
 
 fetch-xotclide: xotclIDE-${XOTCLIDE_FILEVER}.tar.gz xotclide_doc.tar.gz 
 xotclIDE-${XOTCLIDE_FILEVER}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
 xotclide_doc.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
@@ -229,7 +230,7 @@ ${PREFIX}/lib/xotclIDE:
 
 fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip 
 mkziplib${MKZIPLIB_SHORT}.zip:
-	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
 
 extract-mkziplib: fetch-mkziplib mkZiplib${MKZIPLIB_VERSION}/Makefile
