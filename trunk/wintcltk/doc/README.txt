@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.2.2
+Version 0.3
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
@@ -19,6 +19,9 @@ tcllib	 1.9
 tklib	 0.4.1
 BWidget	 1.8.0
 Tgdbm	 0.5
+Metakit  2.4.9.6
+mysqltcl 3.02
+pgtcl	 1.5.3
 mkZiplib 1.0
 TWAPI	 1.0.2
 ASED	 3.0.b16
@@ -38,6 +41,10 @@ Links to package authors:
 Tcl/Tk: http://www.tcl.tk
 XOTcl: http://media.wu-wien.ac.at
 Tcllib,Tklib,BWidget: http://tcllib.sourceforge.net
+Tgdbm: http://www.vogel-nest.de/wiki/Main/TgdbmPage
+Metakit: http://www.equi4.com/metakit.html
+mysqltcl: http://www.xdobry.de/mysqltcl/index.html
+pgtcl: http://pgfoundry.org/projects/pgtclng
 mkZiplib: http://mkextensions.sourceforge.net
 TWAPI: http://twapi.sourceforge.net
 ASED: http://www.mms-forum.de/ased/asedhome.htm

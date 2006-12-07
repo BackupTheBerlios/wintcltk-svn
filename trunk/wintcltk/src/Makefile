@@ -15,10 +15,14 @@ ASED_VERSION=3.0b16
 XOTCLIDE_VERSION=0.80
 MKZIPLIB_VERSION=1.0
 TGDBM_VERSION=0.5
+METAKIT_VERSION=2.4.9.6
+MYSQLTCL_VERSION=3.02
+PGTCL_VERSION=1.5.3
 
 XOTCL_LIBVER=153
 XOTCLIDE_FILEVER=0.80-0
 TKLIB_SHORT=0.4
+PGTCL_DOCVER=20060909
 MKZIPLIB_SHORT=10
 ASED_DIR=ased3.0
 
@@ -38,13 +42,12 @@ MESSAGE_WGET="You require wget to auto-download the sources. See SOURCES.txt for
 MESSAGE_UNZIP="You require unzip to extract this source. See SOURCES.txt for more information."
 
 all: install
-build: build-tcl build-tk build-gdbm build-xotcl build-tgdbm build-xotclide build-tcllib build-tklib build-bwidget build-mkziplib build-twapi build-ased
-install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-metakit clean-mysqltcl clean-pgtcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
 allclean: distclean
-	@rm *.tar.gz *.zip
+	@rm *.tar.gz *.zip *.htm *.html
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
@@ -130,7 +133,6 @@ build-tgdbm: configure-tgdbm tgdbm$(TGDBM_VERSION)/tgdbm.dll
 tgdbm${TGDBM_VERSION}/tgdbm.dll:
 	@cd tgdbm${TGDBM_VERSION} && make -f Makefile.mingw TCL=$(PREFIX) GDBM_LIB_DIR=$(PREFIX)/bin GDBM_DIR=$(PREFIX)/include GDBM_WINDIR=$(PREFIX)/include && strip *.dll
 
-
 install-tgdbm: build-gdbm ${PREFIX}/lib/tgdbm$(TGDBM_VERSION)
 ${PREFIX}/lib/tgdbm$(TGDBM_VERSION):
 	@mkdir -p $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)
@@ -164,6 +166,32 @@ install-xotcl: build-xotcl ${PREFIX}/lib/xotclConfig.sh
 ${PREFIX}/lib/xotclConfig.sh: 
 	@cd xotcl-${XOTCL_VERSION} && make install
 
+fetch-metakit: metakit-${METAKIT_VERSION}.tar.gz mk4tcl.html 
+metakit-${METAKIT_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget "http://www.equi4.com/pub/mk/metakit-${METAKIT_VERSION}.tar.gz"
+mk4tcl.html:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget -O mk4tcl.html "http://www.equi4.com/metakit/tcl.html"
+
+extract-metakit: fetch-metakit metakit-${METAKIT_VERSION}
+metakit-${METAKIT_VERSION}:
+	@md5sum -c md5sums/metakit-${METAKIT_VERSION}.tar.gz.md5 || exit 1
+	@-tar xfz metakit-${METAKIT_VERSION}.tar.gz
+	@patch -p0 < patches/metakit.patch
+
+configure-metakit: extract-metakit metakit-${METAKIT_VERSION}/unix/Makefile
+metakit-${METAKIT_VERSION}/unix/Makefile:
+	@cd metakit-${METAKIT_VERSION}/unix && ./configure --prefix=${PREFIX} --libdir=${PREFIX}/bin --with-tcl=${PREFIX}/include --enable-threads
+
+build-metakit: configure-metakit metakit-${METAKIT_VERSION}/unix/Mk4tcl.dll 
+metakit-${METAKIT_VERSION}/unix/Mk4tcl.dll:
+	@cd metakit-${METAKIT_VERSION}/unix && make && strip *.dll
+
+install-metakit: build-metakit ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll
+${PREFIX}/lib/Mk4tcl/Mk4tcl.dll: 
+	@cd metakit-${METAKIT_VERSION}/unix && make install 
+	@cp mk4tcl.html ${PREFIX}/lib/Mk4tcl
 
 fetch-tcllib: tcllib-${TCLLIB_VERSION}.tar.gz 
 tcllib-${TCLLIB_VERSION}.tar.gz:
@@ -242,6 +270,55 @@ ${PREFIX}/lib/twapi${TWAPI_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/twapi${TWAPI_VERSION}
 	@cp -Rp twapi/* ${PREFIX}/lib/twapi${TWAPI_VERSION}
 
+fetch-mysqltcl: mysqltcl-${MYSQLTCL_VERSION}.zip mysqltcl.html
+mysqltcl-${MYSQLTCL_VERSION}.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@${WGET} "http://www.xdobry.de/mysqltcl/mysqltcl-${MYSQLTCL_VERSION}.zip"
+mysqltcl.html:
+	@${WGET} "http://www.xdobry.de/mysqltcl/mysqltcl.html"
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+ 
+extract-mysqltcl: fetch-mysqltcl mysqltcl-${MYSQLTCL_VERSION} 
+mysqltcl-${MYSQLTCL_VERSION}:
+	@md5sum -c md5sums/mysqltcl-${MYSQLTCL_VERSION}.zip.md5 || exit 1
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
+	@unzip mysqltcl-${MYSQLTCL_VERSION}.zip
+
+configure-mysqltcl: extract-mysqltcl
+build-mysqltcl: configure-mysqltcl
+
+install-mysqltcl: build-mysqltcl ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}/pkgIndex.tcl
+${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}/pkgIndex.tcl:
+	@mkdir -p ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}
+	@cp -Rp mysqltcl.html mysqltcl-${MYSQLTCL_VERSION}/* ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}
+
+fetch-pgtcl: pgtcl${PGTCL_VERSION}-win32.zip pgtcldocs-${PGTCL_DOCVER}.zip 
+pgtcl${PGTCL_VERSION}-win32.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@${WGET} "http://pgfoundry.org/frs/download.php/1074/pgtcl1.5.3-win32.zip"
+pgtcldocs-${PGTCL_DOCVER}.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@${WGET} "http://pgfoundry.org/frs/download.php/1073/pgtcldocs-20060909.zip"
+
+extract-pgtcl: fetch-pgtcl pgtcl${PGTCL_VERSION}-win32 pgtcldocs-${PGTCL_DOCVER}
+pgtcl${PGTCL_VERSION}-win32:
+	@md5sum -c md5sums/pgtcl${PGTCL_VERSION}-win32.zip.md5 || exit 1
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
+	@unzip pgtcl${PGTCL_VERSION}-win32.zip
+pgtcldocs-${PGTCL_DOCVER}:
+	@md5sum -c md5sums/pgtcldocs-${PGTCL_DOCVER}.zip.md5 || exit 1
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
+	@unzip pgtcldocs-${PGTCL_DOCVER}.zip
+
+configure-pgtcl: extract-pgtcl
+build-pgtcl: configure-pgtcl
+
+install-pgtcl: build-pgtcl ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/pkgIndex.tcl
+${PREFIX}/lib/pgtcl${PGTCL_VERSION}/pkgIndex.tcl:
+	@mkdir -p ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs
+	@cp -Rp pgtcl${PGTCL_VERSION}-win32/* ${PREFIX}/lib/pgtcl${PGTCL_VERSION}
+	@cp -Rp pgtcldocs-${PGTCL_DOCVER}/* ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs
+
 fetch-ased: ased${ASED_VERSION}.zip 
 ased${ASED_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
@@ -283,7 +360,7 @@ install-xotclide: build-xotclide ${PREFIX}/lib/xotclIDE
 ${PREFIX}/lib/xotclIDE:
 	@cd xotclide-${XOTCLIDE_VERSION} && rm -f install && make install PREFIX=${PREFIX}
 
-fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip 
+fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip
 mkziplib${MKZIPLIB_SHORT}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@wget "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
@@ -305,7 +382,8 @@ install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIn
 ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
 	@cp ${ZLIB} ${PREFIX}/bin
-	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll {PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cd mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.htm ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib.htm
 
 uninstall-tcl:
 	@-cd ${PREFIX}/bin && rm tcl*.dll tclsh*.exe
@@ -327,6 +405,9 @@ uninstall-gdbm:
 uninstall-tgdbm:
 	@-cd ${PREFIX} && rm -rf lib/tgdbm$(TGDBM_VERSION)
 
+uninstall-metakit:
+	@-cd ${PREFIX} && rm -rf bin/libmk4.dll include/mk4* lib/Mk4tcl 
+
 uninstall-tcllib:
 	@-cd ${PREFIX}/lib && rm -rf tcllib${TCLLIB_VERSION}
 
@@ -338,6 +419,12 @@ uninstall-BWidget:
 
 uninstall-twapi:
 	@-cd ${PREFIX}/lib && rm -rf twapi${TWAPI_VERSION}
+
+uninstall-mysqltcl:
+	@-cd ${PREFIX}/lib && rm -rf mysqltcl${MYSQLTCL_VERSION}
+
+uninstall-pgtcl:
+	@-cd ${PREFIX}/lib && rm -rf pgtcl${PGTCL_VERSION}
 
 uninstall-ased:
 	@-cd ${PREFIX} && rm -rf ${ASED_DIR}
@@ -378,6 +465,12 @@ clean-gdbm:
 distclean-gdbm:
 	@-rm -rf gdbm-${GDBM_VERSION}
 
+clean-metakit:
+	@-cd metakit-${METAKIT_VERSION}/unix && make clean
+
+distclean-metakit:
+	@-rm -rf metakit-${METAKIT_VERSION}
+
 clean-tcllib:
 	@-cd tcllib-${TCLLIB_VERSION} && make clean
 
@@ -399,6 +492,16 @@ clean-twapi:
 
 distclean-twapi:
 	@-rm -rf twapi
+
+clean-mysqltcl:
+
+distclean-mysqltcl:
+	@-rm -rf mysqltcl-${MYSQLTCL_VERSION}
+
+clean-pgtcl:
+
+distclean-pgtcl:
+	@-rm -rf pgtcl${PG_VERSION} pgtcldocs-${PGTCL_DOCVER}
 
 clean-ased:
 

@@ -51,6 +51,15 @@ ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz
 Tgdbm:
 http://www.vogel-nest.de/wiki/uploads/Main/tgdbm0.5.zip
 
+Metakit:
+http://www.equi4.com/pub/mk/metakit-2.4.9.6.tar.gz
+
+mysqltcl:
+http://www.xdobry.de/mysqltcl/mysqltcl-3.02.zip
+
+pgtcl:
+http://pgfoundry.org/frs/download.php/1074/pgtcl1.5.3-win32.zip
+
 mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
 
