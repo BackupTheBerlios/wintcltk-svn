@@ -133,7 +133,7 @@ build-tgdbm: configure-tgdbm tgdbm$(TGDBM_VERSION)/tgdbm.dll
 tgdbm${TGDBM_VERSION}/tgdbm.dll:
 	@cd tgdbm${TGDBM_VERSION} && make -f Makefile.mingw TCL=$(PREFIX) GDBM_LIB_DIR=$(PREFIX)/bin GDBM_DIR=$(PREFIX)/include GDBM_WINDIR=$(PREFIX)/include && strip *.dll
 
-install-tgdbm: build-gdbm ${PREFIX}/lib/tgdbm$(TGDBM_VERSION)
+install-tgdbm: build-tgdbm ${PREFIX}/lib/tgdbm$(TGDBM_VERSION)
 ${PREFIX}/lib/tgdbm$(TGDBM_VERSION):
 	@mkdir -p $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)
 	@cd tgdbm$(TGDBM_VERSION) && cp tgdbm.dll qgdbm.tcl $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)
