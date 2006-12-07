@@ -382,7 +382,7 @@ install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIn
 ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
 	@cp ${ZLIB} ${PREFIX}/bin
-	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll {PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
 	@cd mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.htm ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib.htm
 
 uninstall-tcl:
