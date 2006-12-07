@@ -45,6 +45,12 @@ http://prdownloads.sourceforge.net/tcllib/tcllib-1.9.tar.gz
 http://prdownloads.sourceforge.net/tcllib/tklib-0.4.1.tar.gz
 http://prdownloads.sourceforge.net/tcllib/BWidget-1.8.0.tar.gz
 
+GDBM:
+ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz
+
+Tgdbm:
+http://www.vogel-nest.de/wiki/uploads/Main/tgdbm0.5.zip
+
 mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
 
