@@ -14,6 +14,7 @@ TWAPI_VERSION=1.0.2
 ASED_VERSION=3.0b16
 XOTCLIDE_VERSION=0.80
 MKZIPLIB_VERSION=1.0
+TGDBM_VERSION=0.5
 
 XOTCL_LIBVER=153
 XOTCLIDE_FILEVER=0.80-0
@@ -21,7 +22,11 @@ TKLIB_SHORT=0.4
 MKZIPLIB_SHORT=10
 ASED_DIR=ased3.0
 
+GDBM_VERSION=1.8.3
+GDBM_LIVBER=183
+
 SOURCEFORGE_MIRROR?=heanet
+GNU_MIRROR?=ftp.gnu.org/pub/gnu
 
 WGET?=$(shell which wget)
 UNZIP?=$(shell which unzip)
@@ -30,13 +35,14 @@ CURDIR=$(shell pwd)
 PREFIX=${CURDIR}/../build
 
 MESSAGE_WGET="You require wget to auto-download the sources. See SOURCES.txt for more information."
+MESSAGE_UNZIP="You require unzip to extract this source. See SOURCES.txt for more information."
 
 all: install
-build: build-tcl build-tk build-xotcl build-xotclide build-tcllib build-tklib build-bwidget build-mkziplib build-twapi build-ased
-install: install-tcl install-tk install-xotcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
+build: build-tcl build-tk build-gdbm build-xotcl build-tgdbm build-xotclide build-tcllib build-tklib build-bwidget build-mkziplib build-twapi build-ased
+install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip
 
@@ -85,6 +91,52 @@ install-tk: build-tk ${PREFIX}/lib/tkConfig.sh
 ${PREFIX}/lib/tkConfig.sh:
 	@cd tk${TCLTK_VERSION}/win && make install
 
+fetch-gdbm: gdbm-${GDBM_VERSION}.tar.gz 
+gdbm-${GDBM_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget "ftp://${GNU_MIRROR}/gdbm/gdbm-${GDBM_VERSION}.tar.gz"
+
+extract-gdbm: fetch-gdbm gdbm-${GDBM_VERSION}/win32
+gdbm-${GDBM_VERSION}/win32:
+	@md5sum -c md5sums/gdbm-${GDBM_VERSION}.tar.gz.md5 || exit 1
+	@-tar xfz gdbm-${GDBM_VERSION}.tar.gz
+	@patch -p0 < patches/gdbm.patch
+
+configure-gdbm: extract-gdbm
+
+build-gdbm: configure-gdbm gdbm-${GDBM_VERSION}/win32/shlib/gdbm.dll 
+gdbm-${GDBM_VERSION}/win32/shlib/gdbm.dll:
+	@cd gdbm-${GDBM_VERSION}/win32 && make && strip shlib/*.dll
+
+install-gdbm: build-gdbm ${PREFIX}/bin/gdbm.dll
+${PREFIX}/bin/gdbm.dll: 
+	@cd gdbm-${GDBM_VERSION}/win32 && make install prefix=$(PREFIX)
+
+fetch-tgdbm: tgdbm${TGDBM_VERSION}.zip 
+tgdbm${TGDBM_VERSION}.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
+
+extract-tgdbm: fetch-tgdbm tgdbm${TGDBM_VERSION}
+tgdbm${TGDBM_VERSION}:
+	@md5sum -c md5sums/tgdbm${TGDBM_VERSION}.zip.md5 || exit 1
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
+	@unzip tgdbm$(TGDBM_VERSION).zip
+	@cd tgdbm$(TGDBM_VERSION) && rm tgdbm.dll
+
+configure-tgdbm: extract-tgdbm
+
+build-tgdbm: configure-tgdbm tgdbm$(TGDBM_VERSION)/tgdbm.dll 
+tgdbm${TGDBM_VERSION}/tgdbm.dll:
+	@cd tgdbm${TGDBM_VERSION} && make -f Makefile.mingw TCL=$(PREFIX) GDBM_LIB_DIR=$(PREFIX)/bin GDBM_DIR=$(PREFIX)/include GDBM_WINDIR=$(PREFIX)/include && strip *.dll
+
+
+install-tgdbm: build-gdbm ${PREFIX}/lib/tgdbm$(TGDBM_VERSION)
+${PREFIX}/lib/tgdbm$(TGDBM_VERSION):
+	@mkdir -p $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)
+	@cd tgdbm$(TGDBM_VERSION) && cp tgdbm.dll qgdbm.tcl $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)
+	@echo 'package ifneeded tgdbm' $(TGDBM_VERSION) '[list load [file join $$dir tgdbm.dll] tgdbm]' > $(PREFIX)/lib/tgdbm$(TGDBM_VERSION)/pkgIndex.tcl
+
 fetch-xotcl: xotcl-${XOTCL_VERSION}.tar.gz 
 xotcl-${XOTCL_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
@@ -94,16 +146,19 @@ extract-xotcl: fetch-xotcl xotcl-${XOTCL_VERSION}
 xotcl-${XOTCL_VERSION}:
 	@md5sum -c md5sums/xotcl-${XOTCL_VERSION}.tar.gz.md5 || exit 1
 	@-tar xfz xotcl-${XOTCL_VERSION}.tar.gz
+	@cd xotcl-${XOTCL_VERSION} && patch -p1 < ../patches/xotcl.patch
+	@cd xotcl-${XOTCL_VERSION} && autoconf
+	@cd xotcl-${XOTCL_VERSION}/library/xml/TclExpat-1.1 && autoconf
 
-configure-xotcl: install-tcl extract-xotcl xotcl-${XOTCL_VERSION}/Makefile 
+configure-xotcl: install-tcl install-gdbm extract-xotcl xotcl-${XOTCL_VERSION}/Makefile 
 xotcl-${XOTCL_VERSION}/Makefile:
 	@cd xotcl-${XOTCL_VERSION} && ./configure --prefix=${PREFIX} --enable-shared --enable-threads \
-		--with-tcl=${PREFIX}/lib	
+		--with-tcl=${PREFIX}/lib --with-actiweb --with-gdbm=${PREFIX}/include,${PREFIX}/bin	
 
 build-xotcl: configure-xotcl xotcl-${XOTCL_VERSION}/xotcl${XOTCL_LIBVER}.dll 
 xotcl-${XOTCL_VERSION}/xotcl${XOTCL_LIBVER}.dll:
 	echo $(XOTCL_SHORT)
-	@cd xotcl-${XOTCL_VERSION} && make && strip *.dll
+	@cd xotcl-${XOTCL_VERSION} && make && strip *.dll library/*/*/*.dll
 
 install-xotcl: build-xotcl ${PREFIX}/lib/xotclConfig.sh
 ${PREFIX}/lib/xotclConfig.sh: 
@@ -176,7 +231,7 @@ twapi-${TWAPI_VERSION}.zip:
 extract-twapi: fetch-twapi twapi 
 twapi:
 	@md5sum -c md5sums/twapi-${TWAPI_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "You require unzip to extract this source. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@unzip twapi-${TWAPI_VERSION}.zip
 
 configure-twapi: extract-twapi
@@ -195,9 +250,9 @@ ased${ASED_VERSION}.zip:
 extract-ased: fetch-ased ${ASED_DIR} 
 ${ASED_DIR}:
 	@md5sum -c md5sums/ased${ASED_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "You require unzip to extract this source. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@${UNZIP} ased${ASED_VERSION}.zip
-	@cd ${ASED_DIR} && patch < ../patches/ased${ASED_VERSION}.patch
+	@patch -p0 < patches/ased${ASED_VERSION}.patch
 
 configure-ased: extract-ased
 build-ased: configure-ased
@@ -262,9 +317,15 @@ uninstall-tk:
 	@-cd ${PREFIX}/lib && rm -rf tk* libtk*.a libtkstub*.a tkConfig.shi
 	@-cd ${PREFIX}/include && rm -rf X11 tk.h tkDecls.h tkIntXlibDecls.h tkPlatDecls.h 
 
-uninstall-xotcl:
+uninstall-xotcl: uninstall-gdbm
 	@-cd ${PREFIX}/lib && rm -rf xotcl${XOTCL_VERSION} xotcl*.dll xotclConfig.sh
 	@-cd ${PREFIX}/include && rm xotcl.h xotclDecls.h xotclInt.h xotclIntDecls.h
+
+uninstall-gdbm:
+	@-cd ${PREFIX} && rm -rf bin/gdbm.dll include/dbm.h include/gdbm.h include/ndbm.h lib/gdbm.a
+
+uninstall-tgdbm:
+	@-cd ${PREFIX} && rm -rf lib/tgdbm$(TGDBM_VERSION)
 
 uninstall-tcllib:
 	@-cd ${PREFIX}/lib && rm -rf tcllib${TCLLIB_VERSION}
@@ -299,11 +360,23 @@ clean-tk:
 distclean-tk:
 	@-rm -rf tk${TCLTK_VERSION}
 
-clean-xotcl:
+clean-xotcl: 
 	@-cd xotcl-${XOTCL_VERSION} && make clean 
 
-distclean-xotcl:
+distclean-xotcl: 
 	@-rm -rf xotcl-${XOTCL_VERSION}
+
+clean-tgdbm:
+	@-cd tgdbm$(TGDBM_VERSION) && rm -rf mingw_release tgdbm.dll
+
+distclean-tgdbm:
+	@-rm -rf tgdbm$(TGDBM_VERSION)
+
+clean-gdbm:
+	@-cd gdbm-${GDBM_VERSION}/win32 && make clean
+
+distclean-gdbm:
+	@-rm -rf gdbm-${GDBM_VERSION}
 
 clean-tcllib:
 	@-cd tcllib-${TCLLIB_VERSION} && make clean
