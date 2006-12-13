@@ -28,6 +28,6 @@ Compilation instructions:
 
 1. Please read SOURCES.txt (in this directory)
 2. Start the MSYS shell
-3. Change to the directory where this file resides
+3. Change to the distribution directory
 4. To compile all sources, type "make install"
 5. To compile and create the executable installer, type "make"
