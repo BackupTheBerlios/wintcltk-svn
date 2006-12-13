@@ -45,6 +45,12 @@ http://prdownloads.sourceforge.net/tcllib/tcllib-1.9.tar.gz
 http://prdownloads.sourceforge.net/tcllib/tklib-0.4.1.tar.gz
 http://prdownloads.sourceforge.net/tcllib/BWidget-1.8.0.tar.gz
 
+OpenSSL:
+http://www.openssl.org/source/openssl-0.9.8d.tar.gz
+
+Tls:
+http://prdownloads.sourceforge.net/tls/tls1.5.0-src.tar.gz
+
 GDBM:
 ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz
 

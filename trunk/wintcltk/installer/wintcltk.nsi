@@ -10,7 +10,7 @@
 ;General
 
 !ifndef VERSION
-	!define VERSION "0.3"
+	!define VERSION "0.3.1"
 !endif
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
@@ -26,8 +26,10 @@
 !define METAKIT_VERSION "2.4.9.6"
 !define MYSQLTCL_VERSION "3.02"
 !define PGTCL_VERSION "1.5.3"
+!define TLS_VERSION "1.5.0"
 
 !define GDBM_VERSION "1.8.3"
+!define OPENSSL_VERSION "0.9.8d"
 
 !define XOTCL_LIBVER "153"
 !define TKLIB_SHORTVER "0.4"
@@ -55,7 +57,7 @@ InstallDirRegKey HKLM "Software\WinTclTk" "Install_Dir"
 
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the WinTclTk ${VERSION} Setup Wizard"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\nTgdbm 0.5 (GDBM ${GDBM_VERSION})\r\ntcllib ${TCLLIB_VERSION}, tklib ${TKLIB_VERSION}, BWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION}, TWAPI ${TWAPI_VERSION}\r\nMetaKit ${METAKIT_VERSION}, mysqltcl ${MYSQLTCL_VERSION}, Pgtcl ${PGTCL_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}, ASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\nTgdbm 0.5 (GDBM ${GDBM_VERSION})\r\ntls ${TLS_VERSION} (OpenSSL ${OPENSSL_VERSION})\r\ntcllib ${TCLLIB_VERSION}, tklib ${TKLIB_VERSION}, BWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION}, TWAPI ${TWAPI_VERSION}\r\nMetaKit ${METAKIT_VERSION}, mysqltcl ${MYSQLTCL_VERSION}, Pgtcl ${PGTCL_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}, ASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
@@ -643,6 +645,25 @@ Section "Tgdbm ${TGDBM_VERSION}" tgdbm
   File "..\build\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
   SetOutPath $INSTDIR\doc\packages
   CreateShortCut "$INSTDIR\doc\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+SectionEnd
+
+Section "tls ${TLS_VERSION}" tls
+  SectionIn 1
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\ssleay32-0.9.8.dll"
+  File "..\build\bin\cryptoeay32-0.9.8.dll"
+  SetOutPath $INSTDIR\lib\tls${TLS_VERSION}
+  File "..\build\lib\tls${TLS_VERSION}\tls15.dll"
+  File "..\build\lib\tls${TLS_VERSION}\pkgIndex.tcl"
+  File "..\build\lib\tls${TLS_VERSION}\tls.tcl"
+  SetOutPath $INSTDIR\doc\packages\tls
+  File /oname=index.html "..\build\lib\tls${TLS_VERSION}\tls.htm"
+  SetOutPath $INSTDIR\doc\packages\tls
+  CreateShortCut "$INSTDIR\doc\Tls Documentation.lnk" "$INSTDIR\doc\packages\tls\index.html" "" "$INSTDIR\doc\packages\tls\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=tls-license.txt "..\build\lib\tls${TLS_VERSION}\license.terms"
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
 SectionEnd
 
 Section "Tcllib ${TCLLIB_VERSION}" tcllib
@@ -3426,8 +3447,10 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\tools\visualregexp\README"
   Delete "$INSTDIR\ased3.0\tools\visualregexp\visual_regexp.tcl"
   Delete "$INSTDIR\ased3.0\undo.tcl"
+  Delete "$INSTDIR\bin\cryptoeay32-0.9.8.dll"
   Delete "$INSTDIR\bin\gdbm.dll"
   Delete "$INSTDIR\bin\libmk4.dll"
+  Delete "$INSTDIR\bin\ssleay32-0.9.8.dll"
   Delete "$INSTDIR\bin\tcl84.dll"
   Delete "$INSTDIR\bin\tclpip84.dll"
   Delete "$INSTDIR\bin\tclsh84.exe"
@@ -3445,9 +3468,11 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\mkZiplib-license.txt"
   Delete "$INSTDIR\doc\licenses\mysqltcl-license.lnk"
   Delete "$INSTDIR\doc\licenses\Metakit-license.txt"
+  Delete "$INSTDIR\doc\licenses\OpenSSL-license.txt"
   Delete "$INSTDIR\doc\licenses\pgtcl-license.txt"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
+  Delete "$INSTDIR\doc\licenses\tls-license.txt"
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
   Delete "$INSTDIR\doc\licenses\XOTcl-license"
@@ -3493,6 +3518,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\BWidget\TitleFrame.html"
   Delete "$INSTDIR\doc\packages\BWidget\Tree.html"
   Delete "$INSTDIR\doc\packages\BWidget\Widget.html"
+  Delete "$INSTDIR\doc\packages\tls\index.html"
   Delete "$INSTDIR\doc\packages\metakit\index.html"
   Delete "$INSTDIR\doc\packages\mkZiplib\index.html"
   Delete "$INSTDIR\doc\packages\mysqltcl\index.html"
@@ -3685,6 +3711,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\README.htm"
   Delete "$INSTDIR\doc\README.txt"
   Delete "$INSTDIR\doc\TGDBM Documentation.lnk"
+  Delete "$INSTDIR\doc\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\TWAPI Documentation.lnk"
   Delete "$INSTDIR\doc\XOTcl Documentation.lnk"
   Delete "$INSTDIR\doc\XOTclIDE Documentation.lnk"
@@ -4534,6 +4561,9 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\scrollw.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\superframe.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\widget.tcl"
+  Delete "$INSTDIR\lib\tls${TLS_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls15.dll"
+  Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls.tcl"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\clipboard.tcl"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\com.tcl"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\console.tcl"
@@ -4797,6 +4827,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\tests"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}"
+  RMDir "$INSTDIR\lib\tls${TLS_VERSION}"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\tooltip"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\tkpiechart"
@@ -4929,6 +4960,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\xotclIDE"
   RMDir "$INSTDIR\doc\packages\xotcl"
   RMDir "$INSTDIR\doc\packages\twapi"
+  RMDir "$INSTDIR\doc\packages\tls"
   RMDir "$INSTDIR\doc\packages\pgtcl"
   RMDir "$INSTDIR\doc\packages\mysqltcl"
   RMDir "$INSTDIR\doc\packages\mkZiplib"
@@ -5005,6 +5037,7 @@ LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
+LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk} $(DESC_tcltk)
@@ -5022,6 +5055,7 @@ LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tls} $(DESC_tls)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 Function .onInit

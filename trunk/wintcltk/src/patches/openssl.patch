@@ -1,0 +1,38 @@
+--- Configure.orig	Wed Dec 13 12:29:36 2006
++++ Configure	Wed Dec 13 12:29:52 2006
+@@ -469,7 +469,7 @@
+ "BC-32","bcc32::::WIN32::BN_LLONG DES_PTR RC4_INDEX EXPORT_VAR_AS_FN:${no_asm}:win32",
+ 
+ # MinGW
+-"mingw", "gcc:-mno-cygwin -DL_ENDIAN -fomit-frame-pointer -O3 -march=i486 -Wall -D_WIN32_WINNT=0x333:::MINGW32:-lwsock32 -lgdi32:BN_LLONG ${x86_gcc_des} ${x86_gcc_opts} EXPORT_VAR_AS_FN:${x86_coff_asm}:win32:cygwin-shared:-D_WINDLL -DOPENSSL_USE_APPLINK:-mno-cygwin -shared:.dll.a",
++"mingw", "gcc:-mno-cygwin -DL_ENDIAN -fomit-frame-pointer -O3 -march=i486 -Wall -D_WIN32_WINNT=0x333:::MINGW32:-lwsock32 -lgdi32:BN_LLONG ${x86_gcc_des} ${x86_gcc_opts} EXPORT_VAR_AS_FN:${x86_coff_asm}:win32:cygwin-shared:-D_WINDLL -DOPENSSL_USE_APPLINK:-mno-cygwin -export-all -shared:.dll.a",
+ 
+ # UWIN 
+ "UWIN", "cc:-DTERMIOS -DL_ENDIAN -O -Wall:::UWIN::BN_LLONG ${x86_gcc_des} ${x86_gcc_opts}:${no_asm}:win32",
+--- engines/Makefile.orig	Wed Dec 13 12:27:17 2006
++++ engines/Makefile	Wed Dec 13 12:27:23 2006
+@@ -91,16 +91,20 @@
+ 		set -e; \
+ 		for l in $(LIBNAMES); do \
+ 			( echo installing $$l; \
+-			  if [ "$(PLATFORM)" != "Cygwin" ]; then \
++			  if [ "$(PLATFORM)" == "Cygwin" ]; then \
++			  	sfx="so"; \
++				cp cyg$$l.dll $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new; \
++			  elif [ "$(PLATFORM)" == "mingw" ]; then \
++				sfx="dll"; \
++				lsfx="eay32"; \
++				cp $$l$$lsfx.dll $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new; \
++			  else \
+ 				case "$(CFLAGS)" in \
+ 				*DSO_DLFCN*)	sfx="so";;	\
+ 				*DSO_DL*)	sfx="sl";;	\
+ 				*)		sfx="bad";;	\
+ 				esac; \
+ 				cp lib$$l.$$sfx $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new; \
+-			  else \
+-			  	sfx="so"; \
+-				cp cyg$$l.dll $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new; \
+ 			  fi; \
+ 			  chmod 555 $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new; \
+ 			  mv -f $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx.new $(INSTALL_PREFIX)$(INSTALLTOP)/lib/engines/lib$$l.$$sfx ); \

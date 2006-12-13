@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.3
+Version 0.3.1
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
@@ -18,6 +18,7 @@ XOTcl	 1.5.3
 tcllib	 1.9
 tklib	 0.4.1
 BWidget	 1.8.0
+tls      1.5.0
 Tgdbm	 0.5
 Metakit  2.4.9.6
 mysqltcl 3.02
@@ -29,6 +30,7 @@ XOTclIDE 0.80
 
 The binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped.
+GDBM 1.8.3 and OpenSSL 0.9.8d are bundled.
 
 The binaries are less efficient than binaries compiled with Microsoft Visual C++.
 The main idea of this package is to provide a (fully) free enhanced Tcl/Tk package
@@ -41,6 +43,7 @@ Links to package authors:
 Tcl/Tk: http://www.tcl.tk
 XOTcl: http://media.wu-wien.ac.at
 Tcllib,Tklib,BWidget: http://tcllib.sourceforge.net
+Tls: http://www.sensus.org/tcl/
 Tgdbm: http://www.vogel-nest.de/wiki/Main/TgdbmPage
 Metakit: http://www.equi4.com/metakit.html
 mysqltcl: http://www.xdobry.de/mysqltcl/index.html

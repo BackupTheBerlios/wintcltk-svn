@@ -18,16 +18,21 @@ TGDBM_VERSION=0.5
 METAKIT_VERSION=2.4.9.6
 MYSQLTCL_VERSION=3.02
 PGTCL_VERSION=1.5.3
+TLS_VERSION=1.5.0
 
 XOTCL_LIBVER=153
 XOTCLIDE_FILEVER=0.80-0
 TKLIB_SHORT=0.4
 PGTCL_DOCVER=20060909
 MKZIPLIB_SHORT=10
+TLS_SHORT=1.5
+TLS_LIBVER=15
 ASED_DIR=ased3.0
 
 GDBM_VERSION=1.8.3
 GDBM_LIVBER=183
+OPENSSL_VERSION=0.9.8d
+OPENSSL_LIBVER=0.9.8
 
 SOURCEFORGE_MIRROR?=heanet
 GNU_MIRROR?=ftp.gnu.org/pub/gnu
@@ -42,10 +47,10 @@ MESSAGE_WGET="You require wget to auto-download the sources. See SOURCES.txt for
 MESSAGE_UNZIP="You require unzip to extract this source. See SOURCES.txt for more information."
 
 all: install
-install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-metakit clean-mysqltcl clean-pgtcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip *.htm *.html
 
@@ -81,7 +86,7 @@ tk${TCLTK_VERSION}:
 	@md5sum -c md5sums/tk${TCLTK_VERSION}-src.tar.gz.md5 || exit 1
 	@tar xfz tk${TCLTK_VERSION}-src.tar.gz
 
-configure-tk: extract-tcl extract-tk tk${TCLTK_VERSION}/win/Makefile 
+configure-tk: install-tcl extract-tk tk${TCLTK_VERSION}/win/Makefile 
 
 tk${TCLTK_VERSION}/win/Makefile:
 	@cd tk${TCLTK_VERSION}/win && ./configure --prefix=${PREFIX} --enable-shared --enable-threads
@@ -192,6 +197,62 @@ install-metakit: build-metakit ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll
 ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll: 
 	@cd metakit-${METAKIT_VERSION}/unix && make install 
 	@cp mk4tcl.html ${PREFIX}/lib/Mk4tcl
+
+fetch-openssl: openssl-${OPENSSL_VERSION}.tar.gz 
+openssl-${OPENSSL_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
+
+extract-openssl: fetch-openssl openssl-${OPENSSL_VERSION}
+openssl-${OPENSSL_VERSION}:
+	@md5sum -c md5sums/openssl-${OPENSSL_VERSION}.tar.gz.md5 || exit 1
+	@-tar xfz openssl-${OPENSSL_VERSION}.tar.gz >/dev/null 2>&1
+	@cd openssl-${OPENSSL_VERSION} && patch -p0 < ../patches/openssl.patch
+
+configure-openssl: extract-openssl openssl-${OPENSSL_VERSION}/configure.done openssl-${OPENSSL_VERSION}/include/openssl/crypto.h
+openssl-${OPENSSL_VERSION}/configure.done:
+	@cd openssl-${OPENSSL_VERSION} && Configure --prefix=${PREFIX} mingw shared && touch configure.done 
+openssl-${OPENSSL_VERSION}/include/openssl/crypto.h:
+	@cd openssl-${OPENSSL_VERSION} ; \
+		cp crypto/*.h ssl/*.h *.h include/openssl/ ;\
+		cp crypto/*/*test.c crypto/sha/sha*t.c ssl/*test.c test/ ;\
+		cp test/dummytest.c test/rc5test.c ;\
+		cp test/dummytest.c test/mdc2test.c ;
+
+build-openssl: configure-openssl openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll 
+openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll:
+	@cd openssl-${OPENSSL_VERSION} && make && strip *.dll
+
+install-openssl: build-openssl ${PREFIX}/bin/ssleay32.dll ${PREFIX}/lib/libssl.dll.a
+${PREFIX}/lib/libssl.dll.a:
+	@cd openssl-${OPENSSL_VERSION} && make install_sw
+${PREFIX}/bin/ssleay32.dll: 
+	@cp openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll ${PREFIX}/bin
+	@cp openssl-${OPENSSL_VERSION}/cryptoeay32-${OPENSSL_LIBVER}.dll ${PREFIX}/bin
+
+fetch-tls: tls${TLS_VERSION}-src.tar.gz 
+tls${TLS_VERSION}-src.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tls/tls${TLS_VERSION}-src.tar.gz"
+
+extract-tls: fetch-tls tls${TLS_SHORT}
+tls${TLS_SHORT}:
+	@md5sum -c md5sums/tls${TLS_VERSION}-src.tar.gz.md5 || exit 1
+	@-tar xfz tls${TLS_VERSION}-src.tar.gz
+	@cd tls${TLS_SHORT} && patch -p0 < ../patches/tls.patch
+
+configure-tls: install-openssl extract-tls tls${TLS_SHORT}/Makefile
+tls${TLS_SHORT}/Makefile:
+	@cd tls${TLS_SHORT} && ./configure --prefix=${PREFIX} --enable-threads --enable-shared --enable-gcc --with-ssl-dir=${PREFIX}
+
+build-tls: configure-tls tls${TLS_SHORT}/tls${TLS_LIBVER}.dll 
+tls${TLS_SHORT}/tls${TLS_LIBVER}.dll:
+	@cd tls${TLS_SHORT} && make && strip *.dll
+
+install-tls: build-tls ${PREFIX}/lib/tls${TLS_VERSION}
+${PREFIX}/lib/tls${TLS_VERSION}: 
+	@mkdir -p ${PREFIX}/lib/tls${TLS_VERSION}
+	@cd tls${TLS_SHORT} && cp pkgIndex.tcl license.terms tls.tcl tls.htm tls${TLS_LIBVER}.dll ${PREFIX}/lib/tls${TLS_VERSION} 
 
 fetch-tcllib: tcllib-${TCLLIB_VERSION}.tar.gz 
 tcllib-${TCLLIB_VERSION}.tar.gz:
@@ -405,6 +466,12 @@ uninstall-gdbm:
 uninstall-tgdbm:
 	@-cd ${PREFIX} && rm -rf lib/tgdbm$(TGDBM_VERSION)
 
+uninstall-openssl:
+	@-cd ${PREFIX} && rm -rf bin/openssl.exe bin/ssleay32-*.dll bin/cryptoeay32-*.dll include/openssl lib/libssl.* lib/libcrypto.* lib/engines
+
+uninstall-tls:
+	@-cd ${PREFIX} && rm -rf lib/tls${TLS_VERSION}
+
 uninstall-metakit:
 	@-cd ${PREFIX} && rm -rf bin/libmk4.dll include/mk4* lib/Mk4tcl 
 
@@ -464,6 +531,18 @@ clean-gdbm:
 
 distclean-gdbm:
 	@-rm -rf gdbm-${GDBM_VERSION}
+
+clean-openssl:
+	@-cd openssl-${OPENSSL_VERSION} && make clean
+
+distclean-openssl:
+	@-rm -rf openssl-${OPENSSL_VERSION}
+
+clean-tls:
+	@-cd tls${TLS_SHORT} && make clean
+
+distclean-tls:
+	@-rm -rf tls${TLS_SHORT}
 
 clean-metakit:
 	@-cd metakit-${METAKIT_VERSION}/unix && make clean
