@@ -41,10 +41,14 @@ ${INSTALLER}:
 release: installer wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}.zip
 
 wintcltk-${WINTCLTK_VERSION}:
-	@mkdir -p wintcltk-${WINTCLTK_VERSION}/src
-	@cp -rf BUILD-* SOURCES.* Makefile doc wintcltk-${WINTCLTK_VERSION}
-	@cp -rf src/Makefile src/md5sums src/patches wintcltk-${WINTCLTK_VERSION}/src 
-
+	@mkdir -p wintcltk-${WINTCLTK_VERSION}
+	@cd wintcltk-${WINTCLTK_VERSION} && mkdir -p src/md5sums src/patches doc/licenses
+	@cp Makefile wintcltk-${WINTCLTK_VERSION}
+	@cp src/Makefile wintcltk-${WINTCLTK_VERSION}/src
+	@cp src/md5sums/*.md5 wintcltk-${WINTCLTK_VERSION}/src/md5sums
+	@cp src/patches/*.patch wintcltk-${WINTCLTK_VERSION}/src/patches 
+	@cp doc/*.txt doc/*.htm wintcltk-${WINTCLTK_VERSION}/doc
+	@cp doc/licenses/*.txt wintcltk-${WINTCLTK_VERSION}/doc/licenses
 
 wintcltk-${WINTCLTK_VERSION}.tar.gz: wintcltk-${WINTCLTK_VERSION}
 	@tar cz --exclude CVS -f wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}
