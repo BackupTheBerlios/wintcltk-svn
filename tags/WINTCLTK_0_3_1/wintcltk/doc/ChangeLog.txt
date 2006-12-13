@@ -1,0 +1,42 @@
+#
+# WinTclTk ChangeLog
+#
+# $Id$
+#
+2006-12-13 Martin Matuska <martin at matuska.org>
+	* added package tls
+	    - OpenSSL libraries bundled
+	* release 0.3.1
+
+2006-12-07 Martin Matuska <martin at matuska.org>
+	* added gdbm library
+	* added database interfaces:
+	    - Metakit
+	    - mysqltcl
+	    - pgtcl
+	    - tgdbm
+	* XOTcl now includes actiweb and uses GDBM
+	* release 0.3
+
+2006-12-05 Martin Matuska <martin at matuska.org>
+	* release 0.2.2
+
+2006-11-29 Martin Matuska <martin at matuska.org>
+	* added package mkZiplib
+
+2006-11-27 Martin Matuska <martin at matuska.org>
+	* TWAPI updated to 1.0.2
+	* XOTcl updated to 1.5.3
+	* release 0.2.1
+
+2006-11-09 Martin Matuska <martin at matuska.org>
+	* added package xotclIDE
+	* ASED changes:
+	    - ASED now depends on BWidget and tcllib
+	    - reduced size by dependencies
+	    - added direct shortcut to tkcon	    
+	* various small bugfixes
+        * release 0.2
+
+2006-11-03 Martin Matuska <martin at matuska.org>
+	* initial release 0.1
