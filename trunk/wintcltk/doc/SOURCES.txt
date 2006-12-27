@@ -76,4 +76,4 @@ ASED:
 http://www.mms-forum.de/ased/ased3.0b16.zip
 
 XOTclIDE:
-http://www.xdobry.de/xotclIDE/xotclIDE-0.80-0.tar.gz
+http://www.xdobry.de/xotclIDE/xotclIDE-0.81-0.tar.gz

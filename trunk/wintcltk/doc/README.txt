@@ -26,7 +26,7 @@ pgtcl	 1.5.3
 mkZiplib 1.0
 TWAPI	 1.0.2
 ASED	 3.0.b16
-XOTclIDE 0.80
+XOTclIDE 0.81
 
 The binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped.
