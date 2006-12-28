@@ -10,7 +10,7 @@
 ;General
 
 !ifndef VERSION
-	!define VERSION "0.3.1"
+	!define VERSION "0.x-dev"
 !endif
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
