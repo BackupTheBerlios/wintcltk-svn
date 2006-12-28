@@ -1,0 +1,98 @@
+diff -bur xotcl-1.5.3.orig/library/store/XOTclGdbm/Makefile.in xotcl-1.5.3/library/store/XOTclGdbm/Makefile.in
+--- xotcl-1.5.3.orig/library/store/XOTclGdbm/Makefile.in	Wed Dec  6 13:20:42 2006
++++ xotcl-1.5.3/library/store/XOTclGdbm/Makefile.in	Wed Dec  6 13:26:26 2006
+@@ -200,10 +200,12 @@
+ install-libraries: libraries
+ 	@mkdir -p $(DESTDIR)$(includedir)
+ 	@echo "Installing header files in $(DESTDIR)$(includedir)"
+-	@for i in $(PKG_HEADERS) ; do \
++	@if test -n "$(PKG_HEADERS)" ; then \
++	  for i in "$(PKG_HEADERS)" ; do \
+ 	    echo "Installing $(srcdir)/$$i" ; \
+ 	    $(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(includedir) ; \
+-	done;
++	  done; \
++	fi
+ 
+ #========================================================================
+ # Install documentation.  Unix manpages should go in the $(mandir)
+diff -bur xotcl-1.5.3.orig/library/store/XOTclSdbm/Makefile.in xotcl-1.5.3/library/store/XOTclSdbm/Makefile.in
+--- xotcl-1.5.3.orig/library/store/XOTclSdbm/Makefile.in	Wed Dec  6 13:20:42 2006
++++ xotcl-1.5.3/library/store/XOTclSdbm/Makefile.in	Wed Dec  6 13:25:35 2006
+@@ -200,10 +200,12 @@
+ install-libraries: libraries
+ 	@mkdir -p $(DESTDIR)$(includedir)
+ 	@echo "Installing header files in $(DESTDIR)$(includedir)"
+-	@for i in $(PKG_HEADERS) ; do \
++	@if test -n "$(PKG_HEADERS)" ; then \
++	  for i in "$(PKG_HEADERS)" ; do \
+ 	    echo "Installing $(srcdir)/$$i" ; \
+ 	    $(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(includedir) ; \
+-	done;
++	  done; \
++	fi
+ 
+ #========================================================================
+ # Install documentation.  Unix manpages should go in the $(mandir)
+--- xotcl-1.5.3.orig/library/xml/TclExpat-1.1/configure.in	Wed Dec  6 13:20:42 2006
++++ xotcl-1.5.3/library/xml/TclExpat-1.1/configure.in	Wed Dec  6 14:01:25 2006
+@@ -90,7 +90,12 @@
+ # and PKG_TCL_SOURCES.
+ #-----------------------------------------------------------------------
+ 
+-TEA_ADD_SOURCES([xmltok.c unixfilemap.c xmlrole.c xmlwf.c codepage.c xmlparse.c hashtable.c tclexpat.c])
++if test "${TEA_PLATFORM}" = "windows" ; then
++    TEA_ADD_SOURCES([xmltok.c win32filemap.c xmlrole.c xmlwf.c codepage.c xmlparse.c hashtable.c tclexpat.c])
++else
++    TEA_ADD_SOURCES([xmltok.c unixfilemap.c xmlrole.c xmlwf.c codepage.c xmlparse.c hashtable.c tclexpat.c])
++fi
++
+ TEA_ADD_HEADERS([])
+ TEA_ADD_INCLUDES([-I${with_xotcl}/generic ${XOTCL_BUILD_INCLUDE_SPEC}])
+ TEA_ADD_LIBS([$XOTCL_BUILD_STUB_LIB_SPEC])
+--- xotcl-1.5.3.orig/library/xml/TclExpat-1.1/Makefile.in	Wed Dec  6 13:20:42 2006
++++ xotcl-1.5.3/library/xml/TclExpat-1.1/Makefile.in	Wed Dec  6 14:06:04 2006
+@@ -200,10 +200,12 @@
+ install-libraries: libraries
+ 	@mkdir -p $(DESTDIR)$(includedir)
+ 	@echo "Installing header files in $(DESTDIR)$(includedir)"
+-	@for i in $(PKG_HEADERS) ; do \
++	@if test -n "$(PKG_HEADERS)" ; then \
++	for i in "$(PKG_HEADERS)" ; do \
+ 	    echo "Installing $(srcdir)/$$i" ; \
+ 	    $(INSTALL_DATA) $(srcdir)/$$i $(DESTDIR)$(includedir) ; \
+-	done;
++	done; \
++	fi
+ 
+ #========================================================================
+ # Install documentation.  Unix manpages should go in the $(mandir)
+--- xotcl-1.5.3.orig/configure.in	Wed Dec  6 13:20:41 2006
++++ xotcl-1.5.3/configure.in	Wed Dec  6 14:21:25 2006
+@@ -361,6 +361,8 @@
+ # XOTcl specific configs
+ #
+ 
++if test "${TEA_PLATFORM}" != "windows" ; then
++
+ XOTCL_BUILD_LIB_SPEC="-L`pwd` -lxotcl${PACKAGE_VERSION}"
+ XOTCL_LIB_SPEC="-L${pkglibdir} -lxotcl${PACKAGE_VERSION}"
+ 
+@@ -377,6 +379,17 @@
+ 	XOTCL_STUB_LIB_SPEC="-L${pkglibdir} -lxotclstub${PACKAGE_VERSION}"
+ 	AC_DEFINE(COMPILE_XOTCL_STUBS)
+ fi 
++
++else
++
++XOTCL_BUILD_LIB_SPEC="`pwd`/${PKG_LIB_FILE}"
++XOTCL_LIB_SPEC="${pkglibdir}/${PKG_LIB_FILE}"
++XOTCL_BUILD_STUB_LIB_PATH="`pwd`/${PKG_STUB_LIB_FILE}"
++XOTCL_STUB_LIB_PATH="${pkglibdir}/${PKG_STUB_LIB_FILE}"
++XOTCL_BUILD_STUB_LIB_SPEC="`pwd`/${PKG_STUB_LIB_FILE}"
++XOTCL_STUB_LIB_SPEC="${pkglibdir}/${PKG_STUB_LIB_FILE}"
++
++fi
+ 
+ AC_SUBST(SHARED_LIB_SUFFIX)
+ AC_SUBST(UNSHARED_LIB_SUFFIX)
