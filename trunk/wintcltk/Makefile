@@ -9,8 +9,8 @@ WINTCLTK_VERSION=0.3.2
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
-MAKENSIS?=${PROGRAMFILES}/NSIS/makensis.exe
-ZIP?=$(shell which zip)
+MAKENSIS?="${PROGRAMFILES}/NSIS/makensis.exe"
+ZIP?="$(shell which zip)"
 
 all: installer 
 build:
@@ -54,6 +54,6 @@ wintcltk-${WINTCLTK_VERSION}-src.tar.gz: wintcltk-${WINTCLTK_VERSION}
 	@tar cz --exclude CVS -f wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}
 
 wintcltk-${WINTCLTK_VERSION}-src.zip: wintcltk-${WINTCLTK_VERSION}
-	@[ -x "${ZIP}" ] || ( echo "You require zip to create the source release in zip format. See SOURCES.txt for more information."; exit 1 ) 
+	@[ -x "${ZIP}" ] || ( echo "You require zip to create the source release in zip format. See BUILD-MinGW.txt for more information."; exit 1 ) 
 	@zip -r wintcltk-${WINTCLTK_VERSION}-src.zip wintcltk-${WINTCLTK_VERSION} -x '*/CVS/*' > /dev/null 2>&1
 
