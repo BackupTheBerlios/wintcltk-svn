@@ -70,7 +70,7 @@ mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
 
 TWAPI:
-http://prdownloads.sourceforge.net/twapi/twapi-1.0.2.zip
+http://prdownloads.sourceforge.net/twapi/twapi-1.1.5.zip
 
 ASED:
 http://www.mms-forum.de/ased/ased3.0b16.zip

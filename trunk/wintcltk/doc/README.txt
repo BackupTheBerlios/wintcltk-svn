@@ -24,7 +24,7 @@ Metakit  2.4.9.6
 mysqltcl 3.02
 pgtcl	 1.5.3
 mkZiplib 1.0
-TWAPI	 1.0.2
+TWAPI	 1.1.5
 ASED	 3.0.b16
 XOTclIDE 0.81
 
