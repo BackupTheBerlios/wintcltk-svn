@@ -15,6 +15,16 @@ URL: http://prdownloads.sf.net/mingw/MSYS-1.0.10.exe
 MinGW GCC, recommended from package version 5.1.3:
 URL: http://prdownloads.sourceforge.net/mingw/MinGW-5.1.3.exe
 
+Perl (required for OpenSSL):
+- all perl distribution for win32 should work
+- perl.exe has to be in PATH
+
+- ActivePerl
+  URL: http://www.activestate.com/Products/ActivePerl
+
+- VanillaPerl
+  URL: http://vanillaperl.com/files/vanilla-perl-5.8.8-build-7.exe
+
 -------------------------------------------------------------
 To compile the WinTclTk installer, you require:
 -------------------------------------------------------------

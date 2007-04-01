@@ -40,11 +40,13 @@ GNU_MIRROR?=ftp.gnu.org/pub/gnu
 WGET?=$(shell which wget)
 UNZIP?=$(shell which unzip)
 ZLIB?=$(shell which zlib1.dll)
+PERL?=$(shell which perl)
 CURDIR=$(shell pwd)
 PREFIX=${CURDIR}/../build
 
 MESSAGE_WGET="You require wget to auto-download the sources. See SOURCES.txt for more information."
 MESSAGE_UNZIP="You require unzip to extract this source. See SOURCES.txt for more information."
+MESSAGE_OPENSSL_PERL="You require perl to configure OpenSSL. See BUILD-MinGW.txt for more information."
 
 all: install
 install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
@@ -211,7 +213,8 @@ openssl-${OPENSSL_VERSION}:
 
 configure-openssl: extract-openssl openssl-${OPENSSL_VERSION}/configure.done openssl-${OPENSSL_VERSION}/include/openssl/crypto.h
 openssl-${OPENSSL_VERSION}/configure.done:
-	@cd openssl-${OPENSSL_VERSION} && Configure --prefix=${PREFIX} mingw shared && touch configure.done 
+	@[ -x "${PERL}" ] || ( echo "$(MESSAGE_OPENSSL_PERL)"; exit 1 ) 
+	@cd openssl-${OPENSSL_VERSION} && Configure --prefix=${PREFIX} mingw shared threads && touch configure.done 
 openssl-${OPENSSL_VERSION}/include/openssl/crypto.h:
 	@cd openssl-${OPENSSL_VERSION} ; \
 		cp crypto/*.h ssl/*.h *.h include/openssl/ ;\
