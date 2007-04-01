@@ -1,7 +1,6 @@
-diff -Nbur mkZiplib1.0.orig/Makefile mkZiplib1.0/Makefile
---- mkZiplib1.0.orig/Makefile	Thu Jan  1 00:00:00 1970
-+++ mkZiplib1.0/Makefile	Wed Nov 29 10:19:21 2006
-@@ -0,0 +1,30 @@
+--- Makefile.orig	Sun Apr  1 22:53:24 2007
++++ Makefile	Sun Apr  1 22:56:46 2007
+@@ -0,0 +1,31 @@
 +#!/bin/sh
 +#
 +# Mkziplib MinGW gcc Makefile 
@@ -10,7 +9,8 @@ diff -Nbur mkZiplib1.0.orig/Makefile mkZiplib1.0/Makefile
 +MKZIPLIB_SHORT=10
 +CURDIR=$(shell pwd)
 +PREFIX?=${CURDIR}/../../build
-+ZLIB=$(shell which zlib1.dll)
++LIBS?=$(shell which zlib1.dll)
++CFLAGS?=${CFLAGS}
 +
 +all: build
 +
@@ -20,15 +20,15 @@ diff -Nbur mkZiplib1.0.orig/Makefile mkZiplib1.0/Makefile
 +	strip mkZiplib${MKZIPLIB_SHORT}.dll
 +
 +mkZiplib${MKZIPLIB_SHORT}.dll: mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o
-+	gcc -shared -o mkZiplib${MKZIPLIB_SHORT}.dll mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o ${PREFIX}/bin/tcl84.dll ${ZLIB}
++	gcc ${CFLAGS} -shared -o mkZiplib${MKZIPLIB_SHORT}.dll mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o ${PREFIX}/bin/tcl84.dll ${LDFLAGS} ${LIBS}
 +
 +mkZiplib${MKZIPLIB_SHORT}.o:
-+	gcc -I${PREFIX}/include -c -o mkZiplib${MKZIPLIB_SHORT}.o mkZiplib${MKZIPLIB_SHORT}.c
++	gcc ${CFLAGS} -I${PREFIX}/include -c -o mkZiplib${MKZIPLIB_SHORT}.o mkZiplib${MKZIPLIB_SHORT}.c
 +unzip.o:
-+	gcc -c -o unzip.o unzip.c
++	gcc ${CFLAGS} -c -o unzip.o unzip.c
 +
 +zip.o:
-+	gcc -c -o zip.o zip.c
++	gcc ${CFLAGS} -c -o zip.o zip.c
 +
 +clean:
 +	rm -f *.o *.dll

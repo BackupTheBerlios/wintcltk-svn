@@ -25,11 +25,13 @@
 !define TGDBM_VERSION "0.5"
 !define METAKIT_VERSION "2.4.9.6"
 !define MYSQLTCL_VERSION "3.02"
-!define PGTCL_VERSION "1.5.3"
+!define PGTCL_VERSION "1.6.0"
 !define TLS_VERSION "1.5.0"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
+!define ZLIB_VERSION "1.2.3"
+!define POSTGRESQL_VERSION "8.2.3"
 
 !define XOTCL_LIBVER "153"
 !define TKLIB_SHORTVER "0.4"
@@ -57,7 +59,7 @@ InstallDirRegKey HKLM "Software\WinTclTk" "Install_Dir"
 
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the WinTclTk ${VERSION} Setup Wizard"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\nTgdbm 0.5 (GDBM ${GDBM_VERSION})\r\ntls ${TLS_VERSION} (OpenSSL ${OPENSSL_VERSION})\r\ntcllib ${TCLLIB_VERSION}, tklib ${TKLIB_VERSION}, BWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION}, TWAPI ${TWAPI_VERSION}\r\nMetaKit ${METAKIT_VERSION}, mysqltcl ${MYSQLTCL_VERSION}, Pgtcl ${PGTCL_VERSION}\r\nXOTclIDE ${XOTCLIDE_VERSION}, ASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\nTgdbm 0.5 (GDBM ${GDBM_VERSION})\r\ntls ${TLS_VERSION} (OpenSSL ${OPENSSL_VERSION})\r\ntcllib ${TCLLIB_VERSION}, tklib ${TKLIB_VERSION}, BWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION} (zlib ${ZLIB_VERSION}), TWAPI ${TWAPI_VERSION}\r\nMetaKit ${METAKIT_VERSION}, mysqltcl ${MYSQLTCL_VERSION}, Pgtcl ${PGTCL_VERSION} (libpq ${POSTGRESQL_VERSION})\r\nXOTclIDE ${XOTCLIDE_VERSION}, ASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
@@ -103,6 +105,7 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   SetOutPath $INSTDIR\doc\licenses
   File "..\doc\licenses\TclTk-license.txt"
   File "..\doc\licenses\GPL.txt"
+  File "..\doc\licenses\LGPL.txt"
   SetOutPath $INSTDIR\bin
   File "..\build\bin\tcl84.dll"
   File "..\build\bin\tclpip84.dll"
@@ -393,7 +396,7 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   CreateShortCut "$SMPROGRAMS\WinTclTk\Docs.lnk" "$INSTDIR\doc" "" "$INSTDIR\doc" 0
 SectionEnd
 
-Section "GDBM ${GDBM_VERSION}" gdbm
+Section "-GDBM ${GDBM_VERSION}" gdbm
   SectionIn 1 2 RO
   SetOutPath $INSTDIR\bin
   File "..\build\bin\gdbm.dll"
@@ -405,6 +408,28 @@ Section "GDBM ${GDBM_VERSION}" gdbm
   File "..\build\lib\libgdbm.a"
   SetOutPath $INSTDIR\doc\licenses
   CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+SectionEnd
+
+Section "-zlib ${ZLIB_VERSION}" zlib
+  SectionIn 1 2 RO
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\zlib1.dll"
+  SetOutPath $INSTDIR\include
+  File "..\build\include\zconf.h"
+  File "..\build\include\zlib.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libz.a"
+  SetOutPath $INSTDIR\doc\licenses
+  File "..\doc\licenses\zlib-license.txt"
+SectionEnd
+
+Section "-OpenSSL ${OPENSSL_VERSION}" openssl
+  SectionIn 1 2 RO
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\ssleay32-0.9.8.dll"
+  File "..\build\bin\cryptoeay32-0.9.8.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
 SectionEnd
 
 Section "XOTcl ${XOTCL_VERSION}" xotcl
@@ -649,9 +674,6 @@ SectionEnd
 
 Section "tls ${TLS_VERSION}" tls
   SectionIn 1
-  SetOutPath $INSTDIR\bin
-  File "..\build\bin\ssleay32-0.9.8.dll"
-  File "..\build\bin\cryptoeay32-0.9.8.dll"
   SetOutPath $INSTDIR\lib\tls${TLS_VERSION}
   File "..\build\lib\tls${TLS_VERSION}\tls15.dll"
   File "..\build\lib\tls${TLS_VERSION}\pkgIndex.tcl"
@@ -662,8 +684,6 @@ Section "tls ${TLS_VERSION}" tls
   CreateShortCut "$INSTDIR\doc\Tls Documentation.lnk" "$INSTDIR\doc\packages\tls\index.html" "" "$INSTDIR\doc\packages\tls\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
   File /oname=tls-license.txt "..\build\lib\tls${TLS_VERSION}\license.terms"
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
 SectionEnd
 
 Section "Tcllib ${TCLLIB_VERSION}" tcllib
@@ -1479,7 +1499,7 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
   SetOutPath $INSTDIR\doc\packages\twapi
   CreateShortCut "$INSTDIR\doc\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\twapi\twapi.chm" "" "$INSTDIR\doc\packages\twapi\twapi.chm" 0
   SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
-  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}LICENSE" 0
+  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
@@ -1498,9 +1518,11 @@ SectionEnd
 
 Section "pgtcl ${PGTCL_VERSION}" pgtcl
   Sectionin 1
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\libpq.dll"
+  File "..\build\bin\pthreadGC2.dll"
   SetOutPath $INSTDIR\lib\pgtcl${PGTCL_VERSION}
-  File "..\build\lib\pgtcl${PGTCL_VERSION}\blibpq.dll"
-  File "..\build\lib\pgtcl${PGTCL_VERSION}\libpgtcl.dll"
+  File "..\build\lib\pgtcl${PGTCL_VERSION}\pgtcl.dll"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
   SetOutPath $INSTDIR\doc\packages\pgtcl
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\index.html"
@@ -1534,11 +1556,15 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-parameter-status.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-quote.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-result.html"
+  File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-result-callback.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-select.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery.html"
+  File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-params.html"
+  File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-prepared.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-transaction-status.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pg-unescape-bytea.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-async.html"
+  File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-asyncevent.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-cnq-execute.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-copy.html"
   File "..\build\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-dblist.html"
@@ -1568,6 +1594,8 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
   SetOutPath $INSTDIR\doc
   CreateShortCut "$INSTDIR\doc\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\pgtcl\index.html" "" "$INSTDIR\doc\packages\pgtcl\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
+  File /oname=PostgreSQL-license.txt "..\build\lib\COPYRIGHT-PostgreSQL"
   File /oname=pgtcl-license.txt "..\build\lib\pgtcl${PGTCL_VERSION}\COPYRIGHT"
 SectionEnd
 
@@ -3465,12 +3493,15 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\BWidget-license.lnk"
   Delete "$INSTDIR\doc\licenses\GDBM-license.lnk"
   Delete "$INSTDIR\doc\licenses\GPL.txt"
+  Delete "$INSTDIR\doc\licenses\LGPL.txt"
   Delete "$INSTDIR\doc\licenses\ased-license.lnk"
   Delete "$INSTDIR\doc\licenses\mkZiplib-license.txt"
   Delete "$INSTDIR\doc\licenses\mysqltcl-license.lnk"
   Delete "$INSTDIR\doc\licenses\Metakit-license.txt"
   Delete "$INSTDIR\doc\licenses\OpenSSL-license.txt"
+  Delete "$INSTDIR\doc\licenses\PostgreSQL-license.txt"
   Delete "$INSTDIR\doc\licenses\pgtcl-license.txt"
+  Delete "$INSTDIR\doc\licenses\pthreads-license"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
@@ -3478,6 +3509,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
   Delete "$INSTDIR\doc\licenses\XOTcl-license"
   Delete "$INSTDIR\doc\licenses\XOTclIDE-license"
+  Delete "$INSTDIR\doc\licenses\zlib-license.txt"
   Delete "$INSTDIR\doc\Metakit Documentation.lnk"
   Delete "$INSTDIR\doc\mysqltcl Documentation.lnk"
   Delete "$INSTDIR\doc\mkZiplib Documentation.lnk"
@@ -3554,11 +3586,15 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-parameter-status.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-quote.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-result.html"
+  Delete "$INSTDIR\doc\packages\pgtcl\pg-result-callback.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-select.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery.html"
+  Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery-params.html"
+  Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery-prepared.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-transaction-status.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pg-unescape-bytea.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-async.html"
+  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-asyncevent.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-cnq-execute.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-copy.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-dblist.html"
@@ -3742,6 +3778,8 @@ Section "Uninstall"
   Delete "$INSTDIR\include\xotclDecls.h"
   Delete "$INSTDIR\include\xotclInt.h"
   Delete "$INSTDIR\include\xotclIntDecls.h"
+  Delete "$INSTDIR\include\zconf.h"
+  Delete "$INSTDIR\include\zlib.h"
   Delete "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\arrow.tcl"
   Delete "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\bitmap.tcl"
   Delete "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\button.tcl"
@@ -3838,6 +3876,7 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\libtclstub84.a"
   Delete "$INSTDIR\lib\libtk84.a"
   Delete "$INSTDIR\lib\libtkstub84.a"
+  Delete "$INSTDIR\lib\libz.a"
   Delete "$INSTDIR\lib\Mk4tcl\Mk4tcl.dll"
   Delete "$INSTDIR\lib\Mk4tcl\pkgIndex.tcl"
   Delete "$INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib10.dll"
@@ -3845,8 +3884,8 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}\libmySQL.dll"
   Delete "$INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}\libmysqltcl.dll"
   Delete "$INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}\pkgIndex.tcl"
-  Delete "$INSTDIR\lib\pgtcl${PGTCL_VERSION}\blibpq.dll"
-  Delete "$INSTDIR\lib\pgtcl${PGTCL_VERSION}\libpgtcl.dll"
+  Delete "$INSTDIR\bin\libpq.dll"
+  Delete "$INSTDIR\lib\pgtcl${PGTCL_VERSION}\pgtcl.dll"
   Delete "$INSTDIR\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\reg1.1\pkgIndex.tcl"
   Delete "$INSTDIR\lib\reg1.1\tclreg11.dll"
@@ -5026,6 +5065,8 @@ SectionEnd
 
 LangString DESC_tcltk ${LANG_ENGLISH} "Base Tcl/Tk distribution"
 LangString DESC_gdbm ${LANG_ENGLISH} "Database library that uses extensible hashing"
+LangString DESC_zlib ${LANG_ENGLISH} "Zlib compression library"
+LangString DESC_openssl ${LANG_ENGLISH} "OpenSSL libraries"
 LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extension for Tcl"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
@@ -5044,6 +5085,8 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk} $(DESC_tcltk)
   !insertmacro MUI_DESCRIPTION_TEXT ${gdbm} $(DESC_gdbm)
+  !insertmacro MUI_DESCRIPTION_TEXT ${zlib} $(DESC_zlib)
+  !insertmacro MUI_DESCRIPTION_TEXT ${openssl} $(DESC_openssl)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)

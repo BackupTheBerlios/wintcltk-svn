@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.3.2
+Version 0.3.3
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
@@ -22,7 +22,7 @@ tls      1.5.0
 Tgdbm	 0.5
 Metakit  2.4.9.6
 mysqltcl 3.02
-pgtcl	 1.5.3
+pgtcl	 1.6.0
 mkZiplib 1.0
 TWAPI	 1.1.5
 ASED	 3.0.b16
@@ -30,7 +30,7 @@ XOTclIDE 0.81
 
 The binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped.
-GDBM 1.8.3 and OpenSSL 0.9.8e are bundled.
+zlib 1.2.3, GDBM 1.8.3 and OpenSSL 0.9.8e are bundled.
 
 The binaries are less efficient than binaries compiled with Microsoft Visual C++.
 The main idea of this package is to provide a (fully) free enhanced Tcl/Tk package

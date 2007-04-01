@@ -17,13 +17,15 @@ MKZIPLIB_VERSION=1.0
 TGDBM_VERSION=0.5
 METAKIT_VERSION=2.4.9.6
 MYSQLTCL_VERSION=3.02
-PGTCL_VERSION=1.5.3
+PGTCL_VERSION=1.6.0
 TLS_VERSION=1.5.0
 
 XOTCL_LIBVER=153
 XOTCLIDE_FILEVER=0.81-0
 TKLIB_SHORT=0.4
-PGTCL_DOCVER=20060909
+PGTCL_DOCVER=20070115
+PGTCL_REL=1229
+PGTCL_DOCREL=1228
 MKZIPLIB_SHORT=10
 TLS_SHORT=1.5
 TLS_LIBVER=15
@@ -33,14 +35,17 @@ GDBM_VERSION=1.8.3
 GDBM_LIVBER=183
 OPENSSL_VERSION=0.9.8e
 OPENSSL_LIBVER=0.9.8
+ZLIB_VERSION=1.2.3
+POSTGRESQL_VERSION=8.2.3
+PTHREADS_VERSION=2-8-0
 
 SOURCEFORGE_MIRROR?=heanet
 GNU_MIRROR?=ftp.gnu.org/pub/gnu
+POSTGRESQL_MIRROR?=ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.2.3/
 
 WGET?=$(shell which wget)
 WGET_FLAGS="--passive-ftp"
 UNZIP?=$(shell which unzip)
-ZLIB?=$(shell which zlib1.dll)
 PERL?=$(shell which perl)
 CURDIR=$(shell pwd)
 PREFIX=${CURDIR}/../build
@@ -51,16 +56,16 @@ MESSAGE_OPENSSL_PERL="You require perl to configure OpenSSL. See BUILD-MinGW.txt
 
 all: install
 install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-twapi distclean-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip *.htm *.html
 
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tcl${TCLTK_VERSION}-src.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tcl${TCLTK_VERSION}-src.tar.gz"
 
 extract-tcl: fetch-tcl tcl${TCLTK_VERSION} 
 tcl${TCLTK_VERSION}:
@@ -82,7 +87,7 @@ ${PREFIX}/lib/tclConfig.sh:
 fetch-tk: tk${TCLTK_VERSION}-src.tar.gz 
 tk${TCLTK_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tk${TCLTK_VERSION}-src.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tk${TCLTK_VERSION}-src.tar.gz"
 
 extract-tk: fetch-tk tk${TCLTK_VERSION} 
 tk${TCLTK_VERSION}:
@@ -105,7 +110,7 @@ ${PREFIX}/lib/tkConfig.sh:
 fetch-gdbm: gdbm-${GDBM_VERSION}.tar.gz 
 gdbm-${GDBM_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "ftp://${GNU_MIRROR}/gdbm/gdbm-${GDBM_VERSION}.tar.gz"
+	@${WGET} ${WGET_FLAGS} "ftp://${GNU_MIRROR}/gdbm/gdbm-${GDBM_VERSION}.tar.gz"
 
 extract-gdbm: fetch-gdbm gdbm-${GDBM_VERSION}/win32
 gdbm-${GDBM_VERSION}/win32:
@@ -126,7 +131,7 @@ ${PREFIX}/bin/gdbm.dll:
 fetch-tgdbm: tgdbm${TGDBM_VERSION}.zip 
 tgdbm${TGDBM_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
+	@${WGET} ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
 extract-tgdbm: fetch-tgdbm tgdbm${TGDBM_VERSION}
 tgdbm${TGDBM_VERSION}:
@@ -150,7 +155,7 @@ ${PREFIX}/lib/tgdbm$(TGDBM_VERSION):
 fetch-xotcl: xotcl-${XOTCL_VERSION}.tar.gz 
 xotcl-${XOTCL_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://media.wu-wien.ac.at/download/xotcl-${XOTCL_VERSION}.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://media.wu-wien.ac.at/download/xotcl-${XOTCL_VERSION}.tar.gz"
 
 extract-xotcl: fetch-xotcl xotcl-${XOTCL_VERSION} 
 xotcl-${XOTCL_VERSION}:
@@ -177,10 +182,10 @@ ${PREFIX}/lib/xotclConfig.sh:
 fetch-metakit: metakit-${METAKIT_VERSION}.tar.gz mk4tcl.html 
 metakit-${METAKIT_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://www.equi4.com/pub/mk/metakit-${METAKIT_VERSION}.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://www.equi4.com/pub/mk/metakit-${METAKIT_VERSION}.tar.gz"
 mk4tcl.html:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} -O mk4tcl.html "http://www.equi4.com/metakit/tcl.html"
+	@${WGET} ${WGET_FLAGS} -O mk4tcl.html "http://www.equi4.com/metakit/tcl.html"
 
 extract-metakit: fetch-metakit metakit-${METAKIT_VERSION}
 metakit-${METAKIT_VERSION}:
@@ -204,7 +209,7 @@ ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll:
 fetch-openssl: openssl-${OPENSSL_VERSION}.tar.gz 
 openssl-${OPENSSL_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
 
 extract-openssl: fetch-openssl openssl-${OPENSSL_VERSION}
 openssl-${OPENSSL_VERSION}:
@@ -237,7 +242,7 @@ ${PREFIX}/bin/ssleay32.dll:
 fetch-tls: tls${TLS_VERSION}-src.tar.gz 
 tls${TLS_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tls/tls${TLS_VERSION}-src.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tls/tls${TLS_VERSION}-src.tar.gz"
 
 extract-tls: fetch-tls tls${TLS_SHORT}
 tls${TLS_SHORT}:
@@ -357,32 +362,117 @@ ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}
 	@cp -Rp mysqltcl.html mysqltcl-${MYSQLTCL_VERSION}/* ${PREFIX}/lib/mysqltcl${MYSQLTCL_VERSION}
 
-fetch-pgtcl: pgtcl${PGTCL_VERSION}-win32.zip pgtcldocs-${PGTCL_DOCVER}.zip 
-pgtcl${PGTCL_VERSION}-win32.zip:
+fetch-zlib: zlib-${ZLIB_VERSION}.tar.bz2
+zlib-${ZLIB_VERSION}.tar.bz2:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/libpng/zlib-${ZLIB_VERSION}.tar.bz2"
+
+extract-zlib: fetch-zlib zlib-${ZLIB_VERSION}
+zlib-${ZLIB_VERSION}:
+	@md5sum -c md5sums/zlib-${ZLIB_VERSION}.tar.bz2.md5 || exit 1
+	@tar xfj zlib-${ZLIB_VERSION}.tar.bz2
+	
+configure-zlib: extract-zlib
+build-zlib: configure-zlib zlib-${ZLIB_VERSION}/zlib1.dll
+zlib-${ZLIB_VERSION}/zlib1.dll:
+	@cd zlib-${ZLIB_VERSION} && make -f win32/Makefile.gcc
+
+install-zlib: build-zlib ${PREFIX}/bin/zlib1.dll
+${PREFIX}/bin/zlib1.dll:
+	@cp zlib-${ZLIB_VERSION}/zlib.h zlib-${ZLIB_VERSION}/zconf.h ${PREFIX}/include
+	@cp zlib-${ZLIB_VERSION}/libz.a ${PREFIX}/lib
+	@cp zlib-${ZLIB_VERSION}/zlib1.dll ${PREFIX}/bin
+				
+fetch-pthreads: pthreads-w32-${PTHREADS_VERSION}-release.tar.gz
+pthreads-w32-${PTHREADS_VERSION}-release.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@${WGET} ${WGET_FLAGS} "ftp://sourceware.org/pub/pthreads-win32/pthreads-w32-${PTHREADS_VERSION}-release.tar.gz"
+
+extract-pthreads: fetch-pthreads pthreads-w32-${PTHREADS_VERSION}-release
+pthreads-w32-${PTHREADS_VERSION}-release:
+	@md5sum -c md5sums/pthreads-w32-${PTHREADS_VERSION}-release.tar.gz.md5 || exit 1
+	@tar xfz pthreads-w32-${PTHREADS_VERSION}-release.tar.gz
+
+configure-pthreads: extract-pthreads
+build-pthreads: configure-pthreads pthreads-w32-${PTHREADS_VERSION}-release/pthreadGC2.dll
+pthreads-w32-${PTHREADS_VERSION}-release/pthreadGC2.dll:
+	@cd pthreads-w32-${PTHREADS_VERSION}-release && make clean GC
+
+install-pthreads: build-pthreads ${PREFIX}/bin/pthreadGC2.dll
+${PREFIX}/bin/pthreadGC2.dll:
+	@cd pthreads-w32-${PTHREADS_VERSION}-release && (\
+		cp pthreadGC2.dll ${PREFIX}/bin/pthreadGC2.dll; \
+		cp libpthreadGC2.a ${PREFIX}/lib/libpthreadGC2.a; \
+		cp implement.h need_errno.h pthread.h sched.h semaphore.h ${PREFIX}/include ) 
+
+fetch-postgresql: postgresql-base-${POSTGRESQL_VERSION}.tar.bz2 postgresql-test-${POSTGRESQL_VERSION}.tar.bz2
+postgresql-base-${POSTGRESQL_VERSION}.tar.bz2:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@${WGET} "http://pgfoundry.org/frs/download.php/1074/pgtcl1.5.3-win32.zip"
+	@${WGET} ${WGET_FLAGS} "${POSTGRESQL_MIRROR}/postgresql-base-${POSTGRESQL_VERSION}.tar.bz2"
+postgresql-test-${POSTGRESQL_VERSION}.tar.bz2:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@${WGET} ${WGET_FLAGS} "${POSTGRESQL_MIRROR}/postgresql-test-${POSTGRESQL_VERSION}.tar.bz2"
+
+extract-postgresql: fetch-postgresql postgresql-${POSTGRESQL_VERSION}/src/include/sys/time.h 
+postgresql-${POSTGRESQL_VERSION}/src/include/sys/time.h:
+	@md5sum -c md5sums/postgresql-base-${POSTGRESQL_VERSION}.tar.bz2.md5 || exit 1
+	@md5sum -c md5sums/postgresql-test-${POSTGRESQL_VERSION}.tar.bz2.md5 || exit 1
+	@tar xfj postgresql-base-${POSTGRESQL_VERSION}.tar.bz2 
+	@tar xfj postgresql-test-${POSTGRESQL_VERSION}.tar.bz2
+	@cd postgresql-${POSTGRESQL_VERSION} && patch -p0 < ../patches/postgresql.patch
+	@mkdir postgresql-${POSTGRESQL_VERSION}/src/include/sys && \
+	 touch postgresql-${POSTGRESQL_VERSION}/src/include/sys/time.h
+
+configure-postgresql: extract-postgresql install-openssl install-zlib install-pthreads postgresql-${POSTGRESQL_VERSION}/GNUmakefile 
+postgresql-${POSTGRESQL_VERSION}/GNUmakefile:
+	@cd postgresql-${POSTGRESQL_VERSION} && ./configure --prefix=${PREFIX} --with-openssl \
+		--enable-thread-safety LIBS="-L${PREFIX}/lib" CFLAGS="-I${PREFIX}/include" 
+
+build-postgresql: configure-postgresql postgresql-${POSTGRESQL_VERSION}/src/interfaces/libpq/libpq.dll
+postgresql-${POSTGRESQL_VERSION}/src/interfaces/libpq/libpq.dll:
+	@cd postgresql-${POSTGRESQL_VERSION} && make LDFLAGS="-L${PREFIX}/lib"
+
+install-postgresql: build-postgresql ${PREFIX}/bin/libpq.dll
+${PREFIX}/bin/libpq.dll:
+	@cd postgresql-${POSTGRESQL_VERSION}/src/include && make install
+	@cd postgresql-${POSTGRESQL_VERSION}/src/interfaces/libpq && make install
+	@cp postgresql-${POSTGRESQL_VERSION}/COPYRIGHT ${PREFIX}/lib/COPYRIGHT-PostgreSQL
+	@mv -f ${PREFIX}/lib/libpq.dll ${PREFIX}/bin/libpq.dll
+	@strip ${PREFIX}/bin/libpq.dll
+				
+fetch-pgtcl: pgtcl${PGTCL_VERSION}.tar.gz pgtcldocs-${PGTCL_DOCVER}.zip 
+pgtcl${PGTCL_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@${WGET} "http://pgfoundry.org/frs/download.php/${PGTCL_REL}/pgtcl${PGTCL_VERSION}.tar.gz"
 pgtcldocs-${PGTCL_DOCVER}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
-	@${WGET} "http://pgfoundry.org/frs/download.php/1073/pgtcldocs-20060909.zip"
+	@${WGET} "http://pgfoundry.org/frs/download.php/${PGTCL_DOCREL}/pgtcldocs-${PGTCL_DOCVER}.zip"
 
-extract-pgtcl: fetch-pgtcl pgtcl${PGTCL_VERSION}-win32 pgtcldocs-${PGTCL_DOCVER}
-pgtcl${PGTCL_VERSION}-win32:
-	@md5sum -c md5sums/pgtcl${PGTCL_VERSION}-win32.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
-	@unzip pgtcl${PGTCL_VERSION}-win32.zip
+extract-pgtcl: fetch-pgtcl pgtcl${PGTCL_VERSION} pgtcldocs-${PGTCL_DOCVER}
+pgtcl${PGTCL_VERSION}:
+	@md5sum -c md5sums/pgtcl${PGTCL_VERSION}.tar.gz.md5 || exit 1
+	@tar xfz pgtcl${PGTCL_VERSION}.tar.gz
 pgtcldocs-${PGTCL_DOCVER}:
 	@md5sum -c md5sums/pgtcldocs-${PGTCL_DOCVER}.zip.md5 || exit 1
 	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@unzip pgtcldocs-${PGTCL_DOCVER}.zip
 
-configure-pgtcl: extract-pgtcl
-build-pgtcl: configure-pgtcl
+configure-pgtcl: extract-pgtcl install-postgresql pgtcl${PGTCL_VERSION}/Makefile
+pgtcl${PGTCL_VERSION}/Makefile:
+	@cd pgtcl${PGTCL_VERSION} && ./configure --prefix=${PREFIX} --enable-shared \
+		--with-tcl=${PREFIX}/lib --with-postgres-include=${PREFIX}/include \
+		--with-postgres-lib=${PREFIX}/lib SHARED_LIB_SUFFIX=".dll" \
+		LIBS="-L${PREFIX}/lib -lcrypto.dll -lssl.dll" 
+
+build-pgtcl: configure-pgtcl pgtcl${PGTCL_VERSION}/pgtcl1.6.0.dll
+pgtcl${PGTCL_VERSION}/pgtcl1.6.0.dll:
+	@cd pgtcl${PGTCL_VERSION} && make SHLIB_LD="gcc -shared"
 
 install-pgtcl: build-pgtcl ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/pkgIndex.tcl
 ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/pkgIndex.tcl:
-	@mkdir -p ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs
-	@cp -Rp pgtcl${PGTCL_VERSION}-win32/* ${PREFIX}/lib/pgtcl${PGTCL_VERSION}
-	@cp -Rp pgtcldocs-${PGTCL_DOCVER}/* ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs
+	@cd pgtcl${PGTCL_VERSION} && make install
+	@cp pgtcl${PGTCL_VERSION}/COPYRIGHT ${PREFIX}/lib/pgtcl${PGTCL_VERSION}
+	@mkdir ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs && cp -rf pgtcldocs-${PGTCL_DOCVER}/* ${PREFIX}/lib/pgtcl${PGTCL_VERSION}/docs
 
 fetch-ased: ased${ASED_VERSION}.zip 
 ased${ASED_VERSION}.zip:
@@ -406,10 +496,10 @@ ${PREFIX}/${ASED_DIR}/ased.tcl:
 fetch-xotclide: xotclIDE-${XOTCLIDE_FILEVER}.tar.gz xotclide_doc.tar.gz 
 xotclIDE-${XOTCLIDE_FILEVER}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
 xotclide_doc.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
+	@${WGET} ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
 
 extract-xotclide: fetch-xotclide xotclide-${XOTCLIDE_VERSION} 
 xotclide-${XOTCLIDE_VERSION}:
@@ -428,7 +518,7 @@ ${PREFIX}/lib/xotclIDE:
 fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip
 mkziplib${MKZIPLIB_SHORT}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
+	@${WGET} ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
 
 extract-mkziplib: fetch-mkziplib mkZiplib${MKZIPLIB_VERSION}/Makefile
 mkZiplib${MKZIPLIB_VERSION}/Makefile:
@@ -439,14 +529,13 @@ mkZiplib${MKZIPLIB_VERSION}/Makefile:
 
 configure-mkziplib: extract-mkziplib
 
-build-mkziplib: configure-mkziplib mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll 
+build-mkziplib: configure-mkziplib install-zlib mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll 
 mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll:
-	@cd mkZiplib${MKZIPLIB_VERSION} && make strip
+	@cd mkZiplib${MKZIPLIB_VERSION} && make strip CFLAGS="-I${PREFIX}/include" LIBS="${PREFIX}/bin/zlib1.dll"
 
 install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl
 ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
-	@cp ${ZLIB} ${PREFIX}/bin
 	@cd mkZiplib${MKZIPLIB_VERSION} && cp pkgIndex.tcl mkZiplib${MKZIPLIB_SHORT}.dll ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
 	@cd mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.htm ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib.htm
 
@@ -494,8 +583,19 @@ uninstall-twapi:
 uninstall-mysqltcl:
 	@-cd ${PREFIX}/lib && rm -rf mysqltcl${MYSQLTCL_VERSION}
 
+uninstall-zlib:
+	@-rm -f ${PREFIX}/include/zconf.h ${PREFIX}/include/zlib.h ${PREFIX}/lib/libz.a ${PREFIX}/bin/zlib1.dll
+	
+uninstall-pthreads:
+	@-rm -f ${PREFIX}/bin/pthreadGC2.dll ${PREFIX}/lib/libpthreadGC2.a
+	@-cd ${PREFIX}/include && rm -f implement.h need_errno.h pthread.h sched.h semaphore.h
+
+uninstall-postgresql:
+	@-rm -f ${PREFIX}/bin/libpq.dll ${PREFIX}/lib/libpq.a ${PREFIX}/lib/COPYRIGHT-PostgreSQL
+	@-cd ${PREFIX} && rm -rf postgres_ext.h pg_config.h pg_config_os.h include/postgresql share/postgresql
+ 
 uninstall-pgtcl:
-	@-cd ${PREFIX}/lib && rm -rf pgtcl${PGTCL_VERSION}
+	@-cd ${PREFIX} && rm -rf include/libpgtcl.h lib/pgtcl${PGTCL_VERSION}
 
 uninstall-ased:
 	@-cd ${PREFIX} && rm -rf ${ASED_DIR}
@@ -504,7 +604,7 @@ uninstall-xotclide:
 	@-cd ${PREFIX} && rm -rf lib/xotclIDE
 
 uninstall-mkziplib:
-	@-cd ${PREFIX} && rm -rf bin/zlib1.dll lib/mkZiplib${MKZIPLIB_VERSION}
+	@-cd ${PREFIX} && rm -rf lib/mkZiplib${MKZIPLIB_VERSION}
 
 clean-tcl:
 	@-cd tcl${TCLTK_VERSION}/win && make clean
@@ -581,10 +681,29 @@ clean-mysqltcl:
 distclean-mysqltcl:
 	@-rm -rf mysqltcl-${MYSQLTCL_VERSION}
 
+clean-zlib:
+	@cd zlib-${ZLIB_VERSION} && make -f win32/Makefile.gcc clean
+	
+distclean-zlib:
+	@-rm -rf zlib-${ZLIB_VERSION}
+	
+clean-pthreads:
+	@cd pthreads-w32-${PTHREADS_VERSION}-release && make clean
+
+distclean-pthreads:
+	@-rm -rf pthreads-w32-${PTHREADS_VERSION}-release
+
+clean-postgresql:
+	@cd postgresql-${POSTGRESQL_VERSION} && make clean
+
+distclean-postgresql:
+	@-rm -rf postgresql-${POSTGRESQL_VERSION}
+
 clean-pgtcl:
+	@cd pgtcl${PGTCL_VERSION} && make clean
 
 distclean-pgtcl:
-	@-rm -rf pgtcl${PG_VERSION} pgtcldocs-${PGTCL_DOCVER}
+	@-rm -rf pgtcl${PGTCL_VERSION} pgtcldocs-${PGTCL_DOCVER}
 
 clean-ased:
 

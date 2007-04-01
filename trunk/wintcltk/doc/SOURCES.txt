@@ -63,8 +63,19 @@ http://www.equi4.com/pub/mk/metakit-2.4.9.6.tar.gz
 mysqltcl:
 http://www.xdobry.de/mysqltcl/mysqltcl-3.02.zip
 
+zlib:
+http://prdownloads.sourceforge.net/libpng/zlib-1.2.3.tar.bz2
+
+pthreads:
+ftp://sourceware.org/pub/pthreads-win32/pthreads-w32-2-8-0-release.tar.gz
+
+PostgreSQL:
+ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.2.3/postgresql-base-8.2.3.tar.bz2
+ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.2.3/postgresql-test-8.2.3.tar.bz2
+
 pgtcl:
-http://pgfoundry.org/frs/download.php/1074/pgtcl1.5.3-win32.zip
+http://pgfoundry.org/frs/download.php/1229/pgtcl1.6.0.tar.gz
+http://pgfoundry.org/frs/download.php/1228/pgtcldocs-20070115.zip
 
 mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
