@@ -38,6 +38,7 @@ SOURCEFORGE_MIRROR?=heanet
 GNU_MIRROR?=ftp.gnu.org/pub/gnu
 
 WGET?=$(shell which wget)
+WGET_FLAGS="--passive-ftp"
 UNZIP?=$(shell which unzip)
 ZLIB?=$(shell which zlib1.dll)
 PERL?=$(shell which perl)
@@ -59,7 +60,7 @@ allclean: distclean
 fetch-tcl: tcl${TCLTK_VERSION}-src.tar.gz 
 tcl${TCLTK_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tcl${TCLTK_VERSION}-src.tar.gz"
+	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tcl${TCLTK_VERSION}-src.tar.gz"
 
 extract-tcl: fetch-tcl tcl${TCLTK_VERSION} 
 tcl${TCLTK_VERSION}:
@@ -81,7 +82,7 @@ ${PREFIX}/lib/tclConfig.sh:
 fetch-tk: tk${TCLTK_VERSION}-src.tar.gz 
 tk${TCLTK_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tk${TCLTK_VERSION}-src.tar.gz"
+	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/tk${TCLTK_VERSION}-src.tar.gz"
 
 extract-tk: fetch-tk tk${TCLTK_VERSION} 
 tk${TCLTK_VERSION}:
@@ -104,7 +105,7 @@ ${PREFIX}/lib/tkConfig.sh:
 fetch-gdbm: gdbm-${GDBM_VERSION}.tar.gz 
 gdbm-${GDBM_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "ftp://${GNU_MIRROR}/gdbm/gdbm-${GDBM_VERSION}.tar.gz"
+	@wget ${WGET_FLAGS} "ftp://${GNU_MIRROR}/gdbm/gdbm-${GDBM_VERSION}.tar.gz"
 
 extract-gdbm: fetch-gdbm gdbm-${GDBM_VERSION}/win32
 gdbm-${GDBM_VERSION}/win32:
@@ -125,7 +126,7 @@ ${PREFIX}/bin/gdbm.dll:
 fetch-tgdbm: tgdbm${TGDBM_VERSION}.zip 
 tgdbm${TGDBM_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
+	@wget ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
 extract-tgdbm: fetch-tgdbm tgdbm${TGDBM_VERSION}
 tgdbm${TGDBM_VERSION}:
@@ -149,7 +150,7 @@ ${PREFIX}/lib/tgdbm$(TGDBM_VERSION):
 fetch-xotcl: xotcl-${XOTCL_VERSION}.tar.gz 
 xotcl-${XOTCL_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://media.wu-wien.ac.at/download/xotcl-${XOTCL_VERSION}.tar.gz"
+	@wget ${WGET_FLAGS} "http://media.wu-wien.ac.at/download/xotcl-${XOTCL_VERSION}.tar.gz"
 
 extract-xotcl: fetch-xotcl xotcl-${XOTCL_VERSION} 
 xotcl-${XOTCL_VERSION}:
@@ -176,10 +177,10 @@ ${PREFIX}/lib/xotclConfig.sh:
 fetch-metakit: metakit-${METAKIT_VERSION}.tar.gz mk4tcl.html 
 metakit-${METAKIT_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://www.equi4.com/pub/mk/metakit-${METAKIT_VERSION}.tar.gz"
+	@wget ${WGET_FLAGS} "http://www.equi4.com/pub/mk/metakit-${METAKIT_VERSION}.tar.gz"
 mk4tcl.html:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget -O mk4tcl.html "http://www.equi4.com/metakit/tcl.html"
+	@wget ${WGET_FLAGS} -O mk4tcl.html "http://www.equi4.com/metakit/tcl.html"
 
 extract-metakit: fetch-metakit metakit-${METAKIT_VERSION}
 metakit-${METAKIT_VERSION}:
@@ -203,7 +204,7 @@ ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll:
 fetch-openssl: openssl-${OPENSSL_VERSION}.tar.gz 
 openssl-${OPENSSL_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
+	@wget ${WGET_FLAGS} "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
 
 extract-openssl: fetch-openssl openssl-${OPENSSL_VERSION}
 openssl-${OPENSSL_VERSION}:
@@ -236,7 +237,7 @@ ${PREFIX}/bin/ssleay32.dll:
 fetch-tls: tls${TLS_VERSION}-src.tar.gz 
 tls${TLS_VERSION}-src.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tls/tls${TLS_VERSION}-src.tar.gz"
+	@wget ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tls/tls${TLS_VERSION}-src.tar.gz"
 
 extract-tls: fetch-tls tls${TLS_SHORT}
 tls${TLS_SHORT}:
@@ -405,10 +406,10 @@ ${PREFIX}/${ASED_DIR}/ased.tcl:
 fetch-xotclide: xotclIDE-${XOTCLIDE_FILEVER}.tar.gz xotclide_doc.tar.gz 
 xotclIDE-${XOTCLIDE_FILEVER}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
+	@wget ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
 xotclide_doc.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
-	@wget "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
+	@wget ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
 
 extract-xotclide: fetch-xotclide xotclide-${XOTCLIDE_VERSION} 
 xotclide-${XOTCLIDE_VERSION}:
@@ -427,7 +428,7 @@ ${PREFIX}/lib/xotclIDE:
 fetch-mkziplib: mkziplib${MKZIPLIB_SHORT}.zip
 mkziplib${MKZIPLIB_SHORT}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@wget "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
+	@wget ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
 
 extract-mkziplib: fetch-mkziplib mkZiplib${MKZIPLIB_VERSION}/Makefile
 mkZiplib${MKZIPLIB_VERSION}/Makefile:
