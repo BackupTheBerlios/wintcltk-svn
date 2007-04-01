@@ -29,7 +29,7 @@
 !define TLS_VERSION "1.5.0"
 
 !define GDBM_VERSION "1.8.3"
-!define OPENSSL_VERSION "0.9.8d"
+!define OPENSSL_VERSION "0.9.8e"
 
 !define XOTCL_LIBVER "153"
 !define TKLIB_SHORTVER "0.4"

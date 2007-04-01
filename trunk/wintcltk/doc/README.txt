@@ -30,7 +30,7 @@ XOTclIDE 0.81
 
 The binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped.
-GDBM 1.8.3 and OpenSSL 0.9.8d are bundled.
+GDBM 1.8.3 and OpenSSL 0.9.8e are bundled.
 
 The binaries are less efficient than binaries compiled with Microsoft Visual C++.
 The main idea of this package is to provide a (fully) free enhanced Tcl/Tk package
