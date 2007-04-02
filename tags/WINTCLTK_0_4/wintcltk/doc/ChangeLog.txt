@@ -4,13 +4,14 @@
 # $Id$
 #
 2007-04-02 Martin Matuska <martin at matuska.org>
-	* OpenSSL now uses original MinGW build
 	* Pgtcl updated to 1.6.0
 	  - bundled with MinGW compiled libpq 8.2.3
 	    with support for OpenSSL and POSIX threads
-	* Introduced base and dev options in the installer
+	* OpenSSL now uses original MinGW build
+	* Introduced base and dev options in the installer 
 	  for some packages
 	* Moved installer options into groups
+	* zlib, GDBM and OpenSSL support libraries are now packaged
 	* release 0.4
 
 2007-04-01 Martin Matuska <martin at matuska.org>
