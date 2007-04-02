@@ -217,27 +217,21 @@ openssl-${OPENSSL_VERSION}:
 	@-tar xfz openssl-${OPENSSL_VERSION}.tar.gz >/dev/null 2>&1
 	@cd openssl-${OPENSSL_VERSION} && patch -p0 < ../patches/openssl.patch
 
-configure-openssl: extract-openssl openssl-${OPENSSL_VERSION}/configure.done openssl-${OPENSSL_VERSION}/include/openssl/crypto.h
+configure-openssl: extract-openssl openssl-${OPENSSL_VERSION}/configure.done
 openssl-${OPENSSL_VERSION}/configure.done:
 	@[ -x "${PERL}" ] || ( echo "$(MESSAGE_OPENSSL_PERL)"; exit 1 ) 
 	@cd openssl-${OPENSSL_VERSION} && Configure --prefix=${PREFIX} mingw shared threads && touch configure.done 
-openssl-${OPENSSL_VERSION}/include/openssl/crypto.h:
-	@cd openssl-${OPENSSL_VERSION} ; \
-		cp crypto/*.h ssl/*.h *.h include/openssl/ ;\
-		cp crypto/*/*test.c crypto/sha/sha*t.c ssl/*test.c test/ ;\
-		cp test/dummytest.c test/rc5test.c ;\
-		cp test/dummytest.c test/mdc2test.c ;
 
-build-openssl: configure-openssl openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll 
-openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll:
-	@cd openssl-${OPENSSL_VERSION} && make && strip *.dll
+build-openssl: configure-openssl openssl-${OPENSSL_VERSION}/libeay32.dll 
+openssl-${OPENSSL_VERSION}/libeay32.dll:
+	@cd openssl-${OPENSSL_VERSION} && sh ms/mingw32.sh && strip *.dll
 
-install-openssl: build-openssl ${PREFIX}/bin/ssleay32.dll ${PREFIX}/lib/libssl.dll.a
-${PREFIX}/lib/libssl.dll.a:
-	@cd openssl-${OPENSSL_VERSION} && make install_sw
-${PREFIX}/bin/ssleay32.dll: 
-	@cp openssl-${OPENSSL_VERSION}/ssleay32-${OPENSSL_LIBVER}.dll ${PREFIX}/bin
-	@cp openssl-${OPENSSL_VERSION}/cryptoeay32-${OPENSSL_LIBVER}.dll ${PREFIX}/bin
+install-openssl: build-openssl ${PREFIX}/bin/libeay32.dll
+${PREFIX}/bin/libeay32.dll: 
+	@cd openssl-${OPENSSL_VERSION} && make -f ms/mingw32a.mak install MKDIR="mkdir -p"
+	@cp openssl-${OPENSSL_VERSION}/out/libssl32.a ${PREFIX}/lib/libssl.dll.a
+	@cp openssl-${OPENSSL_VERSION}/out/libeay32.a ${PREFIX}/lib/libcrypto.dll.a
+	@cp openssl-${OPENSSL_VERSION}/libeay32.dll openssl-${OPENSSL_VERSION}/libssl32.dll ${PREFIX}/bin
 
 fetch-tls: tls${TLS_VERSION}-src.tar.gz 
 tls${TLS_VERSION}-src.tar.gz:
@@ -560,7 +554,7 @@ uninstall-tgdbm:
 	@-cd ${PREFIX} && rm -rf lib/tgdbm$(TGDBM_VERSION)
 
 uninstall-openssl:
-	@-cd ${PREFIX} && rm -rf bin/openssl.exe bin/ssleay32-*.dll bin/cryptoeay32-*.dll include/openssl lib/libssl.* lib/libcrypto.* lib/engines
+	@-cd ${PREFIX} && rm -rf bin/openssl.exe bin/libeay32.dll bin/libssl32.dll include/openssl lib/libssl*.a lib/libcrypto*.a 
 
 uninstall-tls:
 	@-cd ${PREFIX} && rm -rf lib/tls${TLS_VERSION}
