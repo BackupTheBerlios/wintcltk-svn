@@ -88,14 +88,17 @@ Page custom installOptions readOptions
  
 !insertmacro MUI_LANGUAGE "English"
 
+InstType "Standard"
 InstType "Full"
 InstType "Minimal"
 
 ;--------------------------------
 ; Sections
-Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
+SectionGroup "Tcl/Tk ${TCLTK_VERSION}" tcltk
 
-  SectionIn 1 2 RO
+Section "!Tcl/Tk base" tcltk-base
+
+  SectionIn 1 2 3 RO
 
   SetOutPath $INSTDIR\doc
   File "..\doc\ChangeLog.txt"
@@ -112,30 +115,6 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   File "..\build\bin\tclsh84.exe"
   File "..\build\bin\tk84.dll"
   File "..\build\bin\wish84.exe"
-  SetOutPath $INSTDIR\include
-  File "..\build\include\tcl.h"
-  File "..\build\include\tclDecls.h"
-  File "..\build\include\tclPlatDecls.h"
-  File "..\build\include\tk.h"
-  File "..\build\include\tkDecls.h"
-  File "..\build\include\tkIntXlibDecls.h"
-  File "..\build\include\tkPlatDecls.h"
-  SetOutPath $INSTDIR\include\X11
-  File "..\build\include\X11\cursorfont.h"
-  File "..\build\include\X11\keysym.h"
-  File "..\build\include\X11\keysymdef.h"
-  File "..\build\include\X11\X.h"
-  File "..\build\include\X11\Xatom.h"
-  File "..\build\include\X11\Xfuncproto.h"
-  File "..\build\include\X11\Xlib.h"
-  File "..\build\include\X11\Xutil.h"
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\libtcl84.a"
-  File "..\build\lib\libtclstub84.a"
-  File "..\build\lib\libtk84.a"
-  File "..\build\lib\libtkstub84.a"
-  File "..\build\lib\tclConfig.sh"
-  File "..\build\lib\tkConfig.sh"
   SetOutPath $INSTDIR\lib\dde1.2
   File "..\build\lib\dde1.2\pkgIndex.tcl"
   File "..\build\lib\dde1.2\tcldde12.dll"
@@ -278,6 +257,73 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   File "..\build\lib\tk8.4\tkfbox.tcl"
   File "..\build\lib\tk8.4\unsupported.tcl"
   File "..\build\lib\tk8.4\xmfbox.tcl"
+  SetOutPath $INSTDIR\lib\tk8.4\msgs
+  File "..\build\lib\tk8.4\msgs\cs.msg"
+  File "..\build\lib\tk8.4\msgs\de.msg"
+  File "..\build\lib\tk8.4\msgs\el.msg"
+  File "..\build\lib\tk8.4\msgs\en.msg"
+  File "..\build\lib\tk8.4\msgs\en_gb.msg"
+  File "..\build\lib\tk8.4\msgs\eo.msg"
+  File "..\build\lib\tk8.4\msgs\es.msg"
+  File "..\build\lib\tk8.4\msgs\es_ES.msg"
+  File "..\build\lib\tk8.4\msgs\fr.msg"
+  File "..\build\lib\tk8.4\msgs\it.msg"
+  File "..\build\lib\tk8.4\msgs\nl.msg"
+  File "..\build\lib\tk8.4\msgs\pl.msg"
+  File "..\build\lib\tk8.4\msgs\pt.msg"
+  File "..\build\lib\tk8.4\msgs\ru.msg"
+  
+  ; Write the installation path into the registry
+  WriteRegStr HKLM SOFTWARE\WinTclTk "Install_Dir" "$INSTDIR"
+  
+  ; Write the uninstall keys for Windows
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayName" "WinTclTk ${VERSION}"
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "UninstallString" '"$INSTDIR\uninstall.exe"'
+  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayIcon" "$INSTDIR\bin\tclsh84.exe"
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoModify" 1
+  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoRepair" 1
+  WriteUninstaller "uninstall.exe"
+
+  ; Create Icons in Start Menu
+  SetOutPath $INSTDIR
+  CreateDirectory "$SMPROGRAMS\WinTclTk"
+  CreateShortCut "$SMPROGRAMS\WinTclTk\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
+  CreateShortCut "$SMPROGRAMS\WinTclTk\Tclsh.lnk" "$INSTDIR\bin\tclsh84.exe" "" "$INSTDIR\bin\tclsh84.exe" 0
+  CreateShortCut "$SMPROGRAMS\WinTclTk\Wish.lnk" "$INSTDIR\bin\wish84.exe" "" "$INSTDIR\bin\wish84.exe" 0
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$SMPROGRAMS\WinTclTk\Docs.lnk" "$INSTDIR\doc" "" "$INSTDIR\doc" 0
+SectionEnd
+
+Section "Tcl/Tk headers & libraries" tcltk-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "..\build\include\tcl.h"
+  File "..\build\include\tclDecls.h"
+  File "..\build\include\tclPlatDecls.h"
+  File "..\build\include\tk.h"
+  File "..\build\include\tkDecls.h"
+  File "..\build\include\tkIntXlibDecls.h"
+  File "..\build\include\tkPlatDecls.h"
+  SetOutPath $INSTDIR\include\X11
+  File "..\build\include\X11\cursorfont.h"
+  File "..\build\include\X11\keysym.h"
+  File "..\build\include\X11\keysymdef.h"
+  File "..\build\include\X11\X.h"
+  File "..\build\include\X11\Xatom.h"
+  File "..\build\include\X11\Xfuncproto.h"
+  File "..\build\include\X11\Xlib.h"
+  File "..\build\include\X11\Xutil.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libtcl84.a"
+  File "..\build\lib\libtclstub84.a"
+  File "..\build\lib\libtk84.a"
+  File "..\build\lib\libtkstub84.a"
+  File "..\build\lib\tclConfig.sh"
+  File "..\build\lib\tkConfig.sh"
+SectionEnd
+
+Section "Tcl/Tk demos & images" tk-demos
+  SectionIn 2
   SetOutPath $INSTDIR\lib\tk8.4\demos
   File "..\build\lib\tk8.4\demos\arrow.tcl"
   File "..\build\lib\tk8.4\demos\bind.tcl"
@@ -359,81 +405,137 @@ Section "!Tcl/Tk ${TCLTK_VERSION}" tcltk
   File "..\build\lib\tk8.4\images\pwrdLogo75.gif"
   File "..\build\lib\tk8.4\images\README"
   File "..\build\lib\tk8.4\images\tai-ku.gif"
-  SetOutPath $INSTDIR\lib\tk8.4\msgs
-  File "..\build\lib\tk8.4\msgs\cs.msg"
-  File "..\build\lib\tk8.4\msgs\de.msg"
-  File "..\build\lib\tk8.4\msgs\el.msg"
-  File "..\build\lib\tk8.4\msgs\en.msg"
-  File "..\build\lib\tk8.4\msgs\en_gb.msg"
-  File "..\build\lib\tk8.4\msgs\eo.msg"
-  File "..\build\lib\tk8.4\msgs\es.msg"
-  File "..\build\lib\tk8.4\msgs\es_ES.msg"
-  File "..\build\lib\tk8.4\msgs\fr.msg"
-  File "..\build\lib\tk8.4\msgs\it.msg"
-  File "..\build\lib\tk8.4\msgs\nl.msg"
-  File "..\build\lib\tk8.4\msgs\pl.msg"
-  File "..\build\lib\tk8.4\msgs\pt.msg"
-  File "..\build\lib\tk8.4\msgs\ru.msg"
-  
-  ; Write the installation path into the registry
-  WriteRegStr HKLM SOFTWARE\WinTclTk "Install_Dir" "$INSTDIR"
-  
-  ; Write the uninstall keys for Windows
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayName" "WinTclTk ${VERSION}"
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "UninstallString" '"$INSTDIR\uninstall.exe"'
-  WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "DisplayIcon" "$INSTDIR\bin\tclsh84.exe"
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoModify" 1
-  WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\WinTclTk" "NoRepair" 1
-  WriteUninstaller "uninstall.exe"
-
-  ; Create Icons in Start Menu
-  SetOutPath $INSTDIR
-  CreateDirectory "$SMPROGRAMS\WinTclTk"
-  CreateShortCut "$SMPROGRAMS\WinTclTk\Uninstall.lnk" "$INSTDIR\uninstall.exe" "" "$INSTDIR\uninstall.exe" 0
-  CreateShortCut "$SMPROGRAMS\WinTclTk\Tclsh.lnk" "$INSTDIR\bin\tclsh84.exe" "" "$INSTDIR\bin\tclsh84.exe" 0
-  CreateShortCut "$SMPROGRAMS\WinTclTk\Wish.lnk" "$INSTDIR\bin\wish84.exe" "" "$INSTDIR\bin\wish84.exe" 0
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$SMPROGRAMS\WinTclTk\Docs.lnk" "$INSTDIR\doc" "" "$INSTDIR\doc" 0
 SectionEnd
 
-Section "-GDBM ${GDBM_VERSION}" gdbm
-  SectionIn 1 2 RO
+SectionGroupEnd
+
+SectionGroup "GDBM ${GDBM_VERSION}" gdbm
+Section "GDBM DLL" gdbm-dll
+  SectionIn 1 2 3 RO
   SetOutPath $INSTDIR\bin
   File "..\build\bin\gdbm.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+SectionEnd
+Section "GDBM headers & libraries" gdbm-dev
+  SectionIn 2
   SetOutPath $INSTDIR\include
   File "..\build\include\dbm.h"
   File "..\build\include\gdbm.h"
   File "..\build\include\ndbm.h"
   SetOutPath $INSTDIR\lib
   File "..\build\lib\libgdbm.a"
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
 SectionEnd
+SectionGroupEnd
 
-Section "-zlib ${ZLIB_VERSION}" zlib
-  SectionIn 1 2 RO
+SectionGroup "zlib ${ZLIB_VERSION}" zlib
+Section "zlib DLL" zlib-dll
+  SectionIn 1 2 3 RO
   SetOutPath $INSTDIR\bin
   File "..\build\bin\zlib1.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  File "..\doc\licenses\zlib-license.txt"
+SectionEnd
+Section "zlib headers & libraries" zlib-dev
+  SectionIn 2
   SetOutPath $INSTDIR\include
   File "..\build\include\zconf.h"
   File "..\build\include\zlib.h"
   SetOutPath $INSTDIR\lib
   File "..\build\lib\libz.a"
-  SetOutPath $INSTDIR\doc\licenses
-  File "..\doc\licenses\zlib-license.txt"
 SectionEnd
+SectionGroupEnd
 
-Section "-OpenSSL ${OPENSSL_VERSION}" openssl
-  SectionIn 1 2 RO
+SectionGroup "OpenSSL ${OPENSSL_VERSION}" openssl
+Section "OpenSSL DLL" openssl-dll
+  SectionIn 1 2 3 RO
   SetOutPath $INSTDIR\bin
-  File "..\build\bin\libssl32.dll"
   File "..\build\bin\libeay32.dll"
+  File "..\build\bin\libssl32.dll"
   SetOutPath $INSTDIR\doc\licenses
   File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
 SectionEnd
+Section "OpenSSL headers & libraries" openssl-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libcrypto.a"
+  File "..\build\lib\libcrypto.dll.a"
+  File "..\build\lib\libssl.a"
+  File "..\build\lib\libssl.dll.a"
+  SetOutPath $INSTDIR\include\openssl
+  File "..\build\include\openssl\aes.h"
+  File "..\build\include\openssl\asn1.h"
+  File "..\build\include\openssl\asn1_mac.h"
+  File "..\build\include\openssl\asn1t.h"
+  File "..\build\include\openssl\bio.h"
+  File "..\build\include\openssl\blowfish.h"
+  File "..\build\include\openssl\bn.h"
+  File "..\build\include\openssl\buffer.h"
+  File "..\build\include\openssl\cast.h"
+  File "..\build\include\openssl\comp.h"
+  File "..\build\include\openssl\conf.h"
+  File "..\build\include\openssl\conf_api.h"
+  File "..\build\include\openssl\crypto.h"
+  File "..\build\include\openssl\des.h"
+  File "..\build\include\openssl\des_old.h"
+  File "..\build\include\openssl\dh.h"
+  File "..\build\include\openssl\dsa.h"
+  File "..\build\include\openssl\dso.h"
+  File "..\build\include\openssl\dtls1.h"
+  File "..\build\include\openssl\e_os2.h"
+  File "..\build\include\openssl\ebcdic.h"
+  File "..\build\include\openssl\ecdsa.h"
+  File "..\build\include\openssl\engine.h"
+  File "..\build\include\openssl\err.h"
+  File "..\build\include\openssl\evp.h"
+  File "..\build\include\openssl\hmac.h"
+  File "..\build\include\openssl\idea.h"
+  File "..\build\include\openssl\krb5_asn.h"
+  File "..\build\include\openssl\kssl.h"
+  File "..\build\include\openssl\lhash.h"
+  File "..\build\include\openssl\md2.h"
+  File "..\build\include\openssl\md4.h"
+  File "..\build\include\openssl\md5.h"
+  File "..\build\include\openssl\obj_mac.h"
+  File "..\build\include\openssl\objects.h"
+  File "..\build\include\openssl\ocsp.h"
+  File "..\build\include\openssl\opensslconf.h"
+  File "..\build\include\openssl\opensslv.h"
+  File "..\build\include\openssl\ossl_typ.h"
+  File "..\build\include\openssl\pem2.h"
+  File "..\build\include\openssl\pem.h"
+  File "..\build\include\openssl\pkcs7.h"
+  File "..\build\include\openssl\pkcs12.h"
+  File "..\build\include\openssl\pq_compat.h"
+  File "..\build\include\openssl\pqueue.h"
+  File "..\build\include\openssl\rand.h"
+  File "..\build\include\openssl\rc2.h"
+  File "..\build\include\openssl\rc4.h"
+  File "..\build\include\openssl\ripemd.h"
+  File "..\build\include\openssl\rsa.h"
+  File "..\build\include\openssl\safestack.h"
+  File "..\build\include\openssl\sha.h"
+  File "..\build\include\openssl\ssl2.h"
+  File "..\build\include\openssl\ssl3.h"
+  File "..\build\include\openssl\ssl23.h"
+  File "..\build\include\openssl\ssl.h"
+  File "..\build\include\openssl\stack.h"
+  File "..\build\include\openssl\store.h"
+  File "..\build\include\openssl\symhacks.h"
+  File "..\build\include\openssl\tls1.h"
+  File "..\build\include\openssl\tmdiff.h"
+  File "..\build\include\openssl\txt_db.h"
+  File "..\build\include\openssl\ui.h"
+  File "..\build\include\openssl\ui_compat.h"
+  File "..\build\include\openssl\x509.h"
+  File "..\build\include\openssl\x509_vfy.h"
+  File "..\build\include\openssl\x509v3.h"
+SectionEnd
+SectionGroupEnd
 
-Section "XOTcl ${XOTCL_VERSION}" xotcl
-  Sectionin 1
+SectionGroup "XOTcl ${XOTCL_VERSION}" xotcl
+Section "XOTcl base" xotcl-base
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File /oname=XOTcl-license "..\build\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
   SetOutPath $INSTDIR\doc\packages\xotcl
@@ -499,17 +601,8 @@ Section "XOTcl ${XOTCL_VERSION}" xotcl
   File "..\src\xotcl-${XOTCL_VERSION}\doc\xocomm-test.html"
   File "..\src\xotcl-${XOTCL_VERSION}\doc\xodoc-xotcl.html"
   File "..\src\xotcl-${XOTCL_VERSION}\doc\xotcl-doc.css"
-  SetOutPath $INSTDIR\include
-  File "..\build\include\xotcl.h"
-  File "..\build\include\xotclDecls.h"
-  File "..\build\include\xotclInt.h"
-  File "..\build\include\xotclIntDecls.h"
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\xotclConfig.sh"
-  SetOutPath $INSTDIR\lib\xotcl${XOTCL_VERSION}
   SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
   File "..\build\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
-  File "..\build\lib\xotcl${XOTCL_VERSION}\libxotclstub153.a"
   File "..\build\lib\xotcl${XOTCL_VERSION}\pkgIndex.tcl"
   File "..\build\lib\xotcl${XOTCL_VERSION}\xotcl153.dll"
   SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
@@ -662,8 +755,22 @@ Section "XOTcl ${XOTCL_VERSION}" xotcl
   CreateShortCut "$INSTDIR\doc\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\xotcl\index.html" "" "$INSTDIR\doc\packages\xotcl\index.html" 0
 SectionEnd
 
+Section "XOTcl headers & libraries" xotcl-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "..\build\include\xotcl.h"
+  File "..\build\include\xotclDecls.h"
+  File "..\build\include\xotclInt.h"
+  File "..\build\include\xotclIntDecls.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\xotclConfig.sh"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
+  File "..\build\lib\xotcl${XOTCL_VERSION}\libxotclstub153.a"
+SectionEnd
+SectionGroupEnd
+
 Section "Tgdbm ${TGDBM_VERSION}" tgdbm
-  SectionIn 1
+  SectionIn 1 2
   SetOutPath $INSTDIR\lib\tgdbm${TGDBM_VERSION}
   File "..\build\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
   File "..\build\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
@@ -673,7 +780,7 @@ Section "Tgdbm ${TGDBM_VERSION}" tgdbm
 SectionEnd
 
 Section "tls ${TLS_VERSION}" tls
-  SectionIn 1
+  SectionIn 1 2
   SetOutPath $INSTDIR\lib\tls${TLS_VERSION}
   File "..\build\lib\tls${TLS_VERSION}\tls15.dll"
   File "..\build\lib\tls${TLS_VERSION}\pkgIndex.tcl"
@@ -687,7 +794,7 @@ Section "tls ${TLS_VERSION}" tls
 SectionEnd
 
 Section "Tcllib ${TCLLIB_VERSION}" tcllib
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File "..\doc\licenses\tcllib-license.txt"
   SetOutPath $INSTDIR\lib\tcllib${TCLLIB_VERSION}
@@ -1167,7 +1274,7 @@ Section "Tcllib ${TCLLIB_VERSION}" tcllib
 SectionEnd
 
 Section "Tklib ${TKLIB_VERSION}" tklib
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File "..\doc\licenses\tklib-license.txt"
   SetOutPath $INSTDIR\lib\tklib${TKLIB_SHORTVER}
@@ -1288,7 +1395,7 @@ Section "Tklib ${TKLIB_VERSION}" tklib
 SectionEnd
 
 Section "BWidget ${BWIDGET_VERSION}" bwidget
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\packages\BWidget
   File "..\build\lib\BWidget${BWIDGET_VERSION}\BWman\ArrowButton.html"
   File "..\build\lib\BWidget${BWIDGET_VERSION}\BWman\Button.html"
@@ -1429,7 +1536,7 @@ Section "BWidget ${BWIDGET_VERSION}" bwidget
 SectionEnd
 
 Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File "..\doc\licenses\mkZiplib-license.txt"
   SetOutPath $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}
@@ -1443,7 +1550,7 @@ Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
 SectionEnd
 
 Section "TWAPI ${TWAPI_VERSION}" twapi
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\packages\twapi
   File "..\build\lib\twapi${TWAPI_VERSION}\doc\readme.txt"
   File "..\build\lib\twapi${TWAPI_VERSION}\doc\twapi.chm"
@@ -1503,7 +1610,7 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}
   File "..\build\lib\mysqltcl${MYSQLTCL_VERSION}\libmySQL.dll"
   File "..\build\lib\mysqltcl${MYSQLTCL_VERSION}\libmysqltcl.dll"
@@ -1517,7 +1624,7 @@ Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
 SectionEnd
 
 Section "pgtcl ${PGTCL_VERSION}" pgtcl
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\bin
   File "..\build\bin\libpq.dll"
   File "..\build\bin\pthreadGC2.dll"
@@ -1600,7 +1707,7 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
 SectionEnd
 
 Section "Metakit ${METAKIT_VERSION}" metakit
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File "..\doc\licenses\Metakit-license.txt"
   SetOutPath $INSTDIR\include
@@ -1620,7 +1727,7 @@ Section "Metakit ${METAKIT_VERSION}" metakit
 SectionEnd
 
 Section "ASED IDE ${ASED_VERSION}" ased
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\ased3.0
   File "..\build\ased3.0\ased.bat"
   File "..\build\ased3.0\ased.gif"
@@ -2498,7 +2605,7 @@ Section "ASED IDE ${ASED_VERSION}" ased
 SectionEnd
 
 Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
-  Sectionin 1
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File /oname=XOTclIDE-license "..\src\xotclIDE-${XOTCLIDE_VERSION}\LICENSE"
   SetOutPath $INSTDIR\doc\packages\xotclIDE
@@ -2628,7 +2735,7 @@ Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
 SectionEnd
 
 Section "-Register .tcl extension" regext
-SectionIn 1 2
+SectionIn 1 2 3
 WriteRegStr HKCR ".tcl" "" "TclTk.Script"
 WriteRegStr HKCR "TclTk.Script\DefaultIcon" "" "$INSTDIR\bin\tclsh84.exe,0"
 WriteRegStr HKCR "TclTk.Script\shell\open\command" "" '"$INSTDIR\bin\wish84.exe" "%1"'
@@ -3759,6 +3866,73 @@ Section "Uninstall"
   Delete "$INSTDIR\include\mk4str.h"
   Delete "$INSTDIR\include\mk4str.inl"
   Delete "$INSTDIR\include\ndbm.h"
+  Delete "$INSTDIR\include\openssl\aes.h"
+  Delete "$INSTDIR\include\openssl\asn1.h"
+  Delete "$INSTDIR\include\openssl\asn1_mac.h"
+  Delete "$INSTDIR\include\openssl\asn1t.h"
+  Delete "$INSTDIR\include\openssl\bio.h"
+  Delete "$INSTDIR\include\openssl\blowfish.h"
+  Delete "$INSTDIR\include\openssl\bn.h"
+  Delete "$INSTDIR\include\openssl\buffer.h"
+  Delete "$INSTDIR\include\openssl\cast.h"
+  Delete "$INSTDIR\include\openssl\comp.h"
+  Delete "$INSTDIR\include\openssl\conf.h"
+  Delete "$INSTDIR\include\openssl\conf_api.h"
+  Delete "$INSTDIR\include\openssl\crypto.h"
+  Delete "$INSTDIR\include\openssl\des.h"
+  Delete "$INSTDIR\include\openssl\des_old.h"
+  Delete "$INSTDIR\include\openssl\dh.h"
+  Delete "$INSTDIR\include\openssl\dsa.h"
+  Delete "$INSTDIR\include\openssl\dso.h"
+  Delete "$INSTDIR\include\openssl\dtls1.h"
+  Delete "$INSTDIR\include\openssl\e_os2.h"
+  Delete "$INSTDIR\include\openssl\ebcdic.h"
+  Delete "$INSTDIR\include\openssl\ecdsa.h"
+  Delete "$INSTDIR\include\openssl\engine.h"
+  Delete "$INSTDIR\include\openssl\err.h"
+  Delete "$INSTDIR\include\openssl\evp.h"
+  Delete "$INSTDIR\include\openssl\hmac.h"
+  Delete "$INSTDIR\include\openssl\idea.h"
+  Delete "$INSTDIR\include\openssl\krb5_asn.h"
+  Delete "$INSTDIR\include\openssl\kssl.h"
+  Delete "$INSTDIR\include\openssl\lhash.h"
+  Delete "$INSTDIR\include\openssl\md2.h"
+  Delete "$INSTDIR\include\openssl\md4.h"
+  Delete "$INSTDIR\include\openssl\md5.h"
+  Delete "$INSTDIR\include\openssl\obj_mac.h"
+  Delete "$INSTDIR\include\openssl\objects.h"
+  Delete "$INSTDIR\include\openssl\ocsp.h"
+  Delete "$INSTDIR\include\openssl\opensslconf.h"
+  Delete "$INSTDIR\include\openssl\opensslv.h"
+  Delete "$INSTDIR\include\openssl\ossl_typ.h"
+  Delete "$INSTDIR\include\openssl\pem2.h"
+  Delete "$INSTDIR\include\openssl\pem.h"
+  Delete "$INSTDIR\include\openssl\pkcs7.h"
+  Delete "$INSTDIR\include\openssl\pkcs12.h"
+  Delete "$INSTDIR\include\openssl\pq_compat.h"
+  Delete "$INSTDIR\include\openssl\pqueue.h"
+  Delete "$INSTDIR\include\openssl\rand.h"
+  Delete "$INSTDIR\include\openssl\rc2.h"
+  Delete "$INSTDIR\include\openssl\rc4.h"
+  Delete "$INSTDIR\include\openssl\ripemd.h"
+  Delete "$INSTDIR\include\openssl\rsa.h"
+  Delete "$INSTDIR\include\openssl\safestack.h"
+  Delete "$INSTDIR\include\openssl\sha.h"
+  Delete "$INSTDIR\include\openssl\ssl2.h"
+  Delete "$INSTDIR\include\openssl\ssl3.h"
+  Delete "$INSTDIR\include\openssl\ssl23.h"
+  Delete "$INSTDIR\include\openssl\ssl.h"
+  Delete "$INSTDIR\include\openssl\stack.h"
+  Delete "$INSTDIR\include\openssl\store.h"
+  Delete "$INSTDIR\include\openssl\symhacks.h"
+  Delete "$INSTDIR\include\openssl\tls1.h"
+  Delete "$INSTDIR\include\openssl\tmdiff.h"
+  Delete "$INSTDIR\include\openssl\txt_db.h"
+  Delete "$INSTDIR\include\openssl\ui.h"
+  Delete "$INSTDIR\include\openssl\ui_compat.h"
+  Delete "$INSTDIR\include\openssl\x509.h"
+  Delete "$INSTDIR\include\openssl\x509_vfy.h"
+  Delete "$INSTDIR\include\openssl\x509v3.h"
   Delete "$INSTDIR\include\tcl.h"
   Delete "$INSTDIR\include\tclDecls.h"
   Delete "$INSTDIR\include\tclPlatDecls.h"
@@ -3871,7 +4045,11 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\xpm2image.tcl"
   Delete "$INSTDIR\lib\dde1.2\pkgIndex.tcl"
   Delete "$INSTDIR\lib\dde1.2\tcldde12.dll"
+  Delete "$INSTDIR\lib\libcrypto.a"
+  Delete "$INSTDIR\lib\libcrypto.dll.a"
   Delete "$INSTDIR\lib\libgdbm.a"
+  Delete "$INSTDIR\lib\libssl.a"
+  Delete "$INSTDIR\lib\libssl.dll.a"
   Delete "$INSTDIR\lib\libtcl84.a"
   Delete "$INSTDIR\lib\libtclstub84.a"
   Delete "$INSTDIR\lib\libtk84.a"
@@ -5063,11 +5241,22 @@ SectionEnd
 ;--------------------------------
 ; Section Descriptions
 
-LangString DESC_tcltk ${LANG_ENGLISH} "Base Tcl/Tk distribution"
+LangString DESC_tcltk ${LANG_ENGLISH} "Tcl/Tk distribution"
+LangString DESC_tcltk-base ${LANG_ENGLISH} "Tcl/Tk base distribution with shells and dll's"
+LangString DESC_tcltk-dev ${LANG_ENGLISH} "Tcl/Tk development headers and libraries"
+LangString DESC_tk-demos ${LANG_ENGLISH} "Tk demos and images"
 LangString DESC_gdbm ${LANG_ENGLISH} "Database library that uses extensible hashing"
+LangString DESC_gdbm-dll ${LANG_ENGLISH} "GDBM dynamic link library (DLL)"
+LangString DESC_gdbm-dev ${LANG_ENGLISH} "GDBM development headers and libraries"
 LangString DESC_zlib ${LANG_ENGLISH} "Zlib compression library"
+LangString DESC_zlib-dll ${LANG_ENGLISH} "Zlib dynamic link library (DLL)"
+LangString DESC_zlib-dev ${LANG_ENGLISH} "Zlib development headers and libraries"
 LangString DESC_openssl ${LANG_ENGLISH} "OpenSSL libraries"
+LangString DESC_openssl-dll ${LANG_ENGLISH} "OpenSSL dynamic link libraries (DLL)"
+LangString DESC_openssl-dev ${LANG_ENGLISH} "OpenSSL development headers and libraries"
 LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extension for Tcl"
+LangString DESC_xotcl-base ${LANG_ENGLISH} "XOTcl base install"
+LangString DESC_xotcl-dev ${LANG_ENGLISH} "XOTcl development headers and libraries"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
@@ -5084,10 +5273,21 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk} $(DESC_tcltk)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tcltk-base} $(DESC_tcltk-base)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tcltk-dev} $(DESC_tcltk-dev)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tk-demos} $(DESC_tk-demos)
   !insertmacro MUI_DESCRIPTION_TEXT ${gdbm} $(DESC_gdbm)
+  !insertmacro MUI_DESCRIPTION_TEXT ${gdbm-dll} $(DESC_gdbm-dll)
+  !insertmacro MUI_DESCRIPTION_TEXT ${gdbm-dev} $(DESC_gdbm-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${zlib} $(DESC_zlib)
+  !insertmacro MUI_DESCRIPTION_TEXT ${zlib-dll} $(DESC_zlib-dll)
+  !insertmacro MUI_DESCRIPTION_TEXT ${zlib-dev} $(DESC_zlib-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${openssl} $(DESC_openssl)
+  !insertmacro MUI_DESCRIPTION_TEXT ${openssl-dll} $(DESC_openssl-dll)
+  !insertmacro MUI_DESCRIPTION_TEXT ${openssl-dev} $(DESC_openssl-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
+  !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-base} $(DESC_xotcl-base)
+  !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-dev} $(DESC_xotcl-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
@@ -5105,7 +5305,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 
 Function .onInit
   !insertmacro MUI_INSTALLOPTIONS_EXTRACT "options.ini"
-  SectionSetFlags ${xotcl} 17
+  SectionSetFlags ${xotcl-base} 17
   SectionSetFlags ${bwidget} 17
   SectionSetFlags ${tcllib} 17
 FunctionEnd
@@ -5133,13 +5333,13 @@ FunctionEnd
 
 Function .onSelChange
    SectionGetFlags ${xotclide} $1
-   SectionGetFlags ${xotcl} $2
+   SectionGetFlags ${xotcl-base} $2
    IntCmp $1 1 0 +3 0
-   SectionSetFlags ${xotcl} 17
+   SectionSetFlags ${xotcl-base} 17
    Goto +4
    IntCmp $2 17 0 +3 0
    IntOp $0 $2 - 16 
-   SectionSetFlags ${xotcl} $0
+   SectionSetFlags ${xotcl-base} $0
    SectionGetFlags ${ased} $1
    SectionGetFlags ${bwidget} $2
    SectionGetFlags ${tcllib} $3
