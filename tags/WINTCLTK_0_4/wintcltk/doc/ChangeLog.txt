@@ -3,6 +3,11 @@
 #
 # $Id$
 #
+2007-04-03 Martin Matuska <martin at matuska.org>
+	* XOTclIDE updated to 0.82
+	  - now starts with XotclStart.tcl
+	* release 0.4
+
 2007-04-02 Martin Matuska <martin at matuska.org>
 	* Pgtcl updated to 1.6.0
 	  - bundled with MinGW compiled libpq 8.2.3
@@ -12,7 +17,6 @@
 	  for some packages
 	* Moved installer options into groups
 	* zlib, GDBM and OpenSSL support libraries are now packaged
-	* release 0.4
 
 2007-04-01 Martin Matuska <martin at matuska.org>
 	* MinGW installer link updated to 5.1.3

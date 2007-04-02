@@ -26,7 +26,7 @@ pgtcl	 1.6.0
 mkZiplib 1.0
 TWAPI	 1.1.5
 ASED	 3.0.b16
-XOTclIDE 0.81
+XOTclIDE 0.82
 
 The following support libraries are bundled:
 
