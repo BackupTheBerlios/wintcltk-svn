@@ -5,7 +5,7 @@
 </HEAD>
 <BODY>
 <H1>WinTclTk</H1>
-<H2>Tcl/Tk Distribution for Microsoft Windows<BR>Version 0.3.3</H2>
+<H2>Tcl/Tk Distribution for Microsoft Windows<BR>Version 0.4</H2>
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 <BR>
@@ -26,12 +26,22 @@ It includes the following packages:
 <TR><TD><B>TWAPI</B></TD><TD>1.1.5</TD></TR>
 <TR><TD><B>ASED</B></TD><TD>3.0.b16</TD></TR>
 <TR><TD><B>XOTclIDE</B></TD><TD>0.81</TD></TR>
-</TABLE>	
+</TABLE>
 <BR>
-The binaries and libraries are compiled using the MinGW distribution with 
+The following support libraries are bundled:
+<BR><BR>
+<TABLE BORDER="0">
+<TR><TD><B>GDBM</B></TD><TD>1.8.3</TD></TR>
+<TR><TD><B>OpenSSL</B></TD><TD>0.9.8e</TD></TR>
+<TR><TD><B>zlib</B></TD><TD>1.2.3</TD></TR>
+</TABLE>
+<BR>
+The pgtcl package includes MinGW compiled libpq ver. 8.2.3 
+with OpenSSL and POSIX threads support.
+<BR><BR>
+Binaries and libraries are compiled using the MinGW distribution with 
 GCC 3.4.5 and stripped. 
-<BR>zlib 1.2.3, GDBM 1.8.3 and OpenSSL 0.9.8e are bundled.
-<BR>
+<BR><BR>
 The binaries are less efficient than binaries compiled with Microsoft Visual C++.
 The main idea of this package is to provide a (fully) free enhanced Tcl/Tk package
 for Microsoft Windows (C).
