@@ -426,8 +426,8 @@ SectionEnd
 Section "-OpenSSL ${OPENSSL_VERSION}" openssl
   SectionIn 1 2 RO
   SetOutPath $INSTDIR\bin
-  File "..\build\bin\ssleay32-0.9.8.dll"
-  File "..\build\bin\cryptoeay32-0.9.8.dll"
+  File "..\build\bin\libssl32.dll"
+  File "..\build\bin\libeay32.dll"
   SetOutPath $INSTDIR\doc\licenses
   File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
 SectionEnd
@@ -3476,10 +3476,10 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\tools\visualregexp\README"
   Delete "$INSTDIR\ased3.0\tools\visualregexp\visual_regexp.tcl"
   Delete "$INSTDIR\ased3.0\undo.tcl"
-  Delete "$INSTDIR\bin\cryptoeay32-0.9.8.dll"
   Delete "$INSTDIR\bin\gdbm.dll"
+  Delete "$INSTDIR\bin\libeay32.dll"
   Delete "$INSTDIR\bin\libmk4.dll"
-  Delete "$INSTDIR\bin\ssleay32-0.9.8.dll"
+  Delete "$INSTDIR\bin\libssl32.dll"
   Delete "$INSTDIR\bin\tcl84.dll"
   Delete "$INSTDIR\bin\tclpip84.dll"
   Delete "$INSTDIR\bin\tclsh84.exe"
