@@ -322,7 +322,7 @@ Section "Tcl/Tk headers & libraries" tcltk-dev
   File "..\build\lib\tkConfig.sh"
 SectionEnd
 
-Section "Tcl/Tk demos & images" tk-demos
+Section "Tk demos & images" tk-demos
   SectionIn 2
   SetOutPath $INSTDIR\lib\tk8.4\demos
   File "..\build\lib\tk8.4\demos\arrow.tcl"
@@ -409,130 +409,7 @@ SectionEnd
 
 SectionGroupEnd
 
-SectionGroup "GDBM ${GDBM_VERSION}" gdbm
-Section "GDBM DLL" gdbm-dll
-  SectionIn 1 2 3 RO
-  SetOutPath $INSTDIR\bin
-  File "..\build\bin\gdbm.dll"
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
-SectionEnd
-Section "GDBM headers & libraries" gdbm-dev
-  SectionIn 2
-  SetOutPath $INSTDIR\include
-  File "..\build\include\dbm.h"
-  File "..\build\include\gdbm.h"
-  File "..\build\include\ndbm.h"
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\libgdbm.a"
-SectionEnd
-SectionGroupEnd
-
-SectionGroup "zlib ${ZLIB_VERSION}" zlib
-Section "zlib DLL" zlib-dll
-  SectionIn 1 2 3 RO
-  SetOutPath $INSTDIR\bin
-  File "..\build\bin\zlib1.dll"
-  SetOutPath $INSTDIR\doc\licenses
-  File "..\doc\licenses\zlib-license.txt"
-SectionEnd
-Section "zlib headers & libraries" zlib-dev
-  SectionIn 2
-  SetOutPath $INSTDIR\include
-  File "..\build\include\zconf.h"
-  File "..\build\include\zlib.h"
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\libz.a"
-SectionEnd
-SectionGroupEnd
-
-SectionGroup "OpenSSL ${OPENSSL_VERSION}" openssl
-Section "OpenSSL DLL" openssl-dll
-  SectionIn 1 2 3 RO
-  SetOutPath $INSTDIR\bin
-  File "..\build\bin\libeay32.dll"
-  File "..\build\bin\libssl32.dll"
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
-SectionEnd
-Section "OpenSSL headers & libraries" openssl-dev
-  SectionIn 2
-  SetOutPath $INSTDIR\lib
-  File "..\build\lib\libcrypto.a"
-  File "..\build\lib\libcrypto.dll.a"
-  File "..\build\lib\libssl.a"
-  File "..\build\lib\libssl.dll.a"
-  SetOutPath $INSTDIR\include\openssl
-  File "..\build\include\openssl\aes.h"
-  File "..\build\include\openssl\asn1.h"
-  File "..\build\include\openssl\asn1_mac.h"
-  File "..\build\include\openssl\asn1t.h"
-  File "..\build\include\openssl\bio.h"
-  File "..\build\include\openssl\blowfish.h"
-  File "..\build\include\openssl\bn.h"
-  File "..\build\include\openssl\buffer.h"
-  File "..\build\include\openssl\cast.h"
-  File "..\build\include\openssl\comp.h"
-  File "..\build\include\openssl\conf.h"
-  File "..\build\include\openssl\conf_api.h"
-  File "..\build\include\openssl\crypto.h"
-  File "..\build\include\openssl\des.h"
-  File "..\build\include\openssl\des_old.h"
-  File "..\build\include\openssl\dh.h"
-  File "..\build\include\openssl\dsa.h"
-  File "..\build\include\openssl\dso.h"
-  File "..\build\include\openssl\dtls1.h"
-  File "..\build\include\openssl\e_os2.h"
-  File "..\build\include\openssl\ebcdic.h"
-  File "..\build\include\openssl\ecdsa.h"
-  File "..\build\include\openssl\engine.h"
-  File "..\build\include\openssl\err.h"
-  File "..\build\include\openssl\evp.h"
-  File "..\build\include\openssl\hmac.h"
-  File "..\build\include\openssl\idea.h"
-  File "..\build\include\openssl\krb5_asn.h"
-  File "..\build\include\openssl\kssl.h"
-  File "..\build\include\openssl\lhash.h"
-  File "..\build\include\openssl\md2.h"
-  File "..\build\include\openssl\md4.h"
-  File "..\build\include\openssl\md5.h"
-  File "..\build\include\openssl\obj_mac.h"
-  File "..\build\include\openssl\objects.h"
-  File "..\build\include\openssl\ocsp.h"
-  File "..\build\include\openssl\opensslconf.h"
-  File "..\build\include\openssl\opensslv.h"
-  File "..\build\include\openssl\ossl_typ.h"
-  File "..\build\include\openssl\pem2.h"
-  File "..\build\include\openssl\pem.h"
-  File "..\build\include\openssl\pkcs7.h"
-  File "..\build\include\openssl\pkcs12.h"
-  File "..\build\include\openssl\pq_compat.h"
-  File "..\build\include\openssl\pqueue.h"
-  File "..\build\include\openssl\rand.h"
-  File "..\build\include\openssl\rc2.h"
-  File "..\build\include\openssl\rc4.h"
-  File "..\build\include\openssl\ripemd.h"
-  File "..\build\include\openssl\rsa.h"
-  File "..\build\include\openssl\safestack.h"
-  File "..\build\include\openssl\sha.h"
-  File "..\build\include\openssl\ssl2.h"
-  File "..\build\include\openssl\ssl3.h"
-  File "..\build\include\openssl\ssl23.h"
-  File "..\build\include\openssl\ssl.h"
-  File "..\build\include\openssl\stack.h"
-  File "..\build\include\openssl\store.h"
-  File "..\build\include\openssl\symhacks.h"
-  File "..\build\include\openssl\tls1.h"
-  File "..\build\include\openssl\tmdiff.h"
-  File "..\build\include\openssl\txt_db.h"
-  File "..\build\include\openssl\ui.h"
-  File "..\build\include\openssl\ui_compat.h"
-  File "..\build\include\openssl\x509.h"
-  File "..\build\include\openssl\x509_vfy.h"
-  File "..\build\include\openssl\x509v3.h"
-SectionEnd
-SectionGroupEnd
-
+SectionGroup "Packages" packages
 SectionGroup "XOTcl ${XOTCL_VERSION}" xotcl
 Section "XOTcl base" xotcl-base
   Sectionin 1 2
@@ -1725,7 +1602,9 @@ Section "Metakit ${METAKIT_VERSION}" metakit
   SetOutPath $INSTDIR\doc 
   CreateShortCut "$INSTDIR\doc\Metakit Documentation.lnk" "$INSTDIR\doc\packages\metakit\index.html" "" "$INSTDIR\doc\packages\metakit\index.html" 0
 SectionEnd
+SectionGroupEnd
 
+SectionGroup "Applications" applications
 Section "ASED IDE ${ASED_VERSION}" ased
   Sectionin 1 2
   SetOutPath $INSTDIR\ased3.0
@@ -2733,6 +2612,133 @@ Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
   SetOutPath $INSTDIR\doc\packages\xotclIDE
   CreateShortCut "$INSTDIR\doc\XOTclIDE Documentation.lnk" "$INSTDIR\doc\packages\xotclIDE\index.html" "" "$INSTDIR\doc\packages\xotclIDE\index.html" 0
 SectionEnd
+SectionGroupEnd
+
+SectionGroup "Support libraries" support-libs
+SectionGroup "GDBM ${GDBM_VERSION}" gdbm
+Section "GDBM DLL" gdbm-dll
+  SectionIn 1 2
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\gdbm.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+SectionEnd
+Section "GDBM headers & libraries" gdbm-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "..\build\include\dbm.h"
+  File "..\build\include\gdbm.h"
+  File "..\build\include\ndbm.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libgdbm.a"
+SectionEnd
+SectionGroupEnd
+
+SectionGroup "zlib ${ZLIB_VERSION}" zlib
+Section "zlib DLL" zlib-dll
+  SectionIn 1 2 RO
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\zlib1.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  File "..\doc\licenses\zlib-license.txt"
+SectionEnd
+Section "zlib headers & libraries" zlib-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "..\build\include\zconf.h"
+  File "..\build\include\zlib.h"
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libz.a"
+SectionEnd
+SectionGroupEnd
+
+SectionGroup "OpenSSL ${OPENSSL_VERSION}" openssl
+Section "OpenSSL DLL" openssl-dll
+  SectionIn 1 2 RO
+  SetOutPath $INSTDIR\bin
+  File "..\build\bin\libeay32.dll"
+  File "..\build\bin\libssl32.dll"
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=OpenSSL-license.txt "..\src\openssl-${OPENSSL_VERSION}\LICENSE"
+SectionEnd
+Section "OpenSSL headers & libraries" openssl-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\lib
+  File "..\build\lib\libcrypto.a"
+  File "..\build\lib\libcrypto.dll.a"
+  File "..\build\lib\libssl.a"
+  File "..\build\lib\libssl.dll.a"
+  SetOutPath $INSTDIR\include\openssl
+  File "..\build\include\openssl\aes.h"
+  File "..\build\include\openssl\asn1.h"
+  File "..\build\include\openssl\asn1_mac.h"
+  File "..\build\include\openssl\asn1t.h"
+  File "..\build\include\openssl\bio.h"
+  File "..\build\include\openssl\blowfish.h"
+  File "..\build\include\openssl\bn.h"
+  File "..\build\include\openssl\buffer.h"
+  File "..\build\include\openssl\cast.h"
+  File "..\build\include\openssl\comp.h"
+  File "..\build\include\openssl\conf.h"
+  File "..\build\include\openssl\conf_api.h"
+  File "..\build\include\openssl\crypto.h"
+  File "..\build\include\openssl\des.h"
+  File "..\build\include\openssl\des_old.h"
+  File "..\build\include\openssl\dh.h"
+  File "..\build\include\openssl\dsa.h"
+  File "..\build\include\openssl\dso.h"
+  File "..\build\include\openssl\dtls1.h"
+  File "..\build\include\openssl\e_os2.h"
+  File "..\build\include\openssl\ebcdic.h"
+  File "..\build\include\openssl\ecdsa.h"
+  File "..\build\include\openssl\engine.h"
+  File "..\build\include\openssl\err.h"
+  File "..\build\include\openssl\evp.h"
+  File "..\build\include\openssl\hmac.h"
+  File "..\build\include\openssl\idea.h"
+  File "..\build\include\openssl\krb5_asn.h"
+  File "..\build\include\openssl\kssl.h"
+  File "..\build\include\openssl\lhash.h"
+  File "..\build\include\openssl\md2.h"
+  File "..\build\include\openssl\md4.h"
+  File "..\build\include\openssl\md5.h"
+  File "..\build\include\openssl\obj_mac.h"
+  File "..\build\include\openssl\objects.h"
+  File "..\build\include\openssl\ocsp.h"
+  File "..\build\include\openssl\opensslconf.h"
+  File "..\build\include\openssl\opensslv.h"
+  File "..\build\include\openssl\ossl_typ.h"
+  File "..\build\include\openssl\pem2.h"
+  File "..\build\include\openssl\pem.h"
+  File "..\build\include\openssl\pkcs7.h"
+  File "..\build\include\openssl\pkcs12.h"
+  File "..\build\include\openssl\pq_compat.h"
+  File "..\build\include\openssl\pqueue.h"
+  File "..\build\include\openssl\rand.h"
+  File "..\build\include\openssl\rc2.h"
+  File "..\build\include\openssl\rc4.h"
+  File "..\build\include\openssl\ripemd.h"
+  File "..\build\include\openssl\rsa.h"
+  File "..\build\include\openssl\safestack.h"
+  File "..\build\include\openssl\sha.h"
+  File "..\build\include\openssl\ssl2.h"
+  File "..\build\include\openssl\ssl3.h"
+  File "..\build\include\openssl\ssl23.h"
+  File "..\build\include\openssl\ssl.h"
+  File "..\build\include\openssl\stack.h"
+  File "..\build\include\openssl\store.h"
+  File "..\build\include\openssl\symhacks.h"
+  File "..\build\include\openssl\tls1.h"
+  File "..\build\include\openssl\tmdiff.h"
+  File "..\build\include\openssl\txt_db.h"
+  File "..\build\include\openssl\ui.h"
+  File "..\build\include\openssl\ui_compat.h"
+  File "..\build\include\openssl\x509.h"
+  File "..\build\include\openssl\x509_vfy.h"
+  File "..\build\include\openssl\x509v3.h"
+SectionEnd
+SectionGroupEnd
+SectionGroupEnd
 
 Section "-Register .tcl extension" regext
 SectionIn 1 2 3
@@ -5241,6 +5247,9 @@ SectionEnd
 ;--------------------------------
 ; Section Descriptions
 
+LangString DESC_packages ${LANG_ENGLISH} "Tcl/Tk additional packages"
+LangString DESC_support-libs ${LANG_ENGLISH} "Support libraries for extensions"
+LangString DESC_applications ${LANG_ENGLISH} "Applications and development environments"
 LangString DESC_tcltk ${LANG_ENGLISH} "Tcl/Tk distribution"
 LangString DESC_tcltk-base ${LANG_ENGLISH} "Tcl/Tk base distribution with shells and dll's"
 LangString DESC_tcltk-dev ${LANG_ENGLISH} "Tcl/Tk development headers and libraries"
@@ -5272,6 +5281,9 @@ LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
 LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
+  !insertmacro MUI_DESCRIPTION_TEXT ${packages} $(DESC_packages)
+  !insertmacro MUI_DESCRIPTION_TEXT ${support-libs} $(DESC_support-libs)
+  !insertmacro MUI_DESCRIPTION_TEXT ${applications} $(DESC_applications)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk} $(DESC_tcltk)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk-base} $(DESC_tcltk-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcltk-dev} $(DESC_tcltk-dev)
@@ -5308,6 +5320,7 @@ Function .onInit
   SectionSetFlags ${xotcl-base} 17
   SectionSetFlags ${bwidget} 17
   SectionSetFlags ${tcllib} 17
+  SectionSetFlags ${gdbm-dll} 17
 FunctionEnd
 
 LangString TEXT_OPTIONS_TITLE ${LANG_ENGLISH} "Installation Options"
@@ -5332,6 +5345,8 @@ Function readOptions
 FunctionEnd
 
 Function .onSelChange
+   GetCurInstType $8
+
    SectionGetFlags ${xotclide} $1
    SectionGetFlags ${xotcl-base} $2
    IntCmp $1 1 0 +3 0
@@ -5340,6 +5355,46 @@ Function .onSelChange
    IntCmp $2 17 0 +3 0
    IntOp $0 $2 - 16 
    SectionSetFlags ${xotcl-base} $0
+
+   SectionGetFlags ${xotcl-base} $1
+   SectionGetFlags ${tgdbm} $2
+   SectionGetFlags ${gdbm-dll} $3
+   IntCmp $1 1 0 +3 0
+   SectionSetFlags ${gdbm-dll} 17
+   Goto +7
+   IntCmp $2 1 0 +3 0
+   SectionSetFlags ${gdbm-dll} 17
+   Goto +4
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $3 - 16 
+   SectionSetFlags ${gdbm-dll} $0
+
+   SectionGetFlags ${pgtcl} $1
+   SectionGetFlags ${mkziplib} $2
+   SectionGetFlags ${zlib-dll} $3
+   IntCmp $1 1 0 +3 0
+   SectionSetFlags ${zlib-dll} 17
+   Goto +7
+   IntCmp $2 1 0 +3 0
+   SectionSetFlags ${zlib-dll} 17
+   Goto +4
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $3 - 16 
+   SectionSetFlags ${zlib-dll} $0
+
+   SectionGetFlags ${pgtcl} $1
+   SectionGetFlags ${tls} $2
+   SectionGetFlags ${openssl-dll} $3
+   IntCmp $1 1 0 +3 0
+   SectionSetFlags ${openssl-dll} 17
+   Goto +7
+   IntCmp $2 1 0 +3 0
+   SectionSetFlags ${openssl-dll} 17
+   Goto +4
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $3 - 16 
+   SectionSetFlags ${openssl-dll} $0
+
    SectionGetFlags ${ased} $1
    SectionGetFlags ${bwidget} $2
    SectionGetFlags ${tcllib} $3
@@ -5353,4 +5408,13 @@ Function .onSelChange
    IntCmp $3 17 0 +3 0
    IntOp $0 $3 - 16
    SectionSetFlags ${tcllib} $0
+
+   IntCmp $8 2 +3 0 0
+   Goto +7
+   SectionSetFlags ${xotcl-base} 0
+   SectionSetFlags ${bwidget} 0
+   SectionSetFlags ${tcllib} 0
+   SectionSetFlags ${gdbm-dll} 0
+   SectionSetFlags ${zlib-dll} 0
+   SectionSetFlags ${openssl-dll} 0
 FunctionEnd
