@@ -19,7 +19,7 @@
 +            [list command [tr "Search ..."] {} [tr "Search dialog"] {Ctrl f} -command Editor::search_dialog ]\
              [list command [tr "Search in files ..."] {} [tr "Search in files"] {} -command Editor::findInFiles]\
 -            [list command [tr "Replace ..."] {} [tr "Replace dialog"] {} -command Editor::replace_dialog ]\
-+            [list command [tr "Replace ..."] {} [tr "Replace dialog"] {Ctrl h} -command Editor::replace_dialog ]\
++            [list command [tr "Replace ..."] {} [tr "Replace dialog"] {Ctrl r} -command Editor::replace_dialog ]\
              {separator}\
              [list command [tr "Undo"] {} [tr "Undo"] {CtrlAlt u} -command Editor::undo ]\
              [list command [tr "Redo"] {} [tr "Redo"] {} -command Editor::redo ]\
