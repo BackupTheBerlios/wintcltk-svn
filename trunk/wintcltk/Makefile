@@ -24,7 +24,7 @@ clean:
 buildclean:
 	@rm -rf build
 sourceclean:
-	@rm -rf wintcltk-${WINTCLTK_VERSION} wintcltk-${WINTCLTK_VERSION}.tar.gz wintcltk-${WINTCLTK_VERSION}.zip
+	@rm -rf wintcltk-${WINTCLTK_VERSION} wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 installerclean:
 	@rm -f ${INSTALLER} 
 releaseclean: sourceclean installerclean
