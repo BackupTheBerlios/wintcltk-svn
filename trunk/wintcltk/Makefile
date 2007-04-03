@@ -9,34 +9,41 @@ WINTCLTK_VERSION=0.4
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
-MAKENSIS?="${PROGRAMFILES}/NSIS/makensis.exe"
-ZIP?="$(shell which zip)"
+MAKENSIS?=	"${PROGRAMFILES}/NSIS/makensis.exe"
+ZIP?=		"$(shell which zip)"
+#
+CURDIR=		"$(shell pwd)"
+BUILDDIR?=	"${CURDIR}/src/build"
+PREFIX?=	"${CURDIR}/src/instroot"
+MAKE_ENV=	PREFIX="${PREFIX}" BUILDDIR="${BUILDDIR}"
 
 all: installer 
 build:
-	@cd src && make build
+	@cd src && make build ${MAKE_ENV}
 install:
-	@cd src && make install
+	@cd src && make install ${MAKE_ENV}
 uninstall:
-	@cd src && make uninstall
+	@cd src && make uninstall ${MAKE_ENV}
 clean:
-	@cd src && make clean
+	@cd src && make clean ${MAKE_ENV}
 buildclean:
-	@rm -rf build
+	@cd src && make buildclean ${MAKE_ENV}
 sourceclean:
 	@rm -rf wintcltk-${WINTCLTK_VERSION} wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 installerclean:
 	@rm -f ${INSTALLER} 
 releaseclean: sourceclean installerclean
 distclean: releaseclean buildclean 
-	@cd src && make distclean
+	@cd src && make distclean ${MAKE_ENV}
 allclean: distclean
-	@cd src && make allclean
+	@cd src && make allclean ${MAKE_ENV}
 
 installer: install ${INSTALLER}
 ${INSTALLER}:
 	@[ -x ${MAKENSIS} ] || ( echo "Counld not find ${MAKENSIS}, please install NSIS or point the MAKENSIS environment variable to makensis.exe"; exit 1 ) 
-	@cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" wintcltk.nsi \
+	@INSTROOT=`cd ${PREFIX} && pwd -W | sed -e 's,/,\\\\,g'`;\
+	 BUILDDIR=`cd ${BUILDDIR} && pwd -W | sed -e 's,/,\\\\,g'`;\
+		cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" //DINSTROOT="$${INSTROOT}" //DBUILDDIR="$${BUILDDIR}" wintcltk.nsi
 
 release: installer wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 
