@@ -14,6 +14,7 @@
 !endif
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
+!define THREAD_VERSION "2.6.5"
 !define XOTCL_VERSION "1.5.3"
 !define TCLLIB_VERSION "1.9"
 !define TKLIB_VERSION "0.4.1"
@@ -34,6 +35,7 @@
 !define POSTGRESQL_VERSION "8.2.3"
 
 !define XOTCL_LIBVER "153"
+!define THREAD_LIBVER "265"
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
 
@@ -69,7 +71,7 @@ InstallDirRegKey HKLM "Software\WinTclTk" "Install_Dir"
 
 !define MUI_ABORTWARNING
 !define MUI_WELCOMEPAGE_TITLE "Welcome to the WinTclTk ${VERSION} Setup Wizard"
-!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nThe following software is included in this package:\r\nTcl/Tk ${TCLTK_VERSION} (${TCL_BUILD})\r\nXOTcl ${XOTCL_VERSION}\r\nTgdbm 0.5 (GDBM ${GDBM_VERSION})\r\ntls ${TLS_VERSION} (OpenSSL ${OPENSSL_VERSION})\r\ntcllib ${TCLLIB_VERSION}, tklib ${TKLIB_VERSION}, BWidget ${BWIDGET_VERSION}\r\nmkZiplib ${MKZIPLIB_VERSION} (zlib ${ZLIB_VERSION}), TWAPI ${TWAPI_VERSION}\r\nMetaKit ${METAKIT_VERSION}, mysqltcl ${MYSQLTCL_VERSION}, Pgtcl ${PGTCL_VERSION} (libpq ${POSTGRESQL_VERSION})\r\nXOTclIDE ${XOTCLIDE_VERSION}, ASED ${ASED_VERSION}\r\n\r\nWWW: http://wintcltk.berlios.de"
+!define MUI_WELCOMEPAGE_TEXT "This wizard will guide you through the installation of WinTclTk.\r\n\r\nIf you have installed WinTclTk, please uninstall it first.\r\n\r\nWWW: http://wintcltk.berlios.de"
 !define MUI_ICON "${NSISDIR}\Contrib\Graphics\Icons\orange-install.ico"
 !define MUI_UNICON "${NSISDIR}\Contrib\Graphics\Icons\orange-uninstall.ico"
 
@@ -655,6 +657,16 @@ Section "XOTcl headers & libraries" xotcl-dev
   File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\libxotclstub153.a"
 SectionEnd
 SectionGroupEnd
+
+Section "Thread ${THREAD_VERSION}" thread
+  SectionIn 1 2
+  SetOutPath $INSTDIR\lib\thread${THREAD_VERSION}
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\ttrace.tcl"
+  SetOutPath $INSTDIR\doc\packages
+  CreateShortCut "$INSTDIR\doc\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+SectionEnd
 
 Section "Tgdbm ${TGDBM_VERSION}" tgdbm
   SectionIn 1 2
@@ -4574,9 +4586,12 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uri\urn-scheme.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\uuid.tcl"
-  Delete "$INSTDIR\lib\tgdbm0.5\pkgIndex.tcl"
-  Delete "$INSTDIR\lib\tgdbm0.5\qgdbm.tcl"
-  Delete "$INSTDIR\lib\tgdbm0.5\tgdbm.dll"
+  Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
+  Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
+  Delete "$INSTDIR\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\thread${THREAD_VERSION}\ttrace.tcl"
+  Delete "$INSTDIR\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
   Delete "$INSTDIR\lib\tk8.4\bgerror.tcl"
   Delete "$INSTDIR\lib\tk8.4\button.tcl"
   Delete "$INSTDIR\lib\tk8.4\choosedir.tcl"
@@ -5089,7 +5104,8 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tk8.4\demos\images"
   RMDir "$INSTDIR\lib\tk8.4\demos"
   RMDir "$INSTDIR\lib\tk8.4"
-  RMDir "$INSTDIR\lib\tgdbm0.5"
+  RMDir "$INSTDIR\lib\tgdbm${TGDBM_VERSION}"
+  RMDir "$INSTDIR\lib\thread${THREAD_VERSION}"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uri"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\units"
@@ -5173,7 +5189,6 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\asn"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\aes"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}"
-  RMDir "$INSTDIR\lib\tcl8.4\tgdbm0.5"
   RMDir "$INSTDIR\lib\tcl8.4\tcltest2.2"
   RMDir "$INSTDIR\lib\tcl8.4\opt0.4"
   RMDir "$INSTDIR\lib\tcl8.4\msgcat1.3"
@@ -5280,6 +5295,7 @@ LangString DESC_openssl-dev ${LANG_ENGLISH} "OpenSSL development headers and lib
 LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extension for Tcl"
 LangString DESC_xotcl-base ${LANG_ENGLISH} "XOTcl base install"
 LangString DESC_xotcl-dev ${LANG_ENGLISH} "XOTcl development headers and libraries"
+LangString DESC_thread ${LANG_ENGLISH} "Tcl Thread extension"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
@@ -5314,6 +5330,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-base} $(DESC_xotcl-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-dev} $(DESC_xotcl-dev)
+  !insertmacro MUI_DESCRIPTION_TEXT ${thread} $(DESC_thread)
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
@@ -5372,15 +5389,19 @@ Function .onSelChange
 
    SectionGetFlags ${xotcl-base} $1
    SectionGetFlags ${tgdbm} $2
-   SectionGetFlags ${gdbm-dll} $3
+   SectionGetFlags ${thread} $3
+   SectionGetFlags ${gdbm-dll} $4
    IntCmp $1 1 0 +3 0
    SectionSetFlags ${gdbm-dll} 17
-   Goto +7
+   Goto +10
    IntCmp $2 1 0 +3 0
    SectionSetFlags ${gdbm-dll} 17
+   Goto +7
+   IntCmp $3 1 0 +3 0
+   SectionSetFlags ${gdbm-dll} 17
    Goto +4
-   IntCmp $3 17 0 +3 0
-   IntOp $0 $3 - 16 
+   IntCmp $4 17 0 +3 0
+   IntOp $0 $4 - 16
    SectionSetFlags ${gdbm-dll} $0
 
    SectionGetFlags ${pgtcl} $1
@@ -5423,7 +5444,7 @@ Function .onSelChange
    IntOp $0 $3 - 16
    SectionSetFlags ${tcllib} $0
 
-   IntCmp $8 2 +3 0 0
+   IntCmp $8 2 +2 0 0
    Goto +7
    SectionSetFlags ${xotcl-base} 0
    SectionSetFlags ${bwidget} 0

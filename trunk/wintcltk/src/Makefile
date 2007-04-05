@@ -6,6 +6,7 @@
 # $Id$
 #
 TCLTK_VERSION=		8.4.14
+THREAD_VERSION=		2.6.5
 XOTCL_VERSION=		1.5.3
 TCLLIB_VERSION=		1.9
 TKLIB_VERSION=		0.4.1
@@ -22,6 +23,7 @@ TLS_VERSION=		1.5.0
 
 XOTCL_LIBVER=		153
 XOTCLIDE_FILEVER=	0.82-0
+THREAD_LIBVER=		265
 TKLIB_SHORT=		0.4
 PGTCL_DOCVER=		20070115
 PGTCL_REL=		1229
@@ -60,10 +62,10 @@ MESSAGE_UNZIP=		"You require unzip to extract this source. See SOURCES.txt for m
 MESSAGE_OPENSSL_PERL=	"You require perl to configure OpenSSL. See BUILD-MinGW.txt for more information."
 
 all: install
-install: install-tcl install-tk install-gdbm install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip *.htm *.html
 
@@ -207,6 +209,39 @@ clean-tgdbm:
 distclean-tgdbm:
 	@-rm -rf ${BUILDDIR}/tgdbm$(TGDBM_VERSION)
 
+# thread
+fetch-thread: ${DISTFILES} ${DISTFILES}/thread${THREAD_VERSION}.tar.gz 
+${DISTFILES}/thread${THREAD_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcl/thread${THREAD_VERSION}.tar.gz"
+
+extract-thread: fetch-thread ${BUILDDIR} ${BUILDDIR}/thread${THREAD_VERSION} 
+${BUILDDIR}/thread${THREAD_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/thread${THREAD_VERSION}.tar.gz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/thread${THREAD_VERSION}.tar.gz	
+
+configure-thread: install-tcl install-gdbm extract-thread ${BUILDDIR}/thread${THREAD_VERSION}/Makefile 
+${BUILDDIR}/thread${THREAD_VERSION}/Makefile:
+	@cd ${BUILDDIR}/thread${THREAD_VERSION} && ./configure --prefix=${PREFIX} --enable-shared --enable-threads \
+		--with-tcl=${PREFIX}/lib --with-gdbm 
+
+build-thread: configure-thread ${BUILDDIR}/thread${THREAD_VERSION}/thread${THREAD_LIBVER}.dll 
+${BUILDDIR}/thread${THREAD_VERSION}/thread${THREAD_LIBVER}.dll :
+	@cd ${BUILDDIR}/thread${THREAD_VERSION} && make
+
+install-thread: build-thread ${PREFIX}/lib/thread${THREAD_VERSION}/pkgIndex.tcl
+${PREFIX}/lib/thread${THREAD_VERSION}/pkgIndex.tcl: 
+	@cd ${BUILDDIR}/thread${THREAD_VERSION} && make install	
+
+uninstall-thread:
+	@-cd ${PREFIX}/lib && rm -rf thread${THREAD_VERSION}
+
+clean-thread: 
+	@-cd ${BUILDDIR}/thread${THREAD_VERSION} && make clean 
+
+distclean-thread: 
+	@-rm -rf ${BUILDDIR}/thread${THREAD_VERSION}	
+
 # xotcl
 fetch-xotcl: ${DISTFILES} ${DISTFILES}/xotcl-${XOTCL_VERSION}.tar.gz 
 ${DISTFILES}/xotcl-${XOTCL_VERSION}.tar.gz:
@@ -235,7 +270,7 @@ install-xotcl: build-xotcl ${PREFIX}/lib/xotclConfig.sh
 ${PREFIX}/lib/xotclConfig.sh: 
 	@cd ${BUILDDIR}/xotcl-${XOTCL_VERSION} && make install
 	
-uninstall-xotcl: uninstall-gdbm
+uninstall-xotcl:
 	@-cd ${PREFIX}/lib && rm -rf xotcl${XOTCL_VERSION} xotcl*.dll xotclConfig.sh
 	@-cd ${PREFIX}/include && rm xotcl.h xotclDecls.h xotclInt.h xotclIntDecls.h
 
