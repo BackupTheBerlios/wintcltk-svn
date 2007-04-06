@@ -1,0 +1,34 @@
+--- Makefile.orig	Sun Apr  1 22:53:24 2007
++++ Makefile	Sun Apr  1 22:56:46 2007
+@@ -0,0 +1,31 @@
++#!/bin/sh
++#
++# Mkziplib MinGW gcc Makefile 
++# Copyright (c) 2006 Martin Matuska
++#
++MKZIPLIB_SHORT=10
++CURDIR=$(shell pwd)
++PREFIX?=${CURDIR}/../../build
++LIBS?=$(shell which zlib1.dll)
++CFLAGS?=${CFLAGS}
++
++all: build
++
++build: mkZiplib${MKZIPLIB_SHORT}.dll 
++
++strip: build
++	strip mkZiplib${MKZIPLIB_SHORT}.dll
++
++mkZiplib${MKZIPLIB_SHORT}.dll: mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o
++	gcc ${CFLAGS} -shared -o mkZiplib${MKZIPLIB_SHORT}.dll mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o ${PREFIX}/bin/tcl84.dll ${LDFLAGS} ${LIBS}
++
++mkZiplib${MKZIPLIB_SHORT}.o:
++	gcc ${CFLAGS} -I${PREFIX}/include -c -o mkZiplib${MKZIPLIB_SHORT}.o mkZiplib${MKZIPLIB_SHORT}.c
++unzip.o:
++	gcc ${CFLAGS} -c -o unzip.o unzip.c
++
++zip.o:
++	gcc ${CFLAGS} -c -o zip.o zip.c
++
++clean:
++	rm -f *.o *.dll
