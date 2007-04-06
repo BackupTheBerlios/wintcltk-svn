@@ -3,6 +3,12 @@
 #
 # $Id$
 #
+2007-04-06 Martin Matuska <martin at matuska.org>
+	* added package tDOM 0.8.1
+	* added package thread 2.6.5
+	* moved all package documentation to doc/packages
+	* release 0.4.1
+
 2007-04-03 Martin Matuska <martin at matuska.org>
 	* XOTclIDE updated to 0.82
 	  - now starts with XotclStart.tcl

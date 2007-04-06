@@ -48,6 +48,12 @@ http://prdownloads.sourceforge.net/tcllib/BWidget-1.8.0.tar.gz
 OpenSSL:
 http://www.openssl.org/source/openssl-0.9.8e.tar.gz
 
+thread:
+http://prdownloads.sourceforge.net/tcl/thread2.6.5.tar.gz
+
+tDOM:
+http://prdownload.berlios.de/wintcltk/tDOM-0.8.1-mingw32-src.tar.gz
+
 Tls:
 http://prdownloads.sourceforge.net/tls/tls1.5.0-src.tar.gz
 

@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.4
+Version 0.4.1
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
@@ -18,6 +18,8 @@ XOTcl	 1.5.3
 tcllib	 1.9
 tklib	 0.4.1
 BWidget	 1.8.0
+thread	 2.6.5
+tDOM	 0.8.1
 tls      1.5.0
 Tgdbm	 0.5
 Metakit  2.4.9.6
