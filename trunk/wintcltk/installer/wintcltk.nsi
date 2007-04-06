@@ -15,6 +15,7 @@
 !define TCL_BUILD "MinGW"
 !define TCLTK_VERSION "8.4.14"
 !define THREAD_VERSION "2.6.5"
+!define TDOM_VERSION "0.8.1"
 !define XOTCL_VERSION "1.5.3"
 !define TCLLIB_VERSION "1.9"
 !define TKLIB_VERSION "0.4.1"
@@ -36,6 +37,7 @@
 
 !define XOTCL_LIBVER "153"
 !define THREAD_LIBVER "265"
+!define TDOM_LIBVER "081"
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
 
@@ -493,7 +495,7 @@ Section "XOTcl base" xotcl-base
   SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
   File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
   File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xotcl153.dll"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xotcl${XOTCL_LIBVER}.dll"
   SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
   File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\Agent.xotcl"
   File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\AgentManagement.xotcl"
@@ -654,18 +656,61 @@ Section "XOTcl headers & libraries" xotcl-dev
   SetOutPath $INSTDIR\lib
   File "${INSTROOT}\lib\xotclConfig.sh"
   SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\libxotclstub153.a"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\libxotclstub${XOTCL_LIBVER}.a"
+SectionEnd
+SectionGroupEnd
+
+SectionGroup "tDOM ${TDOM_VERSION}" tdom
+Section "tDOM base" tdom-base
+  Sectionin 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=tDOM-license.txt "${INSTROOT}\lib\tdom${TDOM_VERSION}\LICENSE"
+  SetOutPath $INSTDIR\doc\packages\tdom
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\category-index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\dom.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domDoc.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domNode.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expat.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expatapi.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\keyword-index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tdomcmd.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tnc.html"
+  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom.tcl"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom${TDOM_LIBVER}.dll"
+  SetOutPath $INSTDIR\doc\packages\tdom
+  CreateShortCut "$INSTDIR\doc\tDOM Documentation.lnk" "$INSTDIR\doc\packages\tdom\index.html" "" "$INSTDIR\doc\packages\tdom\index.html" 0
+SectionEnd
+
+Section "tDOM headers & libraries" tdom-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "${INSTROOT}\include\tdom.h"
+  SetOutPath $INSTDIR\lib
+  File "${INSTROOT}\lib\tdomConfig.sh"
+  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\libtdomstub${TDOM_LIBVER}.a"
 SectionEnd
 SectionGroupEnd
 
 Section "Thread ${THREAD_VERSION}" thread
   SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=thread-license.txt "${BUILDROOT}\thread${THREAD_VERSION}\license.terms"
+  SetOutPath $INSTDIR\doc\packages\thread
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\index.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\thread.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tpool.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tsv.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\ttrace.html"
   SetOutPath $INSTDIR\lib\thread${THREAD_VERSION}
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\ttrace.tcl"
-  SetOutPath $INSTDIR\doc\packages
-  CreateShortCut "$INSTDIR\doc\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+  SetOutPath $INSTDIR\doc\packages\thread
+  CreateShortCut "$INSTDIR\doc\thread Documentation.lnk" "$INSTDIR\doc\packages\thread\index.html" "" "$INSTDIR\doc\packages\thread\index.html" 0
 SectionEnd
 
 Section "Tgdbm ${TGDBM_VERSION}" tgdbm
@@ -3642,6 +3687,8 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\pthreads-license.lnk"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
+  Delete "$INSTDIR\doc\licenses\tDOM-license.txt"
+  Delete "$INSTDIR\doc\licenses\thread-license.txt"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
@@ -3759,6 +3806,21 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-query.html"
   Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref.html"
   Delete "$INSTDIR\doc\packages\pgtcl\stylesheet.css"
+  Delete "$INSTDIR\doc\packages\tdom\category-index.html"
+  Delete "$INSTDIR\doc\packages\tdom\dom.html"
+  Delete "$INSTDIR\doc\packages\tdom\domDoc.html"
+  Delete "$INSTDIR\doc\packages\tdom\domNode.html"
+  Delete "$INSTDIR\doc\packages\tdom\expat.html"
+  Delete "$INSTDIR\doc\packages\tdom\expatapi.html"
+  Delete "$INSTDIR\doc\packages\tdom\index.html"
+  Delete "$INSTDIR\doc\packages\tdom\keyword-index.html"
+  Delete "$INSTDIR\doc\packages\tdom\tdomcmd.html"
+  Delete "$INSTDIR\doc\packages\tdom\tnc.html"
+  Delete "$INSTDIR\doc\packages\thread\index.html"
+  Delete "$INSTDIR\doc\packages\thread\thread.html"
+  Delete "$INSTDIR\doc\packages\thread\tpool.html"
+  Delete "$INSTDIR\doc\packages\thread\tsv.html"
+  Delete "$INSTDIR\doc\packages\thread\ttrace.html"
   Delete "$INSTDIR\doc\packages\twapi\readme.txt"
   Delete "$INSTDIR\doc\packages\twapi\twapi.chm"
   Delete "$INSTDIR\doc\packages\xotcl\adapter-xotcl.html"
@@ -3885,7 +3947,9 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\pgtcl Documentation.lnk"
   Delete "$INSTDIR\doc\README.htm"
   Delete "$INSTDIR\doc\README.txt"
+  Delete "$INSTDIR\doc\tDOM Documentation.lnk"
   Delete "$INSTDIR\doc\TGDBM Documentation.lnk"
+  Delete "$INSTDIR\doc\thread Documentation.lnk"
   Delete "$INSTDIR\doc\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\TWAPI Documentation.lnk"
   Delete "$INSTDIR\doc\XOTcl Documentation.lnk"
@@ -3967,6 +4031,7 @@ Section "Uninstall"
   Delete "$INSTDIR\include\tcl.h"
   Delete "$INSTDIR\include\tclDecls.h"
   Delete "$INSTDIR\include\tclPlatDecls.h"
+  Delete "$INSTDIR\include\tdom.h"
   Delete "$INSTDIR\include\tk.h"
   Delete "$INSTDIR\include\tkDecls.h"
   Delete "$INSTDIR\include\tkIntXlibDecls.h"
@@ -4586,6 +4651,10 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uri\urn-scheme.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\uuid.tcl"
+  Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\libtdomstub081.a"
+  Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\tdom.tcl"
+  Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\tdom${TDOM_LIBVER}.dll"
   Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
   Delete "$INSTDIR\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
@@ -4946,7 +5015,7 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib\upvarcompat.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib\wafecompat.tcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib\xodoc.xotcl"
-  Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\libxotclstub153.a"
+  Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\libxotclstub${XOTCL_LIBVER}.a"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\patterns\adapter.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\patterns\ChainOfResponsibility.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\patterns\composite.xotcl"
@@ -4987,7 +5056,7 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xml\xmlExample.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xml\xmlRecreatorVisitor.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xml\xoXML.xotcl"
-  Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xotcl153.dll"
+  Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xotcl${XOTCL_LIBVER}.dll"
   Delete "$INSTDIR\lib\xotclConfig.sh"
   Delete "$INSTDIR\lib\xotclexpat0.9\pkgIndex.tcl"
   Delete "$INSTDIR\lib\xotclexpat0.9\xotclexpat09.dll"
@@ -5105,6 +5174,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tk8.4\demos"
   RMDir "$INSTDIR\lib\tk8.4"
   RMDir "$INSTDIR\lib\tgdbm${TGDBM_VERSION}"
+  RMDir "$INSTDIR\lib\tdom${TDOM_VERSION}"
   RMDir "$INSTDIR\lib\thread${THREAD_VERSION}"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid"
   RMDir "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uri"
@@ -5215,6 +5285,8 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\xotcl"
   RMDir "$INSTDIR\doc\packages\twapi"
   RMDir "$INSTDIR\doc\packages\tls"
+  RMDir "$INSTDIR\doc\packages\thread"
+  RMDir "$INSTDIR\doc\packages\tdom"
   RMDir "$INSTDIR\doc\packages\pgtcl"
   RMDir "$INSTDIR\doc\packages\mysqltcl"
   RMDir "$INSTDIR\doc\packages\mkZiplib"
@@ -5296,6 +5368,9 @@ LangString DESC_xotcl ${LANG_ENGLISH} "Object-oriented scripting language extens
 LangString DESC_xotcl-base ${LANG_ENGLISH} "XOTcl base install"
 LangString DESC_xotcl-dev ${LANG_ENGLISH} "XOTcl development headers and libraries"
 LangString DESC_thread ${LANG_ENGLISH} "Tcl Thread extension"
+LangString DESC_tdom ${LANG_ENGLISH} "XML data processing extension"
+LangString DESC_tdom-base ${LANG_ENGLISH} "tDOM base files and dll library"
+LangString DESC_tdom-dev ${LANG_ENGLISH} "tDOM development headers and libraries"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
@@ -5331,6 +5406,9 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-base} $(DESC_xotcl-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-dev} $(DESC_xotcl-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${thread} $(DESC_thread)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tdom} $(DESC_tdom)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tdom-base} $(DESC_tdom-base)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tdom-dev} $(DESC_tdom-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)

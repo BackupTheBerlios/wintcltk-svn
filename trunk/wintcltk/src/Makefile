@@ -20,10 +20,12 @@ METAKIT_VERSION=	2.4.9.6
 MYSQLTCL_VERSION=	3.02
 PGTCL_VERSION=		1.6.0
 TLS_VERSION=		1.5.0
+TDOM_VERSION=		0.8.1
 
 XOTCL_LIBVER=		$(subst .,,$(XOTCL_VERSION))
 XOTCLIDE_FILEVER=	$(XOTCLIDE_VERSION)-0
 THREAD_LIBVER=		$(subst .,,$(THREAD_VERSION))
+TDOM_LIBVER=		$(subst .,,$(TDOM_VERSION))
 TKLIB_SHORT=		0.4
 PGTCL_DOCVER=		20070115
 PGTCL_REL=		1229
@@ -62,10 +64,10 @@ MESSAGE_UNZIP=		"You require unzip to extract this source. See SOURCES.txt for m
 MESSAGE_OPENSSL_PERL=	"You require perl to configure OpenSSL. See BUILD-MinGW.txt for more information."
 
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip *.htm *.html
 
@@ -218,7 +220,8 @@ ${DISTFILES}/thread${THREAD_VERSION}.tar.gz:
 extract-thread: fetch-thread ${BUILDDIR} ${BUILDDIR}/thread${THREAD_VERSION} 
 ${BUILDDIR}/thread${THREAD_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/thread${THREAD_VERSION}.tar.gz.md5 || exit 1
-	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/thread${THREAD_VERSION}.tar.gz	
+	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/thread${THREAD_VERSION}.tar.gz
+	@cd ${BUILDDIR}/thread${THREAD_VERSION} && patch -p0 < ${PATCHDIR}/thread.patch
 
 configure-thread: install-tcl install-gdbm extract-thread ${BUILDDIR}/thread${THREAD_VERSION}/Makefile 
 ${BUILDDIR}/thread${THREAD_VERSION}/Makefile:
@@ -241,6 +244,43 @@ clean-thread:
 
 distclean-thread: 
 	@-rm -rf ${BUILDDIR}/thread${THREAD_VERSION}	
+
+# tdom
+fetch-tdom: ${DISTFILES} ${DISTFILES}/tDOM-${TDOM_VERSION}-mingw32-src.tar.gz 
+${DISTFILES}/tDOM-${TDOM_VERSION}-mingw32-src.tar.gz :
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://download.berlios.de/wintcltk/tDOM-${TDOM_VERSION}-mingw32-src.tar.gz"
+
+extract-tdom: fetch-tdom ${BUILDDIR} ${BUILDDIR}/tDOM-${TDOM_VERSION} 
+${BUILDDIR}/tDOM-${TDOM_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tDOM-${TDOM_VERSION}-mingw32-src.tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/tDOM-${TDOM_VERSION}-mingw32-src.tar.gz
+
+
+configure-tdom: install-tcl extract-tdom ${BUILDDIR}/tDOM-${TDOM_VERSION}/Makefile 
+${BUILDDIR}/tDOM-${TDOM_VERSION}/Makefile:
+	@cd ${BUILDDIR}/tDOM-${TDOM_VERSION} && ./configure --prefix="${PREFIX}" --with-tcl="${PREFIX}/lib"	
+
+build-tdom: configure-tdom ${BUILDDIR}/tDOM-${TDOM_VERSION}/tdom${TDOM_LIBVER}.dll
+${BUILDDIR}/tDOM-${TDOM_VERSION}/tdom${TDOM_LIBVER}.dll:
+	@cd ${BUILDDIR}/tDOM-${TDOM_VERSION} && make && strip *.dll
+
+install-tdom: build-tdom ${PREFIX}/lib/tdomConfig.sh
+${PREFIX}/lib/tdomConfig.sh: 
+	@cd ${BUILDDIR}/tDOM-${TDOM_VERSION} && make install
+	@mkdir ${PREFIX}/lib/tdom${TDOM_VERSION}/doc
+	@cp ${BUILDDIR}/tDOM-${TDOM_VERSION}/LICENSE ${PREFIX}/lib/tdom${TDOM_VERSION}
+	
+uninstall-tdom:
+	@-cd ${PREFIX}/lib && rm -rf tdom${TDOM_VERSION} tdomConfig.sh
+	@-cd ${PREFIX}/include && rm tdom.h
+	@-cd ${PREFIX}/man && rm -rf mann
+
+clean-tdom: 
+	@-cd ${BUILDDIR}/tDOM-${TDOM_VERSION} && make clean 
+
+distclean-tdom: 
+	@-rm -rf ${BUILDDIR}/tDOM-${TDOM_VERSION}
 
 # xotcl
 fetch-xotcl: ${DISTFILES} ${DISTFILES}/xotcl-${XOTCL_VERSION}.tar.gz 
