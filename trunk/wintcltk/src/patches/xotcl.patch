@@ -96,8 +96,8 @@ diff -bur xotcl-1.5.3.orig/library/store/XOTclSdbm/Makefile.in xotcl-1.5.3/libra
  
  AC_SUBST(SHARED_LIB_SUFFIX)
  AC_SUBST(UNSHARED_LIB_SUFFIX)
---- xotcl-1.5.3.orig/Makefile.in	Mon Apr  2 12:15:26 2007
-+++ xotcl-1.5.3/Makefile.in	Mon Apr  2 12:20:49 2007
+--- xotcl-1.5.3.orig/Makefile.in	Thu Sep 28 09:19:12 2006
++++ xotcl-1.5.3/Makefile.in	Fri Apr  6 12:42:12 2007
 @@ -75,7 +75,7 @@
  #========================================================================
  
@@ -115,31 +115,39 @@ diff -bur xotcl-1.5.3.orig/library/store/XOTclSdbm/Makefile.in xotcl-1.5.3/libra
  
  #========================================================================
  # Start of user-definable TARGETS section
-@@ -400,6 +401,11 @@
+@@ -400,6 +401,13 @@
  
  .c.@OBJEXT@:
  	$(COMPILE) -c `@CYGPATH@ $<` -o $@
 +
 +xotclrc.o:
 +	$(WINDRES) $(INCLUDES) -DXOTCL_MAJOR_VERSION=@XOTCL_MAJOR_VERSION@ \
-+		-DXOTCL_MINOR_VERSION=@XOTCL_MINOR_VERSION@ \
++		-DXOTCL_COMMAVER=@XOTCL_MAJOR_VERSION@,@XOTCL_MINOR_VERSION@,$(subst .,,@XOTCL_RELEASE_LEVEL@),0 \
++		-DXOTCL_FILEVER=\\\"@XOTCL_MAJOR_VERSION@@XOTCL_MINOR_VERSION@$(subst .,,@XOTCL_RELEASE_LEVEL@)\\\" \
++		-DXOTCL_VERSION=\\\"@XOTCL_MAJOR_VERSION@.@XOTCL_MINOR_VERSION@@XOTCL_RELEASE_LEVEL@\\\" \
 +		-i win/rc/xotcl.rc -o xotclrc.o
  
  #========================================================================
  # xotcl shells
---- xotcl-1.5.3.orig/win/rc/xotcl.rc	Mon Apr  2 12:38:54 2007
-+++ xotcl-1.5.3/win/rc/xotcl.rc	Mon Apr  2 12:39:19 2007
-@@ -41,10 +41,10 @@
+--- xotcl-1.5.3.orig/win/rc/xotcl.rc	Sun May 23 22:50:39 2004
++++ xotcl-1.5.3/win/rc/xotcl.rc	Fri Apr  6 12:30:07 2007
+@@ -21,8 +21,8 @@
+ 
+ 
+ VS_VERSION_INFO VERSIONINFO
+- FILEVERSION	XOTCL_MAJOR_VERSION ,XOTCL_MINOR_VERSION ,0 , 0
+- PRODUCTVERSION	XOTCL_MAJOR_VERSION ,XOTCL_MINOR_VERSION ,0 , 0
++ FILEVERSION	XOTCL_COMMAVER
++ PRODUCTVERSION	XOTCL_COMMAVER
+  FILEFLAGSMASK	0x3fL
+ #if DEBUG == 1
+  FILEFLAGS 	VS_FF_DEBUG
+@@ -39,7 +39,7 @@
+ 		BEGIN
+ 			VALUE "FileDescription", "XOTcl language extension for Tcl\0"
  			VALUE "Authors", "Gustaf Neumann and Uwe Zdun\0"
- 			VALUE "OriginalFilename", "xotcl" STRINGIFY(JOIN(XOTCL_MAJOR_VERSION,XOTCL_MINOR_VERSION)) SUFFIX ".dll\0"
+-			VALUE "OriginalFilename", "xotcl" STRINGIFY(JOIN(XOTCL_MAJOR_VERSION,XOTCL_MINOR_VERSION)) SUFFIX ".dll\0"
++			VALUE "OriginalFilename", "xotcl" XOTCL_FILEVER ".dll\0"
  			VALUE "CompanyName", "Vienna University of Economics and Business Administration, University of Essen\0"
--			VALUE "FileVersion", XOTCL_VERSION
-+			VALUE "FileVersion", STRINGIFY(XOTCL_VERSION)
+ 			VALUE "FileVersion", XOTCL_VERSION
  			VALUE "LegalCopyright", "Copyright \251 1999-2001\0"
--			VALUE "ProductName", "XOTcl " XOTCL_VERSION " for Windows\0"
--			VALUE "ProductVersion", XOTCL_VERSION
-+			VALUE "ProductName", "XOTcl " STRINGIFY(XOTCL_VERSION) " for Windows\0"
-+			VALUE "ProductVersion", STRINGIFY(XOTCL_VERSION)
- 		END
- 	END
- 	BLOCK "VarFileInfo"
