@@ -429,7 +429,7 @@ Section "XOTcl base" xotcl-base
   Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File /oname=XOTcl-license "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
-  SetOutPath $INSTDIR\doc\packages\xotcl
+  SetOutPath $INSTDIR\doc\packages\files\xotcl
   File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapter-xotcl.html"
   File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapterExample-xotcl.html"
   File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\cascaded-message-filter.gif"
@@ -642,8 +642,8 @@ Section "XOTcl base" xotcl-base
   SetOutPath "$INSTDIR\lib\xotclsdbm1.2"
   File "${INSTROOT}\lib\xotclsdbm1.2\pkgIndex.tcl"
   File "${INSTROOT}\lib\xotclsdbm1.2\xotclsdbm12.dll"
-  SetOutPath $INSTDIR\doc\packages\xotcl
-  CreateShortCut "$INSTDIR\doc\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\xotcl\index.html" "" "$INSTDIR\doc\packages\xotcl\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\xotcl
+  CreateShortCut "$INSTDIR\doc\packages\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\files\xotcl\index.html" "" "$INSTDIR\doc\packages\files\xotcl\index.html" 0
 SectionEnd
 
 Section "XOTcl headers & libraries" xotcl-dev
@@ -665,7 +665,7 @@ Section "tDOM base" tdom-base
   Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File /oname=tDOM-license.txt "${INSTROOT}\lib\tdom${TDOM_VERSION}\LICENSE"
-  SetOutPath $INSTDIR\doc\packages\tdom
+  SetOutPath $INSTDIR\doc\packages\files\tdom
   File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\category-index.html"
   File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\dom.html"
   File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domDoc.html"
@@ -680,8 +680,8 @@ Section "tDOM base" tdom-base
   File "${INSTROOT}\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom.tcl"
   File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom${TDOM_LIBVER}.dll"
-  SetOutPath $INSTDIR\doc\packages\tdom
-  CreateShortCut "$INSTDIR\doc\tDOM Documentation.lnk" "$INSTDIR\doc\packages\tdom\index.html" "" "$INSTDIR\doc\packages\tdom\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\tdom
+  CreateShortCut "$INSTDIR\doc\packages\tDOM Documentation.lnk" "$INSTDIR\doc\packages\files\tdom\index.html" "" "$INSTDIR\doc\packages\files\tdom\index.html" 0
 SectionEnd
 
 Section "tDOM headers & libraries" tdom-dev
@@ -698,8 +698,8 @@ SectionGroupEnd
 Section "Thread ${THREAD_VERSION}" thread
   SectionIn 1 2
   SetOutPath $INSTDIR\doc\licenses
-  File /oname=thread-license.txt "${BUILDROOT}\thread${THREAD_VERSION}\license.terms"
-  SetOutPath $INSTDIR\doc\packages\thread
+  File /oname=thread-license.txt "${BUILDDIR}\thread${THREAD_VERSION}\license.terms"
+  SetOutPath $INSTDIR\doc\packages\files\thread
   File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\index.html"
   File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\thread.html"
   File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tpool.html"
@@ -709,8 +709,8 @@ Section "Thread ${THREAD_VERSION}" thread
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\thread${THREAD_VERSION}\ttrace.tcl"
-  SetOutPath $INSTDIR\doc\packages\thread
-  CreateShortCut "$INSTDIR\doc\thread Documentation.lnk" "$INSTDIR\doc\packages\thread\index.html" "" "$INSTDIR\doc\packages\thread\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\thread
+  CreateShortCut "$INSTDIR\doc\packages\thread Documentation.lnk" "$INSTDIR\doc\packages\files\thread\index.html" "" "$INSTDIR\doc\packages\files\thread\index.html" 0
 SectionEnd
 
 Section "Tgdbm ${TGDBM_VERSION}" tgdbm
@@ -719,8 +719,8 @@ Section "Tgdbm ${TGDBM_VERSION}" tgdbm
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
-  SetOutPath $INSTDIR\doc\packages
-  CreateShortCut "$INSTDIR\doc\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+  SetOutPath $INSTDIR\doc\packages\files
+  CreateShortCut "$INSTDIR\doc\packages\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
 SectionEnd
 
 Section "tls ${TLS_VERSION}" tls
@@ -729,10 +729,10 @@ Section "tls ${TLS_VERSION}" tls
   File "${INSTROOT}\lib\tls${TLS_VERSION}\tls15.dll"
   File "${INSTROOT}\lib\tls${TLS_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\tls${TLS_VERSION}\tls.tcl"
-  SetOutPath $INSTDIR\doc\packages\tls
+  SetOutPath $INSTDIR\doc\packages\files\tls
   File /oname=index.html "${INSTROOT}\lib\tls${TLS_VERSION}\tls.htm"
-  SetOutPath $INSTDIR\doc\packages\tls
-  CreateShortCut "$INSTDIR\doc\Tls Documentation.lnk" "$INSTDIR\doc\packages\tls\index.html" "" "$INSTDIR\doc\packages\tls\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\tls
+  CreateShortCut "$INSTDIR\doc\packages\Tls Documentation.lnk" "$INSTDIR\doc\packages\files\tls\index.html" "" "$INSTDIR\doc\packages\files\tls\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
   File /oname=tls-license.txt "${INSTROOT}\lib\tls${TLS_VERSION}\license.terms"
 SectionEnd
@@ -1340,7 +1340,7 @@ SectionEnd
 
 Section "BWidget ${BWIDGET_VERSION}" bwidget
   Sectionin 1 2
-  SetOutPath $INSTDIR\doc\packages\BWidget
+  SetOutPath $INSTDIR\doc\packages\files\BWidget
   File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ArrowButton.html"
   File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Button.html"
   File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ButtonBox.html"
@@ -1473,10 +1473,10 @@ Section "BWidget ${BWIDGET_VERSION}" bwidget
   File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\fr.rc"
   SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests
   File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\tests\entry.test"
-  SetOutPath $INSTDIR\doc\packages\xotcl
-  CreateShortCut "$INSTDIR\doc\BWidget Documentation.lnk" "$INSTDIR\doc\packages\bwidget\index.html" "" "$INSTDIR\doc\packages\bwidget\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\xotcl
+  CreateShortCut "$INSTDIR\doc\packages\BWidget Documentation.lnk" "$INSTDIR\doc\packages\files\bwidget\index.html" "" "$INSTDIR\doc\packages\files\bwidget\index.html" 0
   SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
-  CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
 SectionEnd
 
 Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
@@ -1488,14 +1488,14 @@ Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
   File "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\pkgIndex.tcl"
   SetOutPath $INSTDIR\bin
   File "${INSTROOT}\bin\zlib1.dll"
-  SetOutPath $INSTDIR\doc\packages\mkZiplib
+  SetOutPath $INSTDIR\doc\packages\files\mkZiplib
   File /oname=index.html "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib.htm"
-  CreateShortCut "$INSTDIR\doc\mkZiplib Documentation.lnk" "$INSTDIR\doc\packages\mkZiplib\index.html" "" "$INSTDIR\doc\packages\mkZiplib\index.html" 0
+  CreateShortCut "$INSTDIR\doc\packages\mkZiplib Documentation.lnk" "$INSTDIR\doc\packages\files\mkZiplib\index.html" "" "$INSTDIR\doc\packages\files\mkZiplib\index.html" 0
 SectionEnd
 
 Section "TWAPI ${TWAPI_VERSION}" twapi
   Sectionin 1 2
-  SetOutPath $INSTDIR\doc\packages\twapi
+  SetOutPath $INSTDIR\doc\packages\files\twapi
   File "${INSTROOT}\lib\twapi${TWAPI_VERSION}\doc\readme.txt"
   File "${INSTROOT}\lib\twapi${TWAPI_VERSION}\doc\twapi.chm"
   SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
@@ -1547,10 +1547,10 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
   File "${INSTROOT}\lib\twapi${TWAPI_VERSION}\tests\thread.vbs"
   File "${INSTROOT}\lib\twapi${TWAPI_VERSION}\tests\try.test"
   File "${INSTROOT}\lib\twapi${TWAPI_VERSION}\tests\ui.test"
-  SetOutPath $INSTDIR\doc\packages\twapi
-  CreateShortCut "$INSTDIR\doc\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\twapi\twapi.chm" "" "$INSTDIR\doc\packages\twapi\twapi.chm" 0
+  SetOutPath $INSTDIR\doc\packages\files\twapi
+  CreateShortCut "$INSTDIR\doc\packages\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\files\twapi\twapi.chm" "" "$INSTDIR\doc\packages\files\twapi\twapi.chm" 0
   SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
-  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
@@ -1559,12 +1559,12 @@ Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
   File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmySQL.dll"
   File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmysqltcl.dll"
   File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\mysqltcl
+  SetOutPath $INSTDIR\doc\packages\files\mysqltcl
   File /oname=index.html "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\mysqltcl.html"
   SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\mysqltcl Documentation.lnk" "$INSTDIR\doc\packages\mysqltcl\index.html" "" "$INSTDIR\doc\packages\mysqltcl\index.html" 0
+  CreateShortCut "$INSTDIR\doc\packages\mysqltcl Documentation.lnk" "$INSTDIR\doc\packages\files\mysqltcl\index.html" "" "$INSTDIR\doc\packages\files\mysqltcl\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
 SectionEnd
 
 Section "pgtcl ${PGTCL_VERSION}" pgtcl
@@ -1575,7 +1575,7 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
   SetOutPath $INSTDIR\lib\pgtcl${PGTCL_VERSION}
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pgtcl.dll"
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\pgtcl
+  SetOutPath $INSTDIR\doc\packages\files\pgtcl
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\index.html"
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\ln-legalnotice.html"
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-blocking.html"
@@ -1643,9 +1643,9 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref.html"
   File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\stylesheet.css"
   SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\pgtcl\index.html" "" "$INSTDIR\doc\packages\pgtcl\index.html" 0
+  CreateShortCut "$INSTDIR\doc\packages\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\files\pgtcl\index.html" "" "$INSTDIR\doc\packages\files\pgtcl\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
   File /oname=PostgreSQL-license.txt "${INSTROOT}\lib\COPYRIGHT-PostgreSQL"
   File /oname=pgtcl-license.txt "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\COPYRIGHT"
 SectionEnd
@@ -1664,10 +1664,10 @@ Section "Metakit ${METAKIT_VERSION}" metakit
   File "${INSTROOT}\lib\Mk4tcl\pkgIndex.tcl"
   SetOutPath $INSTDIR\bin
   File "${INSTROOT}\bin\libmk4.dll"
-  SetOutPath $INSTDIR\doc\packages\metakit
+  SetOutPath $INSTDIR\doc\packages\files\metakit
   File /oname=index.html "${INSTROOT}\lib\Mk4tcl\mk4tcl.html"
   SetOutPath $INSTDIR\doc 
-  CreateShortCut "$INSTDIR\doc\Metakit Documentation.lnk" "$INSTDIR\doc\packages\metakit\index.html" "" "$INSTDIR\doc\packages\metakit\index.html" 0
+  CreateShortCut "$INSTDIR\doc\packages\Metakit Documentation.lnk" "$INSTDIR\doc\packages\files\metakit\index.html" "" "$INSTDIR\doc\packages\files\metakit\index.html" 0
 SectionEnd
 SectionGroupEnd
 
@@ -2544,7 +2544,7 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "${INSTROOT}\ased3.0\tools\visualregexp\README"
   File "${INSTROOT}\ased3.0\tools\visualregexp\visual_regexp.tcl"
   SetOutPath $INSTDIR\ased3.0
-  CreateShortCut "$INSTDIR\doc\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
   SetOutPath $INSTDIR
   CreateShortCut "$SMPROGRAMS\WinTclTk\ASED TclTk IDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\ased.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
   CreateShortCut "$SMPROGRAMS\WinTclTk\tkcon.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\tools\tkcon\tkcon.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
@@ -2554,7 +2554,7 @@ Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
   Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
   File /oname=XOTclIDE-license "${BUILDDIR}\xotclIDE-${XOTCLIDE_VERSION}\LICENSE"
-  SetOutPath $INSTDIR\doc\packages\xotclIDE
+  SetOutPath $INSTDIR\doc\packages\files\xotclIDE
   File "${BUILDDIR}\xotclIDE-${XOTCLIDE_VERSION}\docs\appdeployer.png"
   File "${BUILDDIR}\xotclIDE-${XOTCLIDE_VERSION}\docs\breakpointedit.png"
   File "${BUILDDIR}\xotclIDE-${XOTCLIDE_VERSION}\docs\breakpointslist.png"
@@ -2677,8 +2677,8 @@ Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
   File "${INSTROOT}\lib\xotclIDE\XotclIDEFromDB.tcl"
   SetOutPath $INSTDIR
   CreateShortCut "$SMPROGRAMS\WinTclTk\XOTclIDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\lib\xotclIDE\XotclStart.tcl$\"" "$INSTDIR\bin\tclsh84.exe" 0
-  SetOutPath $INSTDIR\doc\packages\xotclIDE
-  CreateShortCut "$INSTDIR\doc\XOTclIDE Documentation.lnk" "$INSTDIR\doc\packages\xotclIDE\index.html" "" "$INSTDIR\doc\packages\xotclIDE\index.html" 0
+  SetOutPath $INSTDIR\doc\packages\files\xotclIDE
+  CreateShortCut "$INSTDIR\doc\packages\XOTclIDE Documentation.lnk" "$INSTDIR\doc\packages\files\xotclIDE\index.html" "" "$INSTDIR\doc\packages\files\xotclIDE\index.html" 0
 SectionEnd
 SectionGroupEnd
 
@@ -2689,7 +2689,7 @@ Section "GDBM DLL" gdbm-dll
   SetOutPath $INSTDIR\bin
   File "${INSTROOT}\bin\gdbm.dll"
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\packages\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
 SectionEnd
 Section "GDBM headers & libraries" gdbm-dev
   SectionIn 2
@@ -3669,7 +3669,6 @@ Section "Uninstall"
   Delete "$INSTDIR\bin\tk84.dll"
   Delete "$INSTDIR\bin\wish84.exe"
   Delete "$INSTDIR\bin\zlib1.dll"
-  Delete "$INSTDIR\doc\BWidget Documentation.lnk"
   Delete "$INSTDIR\doc\ChangeLog.txt"
   Delete "$INSTDIR\doc\LICENSE.txt"
   Delete "$INSTDIR\doc\licenses\ased-license.lnk"
@@ -3695,265 +3694,266 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\XOTcl-license"
   Delete "$INSTDIR\doc\licenses\XOTclIDE-license"
   Delete "$INSTDIR\doc\licenses\zlib-license.txt"
-  Delete "$INSTDIR\doc\Metakit Documentation.lnk"
-  Delete "$INSTDIR\doc\mysqltcl Documentation.lnk"
-  Delete "$INSTDIR\doc\mkZiplib Documentation.lnk"
-  Delete "$INSTDIR\doc\packages\BWidget\ArrowButton.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Button.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ButtonBox.html"
-  Delete "$INSTDIR\doc\packages\BWidget\BWidget.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ComboBox.html"
-  Delete "$INSTDIR\doc\packages\BWidget\contents.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Dialog.html"
-  Delete "$INSTDIR\doc\packages\BWidget\DragSite.html"
-  Delete "$INSTDIR\doc\packages\BWidget\DropSite.html"
-  Delete "$INSTDIR\doc\packages\BWidget\DynamicHelp.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Entry.html"
-  Delete "$INSTDIR\doc\packages\BWidget\index.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Label.html"
-  Delete "$INSTDIR\doc\packages\BWidget\LabelEntry.html"
-  Delete "$INSTDIR\doc\packages\BWidget\LabelFrame.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ListBox.html"
-  Delete "$INSTDIR\doc\packages\BWidget\MainFrame.html"
-  Delete "$INSTDIR\doc\packages\BWidget\MessageDlg.html"
-  Delete "$INSTDIR\doc\packages\BWidget\navtree.html"
-  Delete "$INSTDIR\doc\packages\BWidget\NoteBook.html"
-  Delete "$INSTDIR\doc\packages\BWidget\options.htm"
-  Delete "$INSTDIR\doc\packages\BWidget\PagesManager.html"
-  Delete "$INSTDIR\doc\packages\BWidget\PanedWindow.html"
-  Delete "$INSTDIR\doc\packages\BWidget\PanelFrame.html"
-  Delete "$INSTDIR\doc\packages\BWidget\PasswdDlg.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ProgressBar.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ProgressDlg.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ScrollableFrame.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ScrolledWindow.html"
-  Delete "$INSTDIR\doc\packages\BWidget\ScrollView.html"
-  Delete "$INSTDIR\doc\packages\BWidget\SelectColor.html"
-  Delete "$INSTDIR\doc\packages\BWidget\SelectFont.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Separator.html"
-  Delete "$INSTDIR\doc\packages\BWidget\SpinBox.html"
-  Delete "$INSTDIR\doc\packages\BWidget\StatusBar.html"
-  Delete "$INSTDIR\doc\packages\BWidget\TitleFrame.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Tree.html"
-  Delete "$INSTDIR\doc\packages\BWidget\Widget.html"
-  Delete "$INSTDIR\doc\packages\tls\index.html"
-  Delete "$INSTDIR\doc\packages\metakit\index.html"
-  Delete "$INSTDIR\doc\packages\mkZiplib\index.html"
-  Delete "$INSTDIR\doc\packages\mysqltcl\index.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\index.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\ln-legalnotice.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-blocking.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-cancelrequest.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-conndefaults.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-connect.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-disconnect.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-escape-bytea.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-escape-string.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-exec-params.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-exec-prepared.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-exec.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-execute.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-getresult.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-isbusy.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-listen.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-close.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-creat.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-export.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-import.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-lseek.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-open.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-read.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-tell.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-unlink.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-lo-write.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-notice-handler.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-on-connection-loss.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-parameter-status.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-quote.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-result.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-result-callback.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-select.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery-params.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-sendquery-prepared.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-transaction-status.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pg-unescape-bytea.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-async.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-asyncevent.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-cnq-execute.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-copy.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-dblist.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picstore-esc.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picstore-lo.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picstore-pq.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picview-esc.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picview-lo.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-picview-pq.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-example-results.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-examples.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-load-static.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-loading-load.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-loading.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-make-macos.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-make-win.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-make.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-overview.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-preface.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-async.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-connstatus.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-largeobj.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-notif.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref-query.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\pgtcl-ref.html"
-  Delete "$INSTDIR\doc\packages\pgtcl\stylesheet.css"
-  Delete "$INSTDIR\doc\packages\tdom\category-index.html"
-  Delete "$INSTDIR\doc\packages\tdom\dom.html"
-  Delete "$INSTDIR\doc\packages\tdom\domDoc.html"
-  Delete "$INSTDIR\doc\packages\tdom\domNode.html"
-  Delete "$INSTDIR\doc\packages\tdom\expat.html"
-  Delete "$INSTDIR\doc\packages\tdom\expatapi.html"
-  Delete "$INSTDIR\doc\packages\tdom\index.html"
-  Delete "$INSTDIR\doc\packages\tdom\keyword-index.html"
-  Delete "$INSTDIR\doc\packages\tdom\tdomcmd.html"
-  Delete "$INSTDIR\doc\packages\tdom\tnc.html"
-  Delete "$INSTDIR\doc\packages\thread\index.html"
-  Delete "$INSTDIR\doc\packages\thread\thread.html"
-  Delete "$INSTDIR\doc\packages\thread\tpool.html"
-  Delete "$INSTDIR\doc\packages\thread\tsv.html"
-  Delete "$INSTDIR\doc\packages\thread\ttrace.html"
-  Delete "$INSTDIR\doc\packages\twapi\readme.txt"
-  Delete "$INSTDIR\doc\packages\twapi\twapi.chm"
-  Delete "$INSTDIR\doc\packages\xotcl\adapter-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\adapterExample-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\cascaded-message-filter.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\changeXOTclVersion-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\composite-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\compositeExample-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\features.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\filter-inheritance.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\forwardtest-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\ftp-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\htmllib-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\index.html"
-  Delete "$INSTDIR\doc\packages\xotcl\JufGdbmStorage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\langRef-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\langRef-xotcl.pdf"
-  Delete "$INSTDIR\doc\packages\xotcl\langRef.xotcl"
-  Delete "$INSTDIR\doc\packages\xotcl\link-checker-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\logo-100.jpg"
-  Delete "$INSTDIR\doc\packages\xotcl\make-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\makeDoc-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\MemStorage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\metadataAnalyzer-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\mixinStrategy-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\MultiStorage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\next-path-mixin-movement.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\next-path.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\obj_class_system.gif"
-  Delete "$INSTDIR\doc\packages\xotcl\observer-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\package-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\parameter-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\Persistence-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\persistenceExample-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\pinger-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\pkgIndex.tcl"
-  Delete "$INSTDIR\doc\packages\xotcl\Script-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\secure-webclient-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\secure-webserver-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\Serializer-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\simpleFilters-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\slottest-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\soccerClub-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\speedtest-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\staticMetadata-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\Storage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\TclGdbmStorage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\test-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\testo-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\testx-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\TextFileStorage-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\TODO"
-  Delete "$INSTDIR\doc\packages\xotcl\trace-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\tutorial.html"
-  Delete "$INSTDIR\doc\packages\xotcl\tutorial.pdf"
-  Delete "$INSTDIR\doc\packages\xotcl\UNIVERSAL-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\upvarcompat-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\webclient-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\webserver-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\xo-daemon.html"
-  Delete "$INSTDIR\doc\packages\xotcl\xo-whichPkg.html"
-  Delete "$INSTDIR\doc\packages\xotcl\xocomm-test.html"
-  Delete "$INSTDIR\doc\packages\xotcl\xodoc-xotcl.html"
-  Delete "$INSTDIR\doc\packages\xotcl\xotcl-doc.css"
-  Delete "$INSTDIR\doc\packages\xotclIDE\appdeployer.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\breakpointedit.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\breakpointslist.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch01.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch01s02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch01s03.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch01s04.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch02s02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch03.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch03s02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch03s03.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch03s04.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch03s05.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04s02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04s03.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04s04.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04s05.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch04s06.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch05.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\ch05s02.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\changes.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\codestructure.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\commentsScanner.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\compbrowser.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\compbrowser_fstep.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\confbrowser.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\configmap.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\debugger.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\errorstack.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\evalinspect.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\evalprint.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\evalsubstitute.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\extdebugger.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\firstconfigmap.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\index.html"
-  Delete "$INSTDIR\doc\packages\xotclIDE\inspector.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\inspectret.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\invokeProcDialog.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\kitdeployer.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\LoadPackage.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\parenthesis.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\saveComponents.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\syntaxchecker.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\syntaxedit.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\syntaxhighlighting.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tracker.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tutFirstProc.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tut_cbrowser.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tut_createinstance.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tut_instancemethod.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tut_instancevar.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\tut_sampleapp.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\variabletracker.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\versionsystem.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\versionsystem_er.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\workspace.png"
-  Delete "$INSTDIR\doc\packages\xotclIDE\xotclidesmalltalk.png"
-  Delete "$INSTDIR\doc\pgtcl Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\BWidget Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\Metakit Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\mysqltcl Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\mkZiplib Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\pgtcl Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\tDOM Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\TGDBM Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\Tls Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\TWAPI Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\XOTcl Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\XOTclIDE Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ArrowButton.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Button.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ButtonBox.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\BWidget.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ComboBox.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\contents.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Dialog.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\DragSite.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\DropSite.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\DynamicHelp.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Entry.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\index.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Label.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\LabelEntry.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\LabelFrame.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ListBox.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\MainFrame.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\MessageDlg.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\navtree.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\NoteBook.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\options.htm"
+  Delete "$INSTDIR\doc\packages\files\BWidget\PagesManager.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\PanedWindow.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\PanelFrame.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\PasswdDlg.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ProgressBar.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ProgressDlg.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ScrollableFrame.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ScrolledWindow.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\ScrollView.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\SelectColor.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\SelectFont.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Separator.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\SpinBox.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\StatusBar.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\TitleFrame.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Tree.html"
+  Delete "$INSTDIR\doc\packages\files\BWidget\Widget.html"
+  Delete "$INSTDIR\doc\packages\files\tls\index.html"
+  Delete "$INSTDIR\doc\packages\files\metakit\index.html"
+  Delete "$INSTDIR\doc\packages\files\mkZiplib\index.html"
+  Delete "$INSTDIR\doc\packages\files\mysqltcl\index.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\index.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\ln-legalnotice.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-blocking.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-cancelrequest.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-conndefaults.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-connect.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-disconnect.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-escape-bytea.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-escape-string.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-exec-params.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-exec-prepared.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-exec.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-execute.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-getresult.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-isbusy.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-listen.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-close.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-creat.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-export.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-import.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-lseek.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-open.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-read.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-tell.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-unlink.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-lo-write.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-notice-handler.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-on-connection-loss.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-parameter-status.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-quote.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-result.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-result-callback.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-select.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-sendquery.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-sendquery-params.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-sendquery-prepared.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-transaction-status.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pg-unescape-bytea.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-async.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-asyncevent.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-cnq-execute.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-copy.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-dblist.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picstore-esc.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picstore-lo.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picstore-pq.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picview-esc.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picview-lo.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-picview-pq.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-example-results.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-examples.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-load-static.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-loading-load.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-loading.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-make-macos.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-make-win.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-make.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-overview.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-preface.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-async.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-connstatus.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-largeobj.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-notif.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-query.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref.html"
+  Delete "$INSTDIR\doc\packages\files\pgtcl\stylesheet.css"
+  Delete "$INSTDIR\doc\packages\files\tdom\category-index.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\dom.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\domDoc.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\domNode.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\expat.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\expatapi.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\index.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\keyword-index.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\tdomcmd.html"
+  Delete "$INSTDIR\doc\packages\files\tdom\tnc.html"
+  Delete "$INSTDIR\doc\packages\files\thread\index.html"
+  Delete "$INSTDIR\doc\packages\files\thread\thread.html"
+  Delete "$INSTDIR\doc\packages\files\thread\tpool.html"
+  Delete "$INSTDIR\doc\packages\files\thread\tsv.html"
+  Delete "$INSTDIR\doc\packages\files\thread\ttrace.html"
+  Delete "$INSTDIR\doc\packages\files\twapi\readme.txt"
+  Delete "$INSTDIR\doc\packages\files\twapi\twapi.chm"
+  Delete "$INSTDIR\doc\packages\files\xotcl\adapter-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\adapterExample-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\cascaded-message-filter.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\changeXOTclVersion-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\composite-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\compositeExample-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\features.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\filter-inheritance.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\forwardtest-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\ftp-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\htmllib-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\index.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\JufGdbmStorage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\langRef-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\langRef-xotcl.pdf"
+  Delete "$INSTDIR\doc\packages\files\xotcl\langRef.xotcl"
+  Delete "$INSTDIR\doc\packages\files\xotcl\link-checker-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\logo-100.jpg"
+  Delete "$INSTDIR\doc\packages\files\xotcl\make-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\makeDoc-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\MemStorage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\metadataAnalyzer-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\mixinStrategy-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\MultiStorage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\next-path-mixin-movement.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\next-path.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\obj_class_system.gif"
+  Delete "$INSTDIR\doc\packages\files\xotcl\observer-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\package-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\parameter-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\Persistence-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\persistenceExample-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\pinger-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\pkgIndex.tcl"
+  Delete "$INSTDIR\doc\packages\files\xotcl\Script-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\secure-webclient-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\secure-webserver-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\Serializer-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\simpleFilters-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\slottest-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\soccerClub-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\speedtest-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\staticMetadata-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\Storage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\TclGdbmStorage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\test-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\testo-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\testx-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\TextFileStorage-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\TODO"
+  Delete "$INSTDIR\doc\packages\files\xotcl\trace-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\tutorial.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\tutorial.pdf"
+  Delete "$INSTDIR\doc\packages\files\xotcl\UNIVERSAL-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\upvarcompat-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\webclient-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\webserver-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\xo-daemon.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\xo-whichPkg.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\xocomm-test.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\xodoc-xotcl.html"
+  Delete "$INSTDIR\doc\packages\files\xotcl\xotcl-doc.css"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\appdeployer.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\breakpointedit.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\breakpointslist.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch01.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch01s02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch01s03.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch01s04.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch02s02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch03.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch03s02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch03s03.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch03s04.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch03s05.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04s02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04s03.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04s04.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04s05.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch04s06.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch05.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\ch05s02.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\changes.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\codestructure.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\commentsScanner.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\compbrowser.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\compbrowser_fstep.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\confbrowser.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\configmap.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\debugger.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\errorstack.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\evalinspect.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\evalprint.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\evalsubstitute.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\extdebugger.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\firstconfigmap.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\index.html"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\inspector.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\inspectret.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\invokeProcDialog.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\kitdeployer.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\LoadPackage.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\parenthesis.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\saveComponents.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\syntaxchecker.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\syntaxedit.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\syntaxhighlighting.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tracker.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tutFirstProc.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tut_cbrowser.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tut_createinstance.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tut_instancemethod.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tut_instancevar.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\tut_sampleapp.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\variabletracker.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\versionsystem.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\versionsystem_er.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\workspace.png"
+  Delete "$INSTDIR\doc\packages\files\xotclIDE\xotclidesmalltalk.png"
   Delete "$INSTDIR\doc\README.htm"
   Delete "$INSTDIR\doc\README.txt"
-  Delete "$INSTDIR\doc\tDOM Documentation.lnk"
-  Delete "$INSTDIR\doc\TGDBM Documentation.lnk"
-  Delete "$INSTDIR\doc\thread Documentation.lnk"
-  Delete "$INSTDIR\doc\Tls Documentation.lnk"
-  Delete "$INSTDIR\doc\TWAPI Documentation.lnk"
-  Delete "$INSTDIR\doc\XOTcl Documentation.lnk"
-  Delete "$INSTDIR\doc\XOTclIDE Documentation.lnk"
   Delete "$INSTDIR\include\dbm.h"
   Delete "$INSTDIR\include\gdbm.h"
   Delete "$INSTDIR\include\mk4.h"
@@ -4651,6 +4651,7 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uri\urn-scheme.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid\uuid.tcl"
+  Delete "$INSTDIR\lib\tdomConfig.sh"
   Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\libtdomstub081.a"
   Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tdom${TDOM_VERSION}\tdom.tcl"
@@ -5281,17 +5282,18 @@ Section "Uninstall"
   RMDir "$INSTDIR\include\X11"
   RMDir "$INSTDIR\include\openssl"
   RMDir "$INSTDIR\include"
-  RMDir "$INSTDIR\doc\packages\xotclIDE"
-  RMDir "$INSTDIR\doc\packages\xotcl"
-  RMDir "$INSTDIR\doc\packages\twapi"
-  RMDir "$INSTDIR\doc\packages\tls"
-  RMDir "$INSTDIR\doc\packages\thread"
-  RMDir "$INSTDIR\doc\packages\tdom"
-  RMDir "$INSTDIR\doc\packages\pgtcl"
-  RMDir "$INSTDIR\doc\packages\mysqltcl"
-  RMDir "$INSTDIR\doc\packages\mkZiplib"
-  RMDir "$INSTDIR\doc\packages\metakit"
-  RMDir "$INSTDIR\doc\packages\BWidget"
+  RMDir "$INSTDIR\doc\packages\files\xotclIDE"
+  RMDir "$INSTDIR\doc\packages\files\xotcl"
+  RMDir "$INSTDIR\doc\packages\files\twapi"
+  RMDir "$INSTDIR\doc\packages\files\tls"
+  RMDir "$INSTDIR\doc\packages\files\thread"
+  RMDir "$INSTDIR\doc\packages\files\tdom"
+  RMDir "$INSTDIR\doc\packages\files\pgtcl"
+  RMDir "$INSTDIR\doc\packages\files\mysqltcl"
+  RMDir "$INSTDIR\doc\packages\files\mkZiplib"
+  RMDir "$INSTDIR\doc\packages\files\metakit"
+  RMDir "$INSTDIR\doc\packages\files\BWidget"
+  RMDir "$INSTDIR\doc\packages\files"
   RMDir "$INSTDIR\doc\packages"
   RMDir "$INSTDIR\doc\licenses"
   RMDir "$INSTDIR\doc"
