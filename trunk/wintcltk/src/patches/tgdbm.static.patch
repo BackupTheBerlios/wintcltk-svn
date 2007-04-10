@@ -1,0 +1,38 @@
+--- Makefile.mingw.orig	Tue Apr 10 13:31:40 2007
++++ Makefile.mingw	Tue Apr 10 13:31:56 2007
+@@ -11,7 +11,7 @@
+ TCLSH		= tclsh84
+ TCL			= D:/Programme/Tcl
+ TCL_LIB 	= $(TCL)/lib/tclstub84.lib
+-TCL_LIB_L	= tclstub84
++TCL_LIB_L	= tclstub84s
+ GDBM_DIR  	= ../gdbm-1.8.3
+ GDBM_WINDIR	= $(GDBM_DIR)/win32
+ 
+@@ -23,7 +23,7 @@
+ TGDBMDEF_NAME = tgdbm.def
+ 
+ CC			= gcc
+-CFLAGS		= -Wall -DWIN32 -D_MSC_VER -DUSE_TCL_STUBS
++CFLAGS		= -Wall -DWIN32 -D_MSC_VER -DUSE_TCL_STUBS -DGDBM_STATIC
+ #  -DUSE_DLL
+ # append the needed include-paths: -I/??
+ INCLUDES	= -I$(GDBM_WINDIR) -I$(GDBM_DIR) -I$(TCL)/include
+@@ -35,7 +35,7 @@
+ # ############################################################
+ # nothing should be changed here
+ # ############################################################
+-TARGET	= tgdbm.dll
++TARGET	= tgdbm.a
+ 
+ all: 	setup $(TARGET)
+ 
+@@ -46,7 +46,7 @@
+ 	$(CC) $(CFLAGS) $(INCLUDES) -o $@ -c $<
+ 
+ $(TARGET): $(OUTDIR)/tgdbm.o
+-	gcc -shared -o $@ $< $(LIBS)
++	ar rcs $@ $<
+ 
+ # for older versions of mingw
+ # $(TARGET): $(OUTDIR)/tgdbm.o

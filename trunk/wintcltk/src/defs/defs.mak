@@ -1,9 +1,9 @@
 #!/bin/sh
 #
-# WinTclTk Makefile 
+# WinTclTk make.defs
 # Copyright (c) 2006 Martin Matuska
 #
-# $Id$
+# $Id: Makefile 90 2007-04-06 11:58:32Z mmatuska $
 #
 TCLTK_VERSION=		8.4.14
 THREAD_VERSION=		2.6.5
@@ -61,13 +61,3 @@ PATCHDIR=	${CURDIR}/patches
 MESSAGE_WGET=		"You require wget to auto-download the sources. See SOURCES.txt for more information."
 MESSAGE_UNZIP=		"You require unzip to extract this source. See SOURCES.txt for more information."
 MESSAGE_OPENSSL_PERL=	"You require perl to configure OpenSSL. See BUILD-MinGW.txt for more information."
-
-ifndef STATIC_BUILD
-BUILDDIR?=	${CURDIR}/build
-PREFIX?=	${CURDIR}/instroot
-include defs/shared.mak
-else
-BUILDDIR?=	${CURDIR}/builds
-PREFIX?=	${CURDIR}/instroots
-include defs/static.mak
-endif

@@ -1,6 +1,6 @@
---- Makefile.orig	Sun Apr  1 22:53:24 2007
-+++ Makefile	Sun Apr  1 22:56:46 2007
-@@ -0,0 +1,31 @@
+--- Makefile.orig	Tue Apr 10 15:55:22 2007
++++ Makefile	Tue Apr 10 15:55:14 2007
+@@ -0,0 +1,43 @@
 +#!/bin/sh
 +#
 +# Mkziplib MinGW gcc Makefile 
@@ -10,25 +10,37 @@
 +CURDIR=$(shell pwd)
 +PREFIX?=${CURDIR}/../../build
 +LIBS?=$(shell which zlib1.dll)
-+CFLAGS?=${CFLAGS}
++CFLAGS=$(CFLAGS) -DUSE_TCL_STUBS
++INCLUDES?=-I$(PREFIX)/include
++TCLLIB= $(PREFIX)/lib/libtclstub84s.a
++
++ifdef STATIC_BUILD
++LIBEXT=	.a
++else
++LIBEXT=	.dll
++endif
 +
 +all: build
 +
-+build: mkZiplib${MKZIPLIB_SHORT}.dll 
++build: mkZiplib$(MKZIPLIB_SHORT)$(LIBEXT)
 +
 +strip: build
-+	strip mkZiplib${MKZIPLIB_SHORT}.dll
++	strip mkZiplib$(MKZIPLIB_SHORT)$(LIBEXT)
 +
-+mkZiplib${MKZIPLIB_SHORT}.dll: mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o
-+	gcc ${CFLAGS} -shared -o mkZiplib${MKZIPLIB_SHORT}.dll mkZiplib${MKZIPLIB_SHORT}.o zip.o unzip.o ${PREFIX}/bin/tcl84.dll ${LDFLAGS} ${LIBS}
++mkZiplib$(MKZIPLIB_SHORT)$(LIBEXT): mkZiplib$(MKZIPLIB_SHORT).o zip.o unzip.o
++ifndef STATIC_BUILD
++	gcc -shared $(CFLAGS) $(INCLUDES) -o mkZiplib$(MKZIPLIB_SHORT)$(LIBEXT) mkZiplib$(MKZIPLIB_SHORT).o zip.o unzip.o $(LFLAGS) $(LDFLAGS) $(TCLLIB) $(LIBS)
++else
++	ar rcs mkZiplib$(MKZIPLIB_SHORT)$(LIBEXT) mkZiplib$(MKZIPLIB_SHORT).o zip.o unzip.o
++endif
 +
-+mkZiplib${MKZIPLIB_SHORT}.o:
-+	gcc ${CFLAGS} -I${PREFIX}/include -c -o mkZiplib${MKZIPLIB_SHORT}.o mkZiplib${MKZIPLIB_SHORT}.c
++mkZiplib$(MKZIPLIB_SHORT).o:
++	gcc $(CFLAGS) $(INCLUDES) -c -o mkZiplib$(MKZIPLIB_SHORT).o mkZiplib$(MKZIPLIB_SHORT).c
 +unzip.o:
-+	gcc ${CFLAGS} -c -o unzip.o unzip.c
++	gcc $(CFLAGS) -c -o unzip.o unzip.c
 +
 +zip.o:
-+	gcc ${CFLAGS} -c -o zip.o zip.c
++	gcc $(CFLAGS) -c -o zip.o zip.c
 +
 +clean:
-+	rm -f *.o *.dll
++	rm -f *.o *.a *.dll
