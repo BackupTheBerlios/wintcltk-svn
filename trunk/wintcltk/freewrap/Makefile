@@ -17,13 +17,22 @@
 # Name of the application program
 #
 ## Name of the current extension to include
-## FW_EXT=TCLSH  for TCL only program
-## FW_EXT=       for TCL/TK only
-#FW_EXT=TCLSH
-FW_EXT=
 
 # Where are we?
 CURDIR=$(shell pwd)
+
+# Distribution and destination
+DIST?=	std
+DISTDIR=	$(CURDIR)/dist/std
+
+ifeq ($(DIST),xotcl)
+XOTCL=1
+DISTDIR=	$(CURDIR)/dist/xotcl
+endif
+ifeq ($(DIST),full)
+FULL=1
+DISTDIR=	$(CURDIR)/dist/full
+endif
 
 # WinTclTk source dir
 SRCDIR?=	$(CURDIR)/../src
@@ -37,10 +46,6 @@ INSTROOT?=	$(SRCDIR)/instroots
 # WinTckTk build directory
 BUILDDIR?=	$(SRCDIR)/builds
 
-#
-## Full name of the application
-PROG = freewrap$(FW_EXT)
-
 # Current application program revision number
 PROGREV = 6.2
 
@@ -49,6 +54,9 @@ FBUILD=		$(CURDIR)/build
 
 # Path to the sources directory
 FBSRC=		$(CURDIR)/src
+
+# Path to output directory
+FBOUT=		$(CURDIR)/dist
 
 # TCL/TK version info
 TCLVERSIONDOT = 8.4
@@ -80,13 +88,6 @@ SED = sed
 # Resfile
 RESFILE = ${BUILDDIR}/tcl$(TCLTK_VERSION)/win/tclsh.rc
 
-# X11 stuff
-# A "-I" switch that can be used when compiling to make all of the
-# X11 include files accessible .
-#X11_INCLUDES		= -I/usr/X11R6/include
-
-# Linker switch(es) to use to link with the X11 library archive.
-#X11_LIB_SWITCHES = -L/usr/lib -L/usr/X11R6/lib -lX11 -ldl -lieee -lm -lpthread
 ###### Select a C compiler
 #
 CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS 
@@ -95,11 +96,17 @@ CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS
 #
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB $(X11_INCLUDES)
 
+ifndef FULL
+CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM
+endif
+ifndef XOTCL
+CFLAGS+= -DWITHOUT_XOTCL
+endif
+
 ###### Add these options to CFLAGS when linking object files into
 #      an executable.
 #
 LFLAGS = -static -mwindows
-#LFLAGS = -static -Xlinker -S
 ###### Name of the ZIP archiver program
 #
 ZIP := $(ZIP)
@@ -134,7 +141,7 @@ HDR_ZLIB = -I$(INSTALL_INCL)
 
 ###### The linker option used to link against the TCL library
 #
-ifeq ($(FW_EXT),TCLSH)
+ifdef WITHOUT_TK
 LIB_TK =
 OPT_TK = -DWITHOUT_TK=1
 else
@@ -143,15 +150,13 @@ endif
 
 ###### The name of the top-level directory of the TK script library
 #
-ifeq ($(FW_EXT),TCLSH)
+ifdef WITHOUT_TK
 SCRIPT_TK =
 ZSCRIPT_TK =
 else
 SCRIPT_TK = $(INSTALL_LIB)/tk$(TCLVERSIONDOT)/tclIndex
 ZSCRIPT_TK = zipdir/tk/tclIndex
 endif
-
-XOTCLSCRIPTS= zipdir/xotcl/xml
 
 ###### The linker option needed to include the Z compression library.
 #      This library is required by both the Img extension and the
@@ -161,13 +166,17 @@ LIB_Z = $(INSTALLDIR)/libz.a
 
 # Other libs
 LIB_GDBM = $(INSTALLDIR)/libgdbm-static.a
+LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
+ifdef FULL
 LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
-LIB_MKZIPLIB= $(INSTALLDIR)/mkZiplib$(MKZIPLIB_VERSION)/mkZiplib$(MKZIPLIB_LIBVER).a
 LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
 LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
-LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
 LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
+XOTCL = 1
+endif
+ifdef XOTCL
 LIB_XOTCL = $(INSTALLDIR)/xotcl$(XOTCL_LIBVER).a 
+endif
 XODIR = $(INSTALLDIR)/xotcl$(XOTCL_VERSION)
 	
 ###### Select which Tcl extensions to include.
@@ -236,22 +245,31 @@ $(ZIPOBJDIR)/zipup.o
 #
 OBJ = $(OBJSZIP) \
 $(FBUILD)/freelib.o \
-$(FBUILD)/freewrap$(FW_EXT).o \
+$(FBUILD)/freewrap.o \
 $(FBUILD)/fwcrypt.o \
 $(FBUILD)/zvfs.o \
-$(FBUILD)/tkwinico.o \
 $(FBUILD)/tclsh.res.o
+
+ifndef WITHOUT_TK
+OBJ += $(FBUILD)/tkwinico.o
+endif
 
 # All script directories
 #
 ZSCRIPTS = $(ZSCRIPT_TCL) $(ZSCRIPT_TK) 
-XOTCL_SCRIPTS = zipdir/xotcl/xml
 
-all: $(FBUILD) $(FBUILD)/null.zip $(PROG)$(EXE) freewish$(FW_EXT)$(EXE)
+ifdef XOTCL
+XOTCL_SCRIPTS = zipdir/xotcl/xml
+endif
+
+all: $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
 
 $(FBUILD):
 	@$(MKDIR) $(FBUILD)
 
+$(DISTDIR):
+	@$(MKDIR) $(DISTDIR)	
+	
 zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 	@$(MKDIR) zipdir
 	@$(CP) $(FBSRC)/freewrap.tcl zipdir
@@ -259,18 +277,18 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(PROG)$(EXE): $(PROG)_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS)
-	@$(RM) $(PROG)$(EXE)
-ifeq ($(FW_EXT),TCLSH)
+$(DISTDIR)/freewrap$(EXE): $(DISTDIR)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS)
+	@$(RM) $(DISTDIR)/freewrap$(EXE)
+ifdef WITHOUT_TK
 	@$(DELTREE) zipdir/tk
 endif
-	@$(CP) $(PROG)_bare$(EXE) $(PROG).zip
-	@$(CAT) $(FBUILD)/null.zip >>$(PROG).zip
-	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(PROG)$(EXE) $(PROGREV) $(PROG)_bare$(EXE)
-	@cd zipdir; pwd; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` ../$(PROG).zip *; cd ..
-	@$(RENAME) $(PROG).zip $(PROG)$(EXE)
-	@$(RM) freewish$(FW_EXT)$(EXE)
-	@$(CP) $(PROG)$(EXE) freewish$(FW_EXT)$(EXE)
+	@$(CP) $(DISTDIR)/freewrap_bare$(EXE) $(DISTDIR)/freewrap.zip
+	@$(CAT) $(FBUILD)/null.zip >> $(DISTDIR)/freewrap.zip
+	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(DISTDIR)/freewrap$(EXE) $(PROGREV) $(DISTDIR)/freewrap_bare$(EXE)
+	@cd zipdir; pwd; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
+	@$(RENAME) $(DISTDIR)/freewrap.zip $(DISTDIR)/freewrap$(EXE)
+	@$(RM) $(DISTDIR)/freewish$(EXE)
+	@$(CP) $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
 
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
@@ -301,13 +319,13 @@ zipdir/xotcl/xml:
 $(FBUILD)/tclsh.res.o:
 	@cd $(FBSRC) && windres $(HDR_TK) -i $(RESFILE) -o $(FBUILD)/tclsh.res.o
 	
-$(PROG)_bare$(EXE): $(OBJ) $(LIBS)
-	@$(CC) $(LFLAGS) -o $(PROG)_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+$(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
+	@$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
 # Comment out the following line if you do not want to compress the executable file with UPX.
-	@[ -x $(UPX) ] && $(UPX) -9 $(PROG)_bare$(EXE)
+	@[ -x $(UPX) ] && $(UPX) -9 $(DISTDIR)/freewrap_bare$(EXE)
 	
-$(FBUILD)/freewrap$(FW_EXT).o: $(FBSRC)/main.c
-	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap$(FW_EXT).o -c $(FBSRC)/main.c
+$(FBUILD)/freewrap.o: $(FBSRC)/main.c
+	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
 
 $(FBSRC)/fwcrypt.c: $(FBSRC)/setinfo.tcl
 	@cd ${FBSRC} && $(TCLSH) setinfo.tcl
@@ -328,9 +346,5 @@ $(FBUILD)/zipmain.o : $(FBSRC)/zipmain.c
 	@$(CC) $(CFLAGS) $(OPT) -I$(ZIPOBJDIR) -DUNIX -DASMV -DASM_CRC -DNO_STRCHR -DNO_STRRCHR -DCRYPT -DHAVE_DIRENT_H -DHAVE_TERMIOS_H -o $(FBUILD)/zipmain.o -c $(FBSRC)/zipmain.c
 
 clean:
-	$(RM) core
-	$(RM) -rf $(FBUILD)
-	$(RM) $(PROG)_bare$(EXE) freewish$(FW_EXT)$(EXE)
-	$(RM) $(PROG)$(EXE)
-	$(RM) *.zip
-	$(DELTREE) zipdir
+	$(RM) $(DISTDIR)/*.exe $(DISTDIR)/*.zip
+	$(DELTREE) $(FBUILD) zipdir
