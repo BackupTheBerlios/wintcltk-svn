@@ -1,11 +1,8 @@
-#!/bin/sh
-#
 # WinTclTk shared.mak
 # Copyright (c) 2006-07 Martin Matuska
 #
-# $Id: Makefile 90 2007-04-06 11:58:32Z mmatuska $
+# $Id$
 #
-
 all: install
 install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
 uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
@@ -127,9 +124,8 @@ ${DISTFILES}/tgdbm${TGDBM_VERSION}.zip:
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
 extract-tgdbm: fetch-tgdbm ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
-${BUILDDIR}/tgdbm${TGDBM_VERSION}:
+${BUILDDIR}/tgdbm${TGDBM_VERSION}: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tgdbm${TGDBM_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/tgdbm$(TGDBM_VERSION).zip
 	@cd ${BUILDDIR}/tgdbm$(TGDBM_VERSION) && rm tgdbm.dll
 
@@ -465,9 +461,8 @@ ${DISTFILES}/twapi-${TWAPI_VERSION}.zip:
 	@cd ${DISTFILES} && ${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/twapi/twapi-${TWAPI_VERSION}.zip"
 
 extract-twapi: fetch-twapi ${BUILDDIR} ${BUILDDIR}/twapi 
-${BUILDDIR}/twapi:
+${BUILDDIR}/twapi: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/twapi-${TWAPI_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/twapi-${TWAPI_VERSION}.zip
 
 configure-twapi: extract-twapi
@@ -496,9 +491,8 @@ ${DISTFILES}/mysqltcl.html:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
  
 extract-mysqltcl: fetch-mysqltcl ${BUILDDIR} ${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION} 
-${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION}:
+${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION}: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/mysqltcl-${MYSQLTCL_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mysqltcl-${MYSQLTCL_VERSION}.zip
 
 configure-mysqltcl: extract-mysqltcl
@@ -640,9 +634,8 @@ extract-pgtcl: fetch-pgtcl ${BUILDDIR} ${BUILDDIR}/pgtcl${PGTCL_VERSION} ${BUILD
 ${BUILDDIR}/pgtcl${PGTCL_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/pgtcl${PGTCL_VERSION}.tar.gz.md5 || exit 1
 	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/pgtcl${PGTCL_VERSION}.tar.gz
-${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}:
+${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/pgtcldocs-${PGTCL_DOCVER}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/pgtcldocs-${PGTCL_DOCVER}.zip
 
 configure-pgtcl: extract-pgtcl install-postgresql ${BUILDDIR}/pgtcl${PGTCL_VERSION}/Makefile
@@ -678,9 +671,8 @@ ${DISTFILES}/ased${ASED_VERSION}.zip:
 	@cd ${DISTFILES} && ${WGET} "http://www.mms-forum.de/ased/ased${ASED_VERSION}.zip"
 
 extract-ased: fetch-ased ${BUILDDIR} ${BUILDDIR}/${ASED_DIR} 
-${BUILDDIR}/${ASED_DIR}:
+${BUILDDIR}/${ASED_DIR}: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/ased${ASED_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/ased${ASED_VERSION}.zip
 	@cd ${BUILDDIR} && patch -p0 < ${PATCHDIR}/ased${ASED_VERSION}.patch
 
@@ -737,7 +729,7 @@ ${DISTFILES}/mkziplib${MKZIPLIB_SHORT}.zip:
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
 
 extract-mkziplib: fetch-mkziplib ${BUILDDIR} ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile
-${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile:
+${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile: $(UNZIP)
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/mkZiplib${MKZIPLIB_SHORT}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mkZiplib${MKZIPLIB_SHORT}.zip
 	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && rm -f *.dll *.exe

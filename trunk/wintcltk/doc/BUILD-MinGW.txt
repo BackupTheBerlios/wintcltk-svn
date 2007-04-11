@@ -25,10 +25,6 @@ To compile the WinTclTk installer, you require:
 NSIS Installer
 URL: http://nsis.sourceforge.net/Download
 
-ZIP (zip.exe, required if creating compressed source release):
-URL: http://prdownloads.sourceforge.net/gnuwin32/zip-2.31-bin.zip
-URL: http://prdownloads.sourceforge.net/gnuwin32/zip-2.31.exe
-
 -------------------------------------------------------------
 Compilation instructions:
 -------------------------------------------------------------

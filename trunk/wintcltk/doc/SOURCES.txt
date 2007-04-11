@@ -9,7 +9,7 @@
 Downloading sources automatically:
 ----------------------------------------------------------------------
 
-To download sources automatically you require wget.exe and unzip.exe
+To download sources automatically you require wget.exe
 
 wget.exe
 
@@ -17,13 +17,7 @@ Can be downloaded from:
 http://prdownloads.sourceforge.net/mingw/wget-1.9.1-mingwPORT.tar.bz2
 http://xoomer.alice.it/hherold/
 
-unzip.exe
-
-Can be downloaded from:
-http://prdownloads.sourceforge.net/gnuwin32/unzip-5.51-1-bin.zip
-http://prdownloads.sourceforge.net/gnuwin32/unzip-5.51-1.exe
-
-Both wget.exe and unzip.exe need to be placed in executable paths
+wget.exe needs to be placed in an executable path
 (e.g. C:\MinGW\bin or C:\MSYS\1.0\bin)
 
 ----------------------------------------------------------------------
@@ -94,3 +88,9 @@ http://www.mms-forum.de/ased/ased3.0b16.zip
 
 XOTclIDE:
 http://www.xdobry.de/xotclIDE/xotclIDE-0.82-0.tar.gz
+
+Zip:
+ftp://ftp.info-zip.org/pub/infozip/src/zip232.tgz
+
+Unzip:
+ftp://ftp.info-zip.org/pub/infozip/src/unzip552.tgz

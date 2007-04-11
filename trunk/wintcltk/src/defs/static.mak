@@ -1,11 +1,8 @@
-#!/bin/sh
+# WinTclTk static.mak
+# Copyright (c) 2006-07 Martin Matuska
 #
-# WinTclTk Makefile 
-# Copyright (c) 2006 Martin Matuska
+# $Id$
 #
-# $Id: Makefile 90 2007-04-06 11:58:32Z mmatuska $
-#
-
 all: install
 install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-tcllib install-tklib install-bwidget install-mkziplib install-twapi 
 uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi
@@ -127,10 +124,9 @@ ${DISTFILES}/tgdbm${TGDBM_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
-extract-tgdbm: fetch-tgdbm ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
+extract-tgdbm: fetch-tgdbm $(UNZIP) ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
 ${BUILDDIR}/tgdbm${TGDBM_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tgdbm${TGDBM_VERSION}.zip.md5 || exit 1
-	@[ -x "${UNZIP}" ] || ( echo "$(MESSAGE_UNZIP)"; exit 1 ) 
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/tgdbm$(TGDBM_VERSION).zip
 	@cd ${BUILDDIR}/tgdbm$(TGDBM_VERSION) && patch -p0 < ${PATCHDIR}/tgdbm.static.patch
 	@cd ${BUILDDIR}/tgdbm$(TGDBM_VERSION) && rm tgdbm.dll
@@ -404,3 +400,20 @@ clean-zlib:
 distclean-zlib:
 	@-rm -rf ${BUILDDIR}/zlib-${ZLIB_VERSION}
 
+# static-zip
+
+extract-zip-static: fetch-zip ${BUILDDIR} ${BUILDDIR}/zip-${ZIP_VERSION}
+${BUILDDIR}/zip-${ZIP_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/zip$(ZIP_SHORT).tgz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/zip$(ZIP_SHORT).tgz
+	
+configure-zip-static: extract-zip-static install-zlib
+build-zip-static: configure-zip-static ${BUILDDIR}/zip-${ZIP_VERSION}/zip.exe
+${BUILDDIR}/zip-${ZIP_VERSION}/zip.exe:
+	@cd ${BUILDDIR}/zip-${ZIP_VERSION} && make -f win32/makefile.gcc USEZLIB=1 LOC="-I$(PREFIX)/include" LD="gcc -L$(PREFIX)/lib"
+
+clean-zip-static:
+	@cd ${BUILDDIR}/zip-${ZIP_VERSION} && make -f win32/makefile.gcc clean
+	
+distclean-zip-static:
+	@-rm -rf ${BUILDDIR}/zip-${ZIP_VERSION}

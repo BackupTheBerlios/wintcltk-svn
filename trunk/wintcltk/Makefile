@@ -5,14 +5,17 @@
 #
 # $Id$
 #
+CURDIR=	$(shell pwd)
+SRCDIR=	$(CURDIR)/src
+#
+include $(SRCDIR)/defs/defs.mak
+#
 WINTCLTK_VERSION=0.4.1
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
 MAKENSIS?=	"${PROGRAMFILES}/NSIS/makensis.exe"
-ZIP?=		"$(shell which zip)"
 #
-CURDIR=		"$(shell pwd)"
 BUILDDIR?=	"${CURDIR}/src/build"
 PREFIX?=	"${CURDIR}/src/instroot"
 MAKE_ENV=	PREFIX="${PREFIX}" BUILDDIR="${BUILDDIR}"

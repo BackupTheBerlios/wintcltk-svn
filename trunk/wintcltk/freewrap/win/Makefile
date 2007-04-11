@@ -1,9 +1,8 @@
-# WinTclTk makefile for freeWrap
-#
-# Developed by Martin Matuska
+# WinTclTk freeWrap makefile
 # Based on UNIX makefile developed by Dennis R. LaBelle
+# Copyright (c) 2007 Dennis R. LaBelle, Martin Matuska
 #
-# Edit the parameters to suit your configuration, then type "make".
+# $Id$
 #
 # NOTES: Important - please read.
 #
@@ -14,8 +13,6 @@
 #        first time freeWrap is built and will be printed to the screen
 #        immediately before you need to type it in. 
 #
-
-
 
 # Name of the application program
 #
@@ -60,13 +57,13 @@ TCLVERSION = 84
 TCLSH = ${INSTROOT}/bin/tclsh${TCLVERSION}s.exe
 
 # Locations of various directories
-INSTALL_BASE = ${INSTROOT}
-INSTALL_LIB  = ${INSTROOT}/lib
-INSTALL_INCL = ${INSTROOT}/include
-TCLDIR       = ${BUILDDIR}/tcl$(TCLVERSIONDOT)/unix
-TKDIR        = ${BUILDDIR}/tk$(TCLVERSIONDOT)/unix
-INSTALLDIR   = ${INSTROOT}/lib
-ZIPOBJDIR    = ${BUILDDIR}/zip-2.32
+INSTALL_BASE = $(INSTROOT)
+INSTALL_LIB  = $(INSTROOT)/lib
+INSTALL_INCL = $(INSTROOT)/include
+TCLDIR       = $(BUILDDIR)/tcl$(TCLVERSIONDOT)/unix
+TKDIR        = $(BUILDDIR)/tk$(TCLVERSIONDOT)/unix
+INSTALLDIR   = $(INSTROOT)/lib
+ZIPOBJDIR    = $(BUILDDIR)/zip-$(ZIP_VERSION)
 
 ###### Some operating system specific commands
 RM = rm -f

@@ -1,9 +1,7 @@
-#!/bin/sh
-#
 # WinTclTk make.defs
-# Copyright (c) 2006 Martin Matuska
+# Copyright (c) 2006-07 Martin Matuska
 #
-# $Id: Makefile 90 2007-04-06 11:58:32Z mmatuska $
+# $Id$
 #
 TCLTK_VERSION=		8.4.14
 THREAD_VERSION=		2.6.5
@@ -43,21 +41,26 @@ ZLIB_VERSION=		1.2.3
 POSTGRESQL_VERSION=	8.2.3
 PTHREADS_VERSION=	2-8-0
 
+ZIP_VERSION=		2.32
+ZIP_SHORT=		$(subst .,,$(ZIP_VERSION))
+UNZIP_VERSION=		5.52
+UNZIP_SHORT=		$(subst .,,$(UNZIP_VERSION))
+
 SOURCEFORGE_MIRROR?=	heanet
 GNU_MIRROR?=		ftp.gnu.org/pub/gnu
 POSTGRESQL_MIRROR?=	ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.2.3/
 
+TOOLSDIR=	$(SRCDIR)/tools
+
 WGET?=		$(shell which wget)
 WGET_FLAGS=	"--passive-ftp"
-UNZIP?=		$(shell which unzip)
+UNZIP=		$(TOOLSDIR)/unzip.exe
+ZIP=		$(TOOLSDIR)/zip.exe
 PERL?=		$(shell which perl)
-CURDIR=		$(shell pwd)
 
-DISTFILES?=	${CURDIR}/distfiles
-MD5SUMS=	${CURDIR}/md5sums
-PATCHDIR=	${CURDIR}/patches
-
+DISTFILES?=	$(SRCDIR)/distfiles
+MD5SUMS=	$(SRCDIR)/md5sums
+PATCHDIR=	$(SRCDIR)/patches
 
 MESSAGE_WGET=		"You require wget to auto-download the sources. See SOURCES.txt for more information."
-MESSAGE_UNZIP=		"You require unzip to extract this source. See SOURCES.txt for more information."
 MESSAGE_OPENSSL_PERL=	"You require perl to configure OpenSSL. See BUILD-MinGW.txt for more information."
