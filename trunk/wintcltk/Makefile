@@ -64,7 +64,7 @@ $(FREEWRAPDIR)/dist/full/freewrap.exe: static
 
 wintcltk-fw-$(WINTCLTK_FW_VERSION).zip: $(FREEWRAPDIR)/dist/std/freewrap.exe $(FREEWRAPDIR)/dist/xotcl/freewrap.exe $(FREEWRAPDIR)/dist/full/freewrap.exe
 	@cd $(FREEWRAPDIR)/dist && $(ZIP) -r $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip std/freewrap.exe xotcl/freewrap.exe full/freewrap.exe
-	@$(ZIP) -D $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip $(FREEWRAPDIR)/doc/README.txt
+	@cd $(FREEWRAPDIR)/doc && $(ZIP) $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip README.txt ChangeLog.txt
 		
 release: installer fw wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 
