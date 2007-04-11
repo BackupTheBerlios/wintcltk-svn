@@ -14,10 +14,6 @@
 #        immediately before you need to type it in. 
 #
 
-# Name of the application program
-#
-## Name of the current extension to include
-
 # Where are we?
 CURDIR=$(shell pwd)
 
@@ -348,3 +344,6 @@ $(FBUILD)/zipmain.o : $(FBSRC)/zipmain.c
 clean:
 	$(RM) $(DISTDIR)/*.exe $(DISTDIR)/*.zip
 	$(DELTREE) $(FBUILD) zipdir
+
+distclean: clean
+	$(RM) -f $(FBSRC)/currentPWD.txt $(FBSRC)/fwcrypt.c

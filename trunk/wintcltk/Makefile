@@ -1,5 +1,3 @@
-#!/bin/sh
-#
 # WinTclTk Makefile 
 # Copyright (c) 2006 Martin Matuska
 #
@@ -7,10 +5,12 @@
 #
 CURDIR=	$(shell pwd)
 SRCDIR=	$(CURDIR)/src
+FREEWRAPDIR=	$(CURDIR)/freewrap
 #
 include $(SRCDIR)/defs/defs.mak
 #
 WINTCLTK_VERSION=0.4.1
+WINTCLTK_FW_VERSION=0.1
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
@@ -20,7 +20,7 @@ BUILDDIR?=	"${CURDIR}/src/build"
 PREFIX?=	"${CURDIR}/src/instroot"
 MAKE_ENV=	PREFIX="${PREFIX}" BUILDDIR="${BUILDDIR}"
 
-all: installer 
+all: installer fw
 build:
 	@cd src && make build ${MAKE_ENV}
 install:
@@ -48,7 +48,25 @@ ${INSTALLER}:
 	 BUILDDIR=`cd ${BUILDDIR} && pwd -W | sed -e 's,/,\\\\,g'`;\
 		cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" //DINSTROOT="$${INSTROOT}" //DBUILDDIR="$${BUILDDIR}" wintcltk.nsi
 
-release: installer wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
+static:
+	@cd $(SRCDIR) && make STATIC_BUILD=1
+		
+fw: wintcltk-fw-$(WINTCLTK_FW_VERSION).zip
+
+$(FREEWRAPDIR)/dist/std/freewrap.exe: static
+	@cd $(FREEWRAPDIR) && make clean && make
+
+$(FREEWRAPDIR)/dist/xotcl/freewrap.exe:	static
+	@cd $(FREEWRAPDIR) && make clean DIST=xotcl && make DIST=xotcl
+
+$(FREEWRAPDIR)/dist/full/freewrap.exe: static
+	@cd $(FREEWRAPDIR) && make clean DIST=full && make DIST=full
+
+wintcltk-fw-$(WINTCLTK_FW_VERSION).zip: $(FREEWRAPDIR)/dist/std/freewrap.exe $(FREEWRAPDIR)/dist/xotcl/freewrap.exe $(FREEWRAPDIR)/dist/full/freewrap.exe
+	@cd $(FREEWRAPDIR)/dist && $(ZIP) -r $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip std/freewrap.exe xotcl/freewrap.exe full/freewrap.exe
+	@$(ZIP) -D $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip $(FREEWRAPDIR)/doc/README.txt
+		
+release: installer fw wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 
 wintcltk-${WINTCLTK_VERSION}:
 	@mkdir -p wintcltk-${WINTCLTK_VERSION}
