@@ -1,0 +1,7 @@
+#
+# WinTclTk freeWrap ChangeLog
+#
+# $Id$
+#
+2007-04-11 Martin Matuska <martin at matuska.org>
+	* initial release 0.1
