@@ -31,7 +31,7 @@
 **   peter@pdqi.com
 **   http://pdqi.com
 **
-** @(#) $Id: zvfs.c,v 1.1.1.1 2002/01/27 17:44:02 cvs Exp $
+** @(#) $Id: zvfs.c 97 2007-04-10 16:46:36Z mmatuska $
 ** 
 ** Modified to support encrypted files
 **   Dennis R. LaBelle  Jan. 8, 2006

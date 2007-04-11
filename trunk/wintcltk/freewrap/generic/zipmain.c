@@ -10,7 +10,7 @@
  *  zip.c by Mark Adler.
  */
 
-/* Modifications by Dennis R. LaBelle
+ /* Modifications by Dennis R. LaBelle
 
    Feb. 3, 2004
    This file has been modified so that the Info-ZIP capabilities could be 
@@ -19,6 +19,12 @@
    Jan. 8, 2006
    Modified to include file encryption option.
 */
+
+ /* Modified for WinTclTk by Martin Matuska, 2007
+ 
+   $Id$
+ 
+ */
 
 #define __ZIP_C
 #ifdef WIN32

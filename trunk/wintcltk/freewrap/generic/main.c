@@ -2,6 +2,10 @@
 # freeWrap is Copyright (c) 1998-2002 by Dennis R. LaBelle (labelled@nycap.rr.com)
 # All Rights Reserved.
 #
+# modifications for WinTclTk (c) 2007 by Martin Matuska (martin_at_matuska_dot_org)
+#
+# $Id$
+#
 # This software is provided 'as-is', without any express or implied warranty. In no
 # event will the authors be held #liable for any damages arising from the use of 
 # this software. 
