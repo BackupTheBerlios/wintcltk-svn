@@ -44,7 +44,6 @@ PTHREADS_VERSION=	2-8-0
 ZIP_VERSION=		2.32
 ZIP_SHORT=		$(subst .,,$(ZIP_VERSION))
 UNZIP_VERSION=		5.52
-UNZIP_SHORT=		$(subst .,,$(UNZIP_VERSION))
 
 SOURCEFORGE_MIRROR?=	heanet
 GNU_MIRROR?=		ftp.gnu.org/pub/gnu
@@ -57,6 +56,7 @@ WGET_FLAGS=	"--passive-ftp"
 UNZIP=		$(TOOLSDIR)/unzip.exe
 ZIP=		$(TOOLSDIR)/zip.exe
 PERL?=		$(shell which perl)
+UPX?=		$(shell which upx)
 
 DISTFILES?=	$(SRCDIR)/distfiles
 MD5SUMS=	$(SRCDIR)/md5sums

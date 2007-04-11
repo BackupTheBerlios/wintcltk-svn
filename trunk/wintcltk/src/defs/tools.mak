@@ -36,23 +36,24 @@ distclean-unzip:
 	@-rm -rf $(TOOLSDIR)/build/unzip-${UNZIP_VERSION}
 	
 # zip
+
 fetch-zip: ${DISTFILES} ${DISTFILES}/zip$(ZIP_SHORT).tgz
 ${DISTFILES}/zip$(ZIP_SHORT).tgz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
 	@cd ${DISTFILES} && ${WGET} "ftp://ftp.info-zip.org/pub/infozip/src/zip$(ZIP_SHORT).tgz"
 
-extract-zip: fetch-zip $(TOOLSDIR)/build $(TOOLSDIR)/build/zip-${ZIP_VERSION}
-$(TOOLSDIR)/build/zip-${ZIP_VERSION}:
+extract-zip: $(TOOLSDIR)/build $(TOOLSDIR)/build/zip-${ZIP_VERSION}
+$(TOOLSDIR)/build/zip-${ZIP_VERSION}: fetch-zip 
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/zip$(ZIP_SHORT).tgz.md5 || exit 1
 	@cd $(TOOLSDIR)/build && tar xfz ${DISTFILES}/zip$(ZIP_SHORT).tgz
 	
 configure-zip: extract-zip install-zlib
-build-zip: configure-zip $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe
-$(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe:
+build-zip: $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe
+$(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe: configure-zip
 	@cd $(TOOLSDIR)/build/zip-${ZIP_VERSION} && make -f win32/makefile.gcc
 
-install-zip: build-zip $(TOOLSDIR)/zip.exe
-$(TOOLSDIR)/zip.exe:
+install-zip: $(TOOLSDIR)/zip.exe
+$(TOOLSDIR)/zip.exe: build-zip
 	@cd $(TOOLSDIR)/build/zip-${ZIP_VERSION} && cp zip.exe $(TOOLSDIR)
 
 uninstall-zip:
@@ -63,3 +64,4 @@ clean-zip:
 	
 distclean-zip:
 	@-rm -rf $(TOOLSDIR)/build/zip-${ZIP_VERSION}
+
