@@ -5,7 +5,7 @@
 #     2) Generate fwcrypt.h file
 #
 if {$argv == {}} {
-    set hdrFile "../generic/fwcrypt.c"
+    set hdrFile "fwcrypt.c"
     if {[catch {open $hdrFile w} fout]} {
         puts $fout
        } {
@@ -39,11 +39,11 @@ if {$argv == {}} {
            close $fout
          }
 
-    set pwdFile "../generic/currentPWD.txt"
+    set pwdFile "currentPWD.txt"
     if {[catch {open $pwdFile w} fout]} {
         puts $fout
        } {
-           puts $fout "The current password key is $curpwd"
+           puts $fout "$curpwd"
            close $fout
          }
    } {

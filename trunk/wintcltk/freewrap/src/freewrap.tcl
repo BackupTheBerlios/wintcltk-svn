@@ -352,8 +352,10 @@ if {$argctr > 0} {
 
     if {[file exists $zipname]} {
 	  # remove the specified files from the archive
-	  set cmd "::freewrap::makeZIP \"$zipname\" -Ad $DelList"
-	  catch $cmd result
+	  if { [info exists $DelList] } {
+  	  	set cmd "::freewrap::makeZIP \"$zipname\" -Ad $DelList"
+	  	catch $cmd result
+  	  }
 
 	  set totSize 0
 	  set cmd {::freewrap::makeZIP -A9q}
@@ -418,7 +420,7 @@ if {$argctr > 0} {
 	  while {[llength $namelist] > 0} {
 		 set addcmd "$cmd [lrange $namelist 0 49]"
 		 set namelist [lrange $namelist 50 end]
-		 catch $addcmd
+		 catch $addcmd result
 		}
 
 	  # Do some cleanup
