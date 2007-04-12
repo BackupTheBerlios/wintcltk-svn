@@ -23,3 +23,67 @@
              {separator}\
              [list command [tr "Undo"] {} [tr "Undo"] {CtrlAlt u} -command Editor::undo ]\
              [list command [tr "Redo"] {} [tr "Redo"] {} -command Editor::redo ]\
+--- ased3.0/asedmain.tcl.orig	Thu Apr 12 09:47:05 2007
++++ ased3.0/asedmain.tcl	Thu Apr 12 09:48:09 2007
+@@ -1415,8 +1415,8 @@
+         set filePatternList [list [tr "All-Files {*}"]]
+     }
+     if {$EditorData(options,serverWish) != ""} {
+-        set initialFile "$EditorData(options,serverWish)"
+-        set initialDir [file dirname $EditorData(options,serverWish)]
++        set initialFile [lindex $EditorData(options,serverWish) 0]
++        set initialDir [file dirname [lindex $EditorData(options,serverWish) 0]]
+     } else  {
+         set initialFile [info nameofexecutable]
+         set initialDir [file dirname [info nameofexecutable]]
+@@ -1428,7 +1428,7 @@
+             -initialfile "$initialFile" \
+             -title [tr "Choose an Interpreter"]]
+     if {$serverWish != {}} {
+-        eval [list set EditorData(options,serverWish) $serverWish]
++        eval [list set EditorData(options,serverWish) [list "$serverWish"]]
+     }
+     return
+ }
+@@ -1481,12 +1481,12 @@
+     }
+     
+     if {$EditorData(options,serverWish) == {}} {
+-        eval [list set EditorData(options,serverWish) [info nameofexecutable]]
++        eval [list set EditorData(options,serverWish) [list [info nameofexecutable]]]
+     }
+     # if ased was updated and ased itself was choosen as executable (=default)
+     # then update evalServer to the new version to avoid ased to hang
+     if {[string first "ased" [file tail $EditorData(options,serverWish)]] == 0} {
+-        eval [list set EditorData(options,serverWish) [info nameofexecutable]]
++        eval [list set EditorData(options,serverWish) [list [info nameofexecutable]]]
+     }
+     
+     set cursor [. cget -cursor]
+@@ -1575,7 +1575,7 @@
+     interp eval $current(slave) set con_notebook $con_notebook
+     interp eval $current(slave) set pagename $current(pagename)
+     interp eval $current(slave) set port $EditorData(options,serverPort)
+-    interp eval $current(slave) set serverWish \"$EditorData(options,serverWish)\"
++    interp eval $current(slave) set serverWish \"[lindex $EditorData(options,serverWish) 0]\"
+     interp eval $current(slave) set starkitMode $EditorData(starkit)
+     if {$EditorData(starkit)} {
+         interp eval $current(slave) set starkitTopdir \"$::starkit::topdir\"
+@@ -1622,7 +1622,7 @@
+             eval [list set homeDir [file normalize ~]]
+             if {[info nameofexecutable] == $starkitTopdir} {
+                 # starpack-mode
+-                if {$serverWish == [info nameofexecutable]} {
++                if {"$serverWish" == "[info nameofexecutable]"} {
+                     # use ASED itself
+                     eval [list set sock [Client::initExecutionClient \
+                             localhost \
+@@ -1660,7 +1660,7 @@
+                 }
+             } else {
+                 # starkit-mode: use tclkit to execute
+-                if {$serverWish == [info nameofexecutable]} {
++                if {"$serverWish" == "[info nameofexecutable]"} {
+                     # starkitmode: use ASED to eval
+                     eval [list set sock [Client::initExecutionClient \
+                             localhost \
