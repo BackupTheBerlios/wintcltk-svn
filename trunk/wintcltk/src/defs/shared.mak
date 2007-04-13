@@ -756,7 +756,7 @@ distclean-mkziplib:
 	@-rm -rf ${BUILDDIR}/mkziplib${MKZIPLIB_VERSION}
 
 # memchan
-fetch-memchan: $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz $(DISTFILES)/memchan.html.tar.gz
+fetch-memchan: $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz
 $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/memchan/memchan-$(MEMCHAN_VERSION).tar.gz"
@@ -789,3 +789,52 @@ clean-memchan:
 
 distclean-memchan:
 	@-rm -rf $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)
+	
+# bzip2
+fetch-bzip2: $(DISTFILES) $(DISTFILES)/bzip2-$(BZIP2_VERSION).tar.gz
+$(DISTFILES)/bzip2-$(BZIP2_VERSION).tar.gz:
+	@[ -x "$(WGET)" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@cd $(DISTFILES) && $(WGET) "http://www.bzip.org/$(BZIP2_VERSION)/bzip2-$(BZIP2_VERSION).tar.gz"
+
+extract-bzip2: fetch-bzip2 $(BUILDDIR) $(BUILDDIR)/bzip2-$(BZIP2_VERSION)
+$(BUILDDIR)/bzip2-$(BZIP2_VERSION):
+	@cd $(DISTFILES) && md5sum -c $(MD5SUMS)/bzip2-$(BZIP2_VERSION).tar.gz.md5 || exit 1
+	@cd $(BUILDDIR) && tar xfz $(DISTFILES)/bzip2-$(BZIP2_VERSION).tar.gz
+	@-cd $(BUILDDIR)/bzip2-$(BZIP2_VERSION) && patch -p0 < $(PATCHDIR)/bzip2.patch
+	
+# trf
+fetch-trf: $(DISTFILES)/trf$(TRF_VERSION).tar.gz
+$(DISTFILES)/trf$(TRF_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcltrf/trf$(TRF_VERSION).tar.gz"
+		
+extract-trf: fetch-trf $(BUILDDIR) $(BUILDDIR)/trf$(TRF_VERSION)/win/Makefile.gnu
+$(BUILDDIR)/trf$(TRF_VERSION)/win/Makefile.gnu:
+	@cd ${DISTFILES} && md5sum -c $(MD5SUMS)/trf$(TRF_VERSION).tar.gz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz $(DISTFILES)/trf$(TRF_VERSION).tar.gz
+	@-cd ${BUILDDIR}/trf$(TRF_VERSION) && patch -p0 < $(PATCHDIR)/trf.patch
+
+configure-trf: extract-trf install-tcl
+
+build-trf: configure-trf ${BUILDDIR}/trf$(TRF_VERSION)/win/Trf$(TRF_LIBVER).dll 
+${BUILDDIR}/trf$(TRF_VERSION)/win/Trf$(TRF_LIBVER).dll:
+	@cd ${BUILDDIR}/trf$(TRF_VERSION)/win && make -f Makefile.gnu TCL_SRC_DIR="$(BUILDDIR)/tcl$(TCLTK_VERSION)" DLL_LDLIBS="-L$(PREFIX)/lib -ltclstub84"
+
+install-trf: build-trf install-openssl $(PREFIX)/lib/trf$(TRF_VERSION)/pkgIndex.tcl
+$(PREFIX)/lib/trf$(TRF_VERSION)/pkgIndex.tcl:
+	@mkdir -p $(PREFIX)/lib/trf$(TRF_VERSION)/doc
+	@cd $(BUILDDIR)/trf$(TRF_VERSION)/win && cp Trf$(TRF_LIBVER).dll libTrf$(TRF_LIBVER).a libTrf$(TRF_LIBVER)s.a \
+		libTrfstub$(TRF_LIBVER).a pkgIndex.tcl $(PREFIX)/lib/trf$(TRF_VERSION)
+	@cd $(BUILDDIR)/trf$(TRF_VERSION)/generic && cp transform.h trfDecls.h $(PREFIX)/include
+	@cp -rf $(BUILDDIR)/trf$(TRF_VERSION)/doc/html/* $(BUILDDIR)/trf$(TRF_VERSION)/doc/license.terms \
+		$(PREFIX)/lib/trf$(TRF_VERSION)/doc
+	
+uninstall-trf:
+	@-cd $(PREFIX)/lib && rm -rf trf${TRF_VERSION}
+	@-cd $(PREFIX)/include && rm -f transform.h trfDecls.h
+
+clean-trf:
+	@-cd $(BUILDDIR)/trf-$(TRF_VERSION)/win && make -f Makefile.gnu clean
+
+distclean-trf:
+	@-rm -rf $(BUILDDIR)/trf$(TRF_VERSION)

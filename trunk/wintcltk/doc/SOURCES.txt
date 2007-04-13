@@ -57,8 +57,11 @@ ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz
 Tgdbm:
 http://www.vogel-nest.de/wiki/uploads/Main/tgdbm0.5.zip
 
+Trf:
+http://prdownloads.sourceforge.net/tcltrf/trf2.1p2.tar.gz
+
 Memchan:
-http://prdownloads.sourceforge.net/memchan/memchan2.2.1.tar.gz
+http://prdownloads.sourceforge.net/memchan/memchan-2.2.1.tar.gz
 
 Metakit:
 http://www.equi4.com/pub/mk/metakit-2.4.9.6.tar.gz
