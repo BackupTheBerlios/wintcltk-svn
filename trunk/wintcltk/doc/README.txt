@@ -22,6 +22,7 @@ thread	 2.6.5
 tDOM	 0.8.1
 tls      1.5.0
 Tgdbm	 0.5
+TclVfs	 1.3
 Trf	 2.1p2
 memchan  2.2.1
 Metakit  2.4.9.6
@@ -57,6 +58,9 @@ XOTcl: http://media.wu-wien.ac.at
 Tcllib,Tklib,BWidget: http://tcllib.sourceforge.net
 Tls: http://www.sensus.org/tcl/
 Tgdbm: http://www.vogel-nest.de/wiki/Main/TgdbmPage
+TclVfs: http://tclvfs.sourceforge.net
+Trf: http://tcltrf.sourceforge.net
+Memchan: http://memchan.sourceforge.net
 Metakit: http://www.equi4.com/metakit.html
 mysqltcl: http://www.xdobry.de/mysqltcl/index.html
 pgtcl: http://pgfoundry.org/projects/pgtclng

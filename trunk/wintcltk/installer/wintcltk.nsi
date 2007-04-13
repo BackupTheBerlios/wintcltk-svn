@@ -31,6 +31,7 @@
 !define TLS_VERSION "1.5.0"
 !define MEMCHAN_VERSION "2.2.1"
 !define TRF_VERSION "2.1p2"
+!define TCLVFS_VERSION "1.3"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -44,6 +45,7 @@
 !define TRF_LIBVER "21"
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
+!define TCLVFS_LIBVER "13"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -724,7 +726,31 @@ Section "Tgdbm ${TGDBM_VERSION}" tgdbm
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
   SetOutPath $INSTDIR\doc\packages\files
-  CreateShortCut "$INSTDIR\doc\packages\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+  CreateShortCut "$INSTDIR\doc\packages\TGDBM Homepage.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+SectionEnd
+
+Section "TclVfs ${TCLVFS_VERSION}" tclvfs
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=TclVfs-license.txt "${BUILDDIR}\tclvfs\license.terms"
+  SetOutPath $INSTDIR\lib\vfs${TCLVFS_VERSION}
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\ftpvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\httpvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\mk4vfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\starkit.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tarvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tclprocvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\testvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tkvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfslib.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUrl.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUtils.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\webdavvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\zipvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfs${TCLVFS_LIBVER}.dll"
+  SetOutPath $INSTDIR\doc\packages\files
+  CreateShortCut "$INSTDIR\doc\packages\TclVfs Homepage.lnk" "http://sourceforge.net/projects/tclvfs"
 SectionEnd
 
 Section "Memchan ${MEMCHAN_VERSION}" memchan
@@ -3801,6 +3827,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\pthreads-license.lnk"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
+  Delete "$INSTDIR\doc\licenses\TclVfs-license.txt"
   Delete "$INSTDIR\doc\licenses\tDOM-license.txt"
   Delete "$INSTDIR\doc\licenses\thread-license.txt"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
@@ -3816,8 +3843,9 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\mysqltcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\mkZiplib Documentation.lnk"
   Delete "$INSTDIR\doc\packages\pgtcl Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\TclVfs Homepag.lnk"
   Delete "$INSTDIR\doc\packages\tDOM Documentation.lnk"
-  Delete "$INSTDIR\doc\packages\TGDBM Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\TGDBM Homepage.lnk"
   Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Trf Documentation.lnk"
@@ -5134,6 +5162,21 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\twapi.tcl"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\twapicallback.dll"
   Delete "$INSTDIR\lib\twapi${TWAPI_VERSION}\ui.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\ftpvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\httpvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\mk4vfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\starkit.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\tarvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\tclprocvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\testvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\tkvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\vfslib.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\vfsUrl.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\vfsUtils.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\webdavvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\zipvfs.tcl"
+  Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\vfs${TCLVFS_LIBVER}.dll"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\Agent.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\AgentManagement.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\HtmlPlace.xotcl"
@@ -5350,6 +5393,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
+  RMDir "$INSTDIR\lib\vfs${TCLVFS_VERSION}"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\tests"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}"
   RMDir "$INSTDIR\lib\trf${TRF_VERSION}"
@@ -5585,6 +5629,7 @@ LangString DESC_trf ${LANG_ENGLISH} "Transformer procedures for Tcl"
 LangString DESC_trf-base ${LANG_ENGLISH} "Trf base files and dll library"
 LangString DESC_trf-dev ${LANG_ENGLISH} "Trf development headers and libraries"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
+LangString DESC_tclvfs ${LANG_ENGLISH} "Library providing virtual filesystems"
 LangString DESC_memchan ${LANG_ENGLISH} "Library providing new channel types for in-memory channels"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
@@ -5623,11 +5668,12 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom} $(DESC_tdom)
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom-base} $(DESC_tdom-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom-dev} $(DESC_tdom-dev)
-  !insertmacro MUI_DESCRIPTION_TEXT ${trf} $(DESC_tdom)
-  !insertmacro MUI_DESCRIPTION_TEXT ${trf-base} $(DESC_tdom-base)
-  !insertmacro MUI_DESCRIPTION_TEXT ${trf-dev} $(DESC_tdom-dev)  
+  !insertmacro MUI_DESCRIPTION_TEXT ${trf} $(DESC_trf)
+  !insertmacro MUI_DESCRIPTION_TEXT ${trf-base} $(DESC_trf-base)
+  !insertmacro MUI_DESCRIPTION_TEXT ${trf-dev} $(DESC_trf-dev)  
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
   !insertmacro MUI_DESCRIPTION_TEXT ${memchan} $(DESC_memchan)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tclvfs} $(DESC_tclvfs)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
   !insertmacro MUI_DESCRIPTION_TEXT ${bwidget} $(DESC_bwidget)

@@ -6,6 +6,7 @@
 2007-04-13 Martin Matuska <martin at matuska.org>
 	* added package Trf 2.1p2
 	* added package memchan 2.2.1
+	* added package TclVfs 1.3
 
 2007-04-12 Martin Matuska <martin at matuska.org>
 	* fixed interpreter bug in ASED

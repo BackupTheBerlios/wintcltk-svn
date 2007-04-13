@@ -838,3 +838,36 @@ clean-trf:
 
 distclean-trf:
 	@-rm -rf $(BUILDDIR)/trf$(TRF_VERSION)
+	
+# tclvfs
+fetch-tclvfs: $(DISTFILES) $(DISTFILES)/tclvfs-$(TCLVFS_SOURCE)-src.tar.gz 
+$(DISTFILES)/tclvfs-$(TCLVFS_SOURCE)-src.tar.gz :
+	@[ -x "$(WGET)" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd $(DISTFILES) && $(WGET) $(WGET_FLAGS) "http://download.berlios.de/wintcltk/tclvfs-${TCLVFS_SOURCE}-src.tar.gz"
+
+extract-tclvfs: fetch-tclvfs $(BUILDDIR) $(BUILDDIR)/tclvfs
+$(BUILDDIR)/tclvfs:
+	@cd $(DISTFILES) && md5sum -c $(MD5SUMS)/tclvfs-$(TCLVFS_SOURCE)-src.tar.gz.md5 || exit 1
+	@-cd $(BUILDDIR) && tar xfz $(DISTFILES)/tclvfs-$(TCLVFS_SOURCE)-src.tar.gz
+
+configure-tclvfs: extract-tclvfs $(BUILDDIR)/tclvfs/Makefile
+$(BUILDDIR)/tclvfs/Makefile:
+	@cd $(BUILDDIR)/tclvfs && ./configure --prefix=$(PREFIX) --enable-threads --enable-shared
+
+build-tclvfs: configure-tclvfs $(BUILDDIR)/tclvfs$(TCLVFS_SHORT)/tclvfs$(TCLVFS_LIBVER).dll 
+$(BUILDDIR)/tclvfs$(TCLVFS_SHORT)/tclvfs$(TCLVFS_LIBVER).dll:
+	@cd $(BUILDDIR)/tclvfs && make && strip *.dll
+
+install-tclvfs: build-tclvfs $(PREFIX)/lib/vfs$(TCLVFS_VERSION)
+$(PREFIX)/lib/vfs$(TCLVFS_VERSION): 
+	@cd $(BUILDDIR)/tclvfs && make install
+
+uninstall-tclvfs:
+	@-cd $(PREFIX)/lib && rm -rf vfs$(TCLVFS_VERSION)
+	@-cd $(PREFIX} && rm -rf man
+
+clean-tclvfs:
+	@-cd $(BUILDDIR)/tclvfs && make clean
+
+distclean-tclvfs:
+	@-rm -rf $(BUILDDIR)/tclvfs$(TCLVFS_SHORT)
