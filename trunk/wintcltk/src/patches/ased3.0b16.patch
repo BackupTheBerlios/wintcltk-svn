@@ -23,8 +23,8 @@
              {separator}\
              [list command [tr "Undo"] {} [tr "Undo"] {CtrlAlt u} -command Editor::undo ]\
              [list command [tr "Redo"] {} [tr "Redo"] {} -command Editor::redo ]\
---- ased3.0/asedmain.tcl.orig	Thu Apr 12 09:47:05 2007
-+++ ased3.0/asedmain.tcl	Thu Apr 12 09:48:09 2007
+--- ased3.0/asedmain.tcl.orig	Fri Apr 13 12:39:29 2007
++++ ased3.0/asedmain.tcl	Fri Apr 13 12:40:44 2007
 @@ -1415,8 +1415,8 @@
          set filePatternList [list [tr "All-Files {*}"]]
      }
@@ -87,3 +87,132 @@
                      # starkitmode: use ASED to eval
                      eval [list set sock [Client::initExecutionClient \
                              localhost \
+@@ -3753,7 +3753,7 @@
+             }
+             default {}
+         }
+-        set command [list $EditorData(options,serverWish) $filename ]
++        set command [list [lindex $EditorData(options,serverWish) 0] "$filename" ]
+     }
+     eval exec $command &
+     return
+--- ased3.0/tools/tcltutor/TclTutor.tcl.orig	Sat Jun 19 13:32:04 2004
++++ ased3.0/tools/tcltutor/TclTutor.tcl	Fri Apr 13 13:39:56 2007
+@@ -167,24 +167,24 @@
+ 
+     switch $tcl_platform(platform) {
+       "unix"	{
+-            set Tutor(sourceHome) [file dirname $argv0]
+-            set Tutor(lessonHome) [file dirname $argv0]
++            set Tutor(sourceHome) [list [file dirname $argv0]]
++            set Tutor(lessonHome) [list [file dirname $argv0]]
+ 	    set Tutor(rcHome) $env(HOME)
+             set Tutor(rcfile) [file join $Tutor(rcHome) .tcltutorrc]
+             set Tutor(logFileName) [file join $Tutor(rcHome) .tcltutoract]
+ 	    set Tutor(fontMod) -4
+        }
+       "windows" 	{
+-            set Tutor(sourceHome) [file attributes [file dirname $argv0] -shortname]
+-            set Tutor(lessonHome) [file attributes [file dirname $argv0] -shortname]
++            set Tutor(sourceHome) [list [file dirname $argv0]]
++            set Tutor(lessonHome) [list [file dirname $argv0]]
+ 	    set Tutor(rcHome) [file normalize ~]
+             set Tutor(rcfile) [file join $Tutor(rcHome) tcltutor.rc]
+             set Tutor(logFileName) [file join $Tutor(rcHome) tcltutor.act]
+ 	    set Tutor(fontMod) -5
+       }
+       "mac"	{
+-            set Tutor(sourceHome) [file dirname $argv0]
+-            set Tutor(lessonHome) [file dirname $argv0]
++            set Tutor(sourceHome) [list [file dirname $argv0]]
++            set Tutor(lessonHome) [list [file dirname $argv0]]
+ 	    set Tutor(rcHome) [file dirname $argv0]
+             set Tutor(rcfile) [file join $Tutor(rcHome) tcltutor.rc]
+             set Tutor(logFileName) [file join $Tutor(rcHome) tcltutor.act]
+@@ -222,7 +222,7 @@
+ 
+ set Tutor(courseName) Tcl
+ set Tutor(courseLevel) 1
+-set Tutor(Tcl.lessonFile) [file join $Tutor(lessonHome) Tcl0.lsn]
++set Tutor(Tcl.lessonFile) [file join [lindex $Tutor(lessonHome) 0] Tcl0.lsn]
+ set Tutor(geometry) "500x400"
+ set Tutor(unique) 0
+ set Tutor(interpreter) interp
+@@ -295,7 +295,7 @@
+ #  overhead.  This will work without making things complex.
+ 
+ foreach f [list scaler.tcl htmllib.tcl] {
+-    eval $Tutor(wrapNamespace)source [file join $Tutor(sourceHome) $f]
++    eval $Tutor(wrapNamespace)source [list [file join [lindex $Tutor(sourceHome) 0] $f]]
+ }
+ 
+ # Get the color for frames, and configure the primary window for that color.
+@@ -343,7 +343,7 @@
+           regsub ":TITLE:" $line "" line
+ 	  set Tutor(lsn.title) $line
+           regsub ".*$Tutor(courseName)(\[0-9\]*).lsn" $file {\1} num
+-	  lappend titlelist [list $num $file $Tutor(lsn.title)]
++	  lappend titlelist [list $num [list $file] $Tutor(lsn.title)]
+ 	  }
+ 	}
+       }
+@@ -376,7 +376,7 @@
+   foreach file $filelist {
+         set f [file tail $file]
+         regsub {.cfg} $f "" courseName
+-	lappend titlelist [list "" $file $courseName]
++	lappend titlelist [list "" [list $file] $courseName]
+     }
+   set Tutor(courseList) $titlelist;
+   return $titlelist;
+@@ -462,10 +462,10 @@
+     set Tutor(courseName) [file root [file tail $cfgFileName]]
+     getLessonTitles
+     FillMenu .file.mnu.lessons $Tutor(lessonList) showLesson
+-
+     if {![info exists Tutor($Tutor(courseName).lessonFile)]} {
++
+         set Tutor($Tutor(courseName).lessonFile) \
+-	    [file join $Tutor(lessonHome) "$Tutor(courseName)0.lsn"]
++	    [file join [lindex $Tutor(lessonHome) 0] "$Tutor(courseName)0.lsn"]
+     }
+ 
+     showLesson $Tutor($Tutor(courseName).lessonFile)
+@@ -731,7 +731,7 @@
+     
+     foreach n [count 0 2] t [list Help About] {
+         .help.mnu add command -label $t -command "displayHtmlFile \
+-	    [file join $Tutor(lessonHome) [string tolower $t].html]"
++	    [list [file join $Tutor(lessonHome) [string tolower $t].html]]"
+     }
+ 
+     
+@@ -817,9 +817,8 @@
+         incr index -1
+     }
+     set l [lindex $Tutor(lessonList) $index]
+-
+-    set Tutor($Tutor(courseName).lessonFile) [lindex $l 1]
+-    showLesson [lindex $l 1]
++    set Tutor($Tutor(courseName).lessonFile) [lindex [lindex $l 1] 0]
++    showLesson [lindex [lindex $l 1] 0]
+ }
+ 
+ ################################################################
+@@ -842,8 +841,8 @@
+     }
+     set l [lindex $Tutor(lessonList) $index]
+ 
+-    set Tutor($Tutor(courseName).lessonFile) [lindex $l 1]
+-    showLesson [lindex $l 1]
++    set Tutor($Tutor(courseName).lessonFile) [lindex [lindex $l 1] 0]
++    showLesson [lindex [lindex $l 1] 0]
+ }
+ 
+ 
+@@ -1381,4 +1380,4 @@
+ 
+ bind . <Destroy> {if {[string match "." %W]} {SaveState; exit 0}}
+ 
+-selectCourse [file join $Tutor(lessonHome) [format "%s.%s" $Tutor(courseName) cfg]]
++selectCourse [file join [lindex $Tutor(lessonHome) 0] [format "%s.%s" $Tutor(courseName) cfg]]
