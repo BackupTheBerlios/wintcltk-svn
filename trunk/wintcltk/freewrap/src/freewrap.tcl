@@ -384,7 +384,7 @@ if {$argctr > 0} {
 				  # Remove freeWrap stub from file
 				  set pkgname [file join [file dirname $srcname] fwpkg_[file rootname [file tail $srcname]].zip]
 				  file copy -force $srcname $pkgname
-				  set cmdstr "::freewrap::makeZIP -JA \"$pkgname\""
+				  set cmdstr "::freewrap::makeZIP -jJA \"$pkgname\""
 				  catch {eval $cmdstr} result
 				  set srcname $pkgname
 				 }

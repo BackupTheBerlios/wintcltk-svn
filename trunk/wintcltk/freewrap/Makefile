@@ -26,6 +26,7 @@ XOTCL=1
 DISTDIR=	$(CURDIR)/dist/xotcl
 endif
 ifeq ($(DIST),full)
+XOTCL=1
 FULL=1
 DISTDIR=	$(CURDIR)/dist/full
 endif
