@@ -124,7 +124,7 @@ ${DISTFILES}/tgdbm${TGDBM_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
-extract-tgdbm: fetch-tgdbm $(UNZIP) ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
+extract-tgdbm: fetch-tgdbm install-unzip ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
 ${BUILDDIR}/tgdbm${TGDBM_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tgdbm${TGDBM_VERSION}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/tgdbm$(TGDBM_VERSION).zip

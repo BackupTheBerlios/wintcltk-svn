@@ -22,6 +22,7 @@ thread	 2.6.5
 tDOM	 0.8.1
 tls      1.5.0
 Tgdbm	 0.5
+memchan  2.2.1
 Metakit  2.4.9.6
 mysqltcl 3.02
 pgtcl	 1.6.0

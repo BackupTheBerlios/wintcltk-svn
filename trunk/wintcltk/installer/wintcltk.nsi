@@ -29,6 +29,7 @@
 !define MYSQLTCL_VERSION "3.02"
 !define PGTCL_VERSION "1.6.0"
 !define TLS_VERSION "1.5.0"
+!define MEMCHAN_VERSION "2.2.1"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -38,6 +39,7 @@
 !define XOTCL_LIBVER "153"
 !define THREAD_LIBVER "265"
 !define TDOM_LIBVER "081"
+!define MEMCHAN_LIBVER "22"
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
 
@@ -721,6 +723,24 @@ Section "Tgdbm ${TGDBM_VERSION}" tgdbm
   File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
   SetOutPath $INSTDIR\doc\packages\files
   CreateShortCut "$INSTDIR\doc\packages\TGDBM Documentation.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+SectionEnd
+
+Section "Memchan ${MEMCHAN_VERSION}" memchan
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=memchan-license.txt "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\license.terms"
+  SetOutPath $INSTDIR\doc\packages\files\memchan
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\fifo.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\fifo2.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\memchan.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\memchanapi.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\null.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\random.html"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\doc\zero.html"
+  CreateShortCut "$INSTDIR\doc\packages\Memchan Documentation.lnk" "$INSTDIR\doc\packages\files\memchan" "" "$INSTDIR\doc\packages\files\memchan" 0
+  SetOutPath $INSTDIR\lib\memchan${MEMCHAN_VERSION}
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\memchan${MEMCHAN_LIBVER}.dll"
+  File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\pkgIndex.tcl"
 SectionEnd
 
 Section "tls ${TLS_VERSION}" tls
@@ -1476,7 +1496,7 @@ Section "BWidget ${BWIDGET_VERSION}" bwidget
   SetOutPath $INSTDIR\doc\packages\files\xotcl
   CreateShortCut "$INSTDIR\doc\packages\BWidget Documentation.lnk" "$INSTDIR\doc\packages\files\bwidget\index.html" "" "$INSTDIR\doc\packages\files\bwidget\index.html" 0
   SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
-  CreateShortCut "$INSTDIR\doc\packages\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
+  CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
 SectionEnd
 
 Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
@@ -1550,7 +1570,7 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
   SetOutPath $INSTDIR\doc\packages\files\twapi
   CreateShortCut "$INSTDIR\doc\packages\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\files\twapi\twapi.chm" "" "$INSTDIR\doc\packages\files\twapi\twapi.chm" 0
   SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
-  CreateShortCut "$INSTDIR\doc\packages\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
+  CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
@@ -1564,7 +1584,7 @@ Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
   SetOutPath $INSTDIR\doc
   CreateShortCut "$INSTDIR\doc\packages\mysqltcl Documentation.lnk" "$INSTDIR\doc\packages\files\mysqltcl\index.html" "" "$INSTDIR\doc\packages\files\mysqltcl\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\packages\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
 SectionEnd
 
 Section "pgtcl ${PGTCL_VERSION}" pgtcl
@@ -1645,7 +1665,7 @@ Section "pgtcl ${PGTCL_VERSION}" pgtcl
   SetOutPath $INSTDIR\doc
   CreateShortCut "$INSTDIR\doc\packages\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\files\pgtcl\index.html" "" "$INSTDIR\doc\packages\files\pgtcl\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\packages\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
   File /oname=PostgreSQL-license.txt "${INSTROOT}\lib\COPYRIGHT-PostgreSQL"
   File /oname=pgtcl-license.txt "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\COPYRIGHT"
 SectionEnd
@@ -2544,7 +2564,7 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "${INSTROOT}\ased3.0\tools\visualregexp\README"
   File "${INSTROOT}\ased3.0\tools\visualregexp\visual_regexp.tcl"
   SetOutPath $INSTDIR\ased3.0
-  CreateShortCut "$INSTDIR\doc\packages\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
+  CreateShortCut "$INSTDIR\doc\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
   SetOutPath $INSTDIR
   CreateShortCut "$SMPROGRAMS\WinTclTk\ASED TclTk IDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\ased.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
   CreateShortCut "$SMPROGRAMS\WinTclTk\tkcon.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\tools\tkcon\tkcon.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
@@ -2689,7 +2709,7 @@ Section "GDBM DLL" gdbm-dll
   SetOutPath $INSTDIR\bin
   File "${INSTROOT}\bin\gdbm.dll"
   SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\packages\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  CreateShortCut "$INSTDIR\doc\licenses\GDBM-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
 SectionEnd
 Section "GDBM headers & libraries" gdbm-dev
   SectionIn 2
@@ -3676,7 +3696,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\GDBM-license.lnk"
   Delete "$INSTDIR\doc\licenses\GPL.txt"
   Delete "$INSTDIR\doc\licenses\LGPL.txt"
-  Delete "$INSTDIR\doc\licenses\ased-license.lnk"
+  Delete "$INSTDIR\doc\licenses\memchan-license.txt"
   Delete "$INSTDIR\doc\licenses\mkZiplib-license.txt"
   Delete "$INSTDIR\doc\licenses\mysqltcl-license.lnk"
   Delete "$INSTDIR\doc\licenses\Metakit-license.txt"
@@ -3695,6 +3715,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\XOTclIDE-license"
   Delete "$INSTDIR\doc\licenses\zlib-license.txt"
   Delete "$INSTDIR\doc\packages\BWidget Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\Memchan Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Metakit Documentation.lnk"
   Delete "$INSTDIR\doc\packages\mysqltcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\mkZiplib Documentation.lnk"
@@ -3745,6 +3766,13 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\BWidget\Tree.html"
   Delete "$INSTDIR\doc\packages\files\BWidget\Widget.html"
   Delete "$INSTDIR\doc\packages\files\tls\index.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\fifo.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\fifo2.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\memchan.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\memchanapi.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\null.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\random.html"
+  Delete "$INSTDIR\doc\packages\files\memchan\zero.html"
   Delete "$INSTDIR\doc\packages\files\metakit\index.html"
   Delete "$INSTDIR\doc\packages\files\mkZiplib\index.html"
   Delete "$INSTDIR\doc\packages\files\mysqltcl\index.html"
@@ -4151,6 +4179,8 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\libtk84.a"
   Delete "$INSTDIR\lib\libtkstub84.a"
   Delete "$INSTDIR\lib\libz.a"
+  Delete "$INSTDIR\lib\memchan${MEMCHAN_VERSION}\memchan${MEMCHAN_LIBVER}.dll"
+  Delete "$INSTDIR\lib\memchan${MEMCHAN_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\Mk4tcl\Mk4tcl.dll"
   Delete "$INSTDIR\lib\Mk4tcl\pkgIndex.tcl"
   Delete "$INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib10.dll"
@@ -5272,6 +5302,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}"
   RMDir "$INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}"
   RMDir "$INSTDIR\lib\Mk4tcl"
+  RMDir "$INSTDIR\lib\memchan${MEMCHAN_VERSION}"
   RMDir "$INSTDIR\lib\dde1.2"
   RMDir "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests"
   RMDir "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang"
@@ -5292,6 +5323,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\mysqltcl"
   RMDir "$INSTDIR\doc\packages\files\mkZiplib"
   RMDir "$INSTDIR\doc\packages\files\metakit"
+  RMDir "$INSTDIR\doc\packages\files\memchan"
   RMDir "$INSTDIR\doc\packages\files\BWidget"
   RMDir "$INSTDIR\doc\packages\files"
   RMDir "$INSTDIR\doc\packages"
@@ -5374,6 +5406,7 @@ LangString DESC_tdom ${LANG_ENGLISH} "XML data processing extension"
 LangString DESC_tdom-base ${LANG_ENGLISH} "tDOM base files and dll library"
 LangString DESC_tdom-dev ${LANG_ENGLISH} "tDOM development headers and libraries"
 LangString DESC_tgdbm ${LANG_ENGLISH} "Tcl interface to gdbm"
+LangString DESC_memchan ${LANG_ENGLISH} "Library providing new channel types for in-memory channels"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
 LangString DESC_bwidget ${LANG_ENGLISH} "High-level widget set for Tcl/Tk"
@@ -5412,6 +5445,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom-base} $(DESC_tdom-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom-dev} $(DESC_tdom-dev)
   !insertmacro MUI_DESCRIPTION_TEXT ${tgdbm} $(DESC_tgdbm)
+  !insertmacro MUI_DESCRIPTION_TEXT ${memchan} $(DESC_memchan)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
   !insertmacro MUI_DESCRIPTION_TEXT ${bwidget} $(DESC_bwidget)

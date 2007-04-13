@@ -3,6 +3,12 @@
 #
 # $Id$
 #
+2007-04-13 Martin Matuska <martin at matuska.org>
+	* added package memchan 2.2.1
+
+2007-04-12 Martin Matuska <martin at matuska.org>
+	* fixed interpreter bug in ASED
+
 2007-04-06 Martin Matuska <martin at matuska.org>
 	* added package tDOM 0.8.1
 	* added package thread 2.6.5

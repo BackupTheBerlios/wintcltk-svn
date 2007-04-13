@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
 allclean: distclean
 	@rm *.tar.gz *.zip *.htm *.html
 
@@ -123,8 +123,8 @@ ${DISTFILES}/tgdbm${TGDBM_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.vogel-nest.de/wiki/uploads/Main/tgdbm${TGDBM_VERSION}.zip"
 
-extract-tgdbm: fetch-tgdbm ${BUILDDIR} ${BUILDDIR}/tgdbm${TGDBM_VERSION}
-${BUILDDIR}/tgdbm${TGDBM_VERSION}: $(UNZIP)
+extract-tgdbm: fetch-tgdbm $(BUILDDIR) install-unzip $(BUILDDIR)/tgdbm$(TGDBM_VERSION)
+${BUILDDIR}/tgdbm${TGDBM_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tgdbm${TGDBM_VERSION}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/tgdbm$(TGDBM_VERSION).zip
 	@cd ${BUILDDIR}/tgdbm$(TGDBM_VERSION) && rm tgdbm.dll
@@ -240,14 +240,13 @@ ${BUILDDIR}/xotcl-${XOTCL_VERSION}/Makefile:
 	@cd ${BUILDDIR}/xotcl-${XOTCL_VERSION} && ./configure --prefix=${PREFIX} --enable-shared --enable-threads \
 		--with-tcl=${PREFIX}/lib --with-actiweb --with-gdbm=${PREFIX}/include,${PREFIX}/bin	
 
-build-xotcl: configure-xotcl ${BUILDDIR}/xotcl-${XOTCL_VERSION}/xotcl${XOTCL_LIBVER}.a
-${BUILDDIR}/xotcl-${XOTCL_VERSION}/xotcl${XOTCL_LIBVER}.a:
-	echo $(XOTCL_SHORT)
-	@cd ${BUILDDIR}/xotcl-${XOTCL_VERSION} && make
+build-xotcl: configure-xotcl $(BUILDDIR)/xotcl-$(XOTCL_VERSION)/xotcl$(XOTCL_LIBVER).dll
+$(BUILDDIR)/xotcl-$(XOTCL_VERSION)/xotcl$(XOTCL_LIBVER).dll:
+	@cd $(BUILDDIR)/xotcl-$(XOTCL_VERSION) && make
 
-install-xotcl: build-xotcl ${PREFIX}/lib/xotclConfig.sh
-${PREFIX}/lib/xotclConfig.sh: 
-	@cd ${BUILDDIR}/xotcl-${XOTCL_VERSION} && make install
+install-xotcl: build-xotcl $(PREFIX)/lib/xotcl153.dll
+$(PREFIX)/lib/xotcl153.dll: 
+	@cd $(BUILDDIR)/xotcl-$(XOTCL_VERSION) && make install
 	
 uninstall-xotcl:
 	@-cd ${PREFIX}/lib && rm -rf xotcl${XOTCL_VERSION} xotcl*.dll xotclConfig.sh
@@ -460,8 +459,8 @@ ${DISTFILES}/twapi-${TWAPI_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/twapi/twapi-${TWAPI_VERSION}.zip"
 
-extract-twapi: fetch-twapi ${BUILDDIR} ${BUILDDIR}/twapi 
-${BUILDDIR}/twapi: $(UNZIP)
+extract-twapi: fetch-twapi install-unzip ${BUILDDIR} ${BUILDDIR}/twapi 
+${BUILDDIR}/twapi:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/twapi-${TWAPI_VERSION}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/twapi-${TWAPI_VERSION}.zip
 
@@ -490,8 +489,8 @@ ${DISTFILES}/mysqltcl.html:
 	@cd ${DISTFILES} && ${WGET} "http://www.xdobry.de/mysqltcl/mysqltcl.html"
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
  
-extract-mysqltcl: fetch-mysqltcl ${BUILDDIR} ${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION} 
-${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION}: $(UNZIP)
+extract-mysqltcl: fetch-mysqltcl install-unzip ${BUILDDIR} ${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION} 
+${BUILDDIR}/mysqltcl-${MYSQLTCL_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/mysqltcl-${MYSQLTCL_VERSION}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mysqltcl-${MYSQLTCL_VERSION}.zip
 
@@ -630,11 +629,11 @@ ${DISTFILES}/pgtcldocs-${PGTCL_DOCVER}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
 	@cd ${DISTFILES} && ${WGET} "http://pgfoundry.org/frs/download.php/${PGTCL_DOCREL}/pgtcldocs-${PGTCL_DOCVER}.zip"
 
-extract-pgtcl: fetch-pgtcl ${BUILDDIR} ${BUILDDIR}/pgtcl${PGTCL_VERSION} ${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}
+extract-pgtcl: fetch-pgtcl install-unzip ${BUILDDIR} ${BUILDDIR}/pgtcl${PGTCL_VERSION} ${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}
 ${BUILDDIR}/pgtcl${PGTCL_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/pgtcl${PGTCL_VERSION}.tar.gz.md5 || exit 1
 	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/pgtcl${PGTCL_VERSION}.tar.gz
-${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}: $(UNZIP)
+${BUILDDIR}/pgtcldocs-${PGTCL_DOCVER}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/pgtcldocs-${PGTCL_DOCVER}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/pgtcldocs-${PGTCL_DOCVER}.zip
 
@@ -670,8 +669,8 @@ ${DISTFILES}/ased${ASED_VERSION}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} "http://www.mms-forum.de/ased/ased${ASED_VERSION}.zip"
 
-extract-ased: fetch-ased ${BUILDDIR} ${BUILDDIR}/${ASED_DIR} 
-${BUILDDIR}/${ASED_DIR}: $(UNZIP)
+extract-ased: fetch-ased  install-unzip ${BUILDDIR} ${BUILDDIR}/${ASED_DIR} 
+${BUILDDIR}/${ASED_DIR}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/ased${ASED_VERSION}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/ased${ASED_VERSION}.zip
 	@cd ${BUILDDIR} && patch -p0 < ${PATCHDIR}/ased${ASED_VERSION}.patch
@@ -728,8 +727,8 @@ ${DISTFILES}/mkziplib${MKZIPLIB_SHORT}.zip:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
 	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
 
-extract-mkziplib: fetch-mkziplib ${BUILDDIR} ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile
-${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile: $(UNZIP)
+extract-mkziplib: fetch-mkziplib install-unzip ${BUILDDIR} ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile
+${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/mkZiplib${MKZIPLIB_SHORT}.zip.md5 || exit 1
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mkZiplib${MKZIPLIB_SHORT}.zip
 	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && rm -f *.dll *.exe
@@ -739,7 +738,7 @@ configure-mkziplib: extract-mkziplib install-tcl
 
 build-mkziplib: configure-mkziplib install-zlib ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll 
 ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.dll:
-	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && make strip CFLAGS="-I$(PREFIX)/include -DUSE_TCL_STUBS" TCLLIB="${PREFIX}/lib/libtclstub84.a" PREFIX="${PREFIX}"
+	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && make strip CFLAGS="-I$(PREFIX)/include -DUSE_TCL_STUBS" TCLLIB="${PREFIX}/lib/libtclstub84.a" PREFIX="${PREFIX}" LIBS="$(PREFIX)/bin/zlib1.dll"
 
 install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl
 ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
@@ -755,3 +754,38 @@ clean-mkziplib:
 
 distclean-mkziplib:
 	@-rm -rf ${BUILDDIR}/mkziplib${MKZIPLIB_VERSION}
+
+# memchan
+fetch-memchan: $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz $(DISTFILES)/memchan.html.tar.gz
+$(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/memchan/memchan-$(MEMCHAN_VERSION).tar.gz"
+		
+extract-memchan: fetch-memchan $(BUILDDIR) $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/Makefile.gnu
+$(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/Makefile.gnu:
+	@cd ${DISTFILES} && md5sum -c $(MD5SUMS)/memchan-$(MEMCHAN_VERSION).tar.gz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz
+	@-cd ${BUILDDIR}/memchan-$(MEMCHAN_VERSION) && patch -p0 < $(PATCHDIR)/memchan.patch
+
+configure-memchan: extract-memchan install-tcl
+
+build-memchan: configure-memchan ${BUILDDIR}/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll 
+${BUILDDIR}/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll :
+	@cd ${BUILDDIR}/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu TCL_INC_DIR="$(PREFIX)/include" DLL_LDLIBS="-L$(PREFIX)/lib -ltclstub84"
+
+install-memchan: build-memchan $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl
+$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl:
+	@mkdir -p $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
+	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && cp memchan$(MEMCHAN_LIBVER).dll pkgIndex.tcl \
+		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)
+	@cp $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/*.html $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/license.terms \
+		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
+	
+uninstall-memchan:
+	@-cd $(PREFIX)/lib && rm -rf memchan${MEMCHAN_VERSION}
+
+clean-memchan:
+	@-cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu clean
+
+distclean-memchan:
+	@-rm -rf $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)
