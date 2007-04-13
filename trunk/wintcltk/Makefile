@@ -8,8 +8,9 @@ SRCDIR=	$(CURDIR)/src
 FREEWRAPDIR=	$(CURDIR)/freewrap
 #
 include $(SRCDIR)/defs/defs.mak
+include $(SRCDIR)/defs/tools.mak
 #
-WINTCLTK_VERSION=0.4.1
+WINTCLTK_VERSION=0.4.2
 WINTCLTK_FW_VERSION=0.1
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
@@ -66,22 +67,22 @@ wintcltk-fw-$(WINTCLTK_FW_VERSION).zip: $(FREEWRAPDIR)/dist/std/freewrap.exe $(F
 	@cd $(FREEWRAPDIR)/dist && $(ZIP) -r $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip std/freewrap.exe xotcl/freewrap.exe full/freewrap.exe
 	@cd $(FREEWRAPDIR)/doc && $(ZIP) $(CURDIR)/wintcltk-fw-$(WINTCLTK_FW_VERSION).zip README.txt ChangeLog.txt
 		
-release: installer fw wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
+release: installer wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 
 wintcltk-${WINTCLTK_VERSION}:
 	@mkdir -p wintcltk-${WINTCLTK_VERSION}
-	@cd wintcltk-${WINTCLTK_VERSION} && mkdir -p src/md5sums src/patches doc/licenses
+	@cd wintcltk-${WINTCLTK_VERSION} && mkdir -p src/patches src/defs src/md5sums doc/licenses
 	@cp Makefile wintcltk-${WINTCLTK_VERSION}
-	@cp src/Makefile wintcltk-${WINTCLTK_VERSION}/src
-	@cp src/md5sums/*.md5 wintcltk-${WINTCLTK_VERSION}/src/md5sums
-	@cp src/patches/*.patch wintcltk-${WINTCLTK_VERSION}/src/patches 
+	@cp -rf src/Makefile wintcltk-${WINTCLTK_VERSION}/src
+	@cp -rf src/defs/*.mak wintcltk-${WINTCLTK_VERSION}/src/defs
+	@cp -rf src/md5sums/*.md5 wintcltk-${WINTCLTK_VERSION}/src/md5sums
+	@cp -rf src/patches/*.patch wintcltk-${WINTCLTK_VERSION}/src/patches
 	@cp doc/*.txt doc/*.htm wintcltk-${WINTCLTK_VERSION}/doc
 	@cp doc/licenses/*.txt wintcltk-${WINTCLTK_VERSION}/doc/licenses
 
 wintcltk-${WINTCLTK_VERSION}-src.tar.gz: wintcltk-${WINTCLTK_VERSION}
 	@tar cz --exclude CVS -f wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}
 
-wintcltk-${WINTCLTK_VERSION}-src.zip: wintcltk-${WINTCLTK_VERSION}
-	@[ -x "${ZIP}" ] || ( echo "You require zip to create the source release in zip format. See BUILD-MinGW.txt for more information."; exit 1 ) 
+wintcltk-${WINTCLTK_VERSION}-src.zip: wintcltk-${WINTCLTK_VERSION} install-zip
 	@zip -r wintcltk-${WINTCLTK_VERSION}-src.zip wintcltk-${WINTCLTK_VERSION} -x '*/CVS/*' > /dev/null 2>&1
 

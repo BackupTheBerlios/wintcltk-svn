@@ -47,7 +47,7 @@ $(TOOLSDIR)/build/zip-${ZIP_VERSION}: fetch-zip
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/zip$(ZIP_SHORT).tgz.md5 || exit 1
 	@cd $(TOOLSDIR)/build && tar xfz ${DISTFILES}/zip$(ZIP_SHORT).tgz
 	
-configure-zip: extract-zip install-zlib
+configure-zip: extract-zip
 build-zip: $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe
 $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe: configure-zip
 	@cd $(TOOLSDIR)/build/zip-${ZIP_VERSION} && make -f win32/makefile.gcc

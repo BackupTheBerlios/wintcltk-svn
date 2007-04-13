@@ -7,7 +7,7 @@
 # 
 
 WinTclTk - Tcl/Tk Distribution for Microsoft Windows
-Version 0.4.1
+Version 0.4.2
 
 This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
