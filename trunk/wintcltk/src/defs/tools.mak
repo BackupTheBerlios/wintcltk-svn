@@ -42,18 +42,18 @@ ${DISTFILES}/zip$(ZIP_SHORT).tgz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
 	@cd ${DISTFILES} && ${WGET} "ftp://ftp.info-zip.org/pub/infozip/src/zip$(ZIP_SHORT).tgz"
 
-extract-zip: $(TOOLSDIR)/build $(TOOLSDIR)/build/zip-${ZIP_VERSION}
-$(TOOLSDIR)/build/zip-${ZIP_VERSION}: fetch-zip 
+extract-zip: fetch-zip $(TOOLSDIR)/build $(TOOLSDIR)/build/zip-${ZIP_VERSION}
+$(TOOLSDIR)/build/zip-${ZIP_VERSION}:
 	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/zip$(ZIP_SHORT).tgz.md5 || exit 1
 	@cd $(TOOLSDIR)/build && tar xfz ${DISTFILES}/zip$(ZIP_SHORT).tgz
 	
 configure-zip: extract-zip
-build-zip: $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe
-$(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe: configure-zip
+build-zip:  configure-zip $(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe
+$(TOOLSDIR)/build/zip-${ZIP_VERSION}/zip.exe:
 	@cd $(TOOLSDIR)/build/zip-${ZIP_VERSION} && make -f win32/makefile.gcc
 
-install-zip: $(TOOLSDIR)/zip.exe
-$(TOOLSDIR)/zip.exe: build-zip
+install-zip: build-zip $(TOOLSDIR)/zip.exe
+$(TOOLSDIR)/zip.exe:
 	@cd $(TOOLSDIR)/build/zip-${ZIP_VERSION} && cp zip.exe $(TOOLSDIR)
 
 uninstall-zip:
