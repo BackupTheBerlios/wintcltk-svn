@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install:  install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf
-uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf
-clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf
-distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf
+install:  install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-tklib install-tkcon
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-tklib uninstall-tkcon
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-tklib clean-tkcon
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-tklib distclean-tkcon
 
 # directories
 ${DISTFILES}:
@@ -448,32 +448,32 @@ clean-trf:
 distclean-trf:
 	@-rm -rf $(BUILDDIR)/trf$(TRF_VERSION)
 
-# tcllib
-fetch-tcllib: ${DISTFILES} ${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz 
-${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz:
+# tklib
+fetch-tklib: ${DISTFILES} ${DISTFILES}/tklib-${TKLIB_VERSION}.tar.gz 
+${DISTFILES}/tklib-${TKLIB_VERSION}.tar.gz:
 	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@cd ${DISTFILES} && ${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcllib/tcllib-${TCLLIB_VERSION}.tar.gz"
+	@cd ${DISTFILES} && ${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tklib/tklib-${TKLIB_VERSION}.tar.gz"
 
-extract-tcllib: fetch-tcllib ${BUILDDIR} ${BUILDDIR}/tcllib-${TCLLIB_VERSION} 
-${BUILDDIR}/tcllib-${TCLLIB_VERSION}:
-	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tcllib-${TCLLIB_VERSION}.tar.gz.md5 || exit 1
-	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz
+extract-tklib: fetch-tklib ${BUILDDIR} ${BUILDDIR}/tklib-${TKLIB_VERSION} 
+${BUILDDIR}/tklib-${TKLIB_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tklib-${TKLIB_VERSION}.tar.gz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/tklib-${TKLIB_VERSION}.tar.gz
 
-configure-tcllib: install-tcl extract-tcllib ${BUILDDIR}/tcllib-${TCLLIB_VERSION}/Makefile 
-${BUILDDIR}/tcllib-${TCLLIB_VERSION}/Makefile:
-	@cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && ./configure --prefix=${PREFIX}
+configure-tklib: install-tk extract-tklib ${BUILDDIR}/tklib-${TKLIB_VERSION}/Makefile 
+${BUILDDIR}/tklib-${TKLIB_VERSION}/Makefile:
+	@cd ${BUILDDIR}/tklib-${TKLIB_VERSION} && ./configure --prefix=${PREFIX}
 
-build-tcllib: configure-tcllib 
+build-tklib: configure-tklib 
 
-install-tcllib: build-tcllib ${PREFIX}/lib/tcllib${TCLLIB_VERSION}/pkgIndex.tcl 
-${PREFIX}/lib/tcllib${TCLLIB_VERSION}/pkgIndex.tcl:
-	@cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && make install-libraries
+install-tklib: build-tklib ${PREFIX}/lib/tklib${TKLIB_SHORT}/pkgIndex.tcl 
+${PREFIX}/lib/tklib${TKLIB_SHORT}/pkgIndex.tcl:
+	@cd ${BUILDDIR}/tklib-${TKLIB_VERSION} && make install-libraries
 
-uninstall-tcllib:
-	@-cd ${PREFIX}/lib && rm -rf tcllib${TCLLIB_VERSION}
+uninstall-tklib:
+	@-cd ${PREFIX}/lib && rm -rf tklib${TKLIB_VERSION}
 
-clean-tcllib:
-	@-cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && make clean
+clean-tklib:
+	@-cd ${BUILDDIR}/tklib-${TKLIB_VERSION} && make clean
 
-distclean-tcllib:
-	@-rm -rf ${BUILDDIR}/tcllib-${TCLLIB_VERSION}
+distclean-tklib:
+	@-rm -rf ${BUILDDIR}/tklib-${TKLIB_VERSION}

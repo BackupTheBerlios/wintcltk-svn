@@ -60,7 +60,7 @@ $(COMMONBUILD)/tkcon:
 configure-tkcon: extract-tkcon
 build-tkcon: configure-tkcon
 
-install-tkcon: install-tcllib build-tkcon $(PREFIX)/lib/tkcon$(TKCON_VERSION)/pkgIndex.tcl
+install-tkcon: install-tklib build-tkcon $(PREFIX)/lib/tkcon$(TKCON_VERSION)/pkgIndex.tcl
 $(PREFIX)/lib/tkcon$(TKCON_VERSION)/pkgIndex.tcl:
 	@mkdir -p $(PREFIX)/lib/tkcon$(TKCON_VERSION)
 	@cd $(COMMONBUILD)/tkcon && cp -Rp tkcon.tcl pkgIndex.tcl README.txt Changelog extra docs $(PREFIX)/lib/tkcon$(TKCON_VERSION)
