@@ -38,10 +38,10 @@ SRCDIR?=	$(CURDIR)/../src
 include $(SRCDIR)/defs/defs.mak
 
 # WinTclTk install root
-INSTROOT?=	$(SRCDIR)/instroots
+INSTROOT?=	$(SRCDIR)/instroot_s
 
 # WinTckTk build directory
-BUILDDIR?=	$(SRCDIR)/builds
+BUILDDIR?=	$(SRCDIR)/build_s
 
 # Current application program revision number
 PROGREV = 6.2
@@ -106,7 +106,7 @@ endif
 LFLAGS = -static -mwindows
 ###### Name of the ZIP archiver program
 #
-ZIP := $(ZIP)
+ZIP := $(BUILDDIR)/zip-$(ZIP_VERSION)/zip.exe
 
 ###### Extention for executable files on the target machine.
 #
@@ -259,7 +259,10 @@ ifdef XOTCL
 XOTCL_SCRIPTS = zipdir/xotcl/xml
 endif
 
-all: $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
+all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
+
+static:
+	@cd $(SRCDIR) && make install STATIC_BUILD=1
 
 $(FBUILD):
 	@$(MKDIR) $(FBUILD)
@@ -319,7 +322,7 @@ $(FBUILD)/tclsh.res.o:
 $(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
 	@$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
 # Comment out the following line if you do not want to compress the executable file with UPX.
-	@[ -x $(UPX) ] && $(UPX) -9 $(DISTDIR)/freewrap_bare$(EXE)
+	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(DISTDIR)/freewrap_bare$(EXE)
 	
 $(FBUILD)/freewrap.o: $(FBSRC)/main.c
 	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
