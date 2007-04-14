@@ -1,0 +1,154 @@
+--- win/Makefile.gnu.orig	Fri Apr 13 08:16:45 2007
++++ win/Makefile.gnu	Fri Apr 13 08:16:52 2007
+@@ -5,10 +5,11 @@
+ #----------------------------------------------------------------
+ 
+ EXTENSION	= Memchan
+-VERSION		= 2.2a4
+-TCL_VERSION	= 81
++VERSION		= 2.2.1
++TCL_VERSION	= 84
+ 
+ MEMCHAN_DLL_FILE= memchan22.dll
++MEMCHAN_STATIC_LIB= memchan22.a
+ 
+ #
+ #----------------------------------------------------------------
+@@ -152,7 +153,7 @@
+ 
+ DLL_LDFLAGS = -mwindows -Wl,-e,_DllMain@12
+ #DLL_LDLIBS = -L/progra~1/tcl/lib -ltclstub81
+-DLL_LDLIBS = -L/progra~1/tcl/lib -ltclstub82
++DLL_LDLIBS = -L/progra~1/tcl/lib -ltclstub84
+ 
+ baselibs   = -lkernel32 $(optlibs) -ladvapi32
+ winlibs    = $(baselibs) -luser32 -lgdi32 -lcomdlg32 -lwinspool
+@@ -160,7 +161,7 @@
+ 
+ guilibsdll = $(libcdll) $(winlibs)
+ 
+-MEMCHAN_DEFINES	= -D__WIN32__ -DSTATIC_BUILD -DUSE_TCL_STUBS -DMEMCHAN_VERSION="\"${VERSION}\"" -DHAVE_LTOA
++MEMCHAN_DEFINES	= -D__WIN32__ -DSTATIC_BUILD -DUSE_TCL_STUBS -DHAVE_LTOA -DMEMCHAN_VERSION=\"$(VERSION)\"
+ 
+ # $(TCL_CC_SWITCHES)
+ INCLUDES	=	-I. -I$(srcdir) -I$(TCL_INC_DIR)
+@@ -169,20 +170,28 @@
+ 
+ CC_SWITCHES	=	$(CFLAGS) $(DEFINES) $(INCLUDES)
+ 
+-#		fundamentals of this library
+-SOURCES	=	../generic/counter.c \
+-		../generic/fifo.c \
+-		../generic/init.c \
+-		../generic/memchan.c
+-
+-OBJECTS	=	counter.o \
+-		fifo.o \
++OBJECTS	=	memchan.o	\
+ 		init.o \
+-		memchan.o
++		counter.o	\
++		fifo.o		\
++		fifo2.o		\
++		null.o		\
++		zero.o		\
++		random.o	\
++		buf.o		\
++		bufFix.o	\
++		bufExt.o	\
++		bufRange.o	\
++		bufQueue.o	\
++		bufStubInit.o	\
++		bufStubLib.o	\
++		memchanStubInit.o	\
++		memchanStubLib.o	\
++		randport.o
+ 
+ #-------------------------------------------------------#
+ 
+-default:	$(MEMCHAN_DLL_FILE)
++default:	$(MEMCHAN_STATIC_LIB) $(MEMCHAN_DLL_FILE)
+ 
+ all:	default
+ 
+@@ -192,24 +201,20 @@
+ 
+ #-------------------------------------------------------#
+ 
+-counter.o:	../generic/counter.c
+-	$(CC) -c $(CC_SWITCHES) ../generic/counter.c -o $@
+-
+-fifo.o:	../generic/fifo.c
+-	$(CC) -c $(CC_SWITCHES) ../generic/fifo.c -o $@
++VPATH=	../generic:../isaac
+ 
+-init.o:	../generic/init.c
+-	$(CC) -c $(CC_SWITCHES) ../generic/init.c -o $@
++.c.o:
++	$(CC) $(CC_SWITCHES) -c `echo $<` -o $@
+ 
+-memchan.o:	../generic/memchan.c
+-	$(CC) -c $(CC_SWITCHES) ../generic/memchan.c -o $@
+-
+-dllEntry.o:	dllEntry.c
+-	$(CC) -c $(CC_SWITCHES) dllEntry.c -o $@
++dllEntry.o:
++	$(CC) $(CC_SWITCHES) -c dllEntry.c -o $@
+ 
+ #-------------------------------------------------------#
+ 
+-$(MEMCHAN_DLL_FILE):	$(OBJECTS) mcres.o dllEntry.o memchan.def
++$(MEMCHAN_STATIC_LIB):	$(OBJECTS)
++	ar rcs $(MEMCHAN_STATIC_LIB) $(OBJECTS)
++
++$(MEMCHAN_DLL_FILE):	$(OBJECTS) mcres.o dllEntry.o memchan.def
+ 	$(DLLWRAP) -s $(DLL_LDFLAGS) -mno-cygwin -o $@ $(OBJECTS) \
+ 		mcres.o dllEntry.o --def memchan.def \
+ 		$(DLL_LDLIBS) 
+@@ -217,20 +222,26 @@
+ memchan.def: $(OBJECTS)
+ 	$(DLLTOOL) --export-all --exclude-symbols DllMain@12 --output-def $@ $(OBJECTS)
+ 
++comma = ,
++
+ mcres.o: mc.rc
+-	$(WINDRES) --include . --define VS_VERSION_INFO=1 mc.rc mcres.o
++	$(WINDRES) --include . -D__WIN32__ \
++                -DCOMMAVERSION=$(subst .,$(comma),$(VERSION)),0 \
++                -DDOTVERSION=\\\"$(VERSION)\\\" \
++                -DVERSION=\\\"$(subst .,,$(VERSION))$(SUFX)\\\" \
++		mc.rc mcres.o
+ 
+ 
+ #-------------------------------------------------------#
+ 
+ clean:
+-	del $(OBJECTS) $(MEMCHAN_DLL_FILE)
+-	del TAGS depend *~ */*~ core* tests/core* so_locations lib*.so*
++	rm -f $(OBJECTS) $(MEMCHAN_DLL_FILE)
++	rm -f TAGS depend *~ */*~ core* tests/core* so_locations lib*.so*
+ 
+ distclean:	clean
+-	del config.* $(jpegdir)/config.log $(jpegdir)/config.status
+-	del Makefile
+-	del pkgIndex.tcl
++	rm -f config.* $(jpegdir)/config.log $(jpegdir)/config.status
++	rm -f Makefile
++	rm -f pkgIndex.tcl
+ 
+ #-------------------------------------------------------#
+ # DO NOT DELETE THIS LINE -- make depend depends on it.
+--- win/pkgIndex.tcl.orig	Fri Apr 13 08:16:55 2007
++++ win/pkgIndex.tcl	Fri Apr 13 08:17:01 2007
+@@ -1,10 +1,5 @@
+ # Tcl package index file, version 1.0
+ #if {[info tclversion] < 8.0} return
+ 
+-proc mc_ifneeded dir {
+-    rename mc_ifneeded {}
+-    regsub {\.} [info tclversion] {} version
+-    package ifneeded Memchan 2.2 "load [list [file join $dir memchan22$version.dll]] Memchan"
+-}
++package ifneeded Memchan 2.2 "load [list [file join $dir memchan22.dll]] Memchan"
+ 
+-mc_ifneeded $dir
