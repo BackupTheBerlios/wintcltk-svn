@@ -372,7 +372,8 @@ if {$argctr > 0} {
 
 			# Add file to ZIP command line
 			set filetype [string index $filename 0]
-			set srcname [_freewrap_normalize [string range $filename 1 end]]
+#			set srcname [_freewrap_normalize [string range $filename 1 end]]
+			set srcname [string range $filename 1 end]
 			if {[file exists $srcname]} {
 			    if {$argctr == 1} {
 				  # We are processing the main script

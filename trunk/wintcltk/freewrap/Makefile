@@ -83,7 +83,19 @@ SED = sed
 
 #
 # Resfile
-RESFILE = ${BUILDDIR}/tcl$(TCLTK_VERSION)/win/tclsh.rc
+RESFILE = $(FBSRC)/freewish.rc
+RESHEADER= $(FBSRC)/freewishrc.h
+ICONFILE=	freewish.ico
+
+# Resheader defies
+COMMAVERSION=	0,1,0,0
+DOTVERSION=	0.1.0.0
+PROGNAME=	FreeWish for Windows
+FILENAME=	freewish.exe
+COMPANYNAME=	WinTclTk project
+COPYRIGHT=	© 2007 Martin Matuska
+PRODUCTNAME=	FreeWish for Windows
+MANIFESTNAME=	FreeWish
 
 ###### Select a C compiler
 #
@@ -184,7 +196,7 @@ XODIR = $(INSTALLDIR)/xotcl$(XOTCL_VERSION)
 #      the C preprocessor macro WITHOUT_x.
 #
 
-OPT_MISC=
+OPT_MISC= -DNTSD_EAS
 
 OPT_WINICO = -DSTATIC_BUILD -DPACKAGE_NAME="\"Winico\"" -DPACKAGE_VERSION="\"0.5\""
 
@@ -245,7 +257,7 @@ $(FBUILD)/freelib.o \
 $(FBUILD)/freewrap.o \
 $(FBUILD)/fwcrypt.o \
 $(FBUILD)/zvfs.o \
-$(FBUILD)/tclsh.res.o
+$(FBUILD)/freewish.res.o
 
 ifndef WITHOUT_TK
 OBJ += $(FBUILD)/tkwinico.o
@@ -258,6 +270,8 @@ ZSCRIPTS = $(ZSCRIPT_TCL) $(ZSCRIPT_TK)
 ifdef XOTCL
 XOTCL_SCRIPTS = zipdir/xotcl/xml
 endif
+CTEXT = zipdir/ctext
+TKCON = zipdir/tkcon
 
 all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
 
@@ -277,7 +291,7 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(DISTDIR)/freewrap$(EXE): $(DISTDIR)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS)
+$(DISTDIR)/freewrap$(EXE): $(DISTDIR)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(CTEXT) $(TKCON) init-pkgs
 	@$(RM) $(DISTDIR)/freewrap$(EXE)
 ifdef WITHOUT_TK
 	@$(DELTREE) zipdir/tk
@@ -312,12 +326,38 @@ zipdir/xotcl/xml:
 	@echo "global auto_path" > zipdir/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /xotcl/actiweb /xotcl/comm /xotcl/lib /xotcl/patterns /xotcl/rdf" >> zipdir/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /xotcl/rdf /xotcl/registry /xotcl/serialize /xotcl/store /xotcl/xml" >> zipdir/tcl/init-pkgs.tcl
-	@echo "return" >> zipdir/tcl/init-xotcl.tcl
+
+zipdir/tkcon:
+	@echo "lappend auto_path /tkcon" >> zipdir/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/tkcon
+	@$(MKDIR) zipdir/tkcon
+	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/tkcon
+	
+zipdir/ctext:
+	@echo "lappend auto_path /ctext" >> zipdir/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/ctext
+	@$(CP) -rf $(INSTROOT)/lib/tklib$(TKLIB_SHORT)/ctext zipdir
+
+init-pkgs:
 	@$(SED) -e 's|global auto_path|global auto_path; source /tcl/init-pkgs.tcl|g' zipdir/tcl/init.tcl > zipdir/tcl/init.tcl.bak
 	@$(MV) zipdir/tcl/init.tcl.bak zipdir/tcl/init.tcl
-
-$(FBUILD)/tclsh.res.o:
-	@cd $(FBSRC) && windres $(HDR_TK) -i $(RESFILE) -o $(FBUILD)/tclsh.res.o
+		
+resheader:
+	@echo "#define COMMAVERSION $(COMMAVERSION)" > $(RESHEADER)
+	@echo "#define DOTVERSION \"$(DOTVERSION)\"" >> $(RESHEADER)
+	@echo "#define PROGNAME \"$(PROGNAME)\"" >> $(RESHEADER)
+	@echo "#define FILENAME \"$(FILENAME)\"" >> $(RESHEADER)
+	@echo "#define COMPANYNAME \"$(COMPANYNAME)\"" >> $(RESHEADER)
+	@echo "#define COPYRIGHT \"$(COPYRIGHT)\"" >> $(RESHEADER)
+	@echo "#define PRODUCTNAME \"$(PRODUCTNAME)\"" >> $(RESHEADER)
+	@echo "#define ICONFILE \"$(ICONFILE)\"" >> $(RESHEADER)
+	
+resmanifest:
+	@$(SED) -e 's|%%VERSION%%|$(DOTVERSION)|g' -e 's|%%NAME%%|$(MANIFESTNAME)|g' \
+		$(FBSRC)/freewish.manifest.in > $(FBSRC)/freewish.manifest
+		
+$(FBUILD)/freewish.res.o: resheader resmanifest
+	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewish.res.o
 	
 $(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
 	@$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)

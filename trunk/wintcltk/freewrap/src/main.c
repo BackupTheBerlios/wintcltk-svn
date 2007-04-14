@@ -162,12 +162,12 @@ int main(int argc, char **argv){
   if (Registry_Init(interp) == TCL_ERROR) {
       return TCL_ERROR;
      }
-  Tcl_StaticPackage(interp, "Registry", Registry_Init, 0);
+  Tcl_StaticPackage(interp, "registry", Registry_Init, 0);
 
   if (Dde_Init(interp) == TCL_ERROR) {
       return TCL_ERROR;
      }
-  Tcl_StaticPackage(interp, "Dde", Dde_Init, 0);
+  Tcl_StaticPackage(interp, "dde", Dde_Init, 0);
 #endif
 
 #ifndef WITHOUT_TDOM
@@ -175,7 +175,7 @@ int main(int argc, char **argv){
       return TCL_ERROR;
      }
 
-  Tcl_StaticPackage(interp, "Tdom", Tdom_Init, Tdom_SafeInit);
+  Tcl_StaticPackage(interp, "tdom", Tdom_Init, Tdom_SafeInit);
 #endif
 
 #ifndef WITHOUT_TLS
@@ -183,7 +183,7 @@ int main(int argc, char **argv){
       return TCL_ERROR;
      }
 
-  Tcl_StaticPackage(interp, "Tls", Tls_Init, Tls_SafeInit);
+  Tcl_StaticPackage(interp, "tls", Tls_Init, Tls_SafeInit);
 #endif
 
 /*
@@ -201,7 +201,7 @@ int main(int argc, char **argv){
       return TCL_ERROR;
      }
 
-  Tcl_StaticPackage(interp, "Xotcl", Xotcl_Init, Xotcl_SafeInit);
+  Tcl_StaticPackage(interp, "XOTcl", Xotcl_Init, Xotcl_SafeInit);
 
 /*  
   if (Xotclexpat_Init(interp) == TCL_ERROR) {
@@ -232,7 +232,7 @@ int main(int argc, char **argv){
       return TCL_ERROR;
      }
 
-  Tcl_StaticPackage(interp, "Tgdbm", Tgdbm_Init, 0);
+  Tcl_StaticPackage(interp, "tgdbm", Tgdbm_Init, 0);
 #endif
 
 #ifndef WITHOUT_THREAD
