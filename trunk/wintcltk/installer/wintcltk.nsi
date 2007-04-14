@@ -32,6 +32,7 @@
 !define MEMCHAN_VERSION "2.2.1"
 !define TRF_VERSION "2.1p2"
 !define TCLVFS_VERSION "1.3"
+!define TKCON_VERSION "2.5"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -2487,25 +2488,7 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "${INSTROOT}\ased3.0\help\TclTk\UserCmd\contents.htm"
   File "${INSTROOT}\ased3.0\help\TclTk\UserCmd\tclsh.htm"
   File "${INSTROOT}\ased3.0\help\TclTk\UserCmd\wish.htm"
-  SetOutPath $INSTDIR\ased3.0\help\tkcon
-  File "${INSTROOT}\ased3.0\help\tkcon\bindings.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\changes.txt"
-  File "${INSTROOT}\ased3.0\help\tkcon\demopic.gif"
-  File "${INSTROOT}\ased3.0\help\tkcon\dump.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\idebug.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\index.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\license.terms"
-  File "${INSTROOT}\ased3.0\help\tkcon\limits.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\nontcl.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\observe.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\perl.txt"
-  File "${INSTROOT}\ased3.0\help\tkcon\plugin.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\procs.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\purpose.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\start.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\style.css"
-  File "${INSTROOT}\ased3.0\help\tkcon\tkcon.html"
-  File "${INSTROOT}\ased3.0\help\tkcon\todo.html"
+  CreateShortCut "SetOutPath $INSTDIR\ased3.0\help\tkcon.lnk" "$INSTDIR\doc\packages\files\tkcon" "" "$INSTDIR\doc\packages\files\tkcon" 0
   SetOutPath $INSTDIR\ased3.0\help\Tkhtml
   File "${INSTROOT}\ased3.0\help\Tkhtml\index.html"
   SetOutPath $INSTDIR\ased3.0\highlighters
@@ -2672,13 +2655,7 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "${INSTROOT}\ased3.0\tools\tcltutor\TclTutor.tcl"
   File "${INSTROOT}\ased3.0\tools\tcltutor\Uninstal.exe"
   SetOutPath $INSTDIR\ased3.0\tools\tkcon
-  File "${INSTROOT}\ased3.0\tools\tkcon\ChangeLog"
-  File "${INSTROOT}\ased3.0\tools\tkcon\license_terms.txt"
-  File "${INSTROOT}\ased3.0\tools\tkcon\README.txt"
   File "${INSTROOT}\ased3.0\tools\tkcon\tkcon.tcl"
-  SetOutPath $INSTDIR\ased3.0\tools\tkcon\extra
-  File "${INSTROOT}\ased3.0\tools\tkcon\extra\console1_1.tcl"
-  File "${INSTROOT}\ased3.0\tools\tkcon\extra\stripped.tcl"
   SetOutPath $INSTDIR\ased3.0\tools\tkdiff
   File "${INSTROOT}\ased3.0\tools\tkdiff\tkdiff.tcl"
   SetOutPath $INSTDIR\ased3.0\tools\visualregexp
@@ -2688,7 +2665,38 @@ Section "ASED IDE ${ASED_VERSION}" ased
   CreateShortCut "$INSTDIR\doc\licenses\ased-license.lnk" "$INSTDIR\ased3.0\License.txt" "" "$INSTDIR\ased3.0\License.txt" 0
   SetOutPath $INSTDIR
   CreateShortCut "$SMPROGRAMS\WinTclTk\ASED TclTk IDE.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\ased.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
-  CreateShortCut "$SMPROGRAMS\WinTclTk\tkcon.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\ased3.0\tools\tkcon\tkcon.tcl$\"" "$INSTDIR\ased3.0\tclkit.ico" 0
+SectionEnd
+
+Section "Tkcon ${TKCON_VERSION}" tkcon
+  Sectionin 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\Tkcon-license.lnk" "$INSTDIR\doc\packages\files\tkcon\license.terms" "" "$INSTDIR\doc\packages\files\tkcon\license.terms" 0
+  SetOutPath $INSTDIR\doc\packages\files\tkcon
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\bindings.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\demopic.gif"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\dump.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\idebug.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\index.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\license.terms"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\limits.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\nontcl.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\observe.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\plugin.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\procs.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\purpose.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\start.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\tkcon.html"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\docs\todo.html"
+  SetOutPath $INSTDIR\lib\tkcon${TKCON_VERSION}
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\tkcon.tcl"
+  SetOutPath $INSTDIR\lib\tkcon${TKCON_VERSION}\extra
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\extra\console1_1.tcl"
+  File "${INSTROOT}\lib\tkcon${TKCON_VERSION}\extra\stripped.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tkcon
+  CreateShortCut "$INSTDIR\doc\packages\tkcon Documentation.lnk" "$INSTDIR\doc\packages\files\tkcon\index.html" "" "$INSTDIR\doc\packages\files\tkcon\index.html" 0
+  SetOutPath $INSTDIR
+  CreateShortCut "$SMPROGRAMS\WinTclTk\tkcon.lnk" "$\"$INSTDIR\bin\wish84.exe$\"" "$\"$INSTDIR\lib\tkcon${TKCON_VERSION}\tkcon.tcl$\"" "$INSTDIR\bin\wish84.exe" 0
 SectionEnd
 
 Section "XOTclIDE ${XOTCLIDE_VERSION}" xotclide
@@ -2868,7 +2876,7 @@ Section "OpenSSL DLL" openssl-dll
   File "${INSTROOT}\bin\libeay32.dll"
   File "${INSTROOT}\bin\libssl32.dll"
   SetOutPath $INSTDIR\doc\licenses
-  File /oname=OpenSSL-license.txt "${BUILDDIR}\openssl-${OPENSSL_VERSION}\LICENSE"
+  File /oname=OpenSSL-license.txt "${INSTROOT}\lib\OpenSSL.license"
 SectionEnd
 Section "OpenSSL headers & libraries" openssl-dev
   SectionIn 2
@@ -3607,24 +3615,7 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\help\TclTk\UserCmd\contents.htm"
   Delete "$INSTDIR\ased3.0\help\TclTk\UserCmd\tclsh.htm"
   Delete "$INSTDIR\ased3.0\help\TclTk\UserCmd\wish.htm"
-  Delete "$INSTDIR\ased3.0\help\tkcon\bindings.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\changes.txt"
-  Delete "$INSTDIR\ased3.0\help\tkcon\demopic.gif"
-  Delete "$INSTDIR\ased3.0\help\tkcon\dump.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\idebug.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\index.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\license.terms"
-  Delete "$INSTDIR\ased3.0\help\tkcon\limits.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\nontcl.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\observe.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\perl.txt"
-  Delete "$INSTDIR\ased3.0\help\tkcon\plugin.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\procs.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\purpose.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\start.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\style.css"
-  Delete "$INSTDIR\ased3.0\help\tkcon\tkcon.html"
-  Delete "$INSTDIR\ased3.0\help\tkcon\todo.html"
+  Delete "$INSTDIR\ased3.0\help\tkcon.lnk"
   Delete "$INSTDIR\ased3.0\help\Tkhtml\index.html"
   Delete "$INSTDIR\ased3.0\help\wordindex"
   Delete "$INSTDIR\ased3.0\highlighters\c.mode"
@@ -3788,11 +3779,6 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\tools\tcltutor\Tcl9.lsn"
   Delete "$INSTDIR\ased3.0\tools\tcltutor\TclTutor.tcl"
   Delete "$INSTDIR\ased3.0\tools\tcltutor\Uninstal.exe"
-  Delete "$INSTDIR\ased3.0\tools\tkcon\ChangeLog"
-  Delete "$INSTDIR\ased3.0\tools\tkcon\extra\console1_1.tcl"
-  Delete "$INSTDIR\ased3.0\tools\tkcon\extra\stripped.tcl"
-  Delete "$INSTDIR\ased3.0\tools\tkcon\license_terms.txt"
-  Delete "$INSTDIR\ased3.0\tools\tkcon\README.txt"
   Delete "$INSTDIR\ased3.0\tools\tkcon\tkcon.tcl"
   Delete "$INSTDIR\ased3.0\tools\tkdiff\tkdiff.tcl"
   Delete "$INSTDIR\ased3.0\tools\visualregexp\README"
@@ -3831,6 +3817,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\tDOM-license.txt"
   Delete "$INSTDIR\doc\licenses\thread-license.txt"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
+  Delete "$INSTDIR\doc\licenses\Tkcon-license.lnk"  
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
   Delete "$INSTDIR\doc\licenses\Trf-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
@@ -3847,6 +3834,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\tDOM Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TGDBM Homepage.lnk"
   Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\tkcon Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Trf Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TWAPI Documentation.lnk"
@@ -3982,6 +3970,21 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\thread\tpool.html"
   Delete "$INSTDIR\doc\packages\files\thread\tsv.html"
   Delete "$INSTDIR\doc\packages\files\thread\ttrace.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\bindings.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\demopic.gif"
+  Delete "$INSTDIR\doc\packages\files\tkcon\dump.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\idebug.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\index.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\license.terms"
+  Delete "$INSTDIR\doc\packages\files\tkcon\limits.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\nontcl.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\observe.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\plugin.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\procs.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\purpose.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\start.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\tkcon.html"
+  Delete "$INSTDIR\doc\packages\files\tkcon\todo.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_CheckOptions.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ClearCtrlBlock.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ConverterOptions.html"
@@ -5012,6 +5015,10 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tk8.4\unsupported.tcl"
   Delete "$INSTDIR\lib\tk8.4\xmfbox.tcl"
   Delete "$INSTDIR\lib\tkConfig.sh"
+  Delete "$INSTDIR\lib\tkcon${TKCON_VERSION}\extra\console1_1.tcl"
+  Delete "$INSTDIR\lib\tkcon${TKCON_VERSION}\extra\stripped.tcl"
+  Delete "$INSTDIR\lib\tkcon${TKCON_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\tkcon${TKCON_VERSION}\tkcon.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\autoscroll\autoscroll.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\autoscroll\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\ctext\ctext.tcl"
@@ -5416,6 +5423,8 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\ctext"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\autoscroll"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}"
+  RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}\extra"
+  RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}"
   RMDir "$INSTDIR\lib\tk8.4\msgs"
   RMDir "$INSTDIR\lib\tk8.4\images"
   RMDir "$INSTDIR\lib\tk8.4\demos\images"
@@ -5536,6 +5545,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\trf\capi"
   RMDir "$INSTDIR\doc\packages\files\trf\img"
   RMDir "$INSTDIR\doc\packages\files\trf"
+  RMDir "$INSTDIR\doc\packages\files\tkcon"
   RMDir "$INSTDIR\doc\packages\files\tls"
   RMDir "$INSTDIR\doc\packages\files\thread"
   RMDir "$INSTDIR\doc\packages\files\tdom"
@@ -5639,6 +5649,7 @@ LangString DESC_mysqltcl ${LANG_ENGLISH} "Simple API for MySQL database"
 LangString DESC_mkziplib ${LANG_ENGLISH} "Gzip and zip compression library for Tcl/Tk"
 LangString DESC_pgtcl ${LANG_ENGLISH} "Tcl module for accessing PostgreSQL databases"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
+LangString DESC_tkcon ${LANG_ENGLISH} "Feature-rich Tk console"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
@@ -5682,6 +5693,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${mkziplib} $(DESC_mkziplib)
   !insertmacro MUI_DESCRIPTION_TEXT ${pgtcl} $(DESC_pgtcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${twapi} $(DESC_twapi)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tkcon} $(DESC_tkcon)
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
@@ -5720,6 +5732,15 @@ FunctionEnd
 Function .onSelChange
    GetCurInstType $8
 
+   SectionGetFlags ${tkcon} $1
+   SectionGetFlags ${tklib} $2
+   IntCmp $1 1 0 +3 0
+   SectionSetFlags ${tklib} 17
+   Goto +4
+   IntCmp $2 17 0 +3 0
+   IntOp $0 $2 - 16 
+   SectionSetFlags ${tklib} $0   
+   
    SectionGetFlags ${xotclide} $1
    SectionGetFlags ${xotcl-base} $2
    IntCmp $1 1 0 +3 0
@@ -5791,6 +5812,7 @@ Function .onSelChange
    SectionSetFlags ${xotcl-base} 0
    SectionSetFlags ${bwidget} 0
    SectionSetFlags ${tcllib} 0
+   SectionSetFlags ${tklib} 0
    SectionSetFlags ${gdbm-dll} 0
    SectionSetFlags ${zlib-dll} 0
    SectionSetFlags ${openssl-dll} 0

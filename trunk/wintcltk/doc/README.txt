@@ -30,6 +30,7 @@ mysqltcl 3.02
 pgtcl	 1.6.0
 mkZiplib 1.0
 TWAPI	 1.1.5
+tkcon	 2.5
 ASED	 3.0.b16
 XOTclIDE 0.82
 
@@ -66,6 +67,7 @@ mysqltcl: http://www.xdobry.de/mysqltcl/index.html
 pgtcl: http://pgfoundry.org/projects/pgtclng
 mkZiplib: http://mkextensions.sourceforge.net
 TWAPI: http://twapi.sourceforge.net
+tkcon: http://tkcon.sourceforge.net
 ASED: http://www.mms-forum.de/ased/asedhome.htm
 XOTclIDE: http://www.xdobry.de/xotclIDE
 

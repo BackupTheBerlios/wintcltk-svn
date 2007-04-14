@@ -4,12 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-mysqltcl install-pgtcl install-tcllib install-tklib install-bwidget install-mkziplib install-twapi 
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-postgresql uninstall-pthreads uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi
-allclean: distclean
-	@rm *.tar.gz *.zip *.htm *.html
+install:  install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf
 
 # directories
 ${DISTFILES}:
@@ -101,12 +99,12 @@ ${BUILDDIR}/gdbm-${GDBM_VERSION}/win32:
 
 configure-gdbm: extract-gdbm
 
-build-gdbm: configure-gdbm ${BUILDDIR}/gdbm-${GDBM_VERSION}/win32/gdbm-static.a 
-${BUILDDIR}/gdbm-${GDBM_VERSION}/win32/gdbm-static.a:
+build-gdbm: configure-gdbm ${BUILDDIR}/gdbm-${GDBM_VERSION}/win32/libgdbm-static.a 
+${BUILDDIR}/gdbm-${GDBM_VERSION}/win32/libgdbm-static.a:
 	@cd ${BUILDDIR}/gdbm-${GDBM_VERSION}/win32 && make DLL=0
 
-install-gdbm: build-gdbm ${PREFIX}/lib/gdbm-static.a
-${PREFIX}/lib/gdbm-static.a: 
+install-gdbm: build-gdbm ${PREFIX}/lib/libgdbm-static.a
+${PREFIX}/lib/libgdbm-static.a: 
 	@cd ${BUILDDIR}/gdbm-${GDBM_VERSION}/win32 && make install DLL=0 prefix=$(PREFIX)
 
 uninstall-gdbm:
@@ -172,8 +170,8 @@ build-thread: configure-thread ${BUILDDIR}/thread${THREAD_VERSION}/thread${THREA
 ${BUILDDIR}/thread${THREAD_VERSION}/thread${THREAD_LIBVER}.a :
 	@cd ${BUILDDIR}/thread${THREAD_VERSION} && make
 
-install-thread: build-thread ${PREFIX}/lib/thread${THREAD_VERSION}/pkgIndex.tcl
-${PREFIX}/lib/thread${THREAD_VERSION}/pkgIndex.tcl: 
+install-thread: build-thread ${PREFIX}/lib/thread${THREAD_VERSION}/thread$(THREAD_LIBVER).a
+${PREFIX}/lib/thread${THREAD_VERSION}/thread$(THREAD_LIBVER).a: 
 	@cd ${BUILDDIR}/thread${THREAD_VERSION} && make install	
 
 uninstall-thread:
@@ -278,19 +276,18 @@ ${BUILDDIR}/metakit-${METAKIT_VERSION}:
 
 configure-metakit: extract-metakit ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Makefile
 ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Makefile:
-	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && ./configure --prefix=${PREFIX} --libdir=${PREFIX}/bin --with-tcl=${PREFIX}/include --enable-threads
+	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && ./configure --prefix=${PREFIX} --libdir=${PREFIX}/bin --with-tcl=${PREFIX}/include --enable-threads --disable-shared --enable-static
 
-build-metakit: configure-metakit ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.dll 
-${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.dll:
-	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make && strip *.dll
+build-metakit: configure-metakit ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.lib 
+${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.lib:
+	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make && strip Mk4tcl.lib libmk4.lib
 
-install-metakit: build-metakit ${PREFIX}/lib/Mk4tcl/Mk4tcl.dll
-${PREFIX}/lib/Mk4tcl/Mk4tcl.dll: 
+install-metakit: build-metakit ${PREFIX}/lib/Mk4tcl/Mk4tcl.lib
+${PREFIX}/lib/Mk4tcl/Mk4tcl.lib: 
 	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make install 
-	@cp ${DISTFILES}/mk4tcl.html ${PREFIX}/lib/Mk4tcl
 
 uninstall-metakit:
-	@-cd ${PREFIX} && rm -rf bin/libmk4.dll include/mk4* lib/Mk4tcl 
+	@-cd ${PREFIX} && rm -rf bin/libmk4.lib include/mk4* lib/Mk4tcl
 
 clean-metakit:
 	@-cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make clean
@@ -375,8 +372,108 @@ build-zip-static: configure-zip-static ${BUILDDIR}/zip-${ZIP_VERSION}/zip.exe
 ${BUILDDIR}/zip-${ZIP_VERSION}/zip.exe:
 	@cd ${BUILDDIR}/zip-${ZIP_VERSION} && make -f win32/makefile.gcc USEZLIB=1 LOC="-I$(PREFIX)/include" LD="gcc -L$(PREFIX)/lib"
 
+install-zip-static: build-zip-static	
+	
 clean-zip-static:
 	@cd ${BUILDDIR}/zip-${ZIP_VERSION} && make -f win32/makefile.gcc clean
 	
 distclean-zip-static:
 	@-rm -rf ${BUILDDIR}/zip-${ZIP_VERSION}
+
+# memchan
+fetch-memchan: $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz
+$(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/memchan/memchan-$(MEMCHAN_VERSION).tar.gz"
+		
+extract-memchan: fetch-memchan $(BUILDDIR) $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/Makefile.gnu
+$(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/Makefile.gnu:
+	@cd ${DISTFILES} && md5sum -c $(MD5SUMS)/memchan-$(MEMCHAN_VERSION).tar.gz.md5 || exit 1
+	@cd $(BUILDDIR) && tar xfz $(DISTFILES)/memchan-$(MEMCHAN_VERSION).tar.gz
+	@-cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION) && patch -p0 < $(PATCHDIR)/memchan.patch
+
+configure-memchan: extract-memchan install-tcl
+
+build-memchan: configure-memchan $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll 
+$(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll :
+	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu TCL_INC_DIR="$(PREFIX)/include" DLL_LDLIBS="-L$(PREFIX)/lib -ltclstub84s"
+
+install-memchan: build-memchan $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl
+$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl:
+	@mkdir -p $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
+	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && cp memchan$(MEMCHAN_LIBVER).dll pkgIndex.tcl \
+		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)
+	@cp $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/*.html $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/license.terms \
+		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
+	
+uninstall-memchan:
+	@-cd $(PREFIX)/lib && rm -rf memchan${MEMCHAN_VERSION}
+
+clean-memchan:
+	@-cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu clean
+
+distclean-memchan:
+	@-rm -rf $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)	
+
+# trf
+fetch-trf: $(DISTFILES)/trf$(TRF_VERSION).tar.gz
+$(DISTFILES)/trf$(TRF_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 )
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcltrf/trf$(TRF_VERSION).tar.gz"
+		
+extract-trf: fetch-trf $(BUILDDIR) $(BUILDDIR)/trf$(TRF_VERSION)/win/Makefile.gnu
+$(BUILDDIR)/trf$(TRF_VERSION)/win/Makefile.gnu:
+	@cd ${DISTFILES} && md5sum -c $(MD5SUMS)/trf$(TRF_VERSION).tar.gz.md5 || exit 1
+	@cd $(BUILDDIR) && tar xfz $(DISTFILES)/trf$(TRF_VERSION).tar.gz
+	@-cd $(BUILDDIR)/trf$(TRF_VERSION) && patch -p0 < $(PATCHDIR)/trf.patch
+
+configure-trf: extract-trf install-tcl
+
+build-trf: configure-trf $(BUILDDIR)/trf$(TRF_VERSION)/win/libTrf$(TRF_LIBVER)s.a
+$(BUILDDIR)/trf$(TRF_VERSION)/win/libTrf$(TRF_LIBVER)s.a:
+	@cd $(BUILDDIR)/trf$(TRF_VERSION)/win && make -f Makefile.gnu libTrf21s.a TCL_SRC_DIR="$(BUILDDIR)/tcl$(TCLTK_VERSION)" ZLIB_STATIC="-DZLIB_STATIC_BUILD"
+
+install-trf: build-trf $(PREFIX)/lib/trf$(TRF_VERSION)/libTrf$(TRF_LIBVER)s.a
+$(PREFIX)/lib/trf$(TRF_VERSION)/libTrf$(TRF_LIBVER)s.a:
+	@mkdir -p $(PREFIX)/lib/trf$(TRF_VERSION)
+	@cd $(BUILDDIR)/trf$(TRF_VERSION)/win && cp libTrf$(TRF_LIBVER)s.a $(PREFIX)/lib/trf$(TRF_VERSION)
+		
+uninstall-trf:
+	@-cd $(PREFIX)/lib && rm -rf trf${TRF_VERSION}
+	@-cd $(PREFIX)/include && rm -f transform.h trfDecls.h
+
+clean-trf:
+	@-cd $(BUILDDIR)/trf$(TRF_VERSION)/win && make -f Makefile.gnu clean
+
+distclean-trf:
+	@-rm -rf $(BUILDDIR)/trf$(TRF_VERSION)
+
+# tcllib
+fetch-tcllib: ${DISTFILES} ${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz 
+${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/sourceforge/tcllib/tcllib-${TCLLIB_VERSION}.tar.gz"
+
+extract-tcllib: fetch-tcllib ${BUILDDIR} ${BUILDDIR}/tcllib-${TCLLIB_VERSION} 
+${BUILDDIR}/tcllib-${TCLLIB_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tcllib-${TCLLIB_VERSION}.tar.gz.md5 || exit 1
+	@cd ${BUILDDIR} && tar xfz ${DISTFILES}/tcllib-${TCLLIB_VERSION}.tar.gz
+
+configure-tcllib: install-tcl extract-tcllib ${BUILDDIR}/tcllib-${TCLLIB_VERSION}/Makefile 
+${BUILDDIR}/tcllib-${TCLLIB_VERSION}/Makefile:
+	@cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && ./configure --prefix=${PREFIX}
+
+build-tcllib: configure-tcllib 
+
+install-tcllib: build-tcllib ${PREFIX}/lib/tcllib${TCLLIB_VERSION}/pkgIndex.tcl 
+${PREFIX}/lib/tcllib${TCLLIB_VERSION}/pkgIndex.tcl:
+	@cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && make install-libraries
+
+uninstall-tcllib:
+	@-cd ${PREFIX}/lib && rm -rf tcllib${TCLLIB_VERSION}
+
+clean-tcllib:
+	@-cd ${BUILDDIR}/tcllib-${TCLLIB_VERSION} && make clean
+
+distclean-tcllib:
+	@-rm -rf ${BUILDDIR}/tcllib-${TCLLIB_VERSION}

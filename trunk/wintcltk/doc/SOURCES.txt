@@ -92,6 +92,9 @@ http://mkextensions.sourceforge.net/mkZiplib10.zip
 TWAPI:
 http://prdownloads.sourceforge.net/twapi/twapi-1.1.5.zip
 
+tkcon:
+http://prdownload.berlios.de/wintcltk/tkcon-20070414-src.tar.gz
+
 ASED:
 http://www.mms-forum.de/ased/ased3.0b16.zip
 

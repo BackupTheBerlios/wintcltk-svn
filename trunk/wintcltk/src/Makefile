@@ -15,7 +15,10 @@ BUILDDIR?=	$(CURDIR)/build
 PREFIX?=	$(CURDIR)/instroot
 include $(MDIR)/shared.mak
 else
-BUILDDIR?=	$(CURDIR)/builds
-PREFIX?=	$(CURDIR)/instroots
+BUILDDIR?=	$(CURDIR)/build_s
+PREFIX?=	$(CURDIR)/instroot_s
 include $(MDIR)/static.mak
 endif
+
+COMMONBUILD?=	$(CURDIR)/build_c
+include $(MDIR)/common.mak
