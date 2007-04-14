@@ -294,43 +294,6 @@ clean-metakit:
 
 distclean-metakit:
 	@-rm -rf ${BUILDDIR}/metakit-${METAKIT_VERSION}
-
-# openssl
-fetch-openssl: ${DISTFILES} ${DISTFILES}/openssl-${OPENSSL_VERSION}.tar.gz 
-${DISTFILES}/openssl-${OPENSSL_VERSION}.tar.gz:
-	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
-	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.openssl.org/source/openssl-${OPENSSL_VERSION}.tar.gz"
-
-extract-openssl: fetch-openssl ${BUILDDIR} ${BUILDDIR}/openssl-${OPENSSL_VERSION}
-${BUILDDIR}/openssl-${OPENSSL_VERSION}:
-	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/openssl-${OPENSSL_VERSION}.tar.gz.md5 || exit 1
-	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/openssl-${OPENSSL_VERSION}.tar.gz >/dev/null 2>&1
-	@cd ${BUILDDIR}/openssl-${OPENSSL_VERSION} && patch -p0 < ${PATCHDIR}/openssl.patch
-
-configure-openssl: extract-openssl ${BUILDDIR}/openssl-${OPENSSL_VERSION}/configure.done
-${BUILDDIR}/openssl-${OPENSSL_VERSION}/configure.done:
-	@[ -x "${PERL}" ] || ( echo "$(MESSAGE_OPENSSL_PERL)"; exit 1 ) 
-	@cd ${BUILDDIR}/openssl-${OPENSSL_VERSION} && Configure --prefix=${PREFIX} mingw shared threads && touch configure.done 
-
-build-openssl: configure-openssl ${BUILDDIR}/openssl-${OPENSSL_VERSION}/libeay32.dll 
-${BUILDDIR}/openssl-${OPENSSL_VERSION}/libeay32.dll:
-	@cd ${BUILDDIR}/openssl-${OPENSSL_VERSION} && sh ms/mingw32.sh && strip *.dll
-
-install-openssl: build-openssl ${PREFIX}/bin/libeay32.dll
-${PREFIX}/bin/libeay32.dll: 
-	@cd ${BUILDDIR}/openssl-${OPENSSL_VERSION} && make -f ms/mingw32a.mak install MKDIR="mkdir -p"
-	@cp ${BUILDDIR}/openssl-${OPENSSL_VERSION}/out/libssl32.a ${PREFIX}/lib/libssl.dll.a
-	@cp ${BUILDDIR}/openssl-${OPENSSL_VERSION}/out/libeay32.a ${PREFIX}/lib/libcrypto.dll.a
-	@cp ${BUILDDIR}/openssl-${OPENSSL_VERSION}/libeay32.dll ${BUILDDIR}/openssl-${OPENSSL_VERSION}/libssl32.dll ${PREFIX}/bin
-
-uninstall-openssl:
-	@-cd ${PREFIX} && rm -rf bin/openssl.exe bin/libeay32.dll bin/libssl32.dll include/openssl lib/libssl*.a lib/libcrypto*.a 
-
-clean-openssl:
-	@-cd ${BUILDDIR}/openssl-${OPENSSL_VERSION} && make clean
-
-distclean-openssl:
-	@-rm -rf ${BUILDDIR}/openssl-${OPENSSL_VERSION}
 	
 # tls
 fetch-tls: ${DISTFILES} ${DISTFILES}/tls${TLS_VERSION}-src.tar.gz 
