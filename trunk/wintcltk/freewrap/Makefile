@@ -299,7 +299,7 @@ endif
 	@$(CP) $(DISTDIR)/freewrap_bare$(EXE) $(DISTDIR)/freewrap.zip
 	@$(CAT) $(FBUILD)/null.zip >> $(DISTDIR)/freewrap.zip
 	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(DISTDIR)/freewrap$(EXE) $(PROGREV) $(DISTDIR)/freewrap_bare$(EXE)
-	@cd zipdir; pwd; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
+	@cd zipdir; pwd; rm tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
 	@$(RENAME) $(DISTDIR)/freewrap.zip $(DISTDIR)/freewrap$(EXE)
 	@$(RM) $(DISTDIR)/freewish$(EXE)
 	@$(CP) $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
