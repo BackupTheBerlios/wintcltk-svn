@@ -80,6 +80,7 @@ MKDIR = mkdir -p
 RENAME = mv
 DELTREE = rm -rf
 SED = sed
+STRIP=	strip
 
 #
 # Resfile
@@ -361,6 +362,7 @@ $(FBUILD)/freewish.res.o: resheader resmanifest
 	
 $(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
 	@$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+	@$(STRIP) $(DISTDIR)/freewrap_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
 	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(DISTDIR)/freewrap_bare$(EXE)
 	
