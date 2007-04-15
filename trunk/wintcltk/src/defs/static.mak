@@ -276,11 +276,11 @@ ${BUILDDIR}/metakit-${METAKIT_VERSION}:
 
 configure-metakit: extract-metakit ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Makefile
 ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Makefile:
-	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && ./configure --prefix=${PREFIX} --libdir=${PREFIX}/bin --with-tcl=${PREFIX}/include --enable-threads --disable-shared --enable-static
+	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && CPPFLAGS="-DSTATIC_BUILD=1" ./configure --prefix=${PREFIX} --libdir=${PREFIX}/bin --with-tcl=${PREFIX}/include --enable-threads --disable-shared --enable-static
 
 build-metakit: configure-metakit ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.lib 
 ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix/Mk4tcl.lib:
-	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make && strip Mk4tcl.lib libmk4.lib
+	@cd ${BUILDDIR}/metakit-${METAKIT_VERSION}/unix && make
 
 install-metakit: build-metakit ${PREFIX}/lib/Mk4tcl/Mk4tcl.lib
 ${PREFIX}/lib/Mk4tcl/Mk4tcl.lib: 

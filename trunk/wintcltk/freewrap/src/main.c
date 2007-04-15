@@ -74,6 +74,8 @@ extern int Tls_Init(Tcl_Interp*);
 extern int Tls_SafeInit(Tcl_Interp*);
 extern int Mkziplib_Init(Tcl_Interp*);
 extern int Mkziplib_SafeInit(Tcl_Interp*);
+extern int Mk4tcl_Init(Tcl_Interp*);
+extern int Mk4tcl_SafeInit(Tcl_Interp*);
 extern int Tgdbm_Init(Tcl_Interp*);
 extern int Thread_Init(Tcl_Interp*);
 extern int Freewrap_Init(Tcl_Interp*);
@@ -184,6 +186,14 @@ int main(int argc, char **argv){
      }
 
   Tcl_StaticPackage(interp, "tls", Tls_Init, Tls_SafeInit);
+#endif
+
+#ifndef WITHOUT_MK4TCL
+  if (Mk4tcl_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+
+  Tcl_StaticPackage(interp, "Mk4tcl", Mk4tcl_Init, Mk4tcl_SafeInit);
 #endif
 
 /*

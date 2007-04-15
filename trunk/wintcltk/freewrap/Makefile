@@ -107,7 +107,7 @@ CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB $(X11_INCLUDES)
 
 ifndef FULL
-CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM
+CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM -DWITHOUT_MK4TCL
 endif
 ifndef XOTCL
 CFLAGS+= -DWITHOUT_XOTCL
@@ -181,6 +181,7 @@ ifdef FULL
 LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
 LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
 LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
+LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
 XOTCL = 1
 endif
@@ -205,7 +206,8 @@ OPT_WINICO = -DSTATIC_BUILD -DPACKAGE_NAME="\"Winico\"" -DPACKAGE_VERSION="\"0.5
 # Winlibs
 #
 WINLIBS = -L/mingw/lib -lkernel32 -ladvapi32 -luser32 -lgdi32 -lcomdlg32 \
-	-lwinspool -lole32 -lshell32 -luuid -limm32 -lcomctl32 -lwsock32
+	-lwinspool -lole32 -lshell32 -luuid -limm32 -lcomctl32 -lwsock32 \
+	-lstdc++
 
 ###############################################################################
 # You should not have to change anything below this line
@@ -231,6 +233,7 @@ LIBS = \
   $(LIB_XOTCL) \
   $(LIB_TDOM) \
   $(LIB_TLS) \
+  $(LIB_MK4TCL) \
   $(LIB_OPENSSL) \
   $(LIB_GDBM)
 
@@ -361,7 +364,7 @@ $(FBUILD)/freewish.res.o: resheader resmanifest
 	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewish.res.o
 	
 $(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
-	@$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+	$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
 	@$(STRIP) $(DISTDIR)/freewrap_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
 	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(DISTDIR)/freewrap_bare$(EXE)
