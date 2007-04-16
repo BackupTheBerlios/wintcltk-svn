@@ -271,6 +271,8 @@ int c;                  /* error code from the ZE_ class */
 ZCONST char *h;         /* message about how it happened */
 /* Issue a message for the error, clean up files and memory, and exit. */
 {
+  char buf[1000];
+
 #ifndef WINDLL
 #ifndef MACOS
   static int error_level = 0;
@@ -282,13 +284,8 @@ ZCONST char *h;         /* message about how it happened */
 #endif /* !WINDLL */
 
   if (h != NULL) {
-    if (PERR(c))
-      perror("zip I/O error");
-    fflush(mesg);
-    fprintf(stderr, "\nzip error: %s (%s)\n", ziperrors[c-1], h);
-#ifdef DOS
-    check_for_windows("Zip");
-#endif
+    sprintf(buf, "\nzip error: %s (%s)\n", ziperrors[c-1], h);
+    strcat(resultsBuf, buf);
   }
   if (tempzip != NULL)
   {
@@ -305,8 +302,9 @@ ZCONST char *h;         /* message about how it happened */
       ulg cb = cenbeg;                  /* get start of central */
       struct zlist far *z;  /* steps through zfiles linked list */
 
-      fprintf(stderr, "attempting to restore %s to its previous state\n",
-         zipfile);
+      sprintf(buf, "attempting to restore %s to its previous state\n", zipfile);
+      strcat(resultsBuf, buf);
+
       fseek(tempzf, cenbeg, SEEK_SET);
       tempzn = cenbeg;
       for (z = zfiles; z != NULL; z = z->nxt)
@@ -375,9 +373,10 @@ void zipwarn(a, b)
 ZCONST char *a, *b;     /* message strings juxtaposed in output */
 /* Print a warning message to stderr and return. */
 {
+  char buf[1000];
   if (noisy) {
-    fprintf(stderr, "\tzip warning: %s%s\n", a, b);
-    fflush(stderr);
+       sprintf(buf, "\tzip warning: %s%s\n", a, b);
+       strcat(resultsBuf, buf);
   }
 }
 
@@ -1044,7 +1043,8 @@ char **argv;            /* command line tokens */
   icount = 0;          /* number of include only patterns */
   Rcount = 0;          /* number of -R include patterns */
   bad_open_is_error = 0; /* if read fails, 0=warning, 1=error */
-
+  resultsBuf[0] = 0;	/* Reset results to empty string */
+  
 #ifndef MACOS
   retcode = setjmp(zipdll_error_return);
   if (retcode) {
@@ -1779,8 +1779,8 @@ nextarg: ;
       iztimes f_utim, z_utim;
       ulg z_tim;
 #endif /* USE_EF_UT_TIME */
-      Trace((stderr, "zip diagnostics: marked file=%s\n", z->zname));
-
+      sprintf(msgbuf, "marked file=%s\n", z->zname);
+      zipdiag(msgbuf);
       if (action == DELETE) {
         /* only delete files in date range */
 #ifdef USE_EF_UT_TIME
@@ -1828,9 +1828,11 @@ nextarg: ;
 
   /* Remove entries from found list that do not exist or are too old */
   zipdiag("stating new entries");
-  Trace((stderr, "zip diagnostic: fcount=%u\n", (unsigned)fcount));
+  sprintf(msgbuf, "fcount=%u\n", (unsigned)fcount);
+  zipdiag(msgbuf);
   for (f = found; f != NULL;) {
-    Trace((stderr, "zip diagnostic: new file=%s\n", f->zname));
+    sprintf(msgbuf, "new file=%s\n", f->zname);
+    zipdiag(msgbuf);
     if (action == DELETE || action == FRESHEN ||
         (t = filetime(f->name, (ulg *)NULL, (long *)NULL, (iztimes *)NULL))
            == 0 ||
@@ -2090,7 +2092,6 @@ nextarg: ;
         {
           sprintf(msgbuf, "deleting: %s\n", z->zname);
           zipmsg(msgbuf);
-          fflush(mesg);
         }
 #ifdef WINDLL
         if (lpZipUserFunctions->ServiceApplication != NULL) {
@@ -2127,7 +2128,8 @@ nextarg: ;
 
   /* Process the edited found list, adding them to the zip file */
   zipdiag("zipping up new entries, if any");
-  Trace((stderr, "zip diagnostic: fcount=%u\n", (unsigned)fcount));
+  sprintf(msgbuf, "fcount=%u\n", (unsigned)fcount);
+  zipdiag(msgbuf);
   for (f = found; f != NULL; f = fexpel(f))
   {
     /* add a new zfiles entry and set the name */
@@ -2149,8 +2151,7 @@ nextarg: ;
     if (noisy)
     {
       sprintf(msgbuf, "  adding: %s", z->zname);
-      zipmsg(msgbuf);
-      fflush(mesg);
+      strcat(resultsBuf, msgbuf);
     }
     if ((r = zipup(z, y)) != ZE_OK  && r != ZE_OPEN && r != ZE_MISS)
     {

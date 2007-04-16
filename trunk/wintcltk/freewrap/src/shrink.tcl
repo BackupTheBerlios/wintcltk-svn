@@ -102,7 +102,7 @@ if {$pkg == "tcl"} {
 	set fout2 [open $initfile w]
 	puts $fout2 {global auto_path} 
 	foreach dir $autolist {
-		  set newpath [file join $mountpt/tcl $dir]
+		  set newpath [file join $mountpt/lib/tcl $dir]
 		  puts $fout2 "lappend auto_path $newpath"
 		}
 	set fin2 [open ${initfile}.org r]

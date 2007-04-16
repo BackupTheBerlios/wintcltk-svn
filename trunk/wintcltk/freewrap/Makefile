@@ -138,7 +138,7 @@ LIB_TCL = $(INSTALLDIR)/libtcl$(TCLVERSION)s.a $(INSTALLDIR)/dde1.2/tcldde12s.a 
 SCRIPT_TCL = $(INSTALL_LIB)/tcl$(TCLVERSIONDOT)/tclIndex
 
 ###### The location to store the minimized version of the TCL tclIndex file.
-ZSCRIPT_TCL = zipdir/tcl/tclIndex
+ZSCRIPT_TCL = zipdir/lib/tcl/tclIndex
 
 ###### A list of directory(s) containing TK header files "tk.h" etc.
 #      Leave undefined if not needed.
@@ -165,7 +165,7 @@ SCRIPT_TK =
 ZSCRIPT_TK =
 else
 SCRIPT_TK = $(INSTALL_LIB)/tk$(TCLVERSIONDOT)/tclIndex
-ZSCRIPT_TK = zipdir/tk/tclIndex
+ZSCRIPT_TK = zipdir/lib/tk/tclIndex
 endif
 
 ###### The linker option needed to include the Z compression library.
@@ -272,10 +272,10 @@ endif
 ZSCRIPTS = $(ZSCRIPT_TCL) $(ZSCRIPT_TK) 
 
 ifdef XOTCL
-XOTCL_SCRIPTS = zipdir/xotcl/xml
+XOTCL_SCRIPTS = zipdir/lib/xotcl/xml
 endif
-CTEXT = zipdir/ctext
-TKCON = zipdir/tkcon
+CTEXT = zipdir/lib/ctext
+TKCON = zipdir/lib/tkcon
 
 all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
 
@@ -298,12 +298,12 @@ zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 $(DISTDIR)/freewrap$(EXE): $(DISTDIR)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(CTEXT) $(TKCON) init-pkgs
 	@$(RM) $(DISTDIR)/freewrap$(EXE)
 ifdef WITHOUT_TK
-	@$(DELTREE) zipdir/tk
+	@$(DELTREE) zipdir/lib/tk
 endif
 	@$(CP) $(DISTDIR)/freewrap_bare$(EXE) $(DISTDIR)/freewrap.zip
 	@$(CAT) $(FBUILD)/null.zip >> $(DISTDIR)/freewrap.zip
 	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(DISTDIR)/freewrap$(EXE) $(PROGREV) $(DISTDIR)/freewrap_bare$(EXE)
-	@cd zipdir; pwd; rm tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
+	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
 	@$(RENAME) $(DISTDIR)/freewrap.zip $(DISTDIR)/freewrap$(EXE)
 	@$(RM) $(DISTDIR)/freewish$(EXE)
 	@$(CP) $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
@@ -312,39 +312,46 @@ $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
 	@$(ZIP) $(FBUILD)/null.zip -d -
 
-zipdir/tcl/tclIndex: $(SCRIPT_TCL)
-	@$(DELTREE) zipdir/tcl
-	@$(MKDIR) zipdir/tcl
+zipdir/lib/tcl/tclIndex: $(SCRIPT_TCL)
+	@$(DELTREE) zipdir/lib/tcl
+	@$(MKDIR) zipdir/lib/tcl
 	@$(TCLSH) $(FBSRC)/shrink.tcl tcl $(SCRIPT_TCL) $(ZSCRIPT_TCL)
+#	@$(DELTREE) zipdir/tcl8.4
+#	@$(MKDIR) zipdir/tcl8.4
+#	@$(CP) zipdir/lib/tcl/init.tcl zipdir/tcl
+#	@$(TCLSH) $(FBSRC)/shrink.tcl tcl $(SCRIPT_TCL) zipdir/tcl8.4/tclIndex
 
-zipdir/tk/tclIndex: $(SCRIPT_TK)
-	@$(DELTREE) zipdir/tk
-	@$(MKDIR) zipdir/tk
+zipdir/lib/tk/tclIndex: $(SCRIPT_TK)
+	@$(DELTREE) zipdir/lib/tk
+	@$(MKDIR) zipdir/lib/tk
 	@$(TCLSH) $(FBSRC)/shrink.tcl tk $(SCRIPT_TK) $(ZSCRIPT_TK)
 	
-zipdir/xotcl/xml:
-	@$(DELTREE) zipdir/xotcl
-	@$(MKDIR) zipdir/xotcl
+zipdir/lib/xotcl/xml:
+	@$(DELTREE) zipdir/lib/xotcl
+	@$(MKDIR) zipdir/lib/xotcl
 	@$(CP) -rf $(XODIR)/actiweb $(XODIR)/apps $(XODIR)/comm $(XODIR)/lib $(XODIR)/patterns \
-		$(XODIR)/rdf $(XODIR)/registry $(XODIR)/serialize $(XODIR)/store $(XODIR)/xml zipdir/xotcl
-	@echo "global auto_path" > zipdir/tcl/init-pkgs.tcl
-	@echo "lappend auto_path /xotcl/actiweb /xotcl/comm /xotcl/lib /xotcl/patterns /xotcl/rdf" >> zipdir/tcl/init-pkgs.tcl
-	@echo "lappend auto_path /xotcl/rdf /xotcl/registry /xotcl/serialize /xotcl/store /xotcl/xml" >> zipdir/tcl/init-pkgs.tcl
+		$(XODIR)/rdf $(XODIR)/registry $(XODIR)/serialize $(XODIR)/store $(XODIR)/xml zipdir/lib/xotcl
+	@echo "global auto_path" > zipdir/lib/tcl/init-pkgs.tcl
+	@echo -n "lappend auto_path /lib/xotcl/actiweb /lib/xotcl/comm" >> zipdir/lib/tcl/init-pkgs.tcl
+	@echo -n " /lib/xotcl/lib /lib/xotcl/patterns /lib/xotcl/rdf" >> zipdir/lib/tcl/init-pkgs.tcl
+	@echo -n " /lib/xotcl/rdf /lib/xotcl/registry /lib/xotcl/serialize" >> zipdir/lib/tcl/init-pkgs.tcl
+	@echo " /lib/xotcl/store /lib/xotcl/xml" >> zipdir/lib/tcl/init-pkgs.tcl
 
-zipdir/tkcon:
-	@echo "lappend auto_path /tkcon" >> zipdir/tcl/init-pkgs.tcl
-	@$(DELTREE) zipdir/tkcon
-	@$(MKDIR) zipdir/tkcon
-	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/tkcon
+zipdir/lib/tkcon:
+	@echo "lappend auto_path /lib/tkcon" >> zipdir/lib/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/lib/tkcon
+	@$(MKDIR) zipdir/lib/tkcon
+	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/lib/tkcon
 	
-zipdir/ctext:
-	@echo "lappend auto_path /ctext" >> zipdir/tcl/init-pkgs.tcl
-	@$(DELTREE) zipdir/ctext
-	@$(CP) -rf $(INSTROOT)/lib/tklib$(TKLIB_SHORT)/ctext zipdir
+zipdir/lib/ctext:
+	@echo "lappend auto_path /lib/ctext" >> zipdir/lib/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/lib/ctext
+	@$(MKDIR) zipdir/lib/ctext
+	@$(CP) -rf $(INSTROOT)/lib/tklib$(TKLIB_SHORT)/ctext/* zipdir/lib/ctext
 
 init-pkgs:
-	@$(SED) -e 's|global auto_path|global auto_path; source /tcl/init-pkgs.tcl|g' zipdir/tcl/init.tcl > zipdir/tcl/init.tcl.bak
-	@$(MV) zipdir/tcl/init.tcl.bak zipdir/tcl/init.tcl
+	@$(SED) -e 's|global auto_path|global auto_path; source /lib/tcl/init-pkgs.tcl|g' zipdir/lib/tcl/init.tcl > zipdir/lib/tcl/init.tcl.bak
+	@$(MV) zipdir/lib/tcl/init.tcl.bak zipdir/lib/tcl/init.tcl
 		
 resheader:
 	@echo "#define COMMAVERSION $(COMMAVERSION)" > $(RESHEADER)
@@ -365,30 +372,30 @@ $(FBUILD)/freewish.res.o: resheader resmanifest
 	
 $(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
 	$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
-	@$(STRIP) $(DISTDIR)/freewrap_bare$(EXE)
+	$(STRIP) $(DISTDIR)/freewrap_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
 	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(DISTDIR)/freewrap_bare$(EXE)
-	
+
 $(FBUILD)/freewrap.o: $(FBSRC)/main.c
-	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
+	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
 
 $(FBSRC)/fwcrypt.c: $(FBSRC)/setinfo.tcl
-	@cd ${FBSRC} && $(TCLSH) setinfo.tcl
+	cd ${FBSRC} && $(TCLSH) setinfo.tcl
 
 $(FBUILD)/tkwinico.o: $(FBSRC)/tkwinico.c
-	@$(CC) $(CFLAGS) $(OPT) $(OPT_WINICO) -o $(FBUILD)/tkwinico.o -c $(FBSRC)/tkwinico.c
+	$(CC) $(CFLAGS) $(OPT) $(OPT_WINICO) -o $(FBUILD)/tkwinico.o -c $(FBSRC)/tkwinico.c
 	
 $(FBUILD)/fwcrypt.o: $(FBSRC)/fwcrypt.c
-	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/fwcrypt.o -c $(FBSRC)/fwcrypt.c
+	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/fwcrypt.o -c $(FBSRC)/fwcrypt.c
 
 $(FBUILD)/zvfs.o: $(FBSRC)/zvfs.c
-	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/zvfs.o -c $(FBSRC)/zvfs.c
-
+	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/zvfs.o -c $(FBSRC)/zvfs.c
+	
 $(FBUILD)/freelib.o : $(FBSRC)/freelib.c
-	@$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freelib.o -c $(FBSRC)/freelib.c
+	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freelib.o -c $(FBSRC)/freelib.c
 
 $(FBUILD)/zipmain.o : $(FBSRC)/zipmain.c
-	@$(CC) $(CFLAGS) $(OPT) -I$(ZIPOBJDIR) -DUNIX -DASMV -DASM_CRC -DNO_STRCHR -DNO_STRRCHR -DCRYPT -DHAVE_DIRENT_H -DHAVE_TERMIOS_H -o $(FBUILD)/zipmain.o -c $(FBSRC)/zipmain.c
+	$(CC) $(CFLAGS) $(OPT) -I$(ZIPOBJDIR) -DUNIX -DASMV -DASM_CRC -DNO_STRCHR -DNO_STRRCHR -DCRYPT -DHAVE_DIRENT_H -DHAVE_TERMIOS_H -o $(FBUILD)/zipmain.o -c $(FBSRC)/zipmain.c
 
 clean:
 	$(RM) $(DISTDIR)/*.exe $(DISTDIR)/*.zip

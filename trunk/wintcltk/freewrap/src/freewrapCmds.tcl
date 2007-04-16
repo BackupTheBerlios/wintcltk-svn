@@ -556,7 +556,7 @@ global blt_library
 set newpath {}
 foreach path $auto_path {
 	set prefix [string range $path 0 3]
-	if {$prefix == {/tcl} || $prefix == {/tk}} {
+	if {$prefix == {/lib}} {
 	    lappend newpath $path
 	   }
       }

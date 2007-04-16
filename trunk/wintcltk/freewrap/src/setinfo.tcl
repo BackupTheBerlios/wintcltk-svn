@@ -9,7 +9,7 @@ if {$argv == {}} {
     if {[catch {open $hdrFile w} fout]} {
         puts $fout
        } {
-           set charset {*+-.0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_}
+           set charset {0123456789@ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz_}
            set maxpos [string length $charset]
            set keylen [expr 8 + int(8 * rand())]
            set curpwd {}

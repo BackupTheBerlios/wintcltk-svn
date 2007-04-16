@@ -63,11 +63,6 @@ extern int Dde_Init(Tcl_Interp *);
 
 extern int Xotcl_Init(Tcl_Interp*);
 extern int Xotcl_SafeInit(Tcl_Interp*);
-extern int Xotclexpat_Init(Tcl_Interp*);
-extern int Xotclgdbm_Init(Tcl_Interp*);
-extern int Xotclgdbm_SafeInit(Tcl_Interp*);
-extern int Xotclsdbm_Init(Tcl_Interp*);
-extern int Xotclsdbm_SafeInit(Tcl_Interp*);
 extern int Tdom_Init(Tcl_Interp*);
 extern int Tdom_SafeInit(Tcl_Interp*);
 extern int Tls_Init(Tcl_Interp*);
@@ -131,14 +126,14 @@ int main(int argc, char **argv){
   Zvfs_Init(interp);
   Tcl_SetVar(interp, "extname", "", TCL_GLOBAL_ONLY);
   Zvfs_Mount(interp, (char *)Tcl_GetNameOfExecutable(), "/");
-  sprintf(TCLdir, "%s/tcl", mountPt);
+  sprintf(TCLdir, "%s/lib/tcl", mountPt);
   Tcl_SetVar2(interp, "env", "TCL_LIBRARY", TCLdir, TCL_GLOBAL_ONLY);
-  sprintf(TKdir, "%s/tk", mountPt);
+  sprintf(TKdir, "%s/lib/tk", mountPt);
   Tcl_SetVar2(interp, "env", "TK_LIBRARY", TKdir, TCL_GLOBAL_ONLY);
 
   /* Initialize Tcl and Tk
   */
-  if( Tcl_Init(interp) ) return TCL_ERROR;
+  if( Tcl_Init(interp) ) { return TCL_ERROR; }
 
   sprintf(autopath, " %s", TCLdir);
   Tcl_SetVar(interp, "auto_path", autopath, TCL_GLOBAL_ONLY | TCL_APPEND_VALUE);
@@ -212,29 +207,6 @@ int main(int argc, char **argv){
      }
 
   Tcl_StaticPackage(interp, "XOTcl", Xotcl_Init, Xotcl_SafeInit);
-
-/*  
-  if (Xotclexpat_Init(interp) == TCL_ERROR) {
-      return TCL_ERROR;
-     }
-
-  Tcl_StaticPackage(interp, "xotclexpat", Xotclexpat_Init, 0);
-*/
-/*  
-  if (Xotclsdbm_Init(interp) == TCL_ERROR) {
-      return TCL_ERROR;
-  }
-*/
-
-//  Tcl_StaticPackage(interp, "xotclsdbm", Xotclsdbm_Init, Xotclsdbm_SafeInit);
-
-/* 
-  if (Xotclgdbm_Init(interp) == TCL_ERROR) {
-      return TCL_ERROR;
-     }
-*/
-//  Tcl_StaticPackage(interp, "xotclgdbm", Xotclgdbm_Init, Xotclgdbm_SafeInit);
-
 #endif
 
 #ifndef WITHOUT_TGDBM
