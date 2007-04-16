@@ -4,7 +4,7 @@
 # $Id$
 #
 all: install
-install:  install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-tklib install-tkcon
+install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-tklib install-tkcon
 uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-tklib uninstall-tkcon
 clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-tklib clean-tkcon
 distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-tklib distclean-tkcon
@@ -15,6 +15,9 @@ ${DISTFILES}:
 
 ${BUILDDIR}:
 	@[ -d "${BUILDDIR}" ] || mkdir -p ${BUILDDIR}
+
+${PREFIX}:
+	@[ -d "${PREFIX}" ] || mkdir -p ${PREFIX}/bin ${PREFIX}/lib ${PREFIX}/include
 
 # tcl	
 fetch-tcl: ${DISTFILES} ${DISTFILES}/tcl${TCLTK_VERSION}-src.tar.gz 

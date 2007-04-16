@@ -151,3 +151,14 @@ diff -bur xotcl-1.5.3.orig/library/store/XOTclSdbm/Makefile.in xotcl-1.5.3/libra
  			VALUE "CompanyName", "Vienna University of Economics and Business Administration, University of Essen\0"
  			VALUE "FileVersion", XOTCL_VERSION
  			VALUE "LegalCopyright", "Copyright \251 1999-2001\0"
+--- xotcl-1.5.3.orig/library/store/TclGdbmStorage.xotcl	Mon Apr 16 13:01:57 2007
++++ xotcl-1.5.3/store/TclGdbmStorage.xotcl	Mon Apr 16 13:02:07 2007
+@@ -2,7 +2,7 @@
+ 
+ package provide xotcl::store::tclgdbm 0.84
+ 
+-package require xotcl::store::gdbm
++package require tgdbm
+ package require xotcl::store
+ package require XOTcl
+ 
