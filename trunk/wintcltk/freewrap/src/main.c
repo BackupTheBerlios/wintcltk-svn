@@ -61,18 +61,44 @@ extern int Registry_Init(Tcl_Interp *);
 extern int Dde_Init(Tcl_Interp *);
 #endif
 
+#ifndef WITHOUT_XOTCL
 extern int Xotcl_Init(Tcl_Interp*);
 extern int Xotcl_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_TDOM
 extern int Tdom_Init(Tcl_Interp*);
 extern int Tdom_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_TLS
 extern int Tls_Init(Tcl_Interp*);
 extern int Tls_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_MKZIPLIB
 extern int Mkziplib_Init(Tcl_Interp*);
 extern int Mkziplib_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_MK4TCL
 extern int Mk4tcl_Init(Tcl_Interp*);
 extern int Mk4tcl_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_MEMCHAN
+extern int Memchan_Init(Tcl_Interp*);
+extern int Memchan_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_TGDBM
 extern int Tgdbm_Init(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_THREAD
 extern int Thread_Init(Tcl_Interp*);
+#endif
+
 extern int Freewrap_Init(Tcl_Interp*);
 extern int Winico_Init(Tcl_Interp*);
 extern int Winico_SafeInit(Tcl_Interp*);
@@ -191,15 +217,21 @@ int main(int argc, char **argv){
   Tcl_StaticPackage(interp, "Mk4tcl", Mk4tcl_Init, Mk4tcl_SafeInit);
 #endif
 
-/*
 #ifndef WITHOUT_MKZIPLIB
   if (Mkziplib_Init(interp) == TCL_ERROR) {
       return TCL_ERROR;
      }
 
-  Tcl_StaticPackage(interp, "Mkziplib", Mkziplib_Init, Mkziplib_SafeInit);
+  Tcl_StaticPackage(interp, "mkZiplib", Mkziplib_Init, Mkziplib_SafeInit);
 #endif
-*/
+
+#ifndef WITHOUT_MEMCHAN
+  if (Memchan_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+
+  Tcl_StaticPackage(interp, "Memchan", Memchan_Init, Memchan_SafeInit);
+#endif
 
 #ifndef WITHOUT_XOTCL
   if (Xotcl_Init(interp) == TCL_ERROR) {

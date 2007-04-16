@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-tklib install-tkcon
-uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-tklib uninstall-tkcon
-clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-tklib clean-tkcon
-distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-tklib distclean-tkcon
+install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-tklib install-tkcon
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-tklib uninstall-tkcon
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-tklib clean-tkcon
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-tklib distclean-tkcon
 
 # directories
 ${DISTFILES}:
@@ -397,18 +397,15 @@ $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/Makefile.gnu:
 
 configure-memchan: extract-memchan install-tcl
 
-build-memchan: configure-memchan $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll 
-$(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.dll :
-	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu TCL_INC_DIR="$(PREFIX)/include" DLL_LDLIBS="-L$(PREFIX)/lib -ltclstub84s"
+build-memchan: configure-memchan $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.a
+$(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan${MEMCHAN_LIBVER}.a :
+	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && make -f Makefile.gnu memchan${MEMCHAN_LIBVER}.a TCL_INC_DIR="$(PREFIX)/include" DLL_LDLIBS="-L$(PREFIX)/lib -ltclstub84s"
 
-install-memchan: build-memchan $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl
-$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/pkgIndex.tcl:
-	@mkdir -p $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
-	@cd $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win && cp memchan$(MEMCHAN_LIBVER).dll pkgIndex.tcl \
-		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)
-	@cp $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/*.html $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/doc/license.terms \
-		$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/doc
-	
+install-memchan: build-memchan $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
+$(PREFIX)/lib/memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a:
+	@mkdir -p $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)
+	@cp $(BUILDDIR)/memchan-$(MEMCHAN_VERSION)/win/memchan$(MEMCHAN_LIBVER).a $(PREFIX)/lib/memchan$(MEMCHAN_VERSION)
+		
 uninstall-memchan:
 	@-cd $(PREFIX)/lib && rm -rf memchan${MEMCHAN_VERSION}
 
@@ -480,3 +477,37 @@ clean-tklib:
 
 distclean-tklib:
 	@-rm -rf ${BUILDDIR}/tklib-${TKLIB_VERSION}
+	
+# mkziplib
+fetch-mkziplib: ${DISTFILES}/mkziplib${MKZIPLIB_SHORT}.zip
+${DISTFILES}/mkziplib${MKZIPLIB_SHORT}.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://mkextensions.sourceforge.net/mkZiplib${MKZIPLIB_SHORT}.zip"
+
+extract-mkziplib: fetch-mkziplib install-unzip ${BUILDDIR} ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile
+${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/mkZiplib${MKZIPLIB_SHORT}.zip.md5 || exit 1
+	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mkZiplib${MKZIPLIB_SHORT}.zip
+	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && rm -f *.dll *.exe
+	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && patch -p1 < ${PATCHDIR}/mkZiplib.patch
+
+configure-mkziplib: extract-mkziplib install-tcl
+
+build-mkziplib: configure-mkziplib install-zlib ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a 
+${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a:
+	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && make CFLAGS="-I$(PREFIX)/include -DUSE_TCL_STUBS -DSTATIC_BUILD=1" TCLLIB="${PREFIX}/lib/libtclstub84s.a" PREFIX="${PREFIX}" LIBS=""
+
+install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a
+${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a:
+	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.a ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+
+uninstall-mkziplib:
+	@-cd ${PREFIX} && rm -rf lib/mkZiplib${MKZIPLIB_VERSION}
+
+clean-mkziplib:
+	@-cd ${BUILDDIR}/mkziplib${MKZIPLIB_VERSION} && rm -f *.o *.a
+
+distclean-mkziplib:
+	@-rm -rf ${BUILDDIR}/mkziplib${MKZIPLIB_VERSION}
+	
