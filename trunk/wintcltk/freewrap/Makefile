@@ -17,18 +17,11 @@
 # Where are we?
 CURDIR=$(shell pwd)
 
-# Distribution and destination
-DIST?=	std
-DISTDIR=	$(CURDIR)/dist/std
+# Destination directory
+DISTDIR=	$(CURDIR)/dist
 
-ifeq ($(DIST),xotcl)
+ifdef FULL
 XOTCL=1
-DISTDIR=	$(CURDIR)/dist/xotcl
-endif
-ifeq ($(DIST),full)
-XOTCL=1
-FULL=1
-DISTDIR=	$(CURDIR)/dist/full
 endif
 
 # WinTclTk source dir
@@ -51,6 +44,9 @@ FBUILD=		$(CURDIR)/build
 
 # Path to the sources directory
 FBSRC=		$(CURDIR)/src
+
+# Path for the scripts directory
+FSCRIPTS=	$(CURDIR)/scripts
 
 # Path to output directory
 FBOUT=		$(CURDIR)/dist
@@ -89,14 +85,26 @@ RESHEADER= $(FBSRC)/freewishrc.h
 ICONFILE=	freewish.ico
 
 # Resheader defies
-COMMAVERSION=	0,1,0,0
-DOTVERSION=	0.1.0.0
-PROGNAME=	FreeWish for Windows
-FILENAME=	freewish.exe
-COMPANYNAME=	WinTclTk project
-COPYRIGHT=	© 2007 Martin Matuska
-PRODUCTNAME=	FreeWish for Windows
-MANIFESTNAME=	FreeWish
+COMMAVERSION=	6,2,0,0
+DOTVERSION=	6.2.0.0
+PROGNAME=	freeWrap for Windows
+FILENAME=	freewrap.exe
+COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
+COPYRIGHT=	© 2007 Dennis R. LaBelle, Martin Matuska
+PRODUCTNAME=	freeWrap for Windows
+MANIFESTNAME=	freeWrap
+
+ifdef TKCON
+COMMAVERSION=	2,5,0,0
+DOTVERSION=	2.5.0.0
+PROGNAME=	Tkcon for Windows
+FILENAME=	tkcon.exe
+COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
+COPYRIGHT=	© 2007 Jeffrey Hobbs, Martin Matuska
+PRODUCTNAME=	Tkcon for Windows
+MANIFESTNAME=	Tkcon
+ICONFILE=	tkcon.ico
+endif
 
 ###### Select a C compiler
 #
@@ -107,7 +115,7 @@ CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB $(X11_INCLUDES)
 
 ifndef FULL
-CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB
+CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN
 endif
 ifndef XOTCL
 CFLAGS+= -DWITHOUT_XOTCL
@@ -168,15 +176,10 @@ SCRIPT_TK = $(INSTALL_LIB)/tk$(TCLVERSIONDOT)/tclIndex
 ZSCRIPT_TK = zipdir/lib/tk/tclIndex
 endif
 
-###### The linker option needed to include the Z compression library.
-#      This library is required by both the Img extension and the
-#      virtual file system.
-#
-LIB_Z = $(INSTALLDIR)/libz.a
-
-# Other libs
+# Libraries neede
 LIB_GDBM = $(INSTALLDIR)/libgdbm-static.a
 LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
+LIB_Z = $(INSTALLDIR)/libz.a
 ifdef FULL
 LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
 LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
@@ -265,7 +268,7 @@ $(FBUILD)/freelib.o \
 $(FBUILD)/freewrap.o \
 $(FBUILD)/fwcrypt.o \
 $(FBUILD)/zvfs.o \
-$(FBUILD)/freewish.res.o
+$(FBUILD)/freewrap.res.o
 
 ifndef WITHOUT_TK
 OBJ += $(FBUILD)/tkwinico.o
@@ -273,15 +276,20 @@ endif
 
 # All script directories
 #
-ZSCRIPTS = $(ZSCRIPT_TCL) $(ZSCRIPT_TK) 
+ZSCRIPTS = $(ZSCRIPT_TCL)
+ifndef WITHOUT_TK
+ZSCRIPTS += $(ZSCRIPT_TK)
+endif
 
 ifdef XOTCL
 XOTCL_SCRIPTS = zipdir/lib/xotcl/xml
 endif
-CTEXT = zipdir/lib/ctext
-TKCON = zipdir/lib/tkcon
+ifdef TKCON
+ZCTEXT = zipdir/lib/ctext
+ZTKCON = zipdir/lib/tkcon
+endif
 
-all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
+all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/freewrap$(EXE)
 
 static:
 	@cd $(SRCDIR) && make install STATIC_BUILD=1
@@ -299,18 +307,16 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(DISTDIR)/freewrap$(EXE): $(DISTDIR)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(CTEXT) $(TKCON) init-pkgs
-	@$(RM) $(DISTDIR)/freewrap$(EXE)
-ifdef WITHOUT_TK
-	@$(DELTREE) zipdir/lib/tk
-endif
-	@$(CP) $(DISTDIR)/freewrap_bare$(EXE) $(DISTDIR)/freewrap.zip
-	@$(CAT) $(FBUILD)/null.zip >> $(DISTDIR)/freewrap.zip
-	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(DISTDIR)/freewrap$(EXE) $(PROGREV) $(DISTDIR)/freewrap_bare$(EXE)
-	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(DISTDIR)/freewrap.zip *; cd ..
-	@$(RENAME) $(DISTDIR)/freewrap.zip $(DISTDIR)/freewrap$(EXE)
-	@$(RM) $(DISTDIR)/freewish$(EXE)
-	@$(CP) $(DISTDIR)/freewrap$(EXE) $(DISTDIR)/freewish$(EXE)
+$(DISTDIR)/freewrap$(EXE): $(FBUILD)/freewrap$(EXE)
+	@cp $(FBUILD)/freewrap$(EXE) $(DISTDIR)/freewrap$(EXE)
+
+$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(ZCTEXT) $(ZTKCON) init-pkgs
+	@$(RM) $(FBUILD)/freewrap$(EXE)
+	@$(CP) $(FBUILD)/freewrap_bare$(EXE) $(FBUILD)/freewrap.zip
+	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/freewrap.zip
+	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(FBUILD)/freewrap$(EXE) $(PROGREV) $(FBUILD)/freewrap_bare$(EXE)
+	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(FBUILD)/freewrap.zip *; cd ..
+	@$(RENAME) $(FBUILD)/freewrap.zip $(FBUILD)/freewrap$(EXE)
 
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
@@ -320,10 +326,6 @@ zipdir/lib/tcl/tclIndex: $(SCRIPT_TCL)
 	@$(DELTREE) zipdir/lib/tcl
 	@$(MKDIR) zipdir/lib/tcl
 	@$(TCLSH) $(FBSRC)/shrink.tcl tcl $(SCRIPT_TCL) $(ZSCRIPT_TCL)
-#	@$(DELTREE) zipdir/tcl8.4
-#	@$(MKDIR) zipdir/tcl8.4
-#	@$(CP) zipdir/lib/tcl/init.tcl zipdir/tcl
-#	@$(TCLSH) $(FBSRC)/shrink.tcl tcl $(SCRIPT_TCL) zipdir/tcl8.4/tclIndex
 
 zipdir/lib/tk/tclIndex: $(SCRIPT_TK)
 	@$(DELTREE) zipdir/lib/tk
@@ -370,15 +372,26 @@ resheader:
 resmanifest:
 	@$(SED) -e 's|%%VERSION%%|$(DOTVERSION)|g' -e 's|%%NAME%%|$(MANIFESTNAME)|g' \
 		$(FBSRC)/freewish.manifest.in > $(FBSRC)/freewish.manifest
+
+freewrap: $(DISTDIR)/freewrap$(EXE)
 		
-$(FBUILD)/freewish.res.o: resheader resmanifest
-	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewish.res.o
+full:
+	@make freewrap FULL=1
+
+tkcon:
+	@make clean all FULL=1 TKCON=1
+	@cp $(FSCRIPTS)/tkcon.tcl $(FBUILD)
+	@cd $(FBUILD) && freewrap$(EXE) tkcon.tcl
+	@mv $(FBUILD)/tkcon$(EXE) $(DISTDIR)/tkcon$(EXE)
+		
+$(FBUILD)/freewrap.res.o: resheader resmanifest
+	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewrap.res.o
 	
-$(DISTDIR)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
-	$(CC) $(LFLAGS) -o $(DISTDIR)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
-	$(STRIP) $(DISTDIR)/freewrap_bare$(EXE)
+$(FBUILD)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
+	$(CC) $(LFLAGS) -o $(FBUILD)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+	$(STRIP) $(FBUILD)/freewrap_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
-	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(DISTDIR)/freewrap_bare$(EXE)
+	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(FBUILD)/freewrap_bare$(EXE)
 
 $(FBUILD)/freewrap.o: $(FBSRC)/main.c
 	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
@@ -402,7 +415,6 @@ $(FBUILD)/zipmain.o : $(FBSRC)/zipmain.c
 	$(CC) $(CFLAGS) $(OPT) -I$(ZIPOBJDIR) -DUNIX -DASMV -DASM_CRC -DNO_STRCHR -DNO_STRRCHR -DCRYPT -DHAVE_DIRENT_H -DHAVE_TERMIOS_H -o $(FBUILD)/zipmain.o -c $(FBSRC)/zipmain.c
 
 clean:
-	$(RM) $(DISTDIR)/*.exe $(DISTDIR)/*.zip
 	$(DELTREE) $(FBUILD) zipdir
 
 distclean: clean

@@ -551,7 +551,6 @@ switch $tcl_platform(platform) {
 
 # Adjust auto_path variable. Strip out unwanted default paths.
 global auto_path
-global blt_library
 
 set newpath {}
 foreach path $auto_path {
@@ -561,17 +560,12 @@ foreach path $auto_path {
 	   }
       }
 set auto_path $newpath
-if {$extname == {plus}} {
-    lappend auto_path {/blt}
-    set blt_library {/blt}
-   }
 
 # remove variables that are no longer necessary
 unset newpath
 unset path
 unset prefix
 unset extname
-
 
 # Load the main application script.
 if {[::zvfs::exists /_freewrap_init.txt]} {
