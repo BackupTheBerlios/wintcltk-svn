@@ -7,5 +7,5 @@
 #
 package require tkcon
 set ::tkcon::PRIV(SCRIPT) /tkcon.tcl
-set ::tkcon::OPT(exec) {}
+#set ::tkcon::OPT(exec) {}
 ::tkcon::Init

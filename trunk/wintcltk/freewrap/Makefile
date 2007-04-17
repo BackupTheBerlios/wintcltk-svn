@@ -180,6 +180,7 @@ endif
 LIB_GDBM = $(INSTALLDIR)/libgdbm-static.a
 LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
 LIB_Z = $(INSTALLDIR)/libz.a
+INDEXES= zipdir/lib/base/pkgIndex.tcl zipdir/lib/thread/pkgIndex.tcl
 ifdef FULL
 LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
 LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
@@ -188,6 +189,12 @@ LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_MKZIPLIB = $(INSTALLDIR)/Mkziplib$(MKZIPLIB_VERSION)/Mkziplib$(MKZIPLIB_SHORT).a
 LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
 LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
+INDEXES += zipdir/lib/Mk4tcl/pkgIndex.tcl \
+	zipdir/lib/memchan/pkgIndex.tcl \
+	zipdir/lib/tdom/pkgIndex.tcl \
+	zipdir/lib/tgdbm/pkgIndex.tcl \
+	zipdir/lib/mkZiplib/pkgIndex.tcl \
+	zipdir/lib/tls/pkgIndex.tcl
 XOTCL = 1
 endif
 ifdef XOTCL
@@ -310,7 +317,7 @@ zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 $(DISTDIR)/freewrap$(EXE): $(FBUILD)/freewrap$(EXE)
 	@cp $(FBUILD)/freewrap$(EXE) $(DISTDIR)/freewrap$(EXE)
 
-$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(ZCTEXT) $(ZTKCON) init-pkgs
+$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(ZCTEXT) $(ZTKCON)
 	@$(RM) $(FBUILD)/freewrap$(EXE)
 	@$(CP) $(FBUILD)/freewrap_bare$(EXE) $(FBUILD)/freewrap.zip
 	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/freewrap.zip
@@ -321,43 +328,95 @@ $(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipd
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
 	@$(ZIP) $(FBUILD)/null.zip -d -
-
+	
 zipdir/lib/tcl/tclIndex: $(SCRIPT_TCL)
 	@$(DELTREE) zipdir/lib/tcl
 	@$(MKDIR) zipdir/lib/tcl
 	@$(TCLSH) $(FBSRC)/shrink.tcl tcl $(SCRIPT_TCL) $(ZSCRIPT_TCL)
 
-zipdir/lib/tk/tclIndex: $(SCRIPT_TK)
+zipdir/lib/tcl/init-pkgs.tcl: zipdir/lib/tcl/tclIndex
+	@$(SED) -e 's|global auto_path|global auto_path; source /lib/tcl/init-pkgs.tcl|g' zipdir/lib/tcl/init.tcl > zipdir/lib/tcl/init.tcl.bak
+	@$(MV) zipdir/lib/tcl/init.tcl.bak zipdir/lib/tcl/init.tcl
+	@echo "global auto_path" > zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/tk/tclIndex: zipdir/lib/tcl/init-pkgs.tcl $(SCRIPT_TK)
 	@$(DELTREE) zipdir/lib/tk
 	@$(MKDIR) zipdir/lib/tk
 	@$(TCLSH) $(FBSRC)/shrink.tcl tk $(SCRIPT_TK) $(ZSCRIPT_TK)
-	
-zipdir/lib/xotcl/xml:
+	@sed -e 's|\[file .* tk84.dll\]|""|g' zipdir/lib/Tk/pkgIndex.tcl > zipdir/lib/Tk/pkgIndex.tcl.new
+	@$(MV) zipdir/lib/Tk/pkgIndex.tcl.new zipdir/lib/Tk/pkgIndex.tcl
+			
+zipdir/lib/xotcl/xml: zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/xotcl
 	@$(MKDIR) zipdir/lib/xotcl
-	@$(CP) -rf $(XODIR)/actiweb $(XODIR)/apps $(XODIR)/comm $(XODIR)/lib $(XODIR)/patterns \
+	@$(CP) -rf $(XODIR)/pkgIndex.tcl $(XODIR)/actiweb $(XODIR)/apps $(XODIR)/comm $(XODIR)/lib $(XODIR)/patterns \
 		$(XODIR)/rdf $(XODIR)/registry $(XODIR)/serialize $(XODIR)/store $(XODIR)/xml zipdir/lib/xotcl
-	@echo "global auto_path" > zipdir/lib/tcl/init-pkgs.tcl
-	@echo -n "lappend auto_path /lib/xotcl/actiweb /lib/xotcl/comm" >> zipdir/lib/tcl/init-pkgs.tcl
+	@sed -e 's|\[file join $$dir xotc.*a\]|""|g' $(XODIR)/pkgIndex.tcl > zipdir/lib/xotcl/pkgIndex.tcl
+	@echo -n "lappend auto_path /lib/xotcl /lib/xotcl/actiweb /lib/xotcl/comm" >> zipdir/lib/tcl/init-pkgs.tcl
 	@echo -n " /lib/xotcl/lib /lib/xotcl/patterns /lib/xotcl/rdf" >> zipdir/lib/tcl/init-pkgs.tcl
 	@echo -n " /lib/xotcl/rdf /lib/xotcl/registry /lib/xotcl/serialize" >> zipdir/lib/tcl/init-pkgs.tcl
 	@echo " /lib/xotcl/store /lib/xotcl/xml" >> zipdir/lib/tcl/init-pkgs.tcl
 
-zipdir/lib/tkcon:
+zipdir/lib/Mk4tcl/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/Mk4tcl
+	@sed -e 's|\[file join $$dir Mk4tcl.lib\]|""|g' $(INSTALLDIR)/Mk4tcl/pkgIndex.tcl > zipdir/lib/Mk4tcl/pkgIndex.tcl
+	@echo "lappend auto_path /lib/Mk4tcl" >> zipdir/lib/tcl/init-pkgs.tcl
+	
+zipdir/lib/memchan/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/memchan
+	@echo "package ifneeded Memchan $(MEMCHAN_VERSION) [list load \"\" Memchan]" > zipdir/lib/memchan/pkgIndex.tcl
+	@echo "lappend auto_path /lib/memchan" >> zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/base/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/base
+	@echo "package ifneeded dde 1.2.4 [list load \"\" dde]" > zipdir/lib/base/pkgIndex.tcl
+	@echo "package ifneeded registry 1.1.4 [list load \"\" registry]" >> zipdir/lib/base/pkgIndex.tcl
+#ifndef WITHOUT_TK
+	@echo "package ifneeded Winico 0.5 [list load \"\" Winico]" >> zipdir/lib/base/pkgIndex.tcl
+#endif
+	@echo "lappend auto_path /lib/base" >> zipdir/lib/tcl/init-pkgs.tcl
+	
+zipdir/lib/thread/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/thread
+	@$(CP) $(INSTALLDIR)/thread$(THREAD_VERSION)/ttrace.tcl zipdir/lib/thread/ttrace.tcl
+	@echo "package ifneeded Thread $(THREAD_VERSION) [list load \"\" Thread]" > zipdir/lib/thread/pkgIndex.tcl
+	@echo "package ifneeded Ttrace $(THREAD_VERSION) [list source [file join \$$dir ttrace.tcl]]" >> zipdir/lib/thread/pkgIndex.tcl
+	@echo "lappend auto_path /lib/thread" >> zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/tdom/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/tdom
+	@$(CP) $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom.tcl zipdir/lib/tdom/tdom.tcl
+	@echo "package ifneeded tdom $(TDOM_VERSION) \"load [list \"\" tdom]; source [list [file join \$$dir tdom.tcl]]\"" > zipdir/lib/tdom/pkgIndex.tcl
+	@echo "lappend auto_path /lib/tdom" >> zipdir/lib/tcl/init-pkgs.tcl	
+
+zipdir/lib/tgdbm/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/tgdbm
+	@$(CP) $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/qgdbm.tcl zipdir/lib/tgdbm/qgdbm.tcl
+	@echo "package ifneeded tgdbm $(TGDBM_VERSION) [list load \"\" tgdbm]" > zipdir/lib/tgdbm/pkgIndex.tcl
+	@echo "package ifneeded qgdbm $(TGDBM_VERSION) [list source [file join \$$dir qgdbm.tcl]]" >> zipdir/lib/tgdbm/pkgIndex.tcl
+	@echo "lappend auto_path /lib/tgdbm" >> zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/mkZiplib/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/mkZiplib
+	@echo "package ifneeded mkZiplib $(MKZIPLIB_VERSION) [list load \"\" mkZiplib]" > zipdir/lib/mkZiplib/pkgIndex.tcl
+	@echo "lappend auto_path /lib/mkZiplib" >> zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/tls/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/tls
+	@echo "package ifneeded tls 1.50 [list load \"\" tls]" > zipdir/lib/tls/pkgIndex.tcl
+	@echo "lappend auto_path /lib/tls" >> zipdir/lib/tcl/init-pkgs.tcl
+
+zipdir/lib/tkcon: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /lib/tkcon" >> zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/tkcon
 	@$(MKDIR) zipdir/lib/tkcon
 	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/lib/tkcon
 	
-zipdir/lib/ctext:
+zipdir/lib/ctext: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /lib/ctext" >> zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/ctext
 	@$(MKDIR) zipdir/lib/ctext
 	@$(CP) -rf $(INSTROOT)/lib/tklib$(TKLIB_SHORT)/ctext/* zipdir/lib/ctext
-
-init-pkgs:
-	@$(SED) -e 's|global auto_path|global auto_path; source /lib/tcl/init-pkgs.tcl|g' zipdir/lib/tcl/init.tcl > zipdir/lib/tcl/init.tcl.bak
-	@$(MV) zipdir/lib/tcl/init.tcl.bak zipdir/lib/tcl/init.tcl
 		
 resheader:
 	@echo "#define COMMAVERSION $(COMMAVERSION)" > $(RESHEADER)
