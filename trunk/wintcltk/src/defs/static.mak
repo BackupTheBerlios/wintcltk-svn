@@ -497,10 +497,10 @@ build-mkziplib: configure-mkziplib install-zlib ${BUILDDIR}/mkZiplib${MKZIPLIB_V
 ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a:
 	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && make CFLAGS="-I$(PREFIX)/include -DUSE_TCL_STUBS -DSTATIC_BUILD=1" TCLLIB="${PREFIX}/lib/libtclstub84s.a" PREFIX="${PREFIX}" LIBS=""
 
-install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a
-${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a:
+install-mkziplib: build-mkziplib ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl
+${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}/pkgIndex.tcl:
 	@mkdir -p ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
-	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.a ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
+	@cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && cp mkZiplib${MKZIPLIB_SHORT}.a pkgIndex.tcl ${PREFIX}/lib/mkZiplib${MKZIPLIB_VERSION}
 
 uninstall-mkziplib:
 	@-cd ${PREFIX} && rm -rf lib/mkZiplib${MKZIPLIB_VERSION}
