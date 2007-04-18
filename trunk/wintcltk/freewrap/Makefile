@@ -106,6 +106,18 @@ MANIFESTNAME=	Tkcon
 ICONFILE=	tkcon.ico
 endif
 
+ifdef XOTCLIDE
+COMMAVERSION=	0,8,2,0
+DOTVERSION=	0.8.2.0
+PROGNAME=	XOTclIDE for Windows
+FILENAME=	XOTclIDE.exe
+COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
+COPYRIGHT=	© 2007 Artur Trzewik, Martin Matuska
+PRODUCTNAME=	XOTclIDE for Windows
+MANIFESTNAME=	XOTclIDE
+ICONFILE=	xotclide.ico
+endif
+
 ###### Select a C compiler
 #
 CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS 
@@ -292,8 +304,10 @@ ifdef XOTCL
 XOTCL_SCRIPTS = zipdir/lib/xotcl/xml
 endif
 ifdef TKCON
-ZCTEXT = zipdir/lib/ctext
-ZTKCON = zipdir/lib/tkcon
+SCRIPTS += zipdir/lib/ctext zipdir/lib/tkcon
+endif
+ifdef XOTCLIDE
+SCRIPTS += zipdir/lib/xotclide
 endif
 
 all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/freewrap$(EXE)
@@ -317,7 +331,7 @@ zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 $(DISTDIR)/freewrap$(EXE): $(FBUILD)/freewrap$(EXE)
 	@cp $(FBUILD)/freewrap$(EXE) $(DISTDIR)/freewrap$(EXE)
 
-$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(ZCTEXT) $(ZTKCON)
+$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
 	@$(RM) $(FBUILD)/freewrap$(EXE)
 	@$(CP) $(FBUILD)/freewrap_bare$(EXE) $(FBUILD)/freewrap.zip
 	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/freewrap.zip
@@ -357,6 +371,12 @@ zipdir/lib/xotcl/xml: zipdir/lib/tcl/init-pkgs.tcl
 	@echo -n " /lib/xotcl/rdf /lib/xotcl/registry /lib/xotcl/serialize" >> zipdir/lib/tcl/init-pkgs.tcl
 	@echo " /lib/xotcl/store /lib/xotcl/xml" >> zipdir/lib/tcl/init-pkgs.tcl
 
+zipdir/lib/xotclide: zipdir/lib/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/lib/xotclIDE
+	@$(MKDIR) zipdir/lib/xotclIDE
+	@$(CP) -rf $(INSTALLDIR)/xotclIDE/* zipdir/lib/xotclIDE
+	@echo "lappend auto_path /lib/xotclIDE" >> zipdir/lib/tcl/init-pkgs.tcl
+	
 zipdir/lib/Mk4tcl/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/Mk4tcl
 	@sed -e 's|\[file join $$dir Mk4tcl.lib\]|""|g' $(INSTALLDIR)/Mk4tcl/pkgIndex.tcl > zipdir/lib/Mk4tcl/pkgIndex.tcl
@@ -442,6 +462,12 @@ tkcon:
 	@cp $(FSCRIPTS)/tkcon.tcl $(FBUILD)
 	@cd $(FBUILD) && freewrap$(EXE) tkcon.tcl
 	@mv $(FBUILD)/tkcon$(EXE) $(DISTDIR)/tkcon$(EXE)
+
+xotclide:
+	@make clean all FULL=1 XOTCLIDE=1
+	@cp $(FSCRIPTS)/XOTclIDE.tcl $(FBUILD)
+	@cd $(FBUILD) && freewrap$(EXE) XOTclIDE.tcl
+	@mv $(FBUILD)/XOTclIDE$(EXE) $(DISTDIR)/XOTclIDE$(EXE)
 		
 $(FBUILD)/freewrap.res.o: resheader resmanifest
 	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewrap.res.o

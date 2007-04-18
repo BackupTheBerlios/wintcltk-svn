@@ -72,3 +72,34 @@ clean-tkcon:
 
 distclean-tkcon:
 	@-rm -rf $(COMMONBUILD)/tkcon
+
+# xotclide
+fetch-xotclide: ${DISTFILES} ${DISTFILES}/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz ${DISTFILES}/xotclide_doc.tar.gz 
+${DISTFILES}/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz"
+${DISTFILES}/xotclide_doc.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "You require wget to auto-download the sources. See SOURCES.txt for more information."; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.xdobry.de/xotclIDE/xotclide_doc.tar.gz"
+
+extract-xotclide: fetch-xotclide ${COMMONBUILD} ${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION} 
+${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz.md5 || exit 1
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/xotclide_doc.tar.gz.md5 || exit 1
+	@-cd ${COMMONBUILD} && tar xfz ${DISTFILES}/xotclIDE-${XOTCLIDE_FILEVER}.tar.gz
+	@-cd ${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION}/docs && tar xfz ${DISTFILES}/xotclide_doc.tar.gz 
+
+configure-xotclide: install-xotcl extract-xotclide 
+build-xotclide: configure-xotclide
+
+install-xotclide: build-xotclide ${PREFIX}/lib/xotclIDE
+${PREFIX}/lib/xotclIDE:
+	@cd ${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION} && rm -f install && make install PREFIX=${PREFIX}
+
+uninstall-xotclide:
+	@-cd ${PREFIX} && rm -rf lib/xotclIDE
+
+clean-xotclide:
+
+distclean-xotclide:
+	@-rm -rf ${COMMONBUILD}/xotclIDE-${XOTCLIDE_VERSION}
