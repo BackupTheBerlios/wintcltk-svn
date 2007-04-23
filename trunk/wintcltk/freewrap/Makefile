@@ -14,6 +14,9 @@
 #        immediately before you need to type it in. 
 #
 
+# Wintcltk-freeWrap version
+WINTCLTK_FW_VERSION?=	0.2
+
 # Where are we?
 CURDIR=$(shell pwd)
 
@@ -431,7 +434,9 @@ zipdir/lib/tkcon: zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/tkcon
 	@$(MKDIR) zipdir/lib/tkcon
 	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/lib/tkcon
-	
+	@sed -e 's|"dev"|"$(WINTCLTK_FW_VERSION)"|g' $(CURDIR)/patches/tkcon.patch > $(FBUILD)/tkcon.patch
+	@cd $(CURDIR)/zipdir/lib/tkcon && patch -p2 < $(FBUILD)/tkcon.patch
+		
 zipdir/lib/ctext: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /lib/ctext" >> zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/ctext

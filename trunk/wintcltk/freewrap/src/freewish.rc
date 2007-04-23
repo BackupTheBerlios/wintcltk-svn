@@ -34,6 +34,7 @@ BEGIN
     END
 END
 
+
 //
 //  Include the base resources.
 //
@@ -48,6 +49,7 @@ END
 //
 
 app                      ICON    DISCARDABLE     ICONFILE
+tk                       ICON    DISCARDABLE     ICONFILE
 
 //
 // This enables themed scrollbars in XP by trying to use comctl32 v6.
