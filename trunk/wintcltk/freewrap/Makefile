@@ -120,7 +120,7 @@ endif
 
 ###### Select a C compiler
 #
-CC = gcc -DSTATIC_BUILD=1 -DWIN32 -DWINDOWS 
+CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS 
 
 ###### Select standard command-line options for the C compiler.
 #
@@ -470,7 +470,7 @@ xotclide:
 	@mv $(FBUILD)/XOTclIDE$(EXE) $(DISTDIR)/XOTclIDE$(EXE)
 		
 $(FBUILD)/freewrap.res.o: resheader resmanifest
-	@cd $(FBSRC) && windres -i $(RESFILE) -o $(FBUILD)/freewrap.res.o
+	@cd $(FBSRC) && windres -i $(RESFILE) -I${BUILDDIR}/tk${TCLTK_VERSION}/win/rc -o $(FBUILD)/freewrap.res.o
 	
 $(FBUILD)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
 	$(CC) $(LFLAGS) -o $(FBUILD)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)

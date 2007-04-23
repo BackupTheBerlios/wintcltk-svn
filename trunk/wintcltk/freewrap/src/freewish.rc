@@ -35,6 +35,12 @@ BEGIN
 END
 
 //
+//  Include the base resources.
+//
+
+#include "tk_base.rc"
+
+//
 // Icon
 // 
 //   The icon whose name or resource ID is lexigraphically first, is used
