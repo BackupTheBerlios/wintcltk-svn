@@ -1,4 +1,12 @@
 /*
+# TkWrap Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# This file is derived from the freeWrap Project
+# http://freewrap.sourceforge.net
+#
+# $Id$
+#
 # freeWrap is Copyright (c) 1998-2002 by Dennis R. LaBelle (labelled@nycap.rr.com)
 # All Rights Reserved.
 #
@@ -21,31 +29,6 @@
 # 3. This notice may not be removed or altered from any source distribution.
 */
 
-/*
-** This file implements the main routine for a standalone TCL/TK shell.
-   Revision history:
-
-   Revison  Date           Author             Description
-   -------  -------------  -----------------  ----------------------------------------------
-     5.2    June 2, 2002   Dennis R. LaBelle  1) Changed mount of ZVFS to / instead of /zvfs
-                                              2) Now appends to auto_path instead of
-                                                 directly setting auto_path variable.
-
-     5.4    Oct 16, 2002   Dennis R. LaBelle  1) Added necessary beginning space when appending
-                                                 to auto_path TCL variable. This fixed problem
-                                                 with locating the executable in a directory
-                                                 path that included a space.
-                                              2) Removed / from auto_path variable to prevent
-                                                 searching of / path for libraries upon startup.
-
-     5.5    Jan 12, 2003   Dennis R. LaBelle  1) Removed use of WinICO since Windows icon feature
-                                                 is supported by "wm iconbitmap" command as of
-                                                 TK 8.3.3
-
-     5.6    Nov  9, 2003   Dennis R. LaBelle  1) Included WinICO again due to user requests
-                                                 since WinICO includes features beyond those of
-                                                 "wm iconbitmap".
-*/
 #include <tcl.h>
 #include <tk.h>
 

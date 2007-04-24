@@ -1,4 +1,12 @@
 /*
+# TkWrap Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# This file is derived from the freeWrap Project
+# http://freewrap.sourceforge.net
+#
+# $Id$
+#
 # freeWrap is Copyright (c) 1998-2003 by Dennis R. LaBelle (labelled@nycap.rr.com) 
 # All Rights Reserved.
 #
@@ -20,30 +28,6 @@
 #
 # 3. This notice may not be removed or altered from any source distribution.
 */
-
-/*
-** This file implements new TCL commands added by freeWrap.
-   Revision history:
-
-   Revison  Date           Author             Description
-   -------  -------------  -----------------  ----------------------------------------------
-      3.0   July 26, 1999  Dennis R. LaBelle  1) Added FreewrapEncryptCMD and
-                                                 FreewrapDecryptCmd functions.
-
-      4.4   Oct.  9, 2000  Dennis R. LaBelle  1) Added some commands to install new file
-                                                 types and associations into the Windows
-                                                 registry.
-                                              2) Added a ::freewrap::shortcut command to
-                                                 create shortcuts under Windows.
-                                              3) Added a ::freewrap::getSpecialDir command
-                                                 to find "Start Menu", "Desktop" and similar
-                                                 directory locations under Windows.
-
-      5.6   Nov.  9, 2003  Dennis R. LaBelle  1) Added ::freewrap::makeZIP command.
-                                              2) Removed FreewrapEncryptCmd and 
-                                                 FreewrapDecryptCmd functions.
-*/
-
 
 #include <sys/types.h>
 #include <stdlib.h>

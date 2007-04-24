@@ -1,21 +1,15 @@
-# WinTclTk freeWrap makefile
-# Based on UNIX makefile developed by Dennis R. LaBelle
-# Copyright (c) 2007 Dennis R. LaBelle, Martin Matuska
+# TkWrap makefile
+# Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# Based on freeWrap UNIX makefile
+# Copyright (c) 2006, Dennis R. LaBelle 
 #
 # $Id$
 #
-# NOTES: Important - please read.
-#
-#     1) With the addition of ZIP 2.0 style file encryption, the freeWrap
-#        build process now includes an interactive step. During this step,
-#        you must enter the password key that is compiled into freeWrap
-#        at a console prompt. This password is automatically generated the
-#        first time freeWrap is built and will be printed to the screen
-#        immediately before you need to type it in. 
-#
 
-# Wintcltk-freeWrap version
-WINTCLTK_FW_VERSION?=	0.2
+# TkWrap version
+TKWRAP_VERSION?=	0.2
 
 # Where are we?
 CURDIR=$(shell pwd)
@@ -39,9 +33,6 @@ INSTROOT?=	$(SRCDIR)/instroot_s
 # WinTckTk build directory
 BUILDDIR?=	$(SRCDIR)/build_s
 
-# Current application program revision number
-PROGREV = 6.2
-
 # Path for the build directory
 FBUILD=		$(CURDIR)/build
 
@@ -52,21 +43,19 @@ FBSRC=		$(CURDIR)/src
 FSCRIPTS=	$(CURDIR)/scripts
 
 # Path to output directory
-FBOUT=		$(CURDIR)/dist
+FBOUT=		$(CURDIR)/dist#
 
-# TCL/TK version info
-TCLVERSIONDOT = 8.4
-TCLVERSION = 84
+# Tcl Versions
+TCLVERSIONDOT=	8.4
+TCLVERSION=	$(subst .,,$(TCLVERSIONDOT))
 
 # Location of previously compiled TCLSH program
-TCLSH = ${INSTROOT}/bin/tclsh${TCLVERSION}s.exe
+TCLSH = ${INSTROOT}/bin/tclsh$(TCLVERSION)s.exe
 
 # Locations of various directories
 INSTALL_BASE = $(INSTROOT)
 INSTALL_LIB  = $(INSTROOT)/lib
 INSTALL_INCL = $(INSTROOT)/include
-TCLDIR       = $(BUILDDIR)/tcl$(TCLVERSIONDOT)/unix
-TKDIR        = $(BUILDDIR)/tk$(TCLVERSIONDOT)/unix
 INSTALLDIR   = $(INSTROOT)/lib
 ZIPOBJDIR    = $(BUILDDIR)/zip-$(ZIP_VERSION)
 
@@ -83,19 +72,28 @@ STRIP=	strip
 
 #
 # Resfile
-RESFILE = $(FBSRC)/freewish.rc
-RESHEADER= $(FBSRC)/freewishrc.h
-ICONFILE=	freewish.ico
+RESFILE = $(FBSRC)/tkwrap.rc
+RESHEADER= $(FBSRC)/tkwraprc.h
+ICONFILE=	tkwrap.ico
 
 # Resheader defies
 COMMAVERSION=	6,2,0,0
 DOTVERSION=	6.2.0.0
-PROGNAME=	freeWrap for Windows
-FILENAME=	freewrap.exe
+PROGNAME=	TkWrap (minimal)
+FILENAME=	tkwrap.exe
 COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
-COPYRIGHT=	© 2007 Dennis R. LaBelle, Martin Matuska
-PRODUCTNAME=	freeWrap for Windows
-MANIFESTNAME=	freeWrap
+COPYRIGHT=	© 2007 Martin Matuska
+PRODUCTNAME=	TkWrap for Windows (minimal)
+MANIFESTNAME=	TkWrap
+
+ifdef XOTCL
+PROGNAME=	TkWrap (XOTcl)
+PRODUCTNAME=	TkWrap for Windows (XOTcl ${XOTCL_VERSION})
+endif
+ifdef FULL
+PROGNAME=	TkWrap (full)
+PRODUCTNAME=	TkWrap for Windows (full)
+endif
 
 ifdef TKCON
 COMMAVERSION=	2,5,0,0
@@ -287,10 +285,10 @@ $(ZIPOBJDIR)/zipup.o
 #
 OBJ = $(OBJSZIP) \
 $(FBUILD)/freelib.o \
-$(FBUILD)/freewrap.o \
+$(FBUILD)/tkwrap.o \
 $(FBUILD)/fwcrypt.o \
 $(FBUILD)/zvfs.o \
-$(FBUILD)/freewrap.res.o
+$(FBUILD)/tkwrap.res.o
 
 ifndef WITHOUT_TK
 OBJ += $(FBUILD)/tkwinico.o
@@ -313,7 +311,7 @@ ifdef XOTCLIDE
 SCRIPTS += zipdir/lib/xotclide
 endif
 
-all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/freewrap$(EXE)
+all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/tkwrap$(EXE)
 
 static:
 	@cd $(SRCDIR) && make install STATIC_BUILD=1
@@ -331,16 +329,17 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(DISTDIR)/freewrap$(EXE): $(FBUILD)/freewrap$(EXE)
-	@cp $(FBUILD)/freewrap$(EXE) $(DISTDIR)/freewrap$(EXE)
+$(DISTDIR)/tkwrap$(EXE): $(FBUILD)/tkwrap$(EXE)
+	@cp $(FBUILD)/tkwrap$(EXE) $(DISTDIR)/tkwrap$(EXE)
 
-$(FBUILD)/freewrap$(EXE): $(FBUILD)/freewrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
-	@$(RM) $(FBUILD)/freewrap$(EXE)
-	@$(CP) $(FBUILD)/freewrap_bare$(EXE) $(FBUILD)/freewrap.zip
-	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/freewrap.zip
-	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(FBUILD)/freewrap$(EXE) $(PROGREV) $(FBUILD)/freewrap_bare$(EXE)
-	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(FBUILD)/freewrap.zip *; cd ..
-	@$(RENAME) $(FBUILD)/freewrap.zip $(FBUILD)/freewrap$(EXE)
+$(FBUILD)/tkwrap$(EXE): $(FBUILD)/tkwrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
+	@$(RM) $(FBUILD)/tkwrap$(EXE)
+	@$(CP) $(FBUILD)/tkwrap_bare$(EXE) $(FBUILD)/tkwrap.zip
+	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/tkwrap.zip
+	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(FBUILD)/tkwrap$(EXE) $(TKWRAP_VERSION) $(FBUILD)/tkwrap_bare$(EXE)
+	@$(CP) -f $(FBSRC)/$(ICONFILE) zipdir
+	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(FBUILD)/tkwrap.zip *; cd ..
+	@$(RENAME) $(FBUILD)/tkwrap.zip $(FBUILD)/tkwrap$(EXE)
 
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
@@ -455,36 +454,36 @@ resheader:
 	
 resmanifest:
 	@$(SED) -e 's|%%VERSION%%|$(DOTVERSION)|g' -e 's|%%NAME%%|$(MANIFESTNAME)|g' \
-		$(FBSRC)/freewish.manifest.in > $(FBSRC)/freewish.manifest
+		$(FBSRC)/tkwrap.manifest.in > $(FBSRC)/tkwrap.manifest
 
-freewrap: $(DISTDIR)/freewrap$(EXE)
+tkwrap: all $(DISTDIR)/tkwrap$(EXE)
 		
 full:
-	@make freewrap FULL=1
+	@make clean tkwrap FULL=1
 
 tkcon:
 	@make clean all FULL=1 TKCON=1
 	@cp $(FSCRIPTS)/tkcon.tcl $(FBUILD)
-	@cd $(FBUILD) && freewrap$(EXE) tkcon.tcl
+	@cd $(FBUILD) && tkwrap$(EXE) tkcon.tcl
 	@mv $(FBUILD)/tkcon$(EXE) $(DISTDIR)/tkcon$(EXE)
 
 xotclide:
 	@make clean all FULL=1 XOTCLIDE=1
 	@cp $(FSCRIPTS)/XOTclIDE.tcl $(FBUILD)
-	@cd $(FBUILD) && freewrap$(EXE) XOTclIDE.tcl
+	@cd $(FBUILD) && tkwrap$(EXE) XOTclIDE.tcl
 	@mv $(FBUILD)/XOTclIDE$(EXE) $(DISTDIR)/XOTclIDE$(EXE)
 		
-$(FBUILD)/freewrap.res.o: resheader resmanifest
-	@cd $(FBSRC) && windres -i $(RESFILE) -I${BUILDDIR}/tk${TCLTK_VERSION}/win/rc -o $(FBUILD)/freewrap.res.o
+$(FBUILD)/tkwrap.res.o: resheader resmanifest
+	@cd $(FBSRC) && windres -i $(RESFILE) -I${BUILDDIR}/tk${TCLTK_VERSION}/win/rc -o $(FBUILD)/tkwrap.res.o
 	
-$(FBUILD)/freewrap_bare$(EXE): $(OBJ) $(LIBS)
-	$(CC) $(LFLAGS) -o $(FBUILD)/freewrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
-	$(STRIP) $(FBUILD)/freewrap_bare$(EXE)
+$(FBUILD)/tkwrap_bare$(EXE): $(OBJ) $(LIBS)
+	$(CC) $(LFLAGS) -o $(FBUILD)/tkwrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+	$(STRIP) $(FBUILD)/tkwrap_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
-	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(FBUILD)/freewrap_bare$(EXE)
+	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(FBUILD)/tkwrap_bare$(EXE)
 
-$(FBUILD)/freewrap.o: $(FBSRC)/main.c
-	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/freewrap.o -c $(FBSRC)/main.c
+$(FBUILD)/tkwrap.o: $(FBSRC)/main.c
+	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/tkwrap.o -c $(FBSRC)/main.c
 
 $(FBSRC)/fwcrypt.c: $(FBSRC)/setinfo.tcl
 	cd ${FBSRC} && $(TCLSH) setinfo.tcl
@@ -505,7 +504,7 @@ $(FBUILD)/zipmain.o : $(FBSRC)/zipmain.c
 	$(CC) $(CFLAGS) $(OPT) -I$(ZIPOBJDIR) -DUNIX -DASMV -DASM_CRC -DNO_STRCHR -DNO_STRRCHR -DCRYPT -DHAVE_DIRENT_H -DHAVE_TERMIOS_H -o $(FBUILD)/zipmain.o -c $(FBSRC)/zipmain.c
 
 clean:
-	$(DELTREE) $(FBUILD) zipdir
+	-$(DELTREE) $(FBUILD) zipdir
 
 distclean: clean
 	$(RM) -f $(FBSRC)/currentPWD.txt $(FBSRC)/fwcrypt.c

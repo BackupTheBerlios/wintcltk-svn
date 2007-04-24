@@ -1,3 +1,11 @@
+# TkWrap Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# This file is derived from the freeWrap Project
+# http://freewrap.sourceforge.net
+#
+# $Id$
+#
 # freeWrap is Copyright (c) 1998-2005 by Dennis R. LaBelle (labelled@nycap.rr.com)
 # All Rights Reserved.
 #
@@ -21,58 +29,12 @@
 #
 # This TCL/TK script provides the freeWrap namespace commands.
 #
-# Revision history:
-#
-# Revison  Date           Author             Description
-# -------  -------------  -----------------  --------------------------------------------
-#   5.0    Dec. 31, 2001  Dennis R. LaBelle  1) Extracted freeWrap namespace items to
-#                                               this separate file.
-#                                            2) Added ::freewrap::reconnect procedure to
-#                                               reattach archives to the freeWrap stub
-#                                            3) Replaced the TCL "source" command in order
-#                                               to handle freeWrap encrypted scripts.
-#                                            4) Original "source" command renamed to
-#                                               ::freewrap::source
-#                                            5) Added ::freewrap::getStubSize procedure.
-#                                            6) Added ::freewrap::encrypted variable.
-#                                            7) Added replacement for glob command using
-#                                               some source code from Dave Bodenstab
-
-#   5.1    Jan. 26, 2002 Dennis R. LaBelle   1) Adjusted setting of auto_path variable.
-#                                            2) Fixed error in ::freewrap::getStubSize
-#                                               that occurred since file names are no
-#                                               longer converted to lower case.
-#                                            3) Replaced the TCL "info" command in order
-#                                               to handle the "info script" command for
-#                                               wrapped files.
-
-#   5.2    June  2, 2002 Dennis R. LaBelle   1) Removed replacement glob command.
-#                                            2) Fixed unpack procedure to prevent addition
-#                                               of newline character at end of unpacked file.
-#                                            3) Removed reroot procedure. Correct root directory
-#                                               is now established in main.c file.
-#                                            4) Adjusted setting of auto_path variable to include
-#                                               /blt directory when running BLT version.
-
-#   5.3    Aug. 17, 2002 Dennis R. LaBelle   1) Added errormsg variable to ::freewrap namespace. Modified
-#                                               ::freewrap::unpack proc to set this variable if file cannot
-#                                               be written to the destination.
-#
-#   5.4    Nov. 23, 2002 Dennis R. LaBelle   1) ::freewrap::unpack proc now sets the timestamp of the copied
-#                                               file to that of the wrapped copy.
-#
-#   5.6    Dec.  2, 2003 Dennis R. LaBelle   1) Removed freeWrap version of "source" command as a result of
-#                                               removing source code encryption feature.
-#
-#   6.2    Jan.  2, 2006 Dennis R. LaBelle   1) Corrected ::freewrap::getStubSize to return the proper size.
-#                                               It was returning too small a value. It needed to report the
-#                                               position of the second instance of the signature.
 
 # create ::freeWrap namespace
 #
 namespace eval ::freewrap:: {
-variable patchLevel {6.2}     ;# Current freeWrap revision level
-variable progname {}          ;# Official freeWrap program name
+variable patchLevel {0.2}     ;# Current TkWrap revision level
+variable progname {}          ;# Official TkWrap program name
 variable errormsg {}          ;# Last freeWrap error message.
 
 proc normalizePath { filename} {
@@ -539,12 +501,12 @@ unset shortname
 # Establish proper freeWrap program name for the operating system
 # The extname variable is set from the main.c or tclAppInit.c code.
 switch $tcl_platform(platform) {
-      "unix"	{ set ::freewrap::progname "freewrap$extname" }
-      "windows"	{ set ::freewrap::progname "freewrap[string toupper $extname].exe" }
+      "unix"	{ set ::freewrap::progname "tkwrap$extname" }
+      "windows"	{ set ::freewrap::progname "tkwrap[string toupper $extname].exe" }
        default	{
 			  if {[info exists tk_patchLevel]} {
-                        tk_messageBox -parent . -icon warning -type ok -title "freeWrap$extname" -message "Sorry. freeWrap$extname is only supported on Unix and Windows."
-                       } { puts "freeWrap$extname: Sorry. freeWrap$extname is only supported on Unix and Windows." }
+                        tk_messageBox -parent . -icon warning -type ok -title "TkWrap$extname" -message "Sorry. TkWrap$extname is only supported on Unix and Windows."
+                       } { puts "TkWrap$extname: Sorry. TkWrap$extname is only supported on Unix and Windows." }
                     exit 4
 			}
      }

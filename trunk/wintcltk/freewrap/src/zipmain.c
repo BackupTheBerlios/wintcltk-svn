@@ -1,4 +1,14 @@
 /*
+# TkWrap Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# This file contains modifications by Dennis R. LaBelle, freeWrap project
+# http://freewrap.sourceforge.net
+#
+# $Id$
+#
+*/
+/*
   Copyright (c) 1990-2006 Info-ZIP.  All rights reserved.
 
   See the accompanying file LICENSE, version 2005-Feb-10 or later
@@ -9,16 +19,6 @@
 /*
  *  zip.c by Mark Adler.
  */
-
-/* Modifications by Dennis R. LaBelle
-
-   Feb. 3, 2004
-   This file has been modified so that the Info-ZIP capabilities could be 
-   included into the freeWrap application.
-
-   Jan. 8, 2006
-   Modified to include file encryption option.
-*/
 #define __ZIP_C
 
 #define rindex strrchr

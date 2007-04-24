@@ -1,10 +1,13 @@
-// $Id$
-//
-// Version Resource Script
-//
+/*
+# TkWrap Copyright (c) 2007, Martin Matuska
+# WinTclTk project: http://wintcltk.berlios.de
+#
+# $Id$
+#
+*/
 
 #include <windows.h>
-#include "freewishrc.h"
+#include "tkwraprc.h"
 
 VS_VERSION_INFO VERSIONINFO
  FILEVERSION	COMMAVERSION
@@ -48,7 +51,6 @@ END
 //   as the application's icon.
 //
 
-app                      ICON    DISCARDABLE     ICONFILE
 tk                       ICON    DISCARDABLE     ICONFILE
 
 //
@@ -61,4 +63,4 @@ tk                       ICON    DISCARDABLE     ICONFILE
 #ifndef CREATEPROCESS_MANIFEST_RESOURCE_ID
 #define CREATEPROCESS_MANIFEST_RESOURCE_ID 1
 #endif
-CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "freewish.manifest"
+CREATEPROCESS_MANIFEST_RESOURCE_ID RT_MANIFEST "tkwrap.manifest"
