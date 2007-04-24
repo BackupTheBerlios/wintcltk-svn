@@ -150,6 +150,24 @@ if {[info exists tk_patchLevel]} {
    } { puts "$title: $message" }
 }
 
+proc _freewrap_usage {} {
+global tk_patchLevel
+if {[info exists tk_patchLevel]} { wm withdraw . }
+set msg "TkWrap usage:\n\n$::freewrap::progname mydir/prog.tcl"
+set msg "$msg \[-debug\] \[-f FileLoadList\] \[-forcewrap\] \[-i ICOfile\] \[-o OutFile\]"
+set msg "$msg \[-p WrappedFile\] \[-w WrapStub\] File1 ... FileN\n\n"
+set msg "$msg mydir/prog.tcl	: file path to main TCL/TK program script\n"
+set msg "$msg File1 ... FileN	: A list of space-separated text or binary files to include in the wrapped application.\n" 
+set msg "$msg -debug		: Opens a console window so user can see debug messages while wrapping.\n"
+set msg "$msg -f		: Specifies that the following named file (FileLoadList) contains a list of files to wrap\n"
+set msg "$msg -forcewrap	: Force freeWrap to act as a wrapping program even if it has been renamed.\n"
+set msg "$msg -i		: Substitute the following named Windows ICO file (ICOfile) as the program application icon.\n"
+set msg "$msg -o		: Indicates that the name of the produced executable program should be set to OutFile.\n"
+set msg "$msg -w		: Specifies that the following named file (WrapStub) is the name of the file to use as the freeWrap stub\n"
+_freewrap_message {.} info ok {TkWrap usage} $msg
+if {[info exists tk_patchLevel]} { destroy . }
+}
+
 proc _freewrap_wrapit {cmdline {DelList {}}} {
 # Create a single file executable out of the specified scripts and image files.
 # This is done by appending the specified files to the end of a copy of the freewrap program.
@@ -410,7 +428,8 @@ if {[string first -forcewrap $argv] != -1} {
             } { set wrapit 0 }
 if {$wrapit} {
     # wrap an application
-    exit [_freewrap_wrapit $argv]
+    if {[llength $argv] == 0} { exit [_freewrap_usage] }
+    else { exit [_freewrap_wrapit $argv] }
    } {
 	 # Run as a stand-alone TCLSH/WISH or as a wrapped application.
 	 set _freewrap_argv0 [file tail [_freewrap_getExec]]
