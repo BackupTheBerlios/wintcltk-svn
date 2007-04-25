@@ -30,6 +30,7 @@ mysqltcl 3.02
 pgtcl	 1.6.0
 mkZiplib 1.0
 TWAPI	 1.1.5
+Winico   0.6
 tkcon	 2.5
 ASED	 3.0.b16
 XOTclIDE 0.82
