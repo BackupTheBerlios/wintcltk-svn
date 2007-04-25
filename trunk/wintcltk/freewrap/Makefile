@@ -81,7 +81,7 @@ COMMAVERSION=	0,2,0,0
 DOTVERSION=	0.2.0.0
 PROGNAME=	TkWrap
 FILENAME=	tkwrap.exe
-COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
+COMPANYNAME=	WinTclTk (http://wintcltk.berlios.de)
 COPYRIGHT=	© 2007 Martin Matuska
 PRODUCTNAME=	TkWrap for Windows (minimal)
 MANIFESTNAME=	TkWrap
@@ -111,11 +111,11 @@ COMMAVERSION=	2,5,0,0
 DOTVERSION=	2.5.0.0
 PROGNAME=	Tkcon for Windows
 FILENAME=	tkcon.exe
-COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
 COPYRIGHT=	© 2007 Jeffrey Hobbs, Martin Matuska
 PRODUCTNAME=	Tkcon for Windows
 MANIFESTNAME=	Tkcon
 ICONFILE=	tkcon.ico
+WRAPNAME=	tkwrap
 endif
 
 ifdef XOTCLIDE
@@ -123,11 +123,11 @@ COMMAVERSION=	0,8,2,0
 DOTVERSION=	0.8.2.0
 PROGNAME=	XOTclIDE for Windows
 FILENAME=	XOTclIDE.exe
-COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
 COPYRIGHT=	© 2007 Artur Trzewik, Martin Matuska
 PRODUCTNAME=	XOTclIDE for Windows
 MANIFESTNAME=	XOTclIDE
 ICONFILE=	xotclide.ico
+WRAPNAME=	tkwrap
 endif
 
 ###### Select a C compiler
@@ -139,10 +139,10 @@ CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB -DWRAPNAME=\"$(WRAPNAME)\" $(X11_INCLUDES)
 
 ifndef FULL
-CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN
+CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN
 endif
 ifndef XOTCL
-CFLAGS+= -DWITHOUT_XOTCL
+CFLAGS+= -DWITHOUT_XOTCL -DWITHOUT_TGDBM
 endif
 
 ###### Add these options to CFLAGS when linking object files into
@@ -212,17 +212,17 @@ LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
 LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_MKZIPLIB = $(INSTALLDIR)/Mkziplib$(MKZIPLIB_VERSION)/Mkziplib$(MKZIPLIB_SHORT).a
 LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
-LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
 INDEXES += zipdir/lib/Mk4tcl/pkgIndex.tcl \
 	zipdir/lib/memchan/pkgIndex.tcl \
 	zipdir/lib/tdom/pkgIndex.tcl \
-	zipdir/lib/tgdbm/pkgIndex.tcl \
 	zipdir/lib/mkZiplib/pkgIndex.tcl \
 	zipdir/lib/tls/pkgIndex.tcl
 XOTCL = 1
 endif
 ifdef XOTCL
 LIB_XOTCL = $(INSTALLDIR)/xotcl$(XOTCL_LIBVER).a 
+LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
+INDEXES += zipdir/lib/tgdbm/pkgIndex.tcl
 endif
 XODIR = $(INSTALLDIR)/xotcl$(XOTCL_VERSION)
 	
@@ -444,7 +444,7 @@ zipdir/lib/tkcon: zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/tkcon
 	@$(MKDIR) zipdir/lib/tkcon
 	@cd $(INSTROOT)/lib/tkcon$(TKCON_VERSION) && cp tkcon.tcl pkgIndex.tcl $(CURDIR)/zipdir/lib/tkcon
-	@sed -e 's|"dev"|"$(WINTCLTK_FW_VERSION)"|g' $(CURDIR)/patches/tkcon.patch > $(FBUILD)/tkcon.patch
+	@sed -e 's|"dev"|"$(TKWRAP_VERSION)"|g' $(CURDIR)/patches/tkcon.patch > $(FBUILD)/tkcon.patch
 	@cd $(CURDIR)/zipdir/lib/tkcon && patch -p2 < $(FBUILD)/tkcon.patch
 		
 zipdir/lib/ctext: zipdir/lib/tcl/init-pkgs.tcl

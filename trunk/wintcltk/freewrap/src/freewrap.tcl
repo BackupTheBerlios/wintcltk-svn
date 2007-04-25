@@ -429,7 +429,7 @@ if {[string first -forcewrap $argv] != -1} {
 if {$wrapit} {
     # wrap an application
     if {[llength $argv] == 0} { exit [_freewrap_usage] }
-    else { exit [_freewrap_wrapit $argv] }
+    exit [_freewrap_wrapit $argv]
    } {
 	 # Run as a stand-alone TCLSH/WISH or as a wrapped application.
 	 set _freewrap_argv0 [file tail [_freewrap_getExec]]
