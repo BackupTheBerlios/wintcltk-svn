@@ -133,13 +133,12 @@ int main(int argc, char **argv){
   */
 
   Zvfs_Init(interp);
-  Tcl_SetVar(interp, "extname", "", TCL_GLOBAL_ONLY);
+  Tcl_SetVar(interp, "wrapname", WRAPNAME, TCL_GLOBAL_ONLY);
   Zvfs_Mount(interp, (char *)Tcl_GetNameOfExecutable(), "/");
   sprintf(TCLdir, "%s/lib/tcl", mountPt);
   Tcl_SetVar2(interp, "env", "TCL_LIBRARY", TCLdir, TCL_GLOBAL_ONLY);
   sprintf(TKdir, "%s/lib/tk", mountPt);
   Tcl_SetVar2(interp, "env", "TK_LIBRARY", TKdir, TCL_GLOBAL_ONLY);
-
   /* Initialize Tcl and Tk
   */
   if( Tcl_Init(interp) ) { return TCL_ERROR; }
@@ -149,7 +148,7 @@ int main(int argc, char **argv){
   Tcl_SetVar(interp, "tcl_libPath", TCLdir, TCL_GLOBAL_ONLY);
 
 #ifdef WITHOUT_TK
-  Tcl_SetVar(interp, "extname", "tclsh", TCL_GLOBAL_ONLY);
+  Tcl_SetVar(interp, "wrapname", "tclsh", TCL_GLOBAL_ONLY);
 #else
   Tk_InitConsoleChannels(interp);
   if ( Tk_Init(interp) ) {

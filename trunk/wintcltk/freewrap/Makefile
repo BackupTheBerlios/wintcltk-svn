@@ -77,22 +77,33 @@ RESHEADER= $(FBSRC)/tkwraprc.h
 ICONFILE=	tkwrap.ico
 
 # Resheader defies
-COMMAVERSION=	6,2,0,0
-DOTVERSION=	6.2.0.0
-PROGNAME=	TkWrap (minimal)
+COMMAVERSION=	0,2,0,0
+DOTVERSION=	0.2.0.0
+PROGNAME=	TkWrap
 FILENAME=	tkwrap.exe
 COMPANYNAME=	WinTclTk project (http://wintcltk.berlios.de)
 COPYRIGHT=	© 2007 Martin Matuska
 PRODUCTNAME=	TkWrap for Windows (minimal)
 MANIFESTNAME=	TkWrap
 
+ifndef WITHOUT_TK
+WRAPNAME=	tkwrap
+else
+PROGNAME=	TclWrap
+PRODUCTNAME=	TclWrap for Windows
+MANIFESTNAME=	TclWrap
+WRAPNAME=	tclwrap
+endif
+
 ifdef XOTCL
-PROGNAME=	TkWrap (XOTcl)
+PROGNAME=	XoWrap
 PRODUCTNAME=	TkWrap for Windows (XOTcl ${XOTCL_VERSION})
+WRAPNAME=	xowrap
 endif
 ifdef FULL
 PROGNAME=	TkWrap (full)
 PRODUCTNAME=	TkWrap for Windows (full)
+WRAPNAME=	tkwrapfull
 endif
 
 ifdef TKCON
@@ -125,7 +136,7 @@ CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS
 
 ###### Select standard command-line options for the C compiler.
 #
-CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB $(X11_INCLUDES)
+CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB -DWRAPNAME=\"$(WRAPNAME)\" $(X11_INCLUDES)
 
 ifndef FULL
 CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_TGDBM -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN
@@ -311,7 +322,7 @@ ifdef XOTCLIDE
 SCRIPTS += zipdir/lib/xotclide
 endif
 
-all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/tkwrap$(EXE)
+all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/$(WRAPNAME)$(EXE)
 
 static:
 	@cd $(SRCDIR) && make install STATIC_BUILD=1
@@ -329,17 +340,17 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(DISTDIR)/tkwrap$(EXE): $(FBUILD)/tkwrap$(EXE)
-	@cp $(FBUILD)/tkwrap$(EXE) $(DISTDIR)/tkwrap$(EXE)
+$(DISTDIR)/$(WRAPNAME)$(EXE): $(FBUILD)/$(WRAPNAME)$(EXE)
+	@cp $(FBUILD)/$(WRAPNAME)$(EXE) $(DISTDIR)/$(WRAPNAME)$(EXE)
 
-$(FBUILD)/tkwrap$(EXE): $(FBUILD)/tkwrap_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
-	@$(RM) $(FBUILD)/tkwrap$(EXE)
-	@$(CP) $(FBUILD)/tkwrap_bare$(EXE) $(FBUILD)/tkwrap.zip
+$(FBUILD)/$(WRAPNAME)$(EXE): $(FBUILD)/$(WRAPNAME)_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
+	@$(RM) $(FBUILD)/$(WRAPNAME)$(EXE)
+	@$(CP) $(FBUILD)/$(WRAPNAME)_bare$(EXE) $(FBUILD)/tkwrap.zip
 	@$(CAT) $(FBUILD)/null.zip >> $(FBUILD)/tkwrap.zip
-	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(FBUILD)/tkwrap$(EXE) $(TKWRAP_VERSION) $(FBUILD)/tkwrap_bare$(EXE)
+	@$(TCLSH) $(FBSRC)/setinfo.tcl zipdir $(FBUILD)/$(WRAPNAME)$(EXE) $(TKWRAP_VERSION) $(FBUILD)/$(WRAPNAME)_bare$(EXE)
 	@$(CP) -f $(FBSRC)/$(ICONFILE) zipdir
 	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(FBUILD)/tkwrap.zip *; cd ..
-	@$(RENAME) $(FBUILD)/tkwrap.zip $(FBUILD)/tkwrap$(EXE)
+	@$(RENAME) $(FBUILD)/tkwrap.zip $(FBUILD)/$(WRAPNAME)$(EXE)
 
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
@@ -456,31 +467,40 @@ resmanifest:
 	@$(SED) -e 's|%%VERSION%%|$(DOTVERSION)|g' -e 's|%%NAME%%|$(MANIFESTNAME)|g' \
 		$(FBSRC)/tkwrap.manifest.in > $(FBSRC)/tkwrap.manifest
 
-tkwrap: all $(DISTDIR)/tkwrap$(EXE)
+wrap: all $(DISTDIR)/$(WRAPNAME)$(EXE)
 		
 full:
-	@make clean tkwrap FULL=1
+	@make clean wrap FULL=1
 
+xowrap:
+	@make clean wrap XOTCL=1
+
+tkwrap:
+	@make clean wrap
+
+tclwrap:
+	@make clean wrap WITHOUT_TK=1
+	
 tkcon:
 	@make clean all FULL=1 TKCON=1
 	@cp $(FSCRIPTS)/tkcon.tcl $(FBUILD)
-	@cd $(FBUILD) && tkwrap$(EXE) tkcon.tcl
+	@cd $(FBUILD) && $(WRAPNAME)$(EXE) tkcon.tcl
 	@mv $(FBUILD)/tkcon$(EXE) $(DISTDIR)/tkcon$(EXE)
 
 xotclide:
 	@make clean all FULL=1 XOTCLIDE=1
 	@cp $(FSCRIPTS)/XOTclIDE.tcl $(FBUILD)
-	@cd $(FBUILD) && tkwrap$(EXE) XOTclIDE.tcl
+	@cd $(FBUILD) && $(WRAPNAME)$(EXE) XOTclIDE.tcl
 	@mv $(FBUILD)/XOTclIDE$(EXE) $(DISTDIR)/XOTclIDE$(EXE)
 		
 $(FBUILD)/tkwrap.res.o: resheader resmanifest
 	@cd $(FBSRC) && windres -i $(RESFILE) -I${BUILDDIR}/tk${TCLTK_VERSION}/win/rc -o $(FBUILD)/tkwrap.res.o
 	
-$(FBUILD)/tkwrap_bare$(EXE): $(OBJ) $(LIBS)
-	$(CC) $(LFLAGS) -o $(FBUILD)/tkwrap_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
-	$(STRIP) $(FBUILD)/tkwrap_bare$(EXE)
+$(FBUILD)/$(WRAPNAME)_bare$(EXE): $(OBJ) $(LIBS)
+	$(CC) $(LFLAGS) -o $(FBUILD)/$(WRAPNAME)_bare$(EXE) $(OBJ) $(LIBS) $(WINLIBS) $(X11_LIB_SWITCHES)
+	$(STRIP) $(FBUILD)/$(WRAPNAME)_bare$(EXE)
 # Comment out the following line if you do not want to compress the executable file with UPX.
-	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(FBUILD)/tkwrap_bare$(EXE)
+	@[ -x "$(UPX)" ] && "$(UPX)" -9 $(FBUILD)/$(WRAPNAME)_bare$(EXE)
 
 $(FBUILD)/tkwrap.o: $(FBSRC)/main.c
 	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/tkwrap.o -c $(FBSRC)/main.c

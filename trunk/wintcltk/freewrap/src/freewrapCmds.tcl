@@ -499,14 +499,14 @@ unset shortname
 # end of ::freeWrap namespace definitions
 
 # Establish proper freeWrap program name for the operating system
-# The extname variable is set from the main.c or tclAppInit.c code.
+# The wrapname variable is set from the main.c or tclAppInit.c code.
 switch $tcl_platform(platform) {
-      "unix"	{ set ::freewrap::progname "tkwrap$extname" }
-      "windows"	{ set ::freewrap::progname "tkwrap[string toupper $extname].exe" }
+      "unix"	{ set ::freewrap::progname "$wrapname" }
+      "windows"	{ set ::freewrap::progname "$wrapname.exe" }
        default	{
 			  if {[info exists tk_patchLevel]} {
-                        tk_messageBox -parent . -icon warning -type ok -title "TkWrap$extname" -message "Sorry. TkWrap$extname is only supported on Unix and Windows."
-                       } { puts "TkWrap$extname: Sorry. TkWrap$extname is only supported on Unix and Windows." }
+                        tk_messageBox -parent . -icon warning -type ok -title "$wrapname" -message "Sorry. $wrapname is only supported on Unix and Windows."
+                       } { puts "$wrapname: Sorry. $wrapname is only supported on Unix and Windows." }
                     exit 4
 			}
      }
@@ -527,7 +527,7 @@ set auto_path $newpath
 unset newpath
 unset path
 unset prefix
-unset extname
+unset wrapname
 
 # Load the main application script.
 if {[::zvfs::exists /_freewrap_init.txt]} {
