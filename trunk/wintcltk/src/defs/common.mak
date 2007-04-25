@@ -95,6 +95,7 @@ build-xotclide: configure-xotclide
 install-xotclide: build-xotclide ${PREFIX}/lib/xotclIDE
 ${PREFIX}/lib/xotclIDE:
 	@cd ${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION} && rm -f install && make install PREFIX=${PREFIX}
+	@cd ${COMMONBUILD}/xotclide-${XOTCLIDE_VERSION} && cp -rf LICENSE docs ${PREFIX}/lib/xotclIDE
 
 uninstall-xotclide:
 	@-cd ${PREFIX} && rm -rf lib/xotclIDE

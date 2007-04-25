@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-tklib install-tkcon install-xotclide
-uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-tklib uninstall-tkcon uninstall-xotclide
-clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-tklib clean-tkcon clean-xotclide
-distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-tklib distclean-tkcon distclean-xotclide
+install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-winico install-tklib install-tkcon install-xotclide
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-winico uninstall-tklib uninstall-tkcon uninstall-xotclide
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-winico clean-tklib clean-tkcon clean-xotclide
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-winico distclean-tklib distclean-tkcon distclean-xotclide
 
 # directories
 ${DISTFILES}:
@@ -490,7 +490,8 @@ ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/Makefile:
 	@cd ${BUILDDIR} && ${UNZIP} ${DISTFILES}/mkZiplib${MKZIPLIB_SHORT}.zip
 	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && rm -f *.dll *.exe
 	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && patch -p1 < ${PATCHDIR}/mkZiplib.patch
-
+	@-cd ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION} && patch -p1 < ${PATCHDIR}/mkZiplib.static.patch
+	
 configure-mkziplib: extract-mkziplib install-tcl
 
 build-mkziplib: configure-mkziplib install-zlib ${BUILDDIR}/mkZiplib${MKZIPLIB_VERSION}/mkZiplib${MKZIPLIB_SHORT}.a 
@@ -510,4 +511,37 @@ clean-mkziplib:
 
 distclean-mkziplib:
 	@-rm -rf ${BUILDDIR}/mkziplib${MKZIPLIB_VERSION}
+
+# winico
+fetch-winico: ${DISTFILES} ${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip
+${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/winico${subst .,,$(WINICO_VERSION)}src.zip"
+
+extract-winico: fetch-winico ${BUILDDIR} ${BUILDDIR}/winico-${WINICO_VERSION}
+${BUILDDIR}/winico-${WINICO_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/winico${subst .,,$(WINICO_VERSION)}src.zip.md5 || exit 1
+	@-cd ${BUILDDIR} && $(UNZIP) ${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip
+	@-cd ${BUILDDIR}/winico-${WINICO_VERSION} && patch -p0 < $(PATCHDIR)/winico.patch
+	@-cd ${BUILDDIR}/winico-${WINICO_VERSION} && patch -p0 < $(PATCHDIR)/winico.static.patch
 	
+configure-winico: install-tk extract-winico ${BUILDDIR}/winico-${WINICO_VERSION}/Makefile
+${BUILDDIR}/winico-${WINICO_VERSION}/Makefile:
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --disable-shared --enable-static --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-winico: configure-winico ${BUILDDIR}/winico-${WINICO_VERSION}/Winico${subst .,,$(WINICO_VERSION)}.a 
+${BUILDDIR}/winico-${WINICO_VERSION}/Winico${subst .,,$(WINICO_VERSION)}.a :
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && make binaries
+
+install-winico: build-winico ${PREFIX}/lib/Winico${WINICO_VERSION}
+${PREFIX}/lib/Winico${WINICO_VERSION}:
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && make install-binaries
+
+uninstall-winico:
+	@-cd ${PREFIX} && rm -rf lib/Winico${WINICO_VERSION}
+
+clean-winico:
+	@-cd ${BUILDDIR}/winico-${WINICO_VERSION} && make clean
+
+distclean-winico:
+	@-rm -rf ${BUILDDIR}/winico-${WINICO_VERSION}

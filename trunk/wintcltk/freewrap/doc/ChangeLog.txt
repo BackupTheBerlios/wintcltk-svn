@@ -5,3 +5,12 @@
 #
 2007-04-11 Martin Matuska <martin at matuska.org>
 	* initial release 0.1
+
+2007-04-25 Martin Matuska <martin at matuska.org>
+	* renamed to TkWrap
+	* wrappers bugfixed
+	* added icons (LGPL) and resource information
+	* added help screen with command line arguments
+	* included packages thread, XOTcl, tDOM, memchan, Metakit
+	* moved winico to packages, updated to 0.6
+	* release 0.2

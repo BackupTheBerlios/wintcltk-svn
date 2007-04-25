@@ -1,52 +1,54 @@
 # README.txt
 #
-# WinTclTk freeWrap README
+# WinTclTk TkWrap README
 # Copyright (c) 2007 Martin Matuska
 #
 # $Id$
 #
 
-WinTclTk freeWrap - single file Tcl/Tk Distribution for Microsoft Windows
-Version 0.1
+WinTclTk TkWrap - Tcl/Tk wrapper for Microsoft Windows
+Version 0.2
 
-The distribution is split into three packages.
+With these files, Tcl/Tk scripts can be wrapped into single-file executables
+that do not require any Tcl/Tk distributions installed.
+
+Included wrapper files:
+
+tkwrap.exe
+xowrap.exe
+fullwrap.exe
 
 The following extensions from WinTclTk are included:
 
-File std/freewrap.exe:
+tkwrap.exe:
 
 Tcl/Tk	8.4.14
 Winico	0.5
 thread	2.6.5
 
-File xotcl/freewrap.exe:
+xowrap.exe: = all tkwrap.exe packages +
 
-Tcl/Tk	8.4.14
-Winico	0.5
-thread	2.6.5
-XOTcl	1.5.3
-
-File full/freewrap.exe:
-
-Tcl/Tk	8.4.14
-Winico	0.5
-thread	2.6.5
-XOTcl	1.5.3
 Tgdbm	0.5
+XOTcl	1.5.3
+
+fullwrap.exe: = all xowrap.exe packages +
+
 tls	1.5
 tDOM	0.8.1
+memchan	2.2.1
+Metakit 2.4.9.6
 
-Binaries and libraries are compiled using the MinGW distribution with
-GCC 3.4.5 and stripped.
-
-You can rename "freewrap.exe" to any other filename (e.g. "wish.exe")
+You can rename the exe files to any other filename (e.g. "wish.exe")
 and use it as a standard shell.
 
+Please refer to WinTclTk Project documentation for more information.
+http://wintcltk.berlios.de
+
+The wrappers are based on freeWrap and support all freeWrap command-line flags.
 Please refer to the freeWrap documentation for more details:
 http://freewrap.sourceforge.net/freeWrapDocs.pdf
 
-freeWrap homepage:
-http://freewrap.sourceforge.net/
+Used icons are from the Tulliana 2.0 iconset by M.Umut Pulat, licensed under LGPL 2.1
 
 WinTclTk homepage:
 http://wintcltk.berlios.de

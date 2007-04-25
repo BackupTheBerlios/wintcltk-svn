@@ -202,6 +202,7 @@ endif
 
 # Libraries neede
 LIB_GDBM = $(INSTALLDIR)/libgdbm-static.a
+LIB_WINICO = $(INSTALLDIR)/Winico$(WINICO_VERSION)/Winico$(subst .,,$(WINICO_VERSION)).a
 LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
 LIB_Z = $(INSTALLDIR)/libz.a
 INDEXES= zipdir/lib/base/pkgIndex.tcl zipdir/lib/thread/pkgIndex.tcl
@@ -235,8 +236,6 @@ XODIR = $(INSTALLDIR)/xotcl$(XOTCL_VERSION)
 #
 
 OPT_MISC= -DNTSD_EAS
-
-OPT_WINICO = -DSTATIC_BUILD -DPACKAGE_NAME="\"Winico\"" -DPACKAGE_VERSION="\"0.5\""
 
 #
 # Winlibs
@@ -273,6 +272,7 @@ LIBS = \
   $(LIB_MEMCHAN) \
   $(LIB_OPENSSL) \
   $(LIB_GDBM) \
+  $(LIB_WINICO) \
   $(LIB_Z)
 
 # ZIP program object modules
@@ -300,10 +300,6 @@ $(FBUILD)/tkwrap.o \
 $(FBUILD)/fwcrypt.o \
 $(FBUILD)/zvfs.o \
 $(FBUILD)/tkwrap.res.o
-
-ifndef WITHOUT_TK
-OBJ += $(FBUILD)/tkwinico.o
-endif
 
 # All script directories
 #
@@ -405,7 +401,7 @@ zipdir/lib/base/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "package ifneeded dde 1.2.4 [list load \"\" dde]" > zipdir/lib/base/pkgIndex.tcl
 	@echo "package ifneeded registry 1.1.4 [list load \"\" registry]" >> zipdir/lib/base/pkgIndex.tcl
 #ifndef WITHOUT_TK
-	@echo "package ifneeded Winico 0.5 [list load \"\" Winico]" >> zipdir/lib/base/pkgIndex.tcl
+	@echo "package ifneeded Winico 0.6 [list load \"\" Winico]" >> zipdir/lib/base/pkgIndex.tcl
 #endif
 	@echo "lappend auto_path /lib/base" >> zipdir/lib/tcl/init-pkgs.tcl
 	
@@ -507,9 +503,6 @@ $(FBUILD)/tkwrap.o: $(FBSRC)/main.c
 
 $(FBSRC)/fwcrypt.c: $(FBSRC)/setinfo.tcl
 	cd ${FBSRC} && $(TCLSH) setinfo.tcl
-
-$(FBUILD)/tkwinico.o: $(FBSRC)/tkwinico.c
-	$(CC) $(CFLAGS) $(OPT) $(OPT_WINICO) -o $(FBUILD)/tkwinico.o -c $(FBSRC)/tkwinico.c
 	
 $(FBUILD)/fwcrypt.o: $(FBSRC)/fwcrypt.c
 	$(CC) $(CFLAGS) $(OPT) -o $(FBUILD)/fwcrypt.o -c $(FBSRC)/fwcrypt.c

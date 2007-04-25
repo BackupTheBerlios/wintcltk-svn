@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-twapi install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-twapi uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-twapi clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-twapi distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-winico install-twapi install-tkcon install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-winico uninstall-twapi uninstall-tkcon uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-winico clean-twapi clean-tkcon clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-winico distclean-twapi distclean-tkcon distclean-ased
 
 # directories
 ${DISTFILES}:
@@ -791,3 +791,37 @@ clean-trf:
 
 distclean-trf:
 	@-rm -rf $(BUILDDIR)/trf$(TRF_VERSION)
+	
+# winico
+fetch-winico: ${DISTFILES} ${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip
+${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/winico${subst .,,$(WINICO_VERSION)}src.zip"
+
+extract-winico: fetch-winico ${BUILDDIR} ${BUILDDIR}/winico-${WINICO_VERSION}
+${BUILDDIR}/winico-${WINICO_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/winico${subst .,,$(WINICO_VERSION)}src.zip.md5 || exit 1
+	@-cd ${BUILDDIR} && $(UNZIP) ${DISTFILES}/winico${subst .,,$(WINICO_VERSION)}src.zip
+	@-cd ${BUILDDIR}/winico-${WINICO_VERSION} && patch -p0 < $(PATCHDIR)/winico.patch
+
+configure-winico: install-tk build-tcllib extract-winico ${BUILDDIR}/winico-${WINICO_VERSION}/Makefile
+${BUILDDIR}/winico-${WINICO_VERSION}/Makefile:
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-winico: configure-winico ${BUILDDIR}/winico-${WINICO_VERSION}/Winico${subst .,,$(WINICO_VERSION)}.dll 
+${BUILDDIR}/winico-${WINICO_VERSION}/Winico${subst .,,$(WINICO_VERSION)}.dll :
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && make MPEXPAND="$(PREFIX)/bin/tclsh84.exe $(BUILDDIR)/tcllib-$(TCLLIB_VERSION)/modules/doctools/mpexpand" && strip *.dll
+
+install-winico: build-winico ${PREFIX}/lib/Winico${WINICO_VERSION}
+${PREFIX}/lib/Winico${WINICO_VERSION}:
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && make install-binaries
+	@cd ${BUILDDIR}/winico-${WINICO_VERSION} && cp winico.html license.terms $(PREFIX)/lib/Winico${WINICO_VERSION}
+
+uninstall-winico:
+	@-cd ${PREFIX} && rm -rf lib/Winico${WINICO_VERSION}
+
+clean-winico:
+	@-cd ${BUILDDIR}/winico-${WINICO_VERSION} && make clean
+
+distclean-winico:
+	@-rm -rf ${BUILDDIR}/winico-${WINICO_VERSION}
