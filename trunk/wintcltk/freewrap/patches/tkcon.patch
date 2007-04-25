@@ -1,0 +1,48 @@
+--- lib/tkcon/tkcon.tcl.orig	Tue Apr 24 00:15:15 2007
++++ lib/tkcon/tkcon.tcl	Tue Apr 24 00:15:06 2007
+@@ -76,6 +76,7 @@
+     # when modifying this line, make sure that the auto-upgrade check
+     # for version still works.
+     variable VERSION "2.5"
++    variable WINTCLTK_FW_VERSION "dev"
+     # The OPT variable is an array containing most of the optional
+     # info to configure.  COLOR has the color data.
+     variable OPT
+@@ -95,6 +96,7 @@
+ ##
+ proc ::tkcon::Init {args} {
+     variable VERSION
++    variable WINTCLTK_FW_VERSION
+     variable OPT
+     variable COLOR
+     variable PRIV
+@@ -207,6 +209,7 @@
+ 	if {![info exists PRIV($key)]} { set PRIV($key) [subst $default] }
+     }
+     set PRIV(version) $VERSION
++    set PRIV(wintcltk_fw) $WINTCLTK_FW_VERSION
+ 
+     if {[info exists PRIV(name)]} {
+ 	set title $PRIV(name)
+@@ -1361,7 +1364,7 @@
+ 	wm title $w "About tkcon v$PRIV(version)"
+ 	wm resizable $w 0 0
+ 	button $w.b -text Dismiss -command [list wm withdraw $w]
+-	text $w.text -height 9 -width 60 \
++	text $w.text -height 13 -width 60 \
+ 		-foreground $COLOR(stdin) \
+ 		-background $COLOR(bg) \
+ 		-font $OPT(font) -borderwidth 1 -highlightthickness 0
+@@ -1375,7 +1378,11 @@
+ 		"\n\nCopyright 1995-2002 Jeffrey Hobbs, $PRIV(email)\
+ 		\nRelease Info: v$PRIV(version), CVS v$RCS\
+ 		\nDocumentation available at:\n$PRIV(docs)\
+-		\nUsing: Tcl v$tcl_patchLevel / Tk v$tk_patchLevel" center
++		\nUsing: Tcl v$tcl_patchLevel / Tk v$tk_patchLevel \
++		\n\nWin32 binary by WinTclTk \
++		\nCopyright 2007 Martin Matuska, martin(a)matuska(.)org \
++		\nWinTclTk-freeWrap Release: $PRIV(wintcltk_fw)\
++		\nURL: http://wintcltk.berlios.de" center
+ 	$w.text config -state disabled
+ 	bind $w <Escape> [list destroy $w]
+     }
