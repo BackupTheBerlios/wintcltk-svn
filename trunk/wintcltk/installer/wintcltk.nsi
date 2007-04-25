@@ -34,6 +34,7 @@
 !define TCLVFS_VERSION "1.3"
 !define TKCON_VERSION "2.5"
 !define WINICO_VERSION "0.6"
+!define TKTABLE_VERSION "2.9"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -46,6 +47,7 @@
 !define MEMCHAN_LIBVER "22"
 !define TRF_LIBVER "21"
 !define WINICO_LIBVER "06"
+!define TKTABLE_LIBVER "29"
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
 !define TCLVFS_LIBVER "13"
@@ -1695,6 +1697,20 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
   CreateShortCut "$INSTDIR\doc\packages\TWAPI Documentation.lnk" "$INSTDIR\doc\packages\files\twapi\twapi.chm" "" "$INSTDIR\doc\packages\files\twapi\twapi.chm" 0
   SetOutPath $INSTDIR\lib\twapi${TWAPI_VERSION}
   CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
+SectionEnd
+
+Section "Tktable ${TKTABLE_VERSION}" tktable
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\Tktable${TKTABLE_VERSION}
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\Tktable${TKTABLE_LIBVER}.dll"
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\tkTable.tcl"
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tktable
+  File /oname=index.html "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\html\tkTable.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\Tktable Documentation.lnk" "$INSTDIR\doc\packages\files\tktable\index.html" "" "$INSTDIR\doc\packages\files\tktable\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=Tktable-license.txt "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\license.txt"
 SectionEnd
 
 Section "Winico ${WINICO_VERSION}" winico
@@ -3834,6 +3850,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
   Delete "$INSTDIR\doc\licenses\Tkcon-license.lnk"  
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
+  Delete "$INSTDIR\doc\licenses\Tktable-license.txt"
   Delete "$INSTDIR\doc\licenses\Trf-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
   Delete "$INSTDIR\doc\licenses\Winico-license.txt"
@@ -3851,9 +3868,11 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\TGDBM Homepage.lnk"
   Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
   Delete "$INSTDIR\doc\packages\tkcon Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\Tktable Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Trf Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TWAPI Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\Winico Documentation.lnk"
   Delete "$INSTDIR\doc\packages\XOTcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\XOTclIDE Documentation.lnk"
   Delete "$INSTDIR\doc\packages\files\BWidget\ArrowButton.html"
@@ -4001,6 +4020,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\tkcon\start.html"
   Delete "$INSTDIR\doc\packages\files\tkcon\tkcon.html"
   Delete "$INSTDIR\doc\packages\files\tkcon\todo.html"
+  Delete "$INSTDIR\doc\packages\files\tktable\index.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_CheckOptions.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ClearCtrlBlock.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ConverterOptions.html"
@@ -5132,6 +5152,9 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\scrollw.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\superframe.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\widget.tcl"
+  Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\Tktable${TKTABLE_LIBVER}.dll"
+  Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\tkTable.tcl"
+  Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls15.dll"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls.tcl"
@@ -5443,6 +5466,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\ctext"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\autoscroll"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}"
+  RMDir "$INSTDIR\lib\Tktable${TKTABLE_VERSION}"
   RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}\extra"
   RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}"
   RMDir "$INSTDIR\lib\tk8.4\msgs"
@@ -5567,6 +5591,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\trf\img"
   RMDir "$INSTDIR\doc\packages\files\trf"
   RMDir "$INSTDIR\doc\packages\files\tkcon"
+  RMDir "$INSTDIR\doc\packages\files\tktable"
   RMDir "$INSTDIR\doc\packages\files\tls"
   RMDir "$INSTDIR\doc\packages\files\thread"
   RMDir "$INSTDIR\doc\packages\files\tdom"
@@ -5665,6 +5690,7 @@ LangString DESC_winico ${LANG_ENGLISH} "Windows Icon extension for Tcl/Tk"
 LangString DESC_memchan ${LANG_ENGLISH} "Library providing new channel types for in-memory channels"
 LangString DESC_tcllib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tcl"
 LangString DESC_tklib ${LANG_ENGLISH} "Library of supporting all-Tcl routines for Tk"
+LangString DESC_tktable ${LANG_ENGLISH} "Full-featured 2D table widget for Tk"
 LangString DESC_bwidget ${LANG_ENGLISH} "High-level widget set for Tcl/Tk"
 LangString DESC_metakit ${LANG_ENGLISH} "Efficient embeeded database library"
 LangString DESC_mysqltcl ${LANG_ENGLISH} "Simple API for MySQL database"
@@ -5710,6 +5736,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${winico} $(DESC_winico)
   !insertmacro MUI_DESCRIPTION_TEXT ${tcllib} $(DESC_tcllib)
   !insertmacro MUI_DESCRIPTION_TEXT ${tklib} $(DESC_tklib)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tktable} $(DESC_tktable)
   !insertmacro MUI_DESCRIPTION_TEXT ${bwidget} $(DESC_bwidget)
   !insertmacro MUI_DESCRIPTION_TEXT ${metakit} $(DESC_metakit)
   !insertmacro MUI_DESCRIPTION_TEXT ${mysqltcl} $(DESC_mysqltcl)

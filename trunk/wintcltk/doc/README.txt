@@ -22,6 +22,7 @@ thread	 2.6.5
 tDOM	 0.8.1
 tls      1.5.0
 Tgdbm	 0.5
+Tktable  2.9
 TclVfs	 1.3
 Trf	 2.1p2
 memchan  2.2.1

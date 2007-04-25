@@ -825,3 +825,36 @@ clean-winico:
 
 distclean-winico:
 	@-rm -rf ${BUILDDIR}/winico-${WINICO_VERSION}
+	
+# tktable
+fetch-tktable: ${DISTFILES} ${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz
+${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/Tktable$(TKTABLE_VERSION).tar.gz"
+
+extract-tktable: fetch-tktable ${BUILDDIR} ${BUILDDIR}/Tktable${TKTABLE_VERSION}
+${BUILDDIR}/Tktable${TKTABLE_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/Tktable$(TKTABLE_VERSION).tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz
+	@-cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && patch -p0 < $(PATCHDIR)/tktable.patch
+
+configure-tktable: install-tk build-tcllib extract-tktable ${BUILDDIR}/Tktable${TKTABLE_VERSION}/Makefile
+${BUILDDIR}/Tktable${TKTABLE_VERSION}/Makefile:
+	@cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-tktable: configure-tktable ${BUILDDIR}/tktable${TKTABLE_VERSION}/Tktable${subst .,,$(TKTABLE_VERSION)}.dll 
+${BUILDDIR}/tktable${TKTABLE_VERSION}/Tktable${subst .,,$(TKTABLE_VERSION)}.dll :
+	@cd ${BUILDDIR}/tktable${TKTABLE_VERSION} && make && strip *.dll
+
+install-tktable: build-tktable ${PREFIX}/lib/Tktable${TKTABLE_VERSION}
+${PREFIX}/lib/Tktable${TKTABLE_VERSION}:
+	@cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && make install
+
+uninstall-tktable:
+	@-cd ${PREFIX} && rm -rf lib/Tktable${TKTABLE_VERSION}
+
+clean-tktable:
+	@-cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && make clean
+
+distclean-tktable:
+	@-rm -rf ${BUILDDIR}/Tktable${TKTABLE_VERSION}

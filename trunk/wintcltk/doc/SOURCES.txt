@@ -57,6 +57,9 @@ ftp://ftp.gnu.org/pub/gnu/gdbm/gdbm-1.8.3.tar.gz
 Tgdbm:
 http://www.vogel-nest.de/wiki/uploads/Main/tgdbm0.5.zip
 
+Tktable:
+http://prdownloads.sourceforge.net/tktable/Tktable2.9.tar.gz
+
 TclVfs:
 http://prdownload.berlios.de/wintcltk/tclvfs-20070412-src.tar.gz
 
