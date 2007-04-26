@@ -1403,7 +1403,7 @@ SectionEnd
 SectionGroupEnd
 
 Section "Tkhtml ${TKHTML_VERSION}" tkhtml
-  Sectionin 1 2
+  Sectionin 1 2 RO
   SetOutPath $INSTDIR\lib\Tkhtml${TKHTML_VERSION}
   File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\Tkhtml${TKHTML_LIBVER}.dll"
   File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\pkgIndex.tcl"
@@ -5918,14 +5918,14 @@ LangString DESC_mysqltcl ${LANG_ENGLISH} "Simple API for MySQL database"
 LangString DESC_mkziplib ${LANG_ENGLISH} "Gzip and zip compression library for Tcl/Tk"
 LangString DESC_pgtcl ${LANG_ENGLISH} "Tcl module for accessing PostgreSQL databases"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
-LangString DESC_tktreectrl ${LANG_ENGLISH} "flexible listbox widget for Tk"
+LangString DESC_tktreectrl ${LANG_ENGLISH} "Flexible listbox widget for Tk"
 LangString DESC_tkhtml ${LANG_ENGLISH} "HTML widget for Tk"
 LangString DESC_tkcon ${LANG_ENGLISH} "Feature-rich Tk console"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
 LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
-LangString DESC_sqlite ${LANG_ENGLISH} "SQLite extension"
+LangString DESC_sqlite ${LANG_ENGLISH} "Embeddable SQL database engine"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${packages} $(DESC_packages)
@@ -6077,22 +6077,28 @@ Function .onSelChange
    SectionGetFlags ${ased} $1
    SectionGetFlags ${bwidget} $2
    SectionGetFlags ${tcllib} $3
-   IntCmp $1 1 0 +4 0
+   SectionGetFlags ${tkhtml} $4
+   IntCmp $1 1 0 +5 0
    SectionSetFlags ${bwidget} 17
    SectionSetFlags ${tcllib} 17
-   Goto +7
+   SectionSetFlags ${tkhtml} 17
+   Goto +10
    IntCmp $2 17 0 +3 0
    IntOp $0 $2 - 16
    SectionSetFlags ${bwidget} $0
    IntCmp $3 17 0 +3 0
    IntOp $0 $3 - 16
    SectionSetFlags ${tcllib} $0
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $4 - 16
+   SectionSetFlags ${tkhtml} $0
 
    IntCmp $8 2 +2 0 0
-   Goto +8
+   Goto +9
    SectionSetFlags ${xotcl-base} 0
    SectionSetFlags ${bwidget} 0
    SectionSetFlags ${tcllib} 0
+   SectionSetFlags ${tkhtml} 0
    SectionSetFlags ${tklib} 0
    SectionSetFlags ${gdbm-dll} 0
    SectionSetFlags ${zlib-dll} 0
