@@ -87,8 +87,14 @@ extern int Tktable_Init(Tcl_Interp*);
 extern int Tktable_SafeInit(Tcl_Interp*);
 #endif
 
-#ifndef WITHOUT_TILE
-extern int Tile_Init(Tcl_Interp*);
+#ifndef WITHOUT_TKHTML
+extern int Tkhtml_Init(Tcl_Interp*);
+extern int Tkhtml_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_SQLITE
+extern int Sqlite3_Init(Tcl_Interp*);
+extern int Sqlite3_SafeInit(Tcl_Interp*);
 #endif
 
 #ifndef WITHOUT_SNACK
@@ -260,11 +266,11 @@ int main(int argc, char **argv){
   Tcl_StaticPackage(interp, "Tktable", Tktable_Init, Tktable_SafeInit);
 #endif
 
-#ifndef WITHOUT_TILE
-  if (Tile_Init(interp) == TCL_ERROR) {
+#ifndef WITHOUT_TKHTML
+  if (Tktable_Init(interp) == TCL_ERROR) {
       return TCL_ERROR;
      }
-  Tcl_StaticPackage(interp, "tile", Tile_Init, 0);
+  Tcl_StaticPackage(interp, "Tkhtml", Tkhtml_Init, Tkhtml_SafeInit);
 #endif
 
 #ifndef WITHOUT_SNACK
@@ -272,6 +278,13 @@ int main(int argc, char **argv){
       return TCL_ERROR;
      }
   Tcl_StaticPackage(interp, "snack", Snack_Init, Snack_SafeInit);
+#endif
+
+#ifndef WITHOUT_SQLITE
+  if (Sqlite3_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+  Tcl_StaticPackage(interp, "sqlite3", Sqlite3_Init, Sqlite3_SafeInit);
 #endif
 
 #if !defined(WITHOUT_TK) && !defined(WITHOUT_WINICO) && (defined(__WIN32__) || defined(_WIN32))

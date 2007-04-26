@@ -139,10 +139,10 @@ CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB -DWRAPNAME=\"$(WRAPNAME)\" $(X11_INCLUDES)
 
 ifndef FULL
-CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN -DWITHOUT_SNACK
+OPT_SEL+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN -DWITHOUT_SNACK -DWITHOUT_TKTABLE -DWITHOUT_TKHTML
 endif
 ifndef XOTCL
-CFLAGS+= -DWITHOUT_XOTCL -DWITHOUT_TGDBM
+OPT_SEL+= -DWITHOUT_XOTCL -DWITHOUT_TGDBM
 endif
 
 ###### Add these options to CFLAGS when linking object files into
@@ -214,12 +214,13 @@ LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_MKZIPLIB = $(INSTALLDIR)/Mkziplib$(MKZIPLIB_VERSION)/Mkziplib$(MKZIPLIB_SHORT).a
 LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
 LIB_TKTABLE = $(INSTALLDIR)/Tktable$(TKTABLE_VERSION)/Tktable$(subst .,,$(TKTABLE_VERSION)).a
-LIB_TILE = $(INSTALLDIR)/tile$(TILE_VERSION)/tile$(subst .,,$(TILE_VERSION)).a
+LIB_TKHTML = $(INSTALLDIR)/Tkhtml$(TKHTML_VERSION)/Tkhtml$(TKHTML_LIBVER).a
+LIB_SQLITE = $(INSTALLDIR)/sqlite$(SQLITE_VERSION)/sqlite$(SQLITE_LIBVER).a
 LIB_SNACK = $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnack.a $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnackstub22.a
-INDEXES += metakit-pkgindex memchan-pkgindex mkZiplib-pkgindex snack-pkgindex tls-pkgindex \
+INDEXES += metakit-pkgindex memchan-pkgindex mkZiplib-pkgindex \
+	snack-pkgindex tls-pkgindex tkhtml-pkgindex sqlite-pkgindex \
 	zipdir/lib/tdom/pkgIndex.tcl \
-	zipdir/lib/Tktable/pkgIndex.tcl \
-	zipdir/lib/tile/pkgIndex.tcl
+	zipdir/lib/Tktable/pkgIndex.tcl
 XOTCL = 1
 endif
 ifdef XOTCL
@@ -257,7 +258,8 @@ OPT = \
    $(HDR_TK) \
    $(HDR_ZLIB) \
    $(OPT_TK) \
-   $(OPT_MISC)
+   $(OPT_MISC) \
+   $(OPT_SEL)
 
 # All library options to the linker
 #
@@ -276,7 +278,8 @@ LIBS = \
   $(LIB_GDBM) \
   $(LIB_WINICO) \
   $(LIB_TKTABLE) \
-  $(LIB_TILE) \
+  $(LIB_TKHTML) \
+  $(LIB_SQLITE) \
   $(LIB_SNACK) \
   $(LIB_Z)
 
@@ -429,15 +432,21 @@ memchan-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
 mkZiplib-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "package ifneeded mkZiplib $(MKZIPLIB_VERSION) [list load \"\" mkZiplib]" >> zipdir/lib/base/pkgIndex.tcl
 
+tkhtml-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded Tkhtml $(TKHTML_VERSION) [list load \"\" Tkhtml]" >> zipdir/lib/base/pkgIndex.tcl	
+	
+sqlite-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded sqlite3 $(SQLITE_VERSION) [list load \"\" sqlite3]" >> zipdir/lib/base/pkgIndex.tcl
+	
 snack-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "package ifneeded snack 2.2 [list load \"\" snack]" >> zipdir/lib/base/pkgIndex.tcl
 	
 tls-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "package ifneeded tls 1.50 [list load \"\" tls]" >> zipdir/lib/base/pkgIndex.tcl
-
+	
 zipdir/lib/Tktable/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/Tktable
-	@echo "package ifneeded Tktable 2.9 [list load \"\" Tktable]" > zipdir/lib/Tktable/pkgIndex.tcl
+	@echo "package ifneeded Tktable $(TKTABLE_VERSION) [list load \"\" Tktable]" > zipdir/lib/Tktable/pkgIndex.tcl
 	@cd $(INSTROOT)/lib/Tktable$(TKTABLE_VERSION) && cp tkTable.tcl $(CURDIR)/zipdir/lib/Tktable/tkTable.tcl
 	@echo "lappend auto_path /lib/Tktable" >> zipdir/lib/tcl/init-pkgs.tcl
 	
