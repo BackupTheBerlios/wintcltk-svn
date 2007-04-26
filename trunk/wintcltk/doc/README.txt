@@ -30,6 +30,7 @@ memchan  2.2.1
 Metakit  2.4.9.6
 mysqltcl 3.02
 pgtcl	 1.6.0
+SQLite   3.3.17
 mkZiplib 1.0
 snack    2.2.10
 TWAPI	 1.1.5

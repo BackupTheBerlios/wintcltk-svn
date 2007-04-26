@@ -702,8 +702,8 @@ configure-tclvfs: extract-tclvfs $(BUILDDIR)/tclvfs/Makefile
 $(BUILDDIR)/tclvfs/Makefile:
 	@cd $(BUILDDIR)/tclvfs && ./configure --prefix=$(PREFIX) --enable-threads --enable-shared
 
-build-tclvfs: configure-tclvfs $(BUILDDIR)/tclvfs$(TCLVFS_SHORT)/tclvfs$(TCLVFS_LIBVER).dll 
-$(BUILDDIR)/tclvfs$(TCLVFS_SHORT)/tclvfs$(TCLVFS_LIBVER).dll:
+build-tclvfs: configure-tclvfs $(BUILDDIR)/tclvfs/vfs$(TCLVFS_LIBVER).dll 
+$(BUILDDIR)/tclvfs/vfs$(TCLVFS_LIBVER).dll:
 	@cd $(BUILDDIR)/tclvfs && make && strip *.dll
 
 install-tclvfs: build-tclvfs $(PREFIX)/lib/vfs$(TCLVFS_VERSION)
@@ -916,12 +916,12 @@ ${BUILDDIR}/snack${SNACK_VERSION}/win/Makefile:
 		LDFLAGS="$(LDFLAGS) -L./i386-mingw32/lib" \
 		./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
 
-build-snack: configure-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/snack${subst .,,$(SNACK_VERSION)}.dll 
-${BUILDDIR}/snack${SNACK_VERSION}/win/snack${subst .,,$(SNACK_VERSION)}.dll :
+build-snack: configure-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/libsnack.dll 
+${BUILDDIR}/snack${SNACK_VERSION}/win/libsnack.dll :
 	@cd ${BUILDDIR}/snack${SNACK_VERSION}/win && make && strip *.dll
 
-install-snack: build-snack ${PREFIX}/lib/snack${SNACK_VERSION}
-${PREFIX}/lib/snack$(SNACK_VERSION):
+install-snack: build-snack ${PREFIX}/lib/snack${SNACK_SHORT}
+${PREFIX}/lib/snack$(SNACK_SHORT):
 	@cd $(BUILDDIR)/snack$(SNACK_VERSION)/win && make install
 	@cd $(BUILDDIR)/snack$(SNACK_VERSION) && cp -f doc/tcl-man.html $(PREFIX)/lib/snack$(SNACK_SHORT)
 	
@@ -933,3 +933,36 @@ clean-snack:
 
 distclean-snack:
 	@-rm -rf ${BUILDDIR}/snack${SNACK_VERSION}
+	
+# sqlite
+fetch-sqlite: ${DISTFILES} ${DISTFILES}/sqlite-$(SQLITE_TEA)-tea.tar.gz
+${DISTFILES}/sqlite-$(SQLITE_TEA)-tea.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.sqlite.org/sqlite-$(SQLITE_TEA)-tea.tar.gz"
+
+extract-sqlite: fetch-sqlite ${BUILDDIR} ${BUILDDIR}/sqlite-$(SQLITE_TEA)-tea
+${BUILDDIR}/sqlite-${SQLITE_TEA}-tea:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/sqlite-$(SQLITE_TEA)-tea.tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/sqlite-$(SQLITE_TEA)-tea.tar.gz
+
+configure-sqlite: install-tk extract-sqlite ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea/Makefile
+${BUILDDIR}/sqlite-${SQLITE_TEA}-tea/Makefile:
+	@cd ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea && ./configure --prefix=$(PREFIX) --enable-threads --enable-shared --with-tcl=${PREFIX}/lib
+
+build-sqlite: configure-sqlite ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea/sqlite$(SQLITE_LIBVER).dll 
+${BUILDDIR}/sqlite-${SQLITE_TEA}-tea/sqlite$(SQLITE_LIBVER).dll:
+	@cd ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea && make && strip *.dll
+
+install-sqlite: build-sqlite ${PREFIX}/lib/sqlite${SQLITE_VERSION}
+${PREFIX}/lib/sqlite${SQLITE_VERSION}:
+	@cd ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea && make install
+	@cd ${BUILDDIR}/sqlite-${SQLITE_TEA}-tea && cp license.terms ${PREFIX}/lib/sqlite${SQLITE_VERSION}
+	
+uninstall-sqlite:
+	@-cd ${PREFIX} && rm -rf lib/sqlite${SQLITE_VERSION}
+
+clean-sqlite:
+	@-cd ${BUILDDIR}/sqlite-${SQLITE_VERSION} && make clean
+
+distclean-sqlite:
+	@-rm -rf ${BUILDDIR}/sqlite-${SQLITE_VERSION}

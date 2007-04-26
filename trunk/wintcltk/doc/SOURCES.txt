@@ -72,6 +72,9 @@ http://prdownloads.sourceforge.net/tcltrf/trf2.1p2.tar.gz
 Memchan:
 http://prdownloads.sourceforge.net/memchan/memchan-2.2.1.tar.gz
 
+SQLite:
+http://www.sqlite.org/sqlite-3_3_17-tea.tar.gz
+
 Metakit:
 http://www.equi4.com/pub/mk/metakit-2.4.9.6.tar.gz
 
@@ -94,9 +97,6 @@ http://pgfoundry.org/frs/download.php/1228/pgtcldocs-20070115.zip
 
 mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
-
-snack:
-http://www.speech.kth.se/snack/dist/snack2.2.10.tar.gz
 
 TWAPI:
 http://prdownloads.sourceforge.net/twapi/twapi-1.1.5.zip

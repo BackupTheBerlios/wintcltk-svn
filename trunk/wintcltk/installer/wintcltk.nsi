@@ -37,6 +37,7 @@
 !define TKTABLE_VERSION "2.9"
 !define TILE_VERSION "0.7.8"
 !define SNACK_VERSION "2.2.10"
+!define SQLITE_VERSION "3.3.17"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -55,6 +56,7 @@
 !define MKZIPLIB_SHORTVER "10"
 !define TCLVFS_LIBVER "13"
 !define SNACK_SHORTVER "2.2"
+!define SQLITE_LIBVER "3317"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -1817,6 +1819,17 @@ Section "Snack ${SNACK_VERSION}" snack
   File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsound.dll"
   File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
   File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\snack.tcl"
+SectionEnd
+
+Section "SQLite ${SQLITE_VERSION}" sqlite
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\sqlite${SQLITE_VERSION}
+  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\sqlite${SQLITE_LIBVER}.dll"
+  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\SQLite Homepage.lnk" "http://www.sqlite.org/tclsqlite.html"
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=SQLite-license.txt "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\license.terms"
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
@@ -3960,6 +3973,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\pgtcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TclVfs Homepage.lnk"
   Delete "$INSTDIR\doc\packages\snack Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\SQLite Homepage.lnk"
   Delete "$INSTDIR\doc\packages\tDOM Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TGDBM Homepage.lnk"
   Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
@@ -4561,6 +4575,8 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\libsound.dll"
   Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\snack.tcl"
+  Delete "$INSTDIR\lib\sqlite${SQLITE_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\sqlite${SQLITE_VERSION}\sqlite${SQLITE_LIBVER}.dll"
   Delete "$INSTDIR\lib\tcl8.4\auto.tcl"
   Delete "$INSTDIR\lib\tcl8.4\encoding\ascii.enc"
   Delete "$INSTDIR\lib\tcl8.4\encoding\big5.enc"
@@ -5729,6 +5745,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tcl8.4\http1.0"
   RMDir "$INSTDIR\lib\tcl8.4\encoding"
   RMDir "$INSTDIR\lib\tcl8.4"
+  RMDir "$INSTDIR\lib\sqlite${SQLITE_VERSION}"
   RMDir "$INSTDIR\lib\snack${SNACK_SHORTVER}"
   RMDir "$INSTDIR\lib\reg1.1"
   RMDir "$INSTDIR\lib\pgtcl${PGTCL_VERSION}"
@@ -5871,6 +5888,7 @@ LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon,
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
 LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
+LangString DESC_sqlite ${LANG_ENGLISH} "SQLite extension"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${packages} $(DESC_packages)
@@ -5921,6 +5939,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
   !insertmacro MUI_DESCRIPTION_TEXT ${tls} $(DESC_tls)
+  !insertmacro MUI_DESCRIPTION_TEXT ${sqlite} $(DESC_sqlite)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 Function .onInit
