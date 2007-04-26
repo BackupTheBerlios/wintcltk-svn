@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-winico install-tklib install-tkcon install-xotclide
-uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-winico uninstall-tklib uninstall-tkcon uninstall-xotclide
-clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-winico clean-tklib clean-tkcon clean-xotclide
-distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-winico distclean-tklib distclean-tkcon distclean-xotclide
+install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-winico install-tklib install-tktable install-tile install-snack install-tkcon install-xotclide
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-winico uninstall-tklib uninstall-tktable uninstall-tile uninstall-snack uninstall-tkcon uninstall-xotclide
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-winico clean-tklib clean-tktable clean-tile clean-snack clean-tkcon clean-xotclide
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-winico distclean-tklib distclean-tktable distclean-tile distclean-snack distclean-tkcon distclean-xotclide
 
 # directories
 ${DISTFILES}:
@@ -545,3 +545,110 @@ clean-winico:
 
 distclean-winico:
 	@-rm -rf ${BUILDDIR}/winico-${WINICO_VERSION}
+
+# tktable
+fetch-tktable: ${DISTFILES} ${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz
+${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/Tktable$(TKTABLE_VERSION).tar.gz"
+
+extract-tktable: fetch-tktable ${BUILDDIR} ${BUILDDIR}/Tktable${TKTABLE_VERSION}
+${BUILDDIR}/Tktable${TKTABLE_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/Tktable$(TKTABLE_VERSION).tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/Tktable$(TKTABLE_VERSION).tar.gz
+	@-cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && patch -p0 < $(PATCHDIR)/tktable.patch
+
+configure-tktable: install-tk extract-tktable ${BUILDDIR}/Tktable${TKTABLE_VERSION}/Makefile
+${BUILDDIR}/Tktable${TKTABLE_VERSION}/Makefile:
+	@cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --disable-shared --enable-static --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-tktable: configure-tktable ${BUILDDIR}/tktable${TKTABLE_VERSION}/Tktable${subst .,,$(TKTABLE_VERSION)}.a
+${BUILDDIR}/tktable${TKTABLE_VERSION}/Tktable${subst .,,$(TKTABLE_VERSION)}.a :
+	@cd ${BUILDDIR}/tktable${TKTABLE_VERSION} && make binaries
+
+install-tktable: build-tktable ${PREFIX}/lib/Tktable${TKTABLE_VERSION}
+${PREFIX}/lib/Tktable${TKTABLE_VERSION}:
+	@cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && make install
+
+uninstall-tktable:
+	@-cd ${PREFIX} && rm -rf lib/Tktable${TKTABLE_VERSION}
+
+clean-tktable:
+	@-cd ${BUILDDIR}/Tktable${TKTABLE_VERSION} && make clean
+
+distclean-tktable:
+	@-rm -rf ${BUILDDIR}/Tktable${TKTABLE_VERSION}
+
+# tile
+fetch-tile: ${DISTFILES} ${DISTFILES}/tile-$(TILE_VERSION).tar.gz
+${DISTFILES}/tile-$(TILE_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/tile-$(TILE_VERSION).tar.gz"
+
+extract-tile: fetch-tile ${BUILDDIR} ${BUILDDIR}/tile-${TILE_VERSION}
+${BUILDDIR}/tile-${TILE_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tile-$(TILE_VERSION).tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/tile-$(TILE_VERSION).tar.gz
+
+configure-tile: install-tk extract-tile ${BUILDDIR}/tile-${TILE_VERSION}/Makefile
+${BUILDDIR}/tile-${TILE_VERSION}/Makefile:
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --disable-shared --enable-static --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-tile: configure-tile ${BUILDDIR}/tile-${TILE_VERSION}/tile${subst .,,$(TILE_VERSION)}.a
+${BUILDDIR}/tile-${TILE_VERSION}/tile${subst .,,$(TILE_VERSION)}.a:
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && make
+
+install-tile: build-tile ${PREFIX}/lib/tile${TILE_VERSION}
+${PREFIX}/lib/tile${TILE_VERSION}:
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && make install
+	
+uninstall-tile:
+	@-cd ${PREFIX} && rm -rf lib/tile${TILE_VERSION}
+
+clean-tile:
+	@-cd ${BUILDDIR}/tile-${TILE_VERSION} && make clean
+
+distclean-tile:
+	@-rm -rf ${BUILDDIR}/tile-${TILE_VERSION}
+	
+# snack
+fetch-snack: ${DISTFILES} ${DISTFILES}/snack$(SNACK_VERSION).tar.gz ${DISTFILES}/ming.zip
+${DISTFILES}/snack$(SNACK_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.speech.kth.se/snack/dist/snack${SNACK_VERSION}.tar.gz"
+${DISTFILES}/ming.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://people.montana.com/%7Ebowman/Software/ming.zip"
+			
+extract-snack: fetch-snack ${BUILDDIR} ${BUILDDIR}/snack${SNACK_VERSION}/win/i386-mingw32
+${BUILDDIR}/snack${SNACK_VERSION}/win/i386-mingw32:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/snack$(SNACK_VERSION).tar.gz.md5 || exit 1
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/ming.zip.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/snack$(SNACK_VERSION).tar.gz
+	@-cd ${BUILDDIR}/snack${SNACK_VERSION} && patch -p0 < $(PATCHDIR)/snack.patch && patch -p0 < $(PATCHDIR)/snack.static.patch
+	@-cd ${BUILDDIR}/snack$(SNACK_VERSION)/win && $(UNZIP) ${DISTFILES}/ming.zip
+	
+configure-snack: install-tk extract-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/Makefile
+${BUILDDIR}/snack${SNACK_VERSION}/win/Makefile:
+	@cd ${BUILDDIR}/snack${SNACK_VERSION}/win && \
+		CFLAGS="$(CFLAGS) -I./i386-mingw32/include" \
+		LDFLAGS="$(LDFLAGS) -L./i386-mingw32/lib" \
+		./configure --prefix=${PREFIX} --enable-threads --disable-shared --enable-static --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-snack: configure-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/libsnack.a 
+${BUILDDIR}/snack${SNACK_VERSION}/win/libsnack.a :
+	@cd ${BUILDDIR}/snack${SNACK_VERSION}/win && make && strip *.dll
+
+install-snack: build-snack ${PREFIX}/lib/snack${SNACK_SHORT}
+${PREFIX}/lib/snack$(SNACK_SHORT):
+	@cd $(BUILDDIR)/snack$(SNACK_VERSION)/win && make install
+	@cd $(BUILDDIR)/snack$(SNACK_VERSION) && cp -f doc/tcl-man.html $(PREFIX)/lib/snack$(SNACK_SHORT)
+	
+uninstall-snack:
+	@-cd ${PREFIX} && rm -rf lib/snack$(SNACK_SHORT)
+
+clean-snack:
+	@-cd ${BUILDDIR}/snack${SNACK_VERSION} && make clean
+
+distclean-snack:
+	@-rm -rf ${BUILDDIR}/snack${SNACK_VERSION}
