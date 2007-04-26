@@ -983,7 +983,7 @@ ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/Makefile:
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
 
 build-tktreectrl: configure-tktreectrl ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/treectrl$(TKTREECTRL_LIBVER).dll 
-${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/tktreectrl$(TKTREECTRL_LIBVER).dll :
+${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/treectrl$(TKTREECTRL_LIBVER).dll :
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && make && strip *.dll
 
 install-tktreectrl: build-tktreectrl ${PREFIX}/lib/tktreectrl${TKTREECTRL_VERSION}
