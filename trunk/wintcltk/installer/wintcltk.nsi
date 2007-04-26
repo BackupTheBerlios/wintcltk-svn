@@ -38,6 +38,7 @@
 !define TILE_VERSION "0.7.8"
 !define SNACK_VERSION "2.2.10"
 !define SQLITE_VERSION "3.3.17"
+!define TKTREECTRL_VERSION "2.2.3"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -57,6 +58,7 @@
 !define TCLVFS_LIBVER "13"
 !define SNACK_SHORTVER "2.2"
 !define SQLITE_LIBVER "3317"
+!define TKTREECTRL_LIBVER "22"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -1792,6 +1794,21 @@ Section "Tktable ${TKTABLE_VERSION}" tktable
   CreateShortCut "$INSTDIR\doc\packages\Tktable Documentation.lnk" "$INSTDIR\doc\packages\files\tktable\index.html" "" "$INSTDIR\doc\packages\files\tktable\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
   File /oname=Tktable-license.txt "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\license.txt"
+SectionEnd
+
+Section "TkTreectrl ${TKTREECTRL_VERSION}" tktreectrl
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\treectrl${TKTREECTRL_VERSION}
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\filelist-bindings.tcl"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl${TKTREECTRL_LIBVER}.dll"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tktreectrl
+  File /oname=index.html "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\htmldoc\treectrl.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\TkTreectrl Documentation.lnk" "$INSTDIR\doc\packages\files\tktreectrl\index.html" "" "$INSTDIR\doc\packages\files\tktreectrl\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=TkTreectrl-license.txt "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\license.terms"
 SectionEnd
 
 Section "Winico ${WINICO_VERSION}" winico
@@ -3959,6 +3976,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\Tkcon-license.lnk"  
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
   Delete "$INSTDIR\doc\licenses\Tktable-license.txt"
+  Delete "$INSTDIR\doc\licenses\TkTreectrl-license.txt"
   Delete "$INSTDIR\doc\licenses\Trf-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
   Delete "$INSTDIR\doc\licenses\Winico-license.txt"
@@ -3980,6 +3998,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\Tile Documentation.lnk"
   Delete "$INSTDIR\doc\packages\tkcon Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Tktable Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\TkTreectrl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Tls Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Trf Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TWAPI Documentation.lnk"
@@ -4161,6 +4180,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\tkcon\tkcon.html"
   Delete "$INSTDIR\doc\packages\files\tkcon\todo.html"
   Delete "$INSTDIR\doc\packages\files\tktable\index.html"
+  Delete "$INSTDIR\doc\packages\files\tktreectrl\index.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_CheckOptions.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ClearCtrlBlock.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_ConverterOptions.html"
@@ -5335,6 +5355,10 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls15.dll"
   Delete "$INSTDIR\lib\tls${TLS_VERSION}\tls.tcl"
+  Delete "$INSTDIR\lib\treectrl${TKTREECTRL_VERSION}\filelist-bindings.tcl"
+  Delete "$INSTDIR\lib\treectrl${TKTREECTRL_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\treectrl${TKTREECTRL_VERSION}\treectrl${TKTREECTRL_LIBVER}.dll"
+  Delete "$INSTDIR\lib\treectrl${TKTREECTRL_VERSION}\treectrl.tcl"
   Delete "$INSTDIR\lib\trf${TRF_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\trf${TRF_VERSION}\Trf${TRF_LIBVER}.dll"
   Delete "$INSTDIR\lib\trf${TRF_VERSION}\libTrf${TRF_LIBVER}.a"
@@ -5624,6 +5648,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\tests"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}"
   RMDir "$INSTDIR\lib\trf${TRF_VERSION}"
+  RMDir "$INSTDIR\lib\treectrl${TKTREECTRL_VERSION}"
   RMDir "$INSTDIR\lib\tls${TLS_VERSION}"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\tooltip"
@@ -5770,8 +5795,9 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\trf\capi"
   RMDir "$INSTDIR\doc\packages\files\trf\img"
   RMDir "$INSTDIR\doc\packages\files\trf"
-  RMDir "$INSTDIR\doc\packages\files\tkcon"
+  RMDir "$INSTDIR\doc\packages\files\tktreectrl"
   RMDir "$INSTDIR\doc\packages\files\tktable"
+  RMDir "$INSTDIR\doc\packages\files\tkcon"
   RMDir "$INSTDIR\doc\packages\files\tls"
   RMDir "$INSTDIR\doc\packages\files\tile"
   RMDir "$INSTDIR\doc\packages\files\thread"
@@ -5883,6 +5909,7 @@ LangString DESC_mysqltcl ${LANG_ENGLISH} "Simple API for MySQL database"
 LangString DESC_mkziplib ${LANG_ENGLISH} "Gzip and zip compression library for Tcl/Tk"
 LangString DESC_pgtcl ${LANG_ENGLISH} "Tcl module for accessing PostgreSQL databases"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
+LangString DESC_tktreectrl ${LANG_ENGLISH} "flexible listbox widget for Tk"
 LangString DESC_tkcon ${LANG_ENGLISH} "Feature-rich Tk console"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
@@ -5935,6 +5962,7 @@ LangString DESC_sqlite ${LANG_ENGLISH} "SQLite extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${pgtcl} $(DESC_pgtcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${twapi} $(DESC_twapi)
   !insertmacro MUI_DESCRIPTION_TEXT ${tkcon} $(DESC_tkcon)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tktreectrl} $(DESC_tktreectrl)
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)

@@ -66,6 +66,9 @@ http://prdownloads.sourceforge.net/tktable/tile-0.7.8.tar.gz
 TclVfs:
 http://prdownload.berlios.de/wintcltk/tclvfs-20070412-src.tar.gz
 
+TkTreectrl:
+http://prdownloads.sourceforge.net/tktreectrl/tktreectrl-2.2.3.tar.gz
+
 Trf:
 http://prdownloads.sourceforge.net/tcltrf/trf2.1p2.tar.gz
 

@@ -13,37 +13,38 @@ This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
 It includes the following packages:
 
-Tcl/Tk	 8.4.14
-XOTcl	 1.5.3
-tcllib	 1.9
-tklib	 0.4.1
-BWidget	 1.8.0
-thread	 2.6.5
-tDOM	 0.8.1
-tls      1.5.0
-Tgdbm	 0.5
-Tktable  2.9
-Tile     0.7.8
-TclVfs	 1.3
-Trf	 2.1p2
-memchan  2.2.1
-Metakit  2.4.9.6
-mysqltcl 3.02
-pgtcl	 1.6.0
-SQLite   3.3.17
-mkZiplib 1.0
-snack    2.2.10
-TWAPI	 1.1.5
-Winico   0.6
-tkcon	 2.5
-ASED	 3.0.b16
-XOTclIDE 0.82
+Tcl/Tk	   8.4.14
+XOTcl	   1.5.3
+tcllib	   1.9
+tklib	   0.4.1
+BWidget	   1.8.0
+thread	   2.6.5
+tDOM	   0.8.1
+tls        1.5.0
+Tgdbm	   0.5
+Tktable    2.9
+Tile       0.7.8
+TclVfs	   1.3
+Trf	   2.1p2
+TkTreeCtrl 2.2.3
+memchan    2.2.1
+Metakit    2.4.9.6
+mysqltcl   3.02
+pgtcl	   1.6.0
+SQLite     3.3.17
+mkZiplib   1.0
+snack      2.2.10
+TWAPI	   1.1.5
+Winico     0.6
+tkcon	   2.5
+ASED	   3.0.b16
+XOTclIDE   0.82
 
 The following support libraries are bundled:
 
-GDBM	1.8.3
-OpenSSL	0.9.8e
-zlib	1.2.3
+GDBM	   1.8.3
+OpenSSL	   0.9.8e
+zlib	   1.2.3
 
 The pgtcl package includes MinGW compiled libpq ver. 8.2.3 
 with OpenSSL and POSIX threads support.
