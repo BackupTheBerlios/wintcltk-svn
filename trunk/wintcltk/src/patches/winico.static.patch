@@ -1,0 +1,31 @@
+--- tkwinico.c.orig	Wed Apr 25 14:49:09 2007
++++ tkwinico.c	Wed Apr 25 14:50:27 2007
+@@ -1790,28 +1790,3 @@
+     return DoInit(interp);
+ }
+ 
+-/*
+- *----------------------------------------------------------------------
+- *
+- * DllEntryPoint --
+- *
+- *        This wrapper function is used by Windows to invoke the
+- *        initialization code for the DLL.  If we are compiling
+- *        with Visual C++, this routine will be renamed to DllMain.
+- *        routine.
+- *
+- *----------------------------------------------------------------------
+- */
+-
+-BOOL APIENTRY
+-DllEntryPoint(HINSTANCE hInst,DWORD reason,LPVOID  reserved)
+-{
+-    return TRUE;
+-}
+-
+-/*
+- * Local variables:
+- * mode: c
+- * indent-tabs-mode: nil
+- * End:
+- */
