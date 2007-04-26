@@ -82,6 +82,20 @@ extern int Tgdbm_Init(Tcl_Interp*);
 extern int Thread_Init(Tcl_Interp*);
 #endif
 
+#ifndef WITHOUT_TKTABLE
+extern int Tktable_Init(Tcl_Interp*);
+extern int Tktable_SafeInit(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_TILE
+extern int Tile_Init(Tcl_Interp*);
+#endif
+
+#ifndef WITHOUT_SNACK
+extern int Snack_Init(Tcl_Interp*);
+extern int Snack_SafeInit(Tcl_Interp*);
+#endif
+
 extern int Freewrap_Init(Tcl_Interp*);
 extern int Winico_Init(Tcl_Interp*);
 extern int Winico_SafeInit(Tcl_Interp*);
@@ -237,6 +251,27 @@ int main(int argc, char **argv){
      }
 
   Tcl_StaticPackage(interp, "Thread", Thread_Init, 0);
+#endif
+
+#ifndef WITHOUT_TKTABLE
+  if (Tktable_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+  Tcl_StaticPackage(interp, "Tktable", Tktable_Init, Tktable_SafeInit);
+#endif
+
+#ifndef WITHOUT_TILE
+  if (Tile_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+  Tcl_StaticPackage(interp, "tile", Tile_Init, 0);
+#endif
+
+#ifndef WITHOUT_SNACK
+  if (Snack_Init(interp) == TCL_ERROR) {
+      return TCL_ERROR;
+     }
+  Tcl_StaticPackage(interp, "snack", Snack_Init, Snack_SafeInit);
 #endif
 
 #if !defined(WITHOUT_TK) && !defined(WITHOUT_WINICO) && (defined(__WIN32__) || defined(_WIN32))

@@ -139,7 +139,7 @@ CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB -DWRAPNAME=\"$(WRAPNAME)\" $(X11_INCLUDES)
 
 ifndef FULL
-CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN
+CFLAGS+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN -DWITHOUT_SNACK
 endif
 ifndef XOTCL
 CFLAGS+= -DWITHOUT_XOTCL -DWITHOUT_TGDBM
@@ -213,11 +213,13 @@ LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
 LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_MKZIPLIB = $(INSTALLDIR)/Mkziplib$(MKZIPLIB_VERSION)/Mkziplib$(MKZIPLIB_SHORT).a
 LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
-INDEXES += zipdir/lib/Mk4tcl/pkgIndex.tcl \
-	zipdir/lib/memchan/pkgIndex.tcl \
+LIB_TKTABLE = $(INSTALLDIR)/Tktable$(TKTABLE_VERSION)/Tktable$(subst .,,$(TKTABLE_VERSION)).a
+LIB_TILE = $(INSTALLDIR)/tile$(TILE_VERSION)/tile$(subst .,,$(TILE_VERSION)).a
+LIB_SNACK = $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnack.a $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnackstub22.a
+INDEXES += metakit-pkgindex memchan-pkgindex mkZiplib-pkgindex snack-pkgindex tls-pkgindex \
 	zipdir/lib/tdom/pkgIndex.tcl \
-	zipdir/lib/mkZiplib/pkgIndex.tcl \
-	zipdir/lib/tls/pkgIndex.tcl
+	zipdir/lib/Tktable/pkgIndex.tcl \
+	zipdir/lib/tile/pkgIndex.tcl
 XOTCL = 1
 endif
 ifdef XOTCL
@@ -242,7 +244,7 @@ OPT_MISC= -DNTSD_EAS
 #
 WINLIBS = -L/mingw/lib -lkernel32 -ladvapi32 -luser32 -lgdi32 -lcomdlg32 \
 	-lwinspool -lole32 -lshell32 -luuid -limm32 -lcomctl32 -lwsock32 \
-	-lstdc++
+	-lstdc++ -lwinmm
 
 ###############################################################################
 # You should not have to change anything below this line
@@ -273,6 +275,9 @@ LIBS = \
   $(LIB_OPENSSL) \
   $(LIB_GDBM) \
   $(LIB_WINICO) \
+  $(LIB_TKTABLE) \
+  $(LIB_TILE) \
+  $(LIB_SNACK) \
   $(LIB_Z)
 
 # ZIP program object modules
@@ -385,16 +390,6 @@ zipdir/lib/xotclide: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/xotclIDE
 	@$(CP) -rf $(INSTALLDIR)/xotclIDE/* zipdir/lib/xotclIDE
 	@echo "lappend auto_path /lib/xotclIDE" >> zipdir/lib/tcl/init-pkgs.tcl
-	
-zipdir/lib/Mk4tcl/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
-	@$(MKDIR) zipdir/lib/Mk4tcl
-	@sed -e 's|\[file join $$dir Mk4tcl.lib\]|""|g' $(INSTALLDIR)/Mk4tcl/pkgIndex.tcl > zipdir/lib/Mk4tcl/pkgIndex.tcl
-	@echo "lappend auto_path /lib/Mk4tcl" >> zipdir/lib/tcl/init-pkgs.tcl
-	
-zipdir/lib/memchan/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
-	@$(MKDIR) zipdir/lib/memchan
-	@echo "package ifneeded Memchan $(MEMCHAN_VERSION) [list load \"\" Memchan]" > zipdir/lib/memchan/pkgIndex.tcl
-	@echo "lappend auto_path /lib/memchan" >> zipdir/lib/tcl/init-pkgs.tcl
 
 zipdir/lib/base/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/base
@@ -424,17 +419,34 @@ zipdir/lib/tgdbm/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "package ifneeded tgdbm $(TGDBM_VERSION) [list load \"\" tgdbm]" > zipdir/lib/tgdbm/pkgIndex.tcl
 	@echo "package ifneeded qgdbm $(TGDBM_VERSION) [list source [file join \$$dir qgdbm.tcl]]" >> zipdir/lib/tgdbm/pkgIndex.tcl
 	@echo "lappend auto_path /lib/tgdbm" >> zipdir/lib/tcl/init-pkgs.tcl
+	
+metakit-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded Mk4tcl $(METAKIT_VERSION) [list load \"\" Mk4tcl]" >> zipdir/lib/base/pkgIndex.tcl
+	
+memchan-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded Memchan $(MEMCHAN_VERSION) [list load \"\" Memchan]" >> zipdir/lib/base/pkgIndex.tcl
+	
+mkZiplib-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded mkZiplib $(MKZIPLIB_VERSION) [list load \"\" mkZiplib]" >> zipdir/lib/base/pkgIndex.tcl
 
-zipdir/lib/mkZiplib/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
-	@$(MKDIR) zipdir/lib/mkZiplib
-	@echo "package ifneeded mkZiplib $(MKZIPLIB_VERSION) [list load \"\" mkZiplib]" > zipdir/lib/mkZiplib/pkgIndex.tcl
-	@echo "lappend auto_path /lib/mkZiplib" >> zipdir/lib/tcl/init-pkgs.tcl
+snack-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded snack 2.2 [list load \"\" snack]" >> zipdir/lib/base/pkgIndex.tcl
+	
+tls-pkgindex: zipdir/lib/tcl/init-pkgs.tcl
+	@echo "package ifneeded tls 1.50 [list load \"\" tls]" >> zipdir/lib/base/pkgIndex.tcl
 
-zipdir/lib/tls/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
-	@$(MKDIR) zipdir/lib/tls
-	@echo "package ifneeded tls 1.50 [list load \"\" tls]" > zipdir/lib/tls/pkgIndex.tcl
-	@echo "lappend auto_path /lib/tls" >> zipdir/lib/tcl/init-pkgs.tcl
-
+zipdir/lib/Tktable/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/Tktable
+	@echo "package ifneeded Tktable 2.9 [list load \"\" Tktable]" > zipdir/lib/Tktable/pkgIndex.tcl
+	@cd $(INSTROOT)/lib/Tktable$(TKTABLE_VERSION) && cp tkTable.tcl $(CURDIR)/zipdir/lib/Tktable/tkTable.tcl
+	@echo "lappend auto_path /lib/Tktable" >> zipdir/lib/tcl/init-pkgs.tcl
+	
+zipdir/lib/tile/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(MKDIR) zipdir/lib/tile
+	@cd $(INSTROOT)/lib/tile$(TILE_VERSION) && cp *.tcl $(CURDIR)/zipdir/lib/tile
+	@echo "package ifneeded tile $(TILE_VERSION) [list load \"\" tile]" > zipdir/lib/tile/pkgIndex.tcl
+	@echo "lappend auto_path /lib/tile" >> zipdir/lib/tcl/init-pkgs.tcl
+	
 zipdir/lib/tkcon: zipdir/lib/tcl/init-pkgs.tcl
 	@echo "lappend auto_path /lib/tkcon" >> zipdir/lib/tcl/init-pkgs.tcl
 	@$(DELTREE) zipdir/lib/tkcon
