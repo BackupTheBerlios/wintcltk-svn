@@ -69,6 +69,9 @@ http://prdownload.berlios.de/wintcltk/tclvfs-20070412-src.tar.gz
 TkTreectrl:
 http://prdownloads.sourceforge.net/tktreectrl/tktreectrl-2.2.3.tar.gz
 
+Tkhtml:
+http://prdownload.berlios.de/wintcltk/tkhtml-2.0-src.tar.gz
+
 Trf:
 http://prdownloads.sourceforge.net/tcltrf/trf2.1p2.tar.gz
 

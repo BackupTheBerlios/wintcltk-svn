@@ -27,6 +27,7 @@ Tile       0.7.8
 TclVfs	   1.3
 Trf	   2.1p2
 TkTreeCtrl 2.2.3
+Tkhtml     2.0
 memchan    2.2.1
 Metakit    2.4.9.6
 mysqltcl   3.02

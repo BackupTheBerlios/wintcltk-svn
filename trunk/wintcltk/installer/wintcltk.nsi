@@ -39,6 +39,7 @@
 !define SNACK_VERSION "2.2.10"
 !define SQLITE_VERSION "3.3.17"
 !define TKTREECTRL_VERSION "2.2.3"
+!define TKHTML_VERSION "2.0"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -59,6 +60,7 @@
 !define SNACK_SHORTVER "2.2"
 !define SQLITE_LIBVER "3317"
 !define TKTREECTRL_LIBVER "22"
+!define TKHTML_LIBVER "20"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -1782,6 +1784,19 @@ Section "Tile headers & libraries" tile-dev
 SectionEnd
 SectionGroupEnd
 
+Section "Tkhtml ${TKHTML_VERSION}" tkhtml
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\Tkhtml${TKHTML_VERSION}
+  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\Tkhtml${TKHTML_LIBVER}.dll"
+  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tkhtml
+  File /oname=index.html "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\spec.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\Tkhtml Documentation.lnk" "$INSTDIR\doc\packages\files\tkhtml\index.html" "" "$INSTDIR\doc\packages\files\tkhtml\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\Tkhtml-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
+SectionEnd
+
 Section "Tktable ${TKTABLE_VERSION}" tktable
   Sectionin 1 2
   SetOutPath $INSTDIR\lib\Tktable${TKTABLE_VERSION}
@@ -2643,8 +2658,6 @@ Section "ASED IDE ${ASED_VERSION}" ased
   File "${INSTROOT}\ased3.0\help\TclTk\UserCmd\tclsh.htm"
   File "${INSTROOT}\ased3.0\help\TclTk\UserCmd\wish.htm"
   CreateShortCut "SetOutPath $INSTDIR\ased3.0\help\tkcon.lnk" "$INSTDIR\doc\packages\files\tkcon" "" "$INSTDIR\doc\packages\files\tkcon" 0
-  SetOutPath $INSTDIR\ased3.0\help\Tkhtml
-  File "${INSTROOT}\ased3.0\help\Tkhtml\index.html"
   SetOutPath $INSTDIR\ased3.0\highlighters
   File "${INSTROOT}\ased3.0\highlighters\c.mode"
   File "${INSTROOT}\ased3.0\highlighters\itcl.mode"
@@ -2739,12 +2752,6 @@ Section "ASED IDE ${ASED_VERSION}" ased
   SetOutPath $INSTDIR\ased3.0\lib\supergrid
   File "${INSTROOT}\ased3.0\lib\supergrid\pkgIndex.tcl"
   File "${INSTROOT}\ased3.0\lib\supergrid\supergrid.tcl"
-  SetOutPath $INSTDIR\ased3.0\lib\tkhtml2.0
-  File "${INSTROOT}\ased3.0\lib\tkhtml2.0\COPYING.html"
-  File "${INSTROOT}\ased3.0\lib\tkhtml2.0\COPYRIGHT"
-  File "${INSTROOT}\ased3.0\lib\tkhtml2.0\libTkHtml.dll"
-  File "${INSTROOT}\ased3.0\lib\tkhtml2.0\libTkHtml.so"
-  File "${INSTROOT}\ased3.0\lib\tkhtml2.0\pkgIndex.tcl"
   SetOutPath $INSTDIR\ased3.0\tools
   File "${INSTROOT}\ased3.0\tools\displayWidgetPath.tcl"
   File "${INSTROOT}\ased3.0\tools\sortFile.tcl"
@@ -3770,7 +3777,6 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\help\TclTk\UserCmd\tclsh.htm"
   Delete "$INSTDIR\ased3.0\help\TclTk\UserCmd\wish.htm"
   Delete "$INSTDIR\ased3.0\help\tkcon.lnk"
-  Delete "$INSTDIR\ased3.0\help\Tkhtml\index.html"
   Delete "$INSTDIR\ased3.0\help\wordindex"
   Delete "$INSTDIR\ased3.0\highlighters\c.mode"
   Delete "$INSTDIR\ased3.0\highlighters\itcl.mode"
@@ -3860,11 +3866,6 @@ Section "Uninstall"
   Delete "$INSTDIR\ased3.0\lib\helpviewer\sp.msg"
   Delete "$INSTDIR\ased3.0\lib\supergrid\pkgIndex.tcl"
   Delete "$INSTDIR\ased3.0\lib\supergrid\supergrid.tcl"
-  Delete "$INSTDIR\ased3.0\lib\tkhtml2.0\COPYING.html"
-  Delete "$INSTDIR\ased3.0\lib\tkhtml2.0\COPYRIGHT"
-  Delete "$INSTDIR\ased3.0\lib\tkhtml2.0\libTkHtml.dll"
-  Delete "$INSTDIR\ased3.0\lib\tkhtml2.0\libTkHtml.so"
-  Delete "$INSTDIR\ased3.0\lib\tkhtml2.0\pkgIndex.tcl"
   Delete "$INSTDIR\ased3.0\License.txt"
   Delete "$INSTDIR\ased3.0\liesmich.htm"
   Delete "$INSTDIR\ased3.0\main.tcl"
@@ -3966,6 +3967,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\pgtcl-license.txt"
   Delete "$INSTDIR\doc\licenses\pthreads-license.lnk"
   Delete "$INSTDIR\doc\licenses\snack-license.lnk"
+  Delete "$INSTDIR\doc\licenses\SQLite-license.txt"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
   Delete "$INSTDIR\doc\licenses\TclVfs-license.txt"
@@ -3973,7 +3975,8 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\thread-license.txt"
   Delete "$INSTDIR\doc\licenses\Tile-license.txt"
   Delete "$INSTDIR\doc\licenses\tls-license.txt"
-  Delete "$INSTDIR\doc\licenses\Tkcon-license.lnk"  
+  Delete "$INSTDIR\doc\licenses\Tkcon-license.lnk"
+  Delete "$INSTDIR\doc\licenses\Tkhtml-license.lnk" 
   Delete "$INSTDIR\doc\licenses\tklib-license.txt"
   Delete "$INSTDIR\doc\licenses\Tktable-license.txt"
   Delete "$INSTDIR\doc\licenses\TkTreectrl-license.txt"
@@ -4179,6 +4182,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\tkcon\start.html"
   Delete "$INSTDIR\doc\packages\files\tkcon\tkcon.html"
   Delete "$INSTDIR\doc\packages\files\tkcon\todo.html"
+  Delete "$INSTDIR\doc\packages\files\tkhtml\index.html"
   Delete "$INSTDIR\doc\packages\files\tktable\index.html"
   Delete "$INSTDIR\doc\packages\files\tktreectrl\index.html"
   Delete "$INSTDIR\doc\packages\files\trf\capi\Trf_CheckOptions.html"
@@ -5349,6 +5353,8 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\scrollw.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\superframe.tcl"
   Delete "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\widget\widget.tcl"
+  Delete "$INSTDIR\lib\Tkhtml${TKHTML_VERSION}\Tkhtml${TKHTML_LIBVER}.dll"
+  Delete "$INSTDIR\lib\Tkhtml${TKHTML_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\Tktable${TKTABLE_LIBVER}.dll"
   Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\tkTable.tcl"
   Delete "$INSTDIR\lib\Tktable${TKTABLE_VERSION}\pkgIndex.tcl"
@@ -5669,6 +5675,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}\autoscroll"
   RMDir "$INSTDIR\lib\tklib${TKLIB_SHORTVER}"
   RMDir "$INSTDIR\lib\Tktable${TKTABLE_VERSION}"
+  RMDir "$INSTDIR\lib\Tkhtml${TKHTML_VERSION}"
   RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}\extra"
   RMDir "$INSTDIR\lib\tkcon${TKCON_VERSION}"
   RMDir "$INSTDIR\lib\tk8.4\msgs"
@@ -5797,6 +5804,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\trf"
   RMDir "$INSTDIR\doc\packages\files\tktreectrl"
   RMDir "$INSTDIR\doc\packages\files\tktable"
+  RMDir "$INSTDIR\doc\packages\files\tkhtml"
   RMDir "$INSTDIR\doc\packages\files\tkcon"
   RMDir "$INSTDIR\doc\packages\files\tls"
   RMDir "$INSTDIR\doc\packages\files\tile"
@@ -5910,6 +5918,7 @@ LangString DESC_mkziplib ${LANG_ENGLISH} "Gzip and zip compression library for T
 LangString DESC_pgtcl ${LANG_ENGLISH} "Tcl module for accessing PostgreSQL databases"
 LangString DESC_twapi ${LANG_ENGLISH} "Tcl Windows API"
 LangString DESC_tktreectrl ${LANG_ENGLISH} "flexible listbox widget for Tk"
+LangString DESC_tkhtml ${LANG_ENGLISH} "HTML widget for Tk"
 LangString DESC_tkcon ${LANG_ENGLISH} "Feature-rich Tk console"
 LangString DESC_ased ${LANG_ENGLISH} "Easy to use Tcl/Tk Editor. Includes tkcon, TkDiff, Visual Regexp and Tcl/Tk documentation and tutorials."
 LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for XOTcl and Tcl"
@@ -5963,6 +5972,7 @@ LangString DESC_sqlite ${LANG_ENGLISH} "SQLite extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${twapi} $(DESC_twapi)
   !insertmacro MUI_DESCRIPTION_TEXT ${tkcon} $(DESC_tkcon)
   !insertmacro MUI_DESCRIPTION_TEXT ${tktreectrl} $(DESC_tktreectrl)
+  !insertmacro MUI_DESCRIPTION_TEXT ${tkhtml} $(DESC_tkhtml)
   !insertmacro MUI_DESCRIPTION_TEXT ${ased} $(DESC_ased)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotclide} $(DESC_xotclide)
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
