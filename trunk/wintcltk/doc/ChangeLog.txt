@@ -10,6 +10,7 @@
 	* added package Tktreectrl 2.2.3
 	* added package Tkhtml 2.0
 	* removed Tkhtml 2.0 from ASED
+	* release 0.5
 
 2007-04-25 Martin Matuska <martin at matuska.org>
 	* added package Winico 0.6

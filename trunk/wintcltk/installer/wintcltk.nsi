@@ -1,6 +1,6 @@
 ; WinTclTk.nsi
 ; 
-; Copyright (c) 2006 Martin Matuska
+; Copyright (c) 2006-07 Martin Matuska
 ;
 ; $Id$
 ;
@@ -124,7 +124,7 @@ Page custom installOptions readOptions
 !insertmacro MUI_LANGUAGE "English"
 
 InstType "Standard"
-InstType "Full"
+InstType "Developer"
 InstType "Minimal"
 
 ;--------------------------------
@@ -445,327 +445,146 @@ SectionEnd
 SectionGroupEnd
 
 SectionGroup "Packages" packages
-SectionGroup "XOTcl ${XOTCL_VERSION}" xotcl
-Section "XOTcl base" xotcl-base
+
+Section "BWidget ${BWIDGET_VERSION}" bwidget
   Sectionin 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=XOTcl-license "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
+  SetOutPath $INSTDIR\doc\packages\files\BWidget
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ArrowButton.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Button.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ButtonBox.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\BWidget.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ComboBox.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\contents.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Dialog.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DragSite.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DropSite.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DynamicHelp.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Entry.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\index.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Label.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\LabelEntry.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\LabelFrame.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ListBox.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\MainFrame.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\MessageDlg.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\navtree.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\NoteBook.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\options.htm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PagesManager.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PanedWindow.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PanelFrame.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PasswdDlg.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ProgressBar.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ProgressDlg.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrollableFrame.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrolledWindow.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrollView.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SelectColor.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SelectFont.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Separator.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SpinBox.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\StatusBar.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\TitleFrame.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Tree.html"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Widget.html"
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\arrow.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\bitmap.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\button.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\buttonbox.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\ChangeLog"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\CHANGES.txt"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\color.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\combobox.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dialog.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dragsite.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dropsite.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dynhelp.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\entry.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\font.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\init.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\label.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\labelentry.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\labelframe.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\listbox.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\mainframe.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\messagedlg.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\notebook.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\pagesmgr.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\panedw.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\panelframe.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\passwddlg.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\progressbar.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\progressdlg.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\README.txt"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollframe.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollview.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollw.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\separator.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\spinbox.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\statusbar.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\titleframe.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\tree.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\utils.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\widget.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\wizard.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\xpm2image.tcl"
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\demo
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\basic.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\bwidget.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\demo.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\dnd.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\manager.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\select.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\tmpldlg.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\tree.tcl"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\x1.xbm"
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\images
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\bold.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\copy.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\cut.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\dragfile.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\dragicon.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\error.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\file.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\folder.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\hourglass.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\info.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\italic.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\minus.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\new.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\opcopy.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\open.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\openfold.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\oplink.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\opmove.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\overstrike.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\palette.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\passwd.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\paste.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\plus.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\print.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\question.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\redo.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\save.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\target.xbm"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\underline.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\undo.gif"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\warning.gif"
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\da.rc"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\de.rc"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\en.rc"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\es.rc"
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\fr.rc"
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests
+  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\tests\entry.test"
   SetOutPath $INSTDIR\doc\packages\files\xotcl
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapter-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapterExample-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\cascaded-message-filter.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\changeXOTclVersion-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\composite-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\compositeExample-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\features.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\filter-inheritance.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\forwardtest-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\ftp-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\htmllib-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\index.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\JufGdbmStorage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef-xotcl.pdf"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef.xotcl"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\link-checker-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\logo-100.jpg"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\make-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\makeDoc-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\MemStorage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\metadataAnalyzer-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\mixinStrategy-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\MultiStorage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\next-path-mixin-movement.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\next-path.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\obj_class_system.gif"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\observer-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\package-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\parameter-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Persistence-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\persistenceExample-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\pinger-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\pkgIndex.tcl"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Script-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\secure-webclient-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\secure-webserver-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Serializer-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\simpleFilters-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\slottest-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\soccerClub-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\speedtest-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\staticMetadata-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Storage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TclGdbmStorage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\test-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\testo-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\testx-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TextFileStorage-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TODO"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\trace-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\tutorial.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\tutorial.pdf"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\UNIVERSAL-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\upvarcompat-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\webclient-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\webserver-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xo-daemon.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xo-whichPkg.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xocomm-test.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xodoc-xotcl.html"
-  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xotcl-doc.css"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xotcl${XOTCL_LIBVER}.dll"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\Agent.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\AgentManagement.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\HtmlPlace.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\HttpPlace.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\Invoker.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\pageTemplate.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\PlaceAccessControl.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SecureHtmlPlace.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SecureHttpPlace.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SendStrategy.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\UserMgt.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebAgent.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebDocument.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebObject.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\COPYRIGHT"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\actiweb"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\AgentClient.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter.README"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter2.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter3.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter4.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\examples.README"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\FormsWithState.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\MC.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Receiver.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\securePlaceDemo.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\comm"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\client.pem"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\filename.crt"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\filename.key"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\ftp.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\get-regression-nb.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\get-regression.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\link-checker.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\secure-webclient.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\secure-webserver.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\server.key"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\server.pem"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\test-tls-client.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\test-tls-server.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\webclient.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\webserver.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\persistence"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\persistence\persistenceTest.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\scripts"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\adapter.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\adapterExample.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\composite.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\compositeExample.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\observer.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\parameter.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\pinger.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\simpleFilters.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\soccerClub.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\utils"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xo-daemon"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xo-whichPkg"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xotclsh"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xotclsh.in"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xowish"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xowish.in"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\comm"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Access.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Connection.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Dav.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Ftp.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Httpd.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Imap.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Ldap.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Mime.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\PCache.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\pkgIndex.tcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\changeXOTclVersion.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\htmllib.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\make.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\makeDoc.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\metadataAnalyzer.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\mixinStrategy.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\package.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\Script.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\staticMetadata.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\test.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\trace.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\upvarcompat.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\wafecompat.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\xodoc.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\patterns"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\adapter.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\ChainOfResponsibility.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\composite.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\link.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\manager.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\observer.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\OnCalleeProxy.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\Singleton.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\SortedComposite.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\rdf"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\RDFCreator.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\rdfExample.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\rdfRecreatorVisitor.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\RDFTriple.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\xoRDF.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\registry"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\registry\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\registry\Registry.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\serialize"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\RecoveryPoint.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\ScriptCreator.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\Serializer.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\store"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\JufGdbmStorage.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\MemStorage.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\MultiStorage.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\Persistence.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\persistenceExample.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\Storage.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\TclGdbmStorage.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\TextFileStorage.xotcl"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xml"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\printVisitor.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\sgml.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xml.tcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xml.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xmlExample.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xmlRecreatorVisitor.xotcl"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xoXML.xotcl"
-  SetOutPath "$INSTDIR\lib\xotclexpat0.9"
-  File "${INSTROOT}\lib\xotclexpat0.9\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotclexpat0.9\xotclexpat09.dll"
-  SetOutPath "$INSTDIR\lib\xotclgdbm1.2"
-  File "${INSTROOT}\lib\xotclgdbm1.2\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotclgdbm1.2\xotclgdbm12.dll"
-  SetOutPath "$INSTDIR\lib\xotclsdbm1.2"
-  File "${INSTROOT}\lib\xotclsdbm1.2\pkgIndex.tcl"
-  File "${INSTROOT}\lib\xotclsdbm1.2\xotclsdbm12.dll"
-  SetOutPath $INSTDIR\doc\packages\files\xotcl
-  CreateShortCut "$INSTDIR\doc\packages\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\files\xotcl\index.html" "" "$INSTDIR\doc\packages\files\xotcl\index.html" 0
-SectionEnd
-
-Section "XOTcl headers & libraries" xotcl-dev
-  SectionIn 2
-  SetOutPath $INSTDIR\include
-  File "${INSTROOT}\include\xotcl.h"
-  File "${INSTROOT}\include\xotclDecls.h"
-  File "${INSTROOT}\include\xotclInt.h"
-  File "${INSTROOT}\include\xotclIntDecls.h"
-  SetOutPath $INSTDIR\lib
-  File "${INSTROOT}\lib\xotclConfig.sh"
-  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
-  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\libxotclstub${XOTCL_LIBVER}.a"
-SectionEnd
-SectionGroupEnd
-
-SectionGroup "tDOM ${TDOM_VERSION}" tdom
-Section "tDOM base" tdom-base
-  Sectionin 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=tDOM-license.txt "${INSTROOT}\lib\tdom${TDOM_VERSION}\LICENSE"
-  SetOutPath $INSTDIR\doc\packages\files\tdom
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\category-index.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\dom.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domDoc.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domNode.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expat.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expatapi.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\index.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\keyword-index.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tdomcmd.html"
-  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tnc.html"
-  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
-  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom.tcl"
-  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom${TDOM_LIBVER}.dll"
-  SetOutPath $INSTDIR\doc\packages\files\tdom
-  CreateShortCut "$INSTDIR\doc\packages\tDOM Documentation.lnk" "$INSTDIR\doc\packages\files\tdom\index.html" "" "$INSTDIR\doc\packages\files\tdom\index.html" 0
-SectionEnd
-
-Section "tDOM headers & libraries" tdom-dev
-  SectionIn 2
-  SetOutPath $INSTDIR\include
-  File "${INSTROOT}\include\tdom.h"
-  SetOutPath $INSTDIR\lib
-  File "${INSTROOT}\lib\tdomConfig.sh"
-  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
-  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\libtdomstub${TDOM_LIBVER}.a"
-SectionEnd
-SectionGroupEnd
-
-Section "Thread ${THREAD_VERSION}" thread
-  SectionIn 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=thread-license.txt "${BUILDDIR}\thread${THREAD_VERSION}\license.terms"
-  SetOutPath $INSTDIR\doc\packages\files\thread
-  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\index.html"
-  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\thread.html"
-  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tpool.html"
-  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tsv.html"
-  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\ttrace.html"
-  SetOutPath $INSTDIR\lib\thread${THREAD_VERSION}
-  File "${INSTROOT}\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
-  File "${INSTROOT}\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\thread${THREAD_VERSION}\ttrace.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\thread
-  CreateShortCut "$INSTDIR\doc\packages\thread Documentation.lnk" "$INSTDIR\doc\packages\files\thread\index.html" "" "$INSTDIR\doc\packages\files\thread\index.html" 0
-SectionEnd
-
-Section "Tgdbm ${TGDBM_VERSION}" tgdbm
-  SectionIn 1 2
-  SetOutPath $INSTDIR\lib\tgdbm${TGDBM_VERSION}
-  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
-  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
-  SetOutPath $INSTDIR\doc\packages\files
-  CreateShortCut "$INSTDIR\doc\packages\TGDBM Homepage.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
-SectionEnd
-
-Section "TclVfs ${TCLVFS_VERSION}" tclvfs
-  SectionIn 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=TclVfs-license.txt "${BUILDDIR}\tclvfs\license.terms"
-  SetOutPath $INSTDIR\lib\vfs${TCLVFS_VERSION}
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\ftpvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\httpvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\mk4vfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\starkit.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tarvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tclprocvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\testvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tkvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfslib.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUrl.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUtils.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\webdavvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\zipvfs.tcl"
-  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfs${TCLVFS_LIBVER}.dll"
-  SetOutPath $INSTDIR\doc\packages\files
-  CreateShortCut "$INSTDIR\doc\packages\TclVfs Homepage.lnk" "http://sourceforge.net/projects/tclvfs"
+  CreateShortCut "$INSTDIR\doc\packages\BWidget Documentation.lnk" "$INSTDIR\doc\packages\files\bwidget\index.html" "" "$INSTDIR\doc\packages\files\bwidget\index.html" 0
+  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
+  CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
 SectionEnd
 
 Section "Memchan ${MEMCHAN_VERSION}" memchan
@@ -786,111 +605,160 @@ Section "Memchan ${MEMCHAN_VERSION}" memchan
   File "${INSTROOT}\lib\memchan${MEMCHAN_VERSION}\pkgIndex.tcl"
 SectionEnd
 
-SectionGroup "Trf ${TRF_VERSION}" trf
-Section "Trf base" trf-base
-  SectionIn 1 2
+Section "Metakit ${METAKIT_VERSION}" metakit
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
-  File /oname=Trf-license.txt "${INSTROOT}\lib\trf${TRF_VERSION}\doc\license.terms"
-  SetOutPath $INSTDIR\doc\packages\files\trf\capi
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CheckOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ClearCtrlBlock.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ConverterOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CreateCtrlBlock.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CreateOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_DeleteCtrlBlock.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_DeleteOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlipRegisterLong.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlipRegisterShort.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlushTransformation.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_Init.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_InitStubs.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_IsInitialized.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_LoadLibrary.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDCheck.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDFinal.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDStart.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDUpdate.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDUpdateBuf.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_QueryMaxRead.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_QueryOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_Register.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_RegisterMessageDigest.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SafeInit.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SeekQueryOptions.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SetObjOption.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SetOption.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ShiftRegister.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_TransformBuffer.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_TransformCharacter.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_WriteProc.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_XorBuffer.html"
-  SetOutPath $INSTDIR\doc\packages\files\trf\img
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\chan.gif"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\logo-120x181.gif"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\smiley16.gif"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\trfchan.gif"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\trfchan2.gif"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\up.gif"
-  SetOutPath $INSTDIR\doc\packages\files\trf
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\index.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\sitemap.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ack.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_bdist.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_binio.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_bz2.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_capi.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_changelog.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cmac.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cmds.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_compile.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_conv.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_copyrights.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ctea.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cunix.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cwin.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_danger.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_future.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_install.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_intro.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_logo.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_md.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_misc.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_news.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_patch.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_seek.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ssleay.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_techintro.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_transform.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_where.html"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_zip.html"
-  CreateShortCut "$INSTDIR\doc\packages\Trf Documentation.lnk" "$INSTDIR\doc\packages\files\trf\index.html" "" "$INSTDIR\doc\packages\files\trf\index.html" 0
-  SetOutPath $INSTDIR\lib\trf${TRF_VERSION}
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\Trf${TRF_LIBVER}.dll"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\pkgIndex.tcl"
-SectionEnd
-Section "Trf headers & libraries" trf-dev
-  SectionIn 2
+  File "${DOCSDIR}\licenses\Metakit-license.txt"
   SetOutPath $INSTDIR\include
-  File "${INSTROOT}\include\transform.h"
-  File "${INSTROOT}\include\trfDecls.h"
-  SetOutPath "$INSTDIR\lib\trf${TRF_VERSION}"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\libTrf${TRF_LIBVER}.a"
-  File "${INSTROOT}\lib\trf${TRF_VERSION}\libTrfstub${TRF_LIBVER}.a"
+  File "${INSTROOT}\include\mk4.h"
+  File "${INSTROOT}\include\mk4.inl"
+  File "${INSTROOT}\include\mk4str.h"
+  File "${INSTROOT}\include\mk4str.inl"
+  SetOutPath $INSTDIR\lib\Mk4tcl
+  File "${INSTROOT}\lib\Mk4tcl\Mk4tcl.dll"
+  File "${INSTROOT}\lib\Mk4tcl\pkgIndex.tcl"
+  SetOutPath $INSTDIR\bin
+  File "${INSTROOT}\bin\libmk4.dll"
+  SetOutPath $INSTDIR\doc\packages\files\metakit
+  File /oname=index.html "${INSTROOT}\lib\Mk4tcl\mk4tcl.html"
+  SetOutPath $INSTDIR\doc 
+  CreateShortCut "$INSTDIR\doc\packages\Metakit Documentation.lnk" "$INSTDIR\doc\packages\files\metakit\index.html" "" "$INSTDIR\doc\packages\files\metakit\index.html" 0
 SectionEnd
-SectionGroupEnd
 
-Section "tls ${TLS_VERSION}" tls
-  SectionIn 1 2
-  SetOutPath $INSTDIR\lib\tls${TLS_VERSION}
-  File "${INSTROOT}\lib\tls${TLS_VERSION}\tls15.dll"
-  File "${INSTROOT}\lib\tls${TLS_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\tls${TLS_VERSION}\tls.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\tls
-  File /oname=index.html "${INSTROOT}\lib\tls${TLS_VERSION}\tls.htm"
-  SetOutPath $INSTDIR\doc\packages\files\tls
-  CreateShortCut "$INSTDIR\doc\packages\Tls Documentation.lnk" "$INSTDIR\doc\packages\files\tls\index.html" "" "$INSTDIR\doc\packages\files\tls\index.html" 0
+Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
+  Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
-  File /oname=tls-license.txt "${INSTROOT}\lib\tls${TLS_VERSION}\license.terms"
+  File "${DOCSDIR}\licenses\mkZiplib-license.txt"
+  SetOutPath $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}
+  File "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib${MKZIPLIB_SHORTVER}.dll"
+  File "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\bin
+  File "${INSTROOT}\bin\zlib1.dll"
+  SetOutPath $INSTDIR\doc\packages\files\mkZiplib
+  File /oname=index.html "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib.htm"
+  CreateShortCut "$INSTDIR\doc\packages\mkZiplib Documentation.lnk" "$INSTDIR\doc\packages\files\mkZiplib\index.html" "" "$INSTDIR\doc\packages\files\mkZiplib\index.html" 0
+SectionEnd
+
+Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}
+  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmySQL.dll"
+  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmysqltcl.dll"
+  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\mysqltcl
+  File /oname=index.html "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\mysqltcl.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\mysqltcl Documentation.lnk" "$INSTDIR\doc\packages\files\mysqltcl\index.html" "" "$INSTDIR\doc\packages\files\mysqltcl\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+SectionEnd
+
+Section "pgtcl ${PGTCL_VERSION}" pgtcl
+  Sectionin 1 2
+  SetOutPath $INSTDIR\bin
+  File "${INSTROOT}\bin\libpq.dll"
+  File "${INSTROOT}\bin\pthreadGC2.dll"
+  SetOutPath $INSTDIR\lib\pgtcl${PGTCL_VERSION}
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pgtcl.dll"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\pgtcl
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\index.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\ln-legalnotice.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-blocking.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-cancelrequest.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-conndefaults.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-connect.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-disconnect.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-escape-bytea.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-escape-string.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec-params.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec-prepared.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-execute.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-getresult.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-isbusy.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-listen.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-close.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-creat.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-export.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-import.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-lseek.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-open.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-read.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-tell.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-unlink.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-write.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-notice-handler.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-on-connection-loss.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-parameter-status.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-quote.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-result.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-result-callback.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-select.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-params.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-prepared.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-transaction-status.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-unescape-bytea.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-async.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-asyncevent.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-cnq-execute.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-copy.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-dblist.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-esc.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-lo.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-pq.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-esc.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-lo.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-pq.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-results.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-examples.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-load-static.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-loading-load.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-loading.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make-macos.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make-win.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-overview.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-preface.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-async.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-connstatus.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-largeobj.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-notif.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-query.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref.html"
+  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\stylesheet.css"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\files\pgtcl\index.html" "" "$INSTDIR\doc\packages\files\pgtcl\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
+  File /oname=PostgreSQL-license.txt "${INSTROOT}\lib\COPYRIGHT-PostgreSQL"
+  File /oname=pgtcl-license.txt "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\COPYRIGHT"
+SectionEnd
+
+Section "Snack ${SNACK_VERSION}" snack
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\snack-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  SetOutPath $INSTDIR\doc\packages\files\snack
+  File /oname=index.html "${INSTROOT}\lib\snack${SNACK_SHORTVER}\tcl-man.html"
+  CreateShortCut "$INSTDIR\doc\packages\Snack Documentation.lnk" "$INSTDIR\doc\packages\files\snack\index.html" "" "$INSTDIR\doc\packages\files\snack\index.html" 0
+  SetOutPath $INSTDIR\lib\snack${SNACK_SHORTVER}
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsnack.dll"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsound.dll"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\snack.tcl"
+SectionEnd
+
+Section "SQLite ${SQLITE_VERSION}" sqlite
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\sqlite${SQLITE_VERSION}
+  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\sqlite${SQLITE_LIBVER}.dll"
+  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\SQLite Homepage.lnk" "http://www.sqlite.org/tclsqlite.html"
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=SQLite-license.txt "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\license.terms"
 SectionEnd
 
 Section "Tcllib ${TCLLIB_VERSION}" tcllib
@@ -1370,7 +1238,181 @@ Section "Tcllib ${TCLLIB_VERSION}" tcllib
   SetOutPath $INSTDIR\lib\tcllib${TCLLIB_VERSION}\uuid
   File "${INSTROOT}\lib\tcllib${TCLLIB_VERSION}\uuid\pkgIndex.tcl"
   File "${INSTROOT}\lib\tcllib${TCLLIB_VERSION}\uuid\uuid.tcl"
+SectionEnd
 
+Section "TclVfs ${TCLVFS_VERSION}" tclvfs
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=TclVfs-license.txt "${BUILDDIR}\tclvfs\license.terms"
+  SetOutPath $INSTDIR\lib\vfs${TCLVFS_VERSION}
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\ftpvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\httpvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\mk4vfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\starkit.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tarvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tclprocvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\testvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\tkvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfslib.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUrl.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfsUtils.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\webdavvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\zipvfs.tcl"
+  File "${INSTROOT}\lib\vfs${TCLVFS_VERSION}\vfs${TCLVFS_LIBVER}.dll"
+  SetOutPath $INSTDIR\doc\packages\files
+  CreateShortCut "$INSTDIR\doc\packages\TclVfs Homepage.lnk" "http://sourceforge.net/projects/tclvfs"
+SectionEnd
+
+SectionGroup "tDOM ${TDOM_VERSION}" tdom
+Section "tDOM base" tdom-base
+  Sectionin 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=tDOM-license.txt "${INSTROOT}\lib\tdom${TDOM_VERSION}\LICENSE"
+  SetOutPath $INSTDIR\doc\packages\files\tdom
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\category-index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\dom.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domDoc.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\domNode.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expat.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\expatapi.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\keyword-index.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tdomcmd.html"
+  File "${BUILDDIR}\tDOM-${TDOM_VERSION}\doc\tnc.html"
+  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom.tcl"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\tdom${TDOM_LIBVER}.dll"
+  SetOutPath $INSTDIR\doc\packages\files\tdom
+  CreateShortCut "$INSTDIR\doc\packages\tDOM Documentation.lnk" "$INSTDIR\doc\packages\files\tdom\index.html" "" "$INSTDIR\doc\packages\files\tdom\index.html" 0
+SectionEnd
+
+Section "tDOM headers & libraries" tdom-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "${INSTROOT}\include\tdom.h"
+  SetOutPath $INSTDIR\lib
+  File "${INSTROOT}\lib\tdomConfig.sh"
+  SetOutPath "$INSTDIR\lib\tdom${TDOM_VERSION}"
+  File "${INSTROOT}\lib\tdom${TDOM_VERSION}\libtdomstub${TDOM_LIBVER}.a"
+SectionEnd
+SectionGroupEnd
+
+Section "Tgdbm ${TGDBM_VERSION}" tgdbm
+  SectionIn 1 2
+  SetOutPath $INSTDIR\lib\tgdbm${TGDBM_VERSION}
+  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\tgdbm.dll"
+  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tgdbm${TGDBM_VERSION}\qgdbm.tcl"
+  SetOutPath $INSTDIR\doc\packages\files
+  CreateShortCut "$INSTDIR\doc\packages\TGDBM Homepage.lnk" "http://www.vogel-nest.de/wiki/Main/TgdbmDoc"
+SectionEnd
+
+Section "Thread ${THREAD_VERSION}" thread
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=thread-license.txt "${BUILDDIR}\thread${THREAD_VERSION}\license.terms"
+  SetOutPath $INSTDIR\doc\packages\files\thread
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\index.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\thread.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tpool.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\tsv.html"
+  File "${BUILDDIR}\thread${THREAD_VERSION}\doc\html\ttrace.html"
+  SetOutPath $INSTDIR\lib\thread${THREAD_VERSION}
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\thread${THREAD_LIBVER}.dll"
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\thread${THREAD_VERSION}\ttrace.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\thread
+  CreateShortCut "$INSTDIR\doc\packages\thread Documentation.lnk" "$INSTDIR\doc\packages\files\thread\index.html" "" "$INSTDIR\doc\packages\files\thread\index.html" 0
+SectionEnd
+
+SectionGroup "Tile ${TILE_VERSION}" tile
+Section "Tile base" tile-base
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=Tile-license.txt "${INSTROOT}\lib\tile${TILE_VERSION}\license.terms"
+  SetOutPath $INSTDIR\doc\packages\files\tile
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\Geometry.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\Theme.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\button.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\category-index.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\checkbutton.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\combobox.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\converting.txt"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\dialog.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\entry.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\frame.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\image.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\index.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\keyword-index.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\label.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\labelframe.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\manpage.css"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\menubutton.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\notebook.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\paned.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\progressbar.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\radiobutton.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\scrollbar.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\separator.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\sizegrip.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\style.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\tile-intro.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\treeview.html"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\widget.html"
+  CreateShortCut "$INSTDIR\doc\packages\Tile Documentation.lnk" "$INSTDIR\doc\packages\files\tile\index.html" "" "$INSTDIR\doc\packages\files\tile\index.html" 0
+  SetOutPath $INSTDIR\lib\tile${TILE_VERSION}
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\altTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\aquaTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\button.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\clamTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\classicTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\combobox.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\cursors.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\defaults.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\dialog.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\entry.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\fonts.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\icons.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\keynav.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\menubutton.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\notebook.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\paned.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\progress.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\scale.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\scrollbar.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\sizegrip.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\stepTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\tile.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\tile${TILE_LIBVER}.dll"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\treeview.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\utils.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\winTheme.tcl"
+  File "${INSTROOT}\lib\tile${TILE_VERSION}\xpTheme.tcl"
+SectionEnd
+Section "Tile headers & libraries" tile-dev
+  SectionIn 2
+  SetOutPath "$INSTDIR\include"
+  File "${INSTROOT}\include\tkTheme.h"
+  File "${INSTROOT}\include\ttkDecls.h"
+  SetOutPath "$INSTDIR\lib"
+  File "${INSTROOT}\lib\libttkstub.a"
+SectionEnd
+SectionGroupEnd
+
+Section "Tkhtml ${TKHTML_VERSION}" tkhtml
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\Tkhtml${TKHTML_VERSION}
+  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\Tkhtml${TKHTML_LIBVER}.dll"
+  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tkhtml
+  File /oname=index.html "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\spec.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\Tkhtml Documentation.lnk" "$INSTDIR\doc\packages\files\tkhtml\index.html" "" "$INSTDIR\doc\packages\files\tkhtml\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\Tkhtml-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
 SectionEnd
 
 Section "Tklib ${TKLIB_VERSION}" tklib
@@ -1491,163 +1533,143 @@ Section "Tklib ${TKLIB_VERSION}" tklib
   File "${INSTROOT}\lib\tklib${TKLIB_SHORTVER}\widget\scrollw.tcl"
   File "${INSTROOT}\lib\tklib${TKLIB_SHORTVER}\widget\superframe.tcl"
   File "${INSTROOT}\lib\tklib${TKLIB_SHORTVER}\widget\widget.tcl"
-
 SectionEnd
 
-Section "BWidget ${BWIDGET_VERSION}" bwidget
+Section "Tktable ${TKTABLE_VERSION}" tktable
   Sectionin 1 2
-  SetOutPath $INSTDIR\doc\packages\files\BWidget
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ArrowButton.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Button.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ButtonBox.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\BWidget.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ComboBox.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\contents.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Dialog.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DragSite.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DropSite.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\DynamicHelp.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Entry.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\index.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Label.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\LabelEntry.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\LabelFrame.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ListBox.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\MainFrame.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\MessageDlg.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\navtree.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\NoteBook.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\options.htm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PagesManager.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PanedWindow.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PanelFrame.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\PasswdDlg.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ProgressBar.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ProgressDlg.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrollableFrame.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrolledWindow.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\ScrollView.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SelectColor.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SelectFont.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Separator.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\SpinBox.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\StatusBar.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\TitleFrame.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Tree.html"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\BWman\Widget.html"
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\arrow.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\bitmap.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\button.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\buttonbox.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\ChangeLog"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\CHANGES.txt"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\color.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\combobox.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dialog.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dragsite.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dropsite.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\dynhelp.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\entry.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\font.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\init.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\label.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\labelentry.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\labelframe.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\listbox.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\mainframe.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\messagedlg.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\notebook.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\pagesmgr.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\panedw.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\panelframe.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\passwddlg.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\progressbar.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\progressdlg.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\README.txt"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollframe.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollview.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\scrollw.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\separator.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\spinbox.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\statusbar.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\titleframe.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\tree.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\utils.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\widget.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\wizard.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\xpm2image.tcl"
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\demo
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\basic.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\bwidget.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\demo.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\dnd.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\manager.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\select.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\tmpldlg.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\tree.tcl"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\demo\x1.xbm"
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\images
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\bold.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\copy.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\cut.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\dragfile.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\dragicon.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\error.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\file.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\folder.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\hourglass.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\info.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\italic.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\minus.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\new.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\opcopy.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\open.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\openfold.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\oplink.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\opmove.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\overstrike.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\palette.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\passwd.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\paste.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\plus.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\print.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\question.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\redo.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\save.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\target.xbm"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\underline.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\undo.gif"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\images\warning.gif"
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\lang
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\da.rc"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\de.rc"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\en.rc"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\es.rc"
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\lang\fr.rc"
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}\tests
-  File "${INSTROOT}\lib\BWidget${BWIDGET_VERSION}\tests\entry.test"
-  SetOutPath $INSTDIR\doc\packages\files\xotcl
-  CreateShortCut "$INSTDIR\doc\packages\BWidget Documentation.lnk" "$INSTDIR\doc\packages\files\bwidget\index.html" "" "$INSTDIR\doc\packages\files\bwidget\index.html" 0
-  SetOutPath $INSTDIR\lib\BWidget${BWIDGET_VERSION}
-  CreateShortCut "$INSTDIR\doc\licenses\BWidget-license.lnk" "$INSTDIR\lib\BWidget${BWIDGET_VERSION}\LICENSE.txt" "" "$INSTDIRlib\BWidget-${BWIDGET_VERSION}\LICENSE.txt" 0
-SectionEnd
-
-Section "mkZiplib ${MKZIPLIB_VERSION}" mkziplib
-  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\Tktable${TKTABLE_VERSION}
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\Tktable${TKTABLE_LIBVER}.dll"
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\tkTable.tcl"
+  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\pkgIndex.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tktable
+  File /oname=index.html "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\html\tkTable.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\Tktable Documentation.lnk" "$INSTDIR\doc\packages\files\tktable\index.html" "" "$INSTDIR\doc\packages\files\tktable\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
-  File "${DOCSDIR}\licenses\mkZiplib-license.txt"
-  SetOutPath $INSTDIR\lib\mkZiplib${MKZIPLIB_VERSION}
-  File "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib${MKZIPLIB_SHORTVER}.dll"
-  File "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\bin
-  File "${INSTROOT}\bin\zlib1.dll"
-  SetOutPath $INSTDIR\doc\packages\files\mkZiplib
-  File /oname=index.html "${INSTROOT}\lib\mkZiplib${MKZIPLIB_VERSION}\mkZiplib.htm"
-  CreateShortCut "$INSTDIR\doc\packages\mkZiplib Documentation.lnk" "$INSTDIR\doc\packages\files\mkZiplib\index.html" "" "$INSTDIR\doc\packages\files\mkZiplib\index.html" 0
+  File /oname=Tktable-license.txt "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\license.txt"
 SectionEnd
+
+Section "TkTreectrl ${TKTREECTRL_VERSION}" tktreectrl
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\treectrl${TKTREECTRL_VERSION}
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\filelist-bindings.tcl"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl${TKTREECTRL_LIBVER}.dll"
+  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tktreectrl
+  File /oname=index.html "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\htmldoc\treectrl.html"
+  SetOutPath $INSTDIR\doc
+  CreateShortCut "$INSTDIR\doc\packages\TkTreectrl Documentation.lnk" "$INSTDIR\doc\packages\files\tktreectrl\index.html" "" "$INSTDIR\doc\packages\files\tktreectrl\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=TkTreectrl-license.txt "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\license.terms"
+SectionEnd
+
+Section "tls ${TLS_VERSION}" tls
+  SectionIn 1 2
+  SetOutPath $INSTDIR\lib\tls${TLS_VERSION}
+  File "${INSTROOT}\lib\tls${TLS_VERSION}\tls15.dll"
+  File "${INSTROOT}\lib\tls${TLS_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\tls${TLS_VERSION}\tls.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\tls
+  File /oname=index.html "${INSTROOT}\lib\tls${TLS_VERSION}\tls.htm"
+  SetOutPath $INSTDIR\doc\packages\files\tls
+  CreateShortCut "$INSTDIR\doc\packages\Tls Documentation.lnk" "$INSTDIR\doc\packages\files\tls\index.html" "" "$INSTDIR\doc\packages\files\tls\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=tls-license.txt "${INSTROOT}\lib\tls${TLS_VERSION}\license.terms"
+SectionEnd
+
+SectionGroup "Trf ${TRF_VERSION}" trf
+Section "Trf base" trf-base
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=Trf-license.txt "${INSTROOT}\lib\trf${TRF_VERSION}\doc\license.terms"
+  SetOutPath $INSTDIR\doc\packages\files\trf\capi
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CheckOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ClearCtrlBlock.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ConverterOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CreateCtrlBlock.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_CreateOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_DeleteCtrlBlock.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_DeleteOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlipRegisterLong.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlipRegisterShort.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_FlushTransformation.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_Init.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_InitStubs.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_IsInitialized.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_LoadLibrary.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDCheck.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDFinal.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDStart.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDUpdate.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_MDUpdateBuf.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_QueryMaxRead.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_QueryOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_Register.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_RegisterMessageDigest.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SafeInit.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SeekQueryOptions.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SetObjOption.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_SetOption.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_ShiftRegister.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_TransformBuffer.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_TransformCharacter.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_WriteProc.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\capi\Trf_XorBuffer.html"
+  SetOutPath $INSTDIR\doc\packages\files\trf\img
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\chan.gif"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\logo-120x181.gif"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\smiley16.gif"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\trfchan.gif"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\trfchan2.gif"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\img\up.gif"
+  SetOutPath $INSTDIR\doc\packages\files\trf
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\index.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\sitemap.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ack.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_bdist.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_binio.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_bz2.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_capi.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_changelog.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cmac.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cmds.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_compile.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_conv.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_copyrights.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ctea.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cunix.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_cwin.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_danger.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_future.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_install.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_intro.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_logo.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_md.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_misc.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_news.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_patch.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_seek.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_ssleay.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_techintro.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_transform.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_where.html"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\doc\trf_zip.html"
+  CreateShortCut "$INSTDIR\doc\packages\Trf Documentation.lnk" "$INSTDIR\doc\packages\files\trf\index.html" "" "$INSTDIR\doc\packages\files\trf\index.html" 0
+  SetOutPath $INSTDIR\lib\trf${TRF_VERSION}
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\Trf${TRF_LIBVER}.dll"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\pkgIndex.tcl"
+SectionEnd
+Section "Trf headers & libraries" trf-dev
+  SectionIn 2
+  SetOutPath $INSTDIR\include
+  File "${INSTROOT}\include\transform.h"
+  File "${INSTROOT}\include\trfDecls.h"
+  SetOutPath "$INSTDIR\lib\trf${TRF_VERSION}"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\libTrf${TRF_LIBVER}.a"
+  File "${INSTROOT}\lib\trf${TRF_VERSION}\libTrfstub${TRF_LIBVER}.a"
+SectionEnd
+SectionGroupEnd
 
 Section "TWAPI ${TWAPI_VERSION}" twapi
   Sectionin 1 2
@@ -1709,123 +1731,6 @@ Section "TWAPI ${TWAPI_VERSION}" twapi
   CreateShortCut "$INSTDIR\doc\licenses\TWAPI-license.lnk" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" "" "$INSTDIR\lib\twapi${TWAPI_VERSION}\LICENSE" 0
 SectionEnd
 
-SectionGroup "Tile ${TILE_VERSION}" tile
-Section "Tile base" tile-base
-  SectionIn 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=Tile-license.txt "${INSTROOT}\lib\tile${TILE_VERSION}\license.terms"
-  SetOutPath $INSTDIR\doc\packages\files\tile
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\Geometry.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\Theme.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\button.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\category-index.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\checkbutton.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\combobox.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\converting.txt"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\dialog.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\entry.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\frame.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\image.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\index.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\keyword-index.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\label.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\labelframe.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\manpage.css"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\menubutton.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\notebook.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\paned.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\progressbar.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\radiobutton.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\scrollbar.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\separator.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\sizegrip.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\style.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\tile-intro.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\treeview.html"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\html\widget.html"
-  CreateShortCut "$INSTDIR\doc\packages\Tile Documentation.lnk" "$INSTDIR\doc\packages\files\tile\index.html" "" "$INSTDIR\doc\packages\files\tile\index.html" 0
-  SetOutPath $INSTDIR\lib\tile${TILE_VERSION}
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\altTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\aquaTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\button.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\clamTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\classicTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\combobox.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\cursors.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\defaults.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\dialog.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\entry.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\fonts.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\icons.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\keynav.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\menubutton.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\notebook.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\paned.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\progress.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\scale.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\scrollbar.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\sizegrip.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\stepTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\tile.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\tile${TILE_LIBVER}.dll"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\treeview.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\utils.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\winTheme.tcl"
-  File "${INSTROOT}\lib\tile${TILE_VERSION}\xpTheme.tcl"
-SectionEnd
-Section "Tile headers & libraries" tile-dev
-  SectionIn 2
-  SetOutPath "$INSTDIR\include"
-  File "${INSTROOT}\include\tkTheme.h"
-  File "${INSTROOT}\include\ttkDecls.h"
-  SetOutPath "$INSTDIR\lib"
-  File "${INSTROOT}\lib\libttkstub.a"
-SectionEnd
-SectionGroupEnd
-
-Section "Tkhtml ${TKHTML_VERSION}" tkhtml
-  Sectionin 1 2
-  SetOutPath $INSTDIR\lib\Tkhtml${TKHTML_VERSION}
-  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\Tkhtml${TKHTML_LIBVER}.dll"
-  File "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\tkhtml
-  File /oname=index.html "${INSTROOT}\lib\Tkhtml${TKHTML_VERSION}\spec.html"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\Tkhtml Documentation.lnk" "$INSTDIR\doc\packages\files\tkhtml\index.html" "" "$INSTDIR\doc\packages\files\tkhtml\index.html" 0
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\Tkhtml-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
-SectionEnd
-
-Section "Tktable ${TKTABLE_VERSION}" tktable
-  Sectionin 1 2
-  SetOutPath $INSTDIR\lib\Tktable${TKTABLE_VERSION}
-  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\Tktable${TKTABLE_LIBVER}.dll"
-  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\tkTable.tcl"
-  File "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\tktable
-  File /oname=index.html "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\html\tkTable.html"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\Tktable Documentation.lnk" "$INSTDIR\doc\packages\files\tktable\index.html" "" "$INSTDIR\doc\packages\files\tktable\index.html" 0
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=Tktable-license.txt "${INSTROOT}\lib\Tktable${TKTABLE_VERSION}\license.txt"
-SectionEnd
-
-Section "TkTreectrl ${TKTREECTRL_VERSION}" tktreectrl
-  Sectionin 1 2
-  SetOutPath $INSTDIR\lib\treectrl${TKTREECTRL_VERSION}
-  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\filelist-bindings.tcl"
-  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl${TKTREECTRL_LIBVER}.dll"
-  File "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\treectrl.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\tktreectrl
-  File /oname=index.html "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\htmldoc\treectrl.html"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\TkTreectrl Documentation.lnk" "$INSTDIR\doc\packages\files\tktreectrl\index.html" "" "$INSTDIR\doc\packages\files\tktreectrl\index.html" 0
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=TkTreectrl-license.txt "${INSTROOT}\lib\treectrl${TKTREECTRL_VERSION}\license.terms"
-SectionEnd
-
 Section "Winico ${WINICO_VERSION}" winico
   Sectionin 1 2
   SetOutPath $INSTDIR\lib\Winico${WINICO_VERSION}
@@ -1839,147 +1744,242 @@ Section "Winico ${WINICO_VERSION}" winico
   File /oname=winico-license.txt "${INSTROOT}\lib\Winico${WINICO_VERSION}\license.terms"
 SectionEnd
 
-Section "Snack ${SNACK_VERSION}" snack
-  SectionIn 1 2
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\snack-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
-  SetOutPath $INSTDIR\doc\packages\files\snack
-  File /oname=index.html "${INSTROOT}\lib\snack${SNACK_SHORTVER}\tcl-man.html"
-  CreateShortCut "$INSTDIR\doc\packages\Snack Documentation.lnk" "$INSTDIR\doc\packages\files\snack\index.html" "" "$INSTDIR\doc\packages\files\snack\index.html" 0
-  SetOutPath $INSTDIR\lib\snack${SNACK_SHORTVER}
-  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsnack.dll"
-  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsound.dll"
-  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
-  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\snack.tcl"
-SectionEnd
-
-Section "SQLite ${SQLITE_VERSION}" sqlite
-  Sectionin 1 2
-  SetOutPath $INSTDIR\lib\sqlite${SQLITE_VERSION}
-  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\sqlite${SQLITE_LIBVER}.dll"
-  File "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\SQLite Homepage.lnk" "http://www.sqlite.org/tclsqlite.html"
-  SetOutPath $INSTDIR\doc\licenses
-  File /oname=SQLite-license.txt "${INSTROOT}\lib\sqlite${SQLITE_VERSION}\license.terms"
-SectionEnd
-
-Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
-  Sectionin 1 2
-  SetOutPath $INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}
-  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmySQL.dll"
-  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\libmysqltcl.dll"
-  File "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\mysqltcl
-  File /oname=index.html "${INSTROOT}\lib\mysqltcl${MYSQLTCL_VERSION}\mysqltcl.html"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\mysqltcl Documentation.lnk" "$INSTDIR\doc\packages\files\mysqltcl\index.html" "" "$INSTDIR\doc\packages\files\mysqltcl\index.html" 0
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\mysqltcl-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
-SectionEnd
-
-Section "pgtcl ${PGTCL_VERSION}" pgtcl
-  Sectionin 1 2
-  SetOutPath $INSTDIR\bin
-  File "${INSTROOT}\bin\libpq.dll"
-  File "${INSTROOT}\bin\pthreadGC2.dll"
-  SetOutPath $INSTDIR\lib\pgtcl${PGTCL_VERSION}
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pgtcl.dll"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
-  SetOutPath $INSTDIR\doc\packages\files\pgtcl
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\index.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\ln-legalnotice.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-blocking.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-cancelrequest.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-conndefaults.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-connect.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-disconnect.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-escape-bytea.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-escape-string.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec-params.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec-prepared.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-exec.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-execute.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-getresult.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-isbusy.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-listen.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-close.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-creat.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-export.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-import.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-lseek.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-open.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-read.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-tell.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-unlink.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-lo-write.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-notice-handler.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-on-connection-loss.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-parameter-status.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-quote.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-result.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-result-callback.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-select.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-params.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-sendquery-prepared.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-transaction-status.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pg-unescape-bytea.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-async.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-asyncevent.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-cnq-execute.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-copy.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-dblist.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-esc.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-lo.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picstore-pq.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-esc.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-lo.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-picview-pq.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-example-results.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-examples.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-load-static.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-loading-load.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-loading.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make-macos.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make-win.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-make.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-overview.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-preface.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-async.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-connstatus.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-largeobj.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-notif.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref-query.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\pgtcl-ref.html"
-  File "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\docs\stylesheet.css"
-  SetOutPath $INSTDIR\doc
-  CreateShortCut "$INSTDIR\doc\packages\pgtcl Documentation.lnk" "$INSTDIR\doc\packages\files\pgtcl\index.html" "" "$INSTDIR\doc\packages\files\pgtcl\index.html" 0
-  SetOutPath $INSTDIR\doc\licenses
-  CreateShortCut "$INSTDIR\doc\licenses\pthreads-license.lnk" "$INSTDIR\doc\licenses\LGPL.txt" "" "$INSTDIR\doc\licenses\LGPL.txt" 0
-  File /oname=PostgreSQL-license.txt "${INSTROOT}\lib\COPYRIGHT-PostgreSQL"
-  File /oname=pgtcl-license.txt "${INSTROOT}\lib\pgtcl${PGTCL_VERSION}\COPYRIGHT"
-SectionEnd
-
-Section "Metakit ${METAKIT_VERSION}" metakit
+SectionGroup "XOTcl ${XOTCL_VERSION}" xotcl
+Section "XOTcl base" xotcl-base
   Sectionin 1 2
   SetOutPath $INSTDIR\doc\licenses
-  File "${DOCSDIR}\licenses\Metakit-license.txt"
+  File /oname=XOTcl-license "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
+  SetOutPath $INSTDIR\doc\packages\files\xotcl
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapter-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\adapterExample-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\cascaded-message-filter.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\changeXOTclVersion-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\composite-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\compositeExample-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\features.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\filter-inheritance.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\forwardtest-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\ftp-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\htmllib-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\index.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\JufGdbmStorage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef-xotcl.pdf"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\langRef.xotcl"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\link-checker-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\logo-100.jpg"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\make-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\makeDoc-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\MemStorage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\metadataAnalyzer-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\mixinStrategy-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\MultiStorage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\next-path-mixin-movement.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\next-path.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\obj_class_system.gif"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\observer-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\package-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\parameter-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Persistence-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\persistenceExample-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\pinger-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\pkgIndex.tcl"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Script-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\secure-webclient-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\secure-webserver-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Serializer-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\simpleFilters-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\slottest-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\soccerClub-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\speedtest-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\staticMetadata-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\Storage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TclGdbmStorage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\test-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\testo-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\testx-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TextFileStorage-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\TODO"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\trace-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\tutorial.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\tutorial.pdf"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\UNIVERSAL-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\upvarcompat-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\webclient-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\webserver-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xo-daemon.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xo-whichPkg.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xocomm-test.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xodoc-xotcl.html"
+  File "${BUILDDIR}\xotcl-${XOTCL_VERSION}\doc\xotcl-doc.css"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xotcl${XOTCL_LIBVER}.dll"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\Agent.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\AgentManagement.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\HtmlPlace.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\HttpPlace.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\Invoker.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\pageTemplate.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\PlaceAccessControl.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SecureHtmlPlace.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SecureHttpPlace.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\SendStrategy.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\UserMgt.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebAgent.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebDocument.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\actiweb\WebObject.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\COPYRIGHT"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\actiweb"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\AgentClient.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter.README"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter2.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter3.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Counter4.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\examples.README"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\FormsWithState.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\MC.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\Receiver.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\actiweb\securePlaceDemo.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\comm"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\client.pem"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\filename.crt"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\filename.key"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\ftp.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\get-regression-nb.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\get-regression.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\link-checker.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\secure-webclient.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\secure-webserver.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\server.key"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\server.pem"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\test-tls-client.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\test-tls-server.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\webclient.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\comm\webserver.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\persistence"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\persistence\persistenceTest.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\scripts"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\adapter.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\adapterExample.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\composite.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\compositeExample.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\observer.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\parameter.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\pinger.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\simpleFilters.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\scripts\soccerClub.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps\utils"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xo-daemon"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xo-whichPkg"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xotclsh"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xotclsh.in"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xowish"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\apps\utils\xowish.in"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\comm"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Access.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Connection.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Dav.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Ftp.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Httpd.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Imap.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Ldap.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\Mime.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\PCache.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\comm\pkgIndex.tcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\lib"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\changeXOTclVersion.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\htmllib.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\make.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\makeDoc.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\metadataAnalyzer.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\mixinStrategy.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\package.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\Script.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\staticMetadata.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\test.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\trace.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\upvarcompat.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\wafecompat.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\lib\xodoc.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\patterns"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\adapter.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\ChainOfResponsibility.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\composite.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\link.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\manager.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\observer.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\OnCalleeProxy.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\Singleton.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\patterns\SortedComposite.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\rdf"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\RDFCreator.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\rdfExample.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\rdfRecreatorVisitor.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\RDFTriple.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\rdf\xoRDF.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\registry"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\registry\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\registry\Registry.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\serialize"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\RecoveryPoint.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\ScriptCreator.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\serialize\Serializer.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\store"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\JufGdbmStorage.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\MemStorage.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\MultiStorage.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\Persistence.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\persistenceExample.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\Storage.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\TclGdbmStorage.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\store\TextFileStorage.xotcl"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}\xml"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\printVisitor.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\sgml.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xml.tcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xml.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xmlExample.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xmlRecreatorVisitor.xotcl"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\xml\xoXML.xotcl"
+  SetOutPath "$INSTDIR\lib\xotclexpat0.9"
+  File "${INSTROOT}\lib\xotclexpat0.9\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotclexpat0.9\xotclexpat09.dll"
+  SetOutPath "$INSTDIR\lib\xotclgdbm1.2"
+  File "${INSTROOT}\lib\xotclgdbm1.2\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotclgdbm1.2\xotclgdbm12.dll"
+  SetOutPath "$INSTDIR\lib\xotclsdbm1.2"
+  File "${INSTROOT}\lib\xotclsdbm1.2\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xotclsdbm1.2\xotclsdbm12.dll"
+  SetOutPath $INSTDIR\doc\packages\files\xotcl
+  CreateShortCut "$INSTDIR\doc\packages\XOTcl Documentation.lnk" "$INSTDIR\doc\packages\files\xotcl\index.html" "" "$INSTDIR\doc\packages\files\xotcl\index.html" 0
+SectionEnd
+
+Section "XOTcl headers & libraries" xotcl-dev
+  SectionIn 2
   SetOutPath $INSTDIR\include
-  File "${INSTROOT}\include\mk4.h"
-  File "${INSTROOT}\include\mk4.inl"
-  File "${INSTROOT}\include\mk4str.h"
-  File "${INSTROOT}\include\mk4str.inl"
-  SetOutPath $INSTDIR\lib\Mk4tcl
-  File "${INSTROOT}\lib\Mk4tcl\Mk4tcl.dll"
-  File "${INSTROOT}\lib\Mk4tcl\pkgIndex.tcl"
-  SetOutPath $INSTDIR\bin
-  File "${INSTROOT}\bin\libmk4.dll"
-  SetOutPath $INSTDIR\doc\packages\files\metakit
-  File /oname=index.html "${INSTROOT}\lib\Mk4tcl\mk4tcl.html"
-  SetOutPath $INSTDIR\doc 
-  CreateShortCut "$INSTDIR\doc\packages\Metakit Documentation.lnk" "$INSTDIR\doc\packages\files\metakit\index.html" "" "$INSTDIR\doc\packages\files\metakit\index.html" 0
+  File "${INSTROOT}\include\xotcl.h"
+  File "${INSTROOT}\include\xotclDecls.h"
+  File "${INSTROOT}\include\xotclInt.h"
+  File "${INSTROOT}\include\xotclIntDecls.h"
+  SetOutPath $INSTDIR\lib
+  File "${INSTROOT}\lib\xotclConfig.sh"
+  SetOutPath "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
+  File "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\libxotclstub${XOTCL_LIBVER}.a"
 SectionEnd
+SectionGroupEnd
+
 SectionGroupEnd
 
 SectionGroup "Applications" applications

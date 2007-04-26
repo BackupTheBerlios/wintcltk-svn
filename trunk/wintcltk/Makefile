@@ -1,5 +1,5 @@
 # WinTclTk Makefile 
-# Copyright (c) 2006 Martin Matuska
+# Copyright (c) 2006-07 Martin Matuska
 #
 # $Id$
 #
@@ -10,8 +10,7 @@ FREEWRAPDIR=	$(CURDIR)/freewrap
 include $(SRCDIR)/defs/defs.mak
 include $(SRCDIR)/defs/tools.mak
 #
-WINTCLTK_VERSION=0.4.2
-WINTCLTK_FW_VERSION=0.1
+WINTCLTK_VERSION=0.5
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
@@ -20,6 +19,10 @@ MAKENSIS?=	"${PROGRAMFILES}/NSIS/makensis.exe"
 BUILDDIR?=	"${CURDIR}/src/build"
 PREFIX?=	"${CURDIR}/src/instroot"
 MAKE_ENV=	PREFIX="${PREFIX}" BUILDDIR="${BUILDDIR}"
+
+ifdef USE_UPX
+UPXDEF=		//DUSE_UPX=1
+endif
 
 all: installer fw
 build:
@@ -47,7 +50,7 @@ ${INSTALLER}:
 	@[ -x ${MAKENSIS} ] || ( echo "Counld not find ${MAKENSIS}, please install NSIS or point the MAKENSIS environment variable to makensis.exe"; exit 1 ) 
 	@INSTROOT=`cd ${PREFIX} && pwd -W | sed -e 's,/,\\\\,g'`;\
 	 BUILDDIR=`cd ${BUILDDIR} && pwd -W | sed -e 's,/,\\\\,g'`;\
-		cd installer && ${MAKENSIS} //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" //DINSTROOT="$${INSTROOT}" //DBUILDDIR="$${BUILDDIR}" wintcltk.nsi
+		cd installer && ${MAKENSIS} $(UPXDEF) //DVERSION=${WINTCLTK_VERSION} //DOUTFILE=\"..\\${INSTALLER}\" //DINSTROOT="$${INSTROOT}" //DBUILDDIR="$${BUILDDIR}" wintcltk.nsi
 
 static:
 	@cd $(SRCDIR) && make STATIC_BUILD=1
