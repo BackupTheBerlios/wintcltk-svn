@@ -104,3 +104,29 @@ clean-xotclide:
 
 distclean-xotclide:
 	@-rm -rf ${COMMONBUILD}/xotclIDE-${XOTCLIDE_VERSION}
+
+# xosql
+fetch-xosql: ${DISTFILES} ${DISTFILES}/xosql-${XOSQL_VERSION}.tar.gz
+${DISTFILES}/xosql-${XOSQL_VERSION}.tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.xdobry.de/xosql/xosql-${XOSQL_VERSION}.tar.gz"
+
+extract-xosql: fetch-xosql ${COMMONBUILD} ${COMMONBUILD}/xosql
+${COMMONBUILD}/xosql:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/xosql-${XOSQL_VERSION}.tar.gz.md5 || exit 1
+	@-cd ${COMMONBUILD} && tar xfz ${DISTFILES}/xosql-${XOSQL_VERSION}.tar.gz
+
+configure-xosql: install-xotcl extract-xosql 
+build-xosql: configure-xosql
+
+install-xosql: build-xosql ${PREFIX}/lib/xosql
+${PREFIX}/lib/xosql:
+	@cp -rf ${COMMONBUILD}/xosql $(PREFIX)/lib
+
+uninstall-xosql:
+	@-cd ${PREFIX} && rm -rf lib/xosql
+
+clean-xosql:
+
+distclean-xosql:
+	@-rm -rf ${COMMONBUILD}/xosql

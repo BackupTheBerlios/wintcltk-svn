@@ -104,6 +104,9 @@ http://prdownloads.sourceforge.net/twapi/twapi-1.1.5.zip
 Winico:
 http://prdownloads.sourceforge.net/tktable/winico06src.zip
 
+XOSql:
+http://www.xdobry.de/xosql/xosql-0.61.tar.gz
+
 XOTcl:
 http://media.wu-wien.ac.at/download/xotcl-1.5.3.tar.gz
 

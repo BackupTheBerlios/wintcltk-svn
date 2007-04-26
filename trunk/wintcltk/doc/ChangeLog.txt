@@ -3,6 +3,10 @@
 #
 # $Id$
 #
+2007-04-27 Martin Matuska <martin at matuska.org>
+	* added package XOSql 0.61
+	* release 0.5
+
 2007-04-26 Martin Matuska <martin at matuska.org>
 	* added package Tile 0.7.8
 	* added package Snack 2.2.0
@@ -10,7 +14,6 @@
 	* added package Tktreectrl 2.2.3
 	* added package Tkhtml 2.0
 	* removed Tkhtml 2.0 from ASED
-	* release 0.5
 
 2007-04-25 Martin Matuska <martin at matuska.org>
 	* added package Winico 0.6

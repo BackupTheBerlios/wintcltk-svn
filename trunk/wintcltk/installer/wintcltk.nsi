@@ -40,6 +40,7 @@
 !define SQLITE_VERSION "3.3.17"
 !define TKTREECTRL_VERSION "2.2.3"
 !define TKHTML_VERSION "2.0"
+!define XOSQL_VERSION "0.61"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -1744,9 +1745,36 @@ Section "Winico ${WINICO_VERSION}" winico
   File /oname=winico-license.txt "${INSTROOT}\lib\Winico${WINICO_VERSION}\license.terms"
 SectionEnd
 
+Section "XOSql ${XOSQL_VERSION}" xosql
+  Sectionin 1 2
+  SetOutPath $INSTDIR\lib\xosql
+  File "${INSTROOT}\lib\xosql\pkgIndex.tcl"
+  File "${INSTROOT}\lib\xosql\xdobry_access.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_mssql.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_mysql.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_odbc.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_oratcl.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_pgsql.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_sql.xotcl"
+  File "${INSTROOT}\lib\xosql\xdobry_sqlite.xotcl"
+  File "${INSTROOT}\lib\xosql\xosql.cfmap"
+  File "${INSTROOT}\lib\xosql\xosql.tcl"
+  SetOutPath $INSTDIR\doc\packages\files\xosql
+  File "${INSTROOT}\lib\xosql\doc\index.html"
+  File "${INSTROOT}\lib\xosql\doc\xdobry_mysql.html"
+  File "${INSTROOT}\lib\xosql\doc\xdobry_odbc.html"
+  File "${INSTROOT}\lib\xosql\doc\xdobry_pgsql.html"
+  File "${INSTROOT}\lib\xosql\doc\xdobry_sql.html"
+  File "${INSTROOT}\lib\xosql\doc\xdobry_sqlite.html"
+  SetOutPath $INSTDIR\doc\packages
+  CreateShortCut "$INSTDIR\doc\packages\XOSql Documentation.lnk" "$INSTDIR\doc\packages\files\xosql\index.html" "" "$INSTDIR\doc\packages\files\xosql\index.html" 0
+  SetOutPath $INSTDIR\doc\licenses
+  File /oname=XOSql-license.txt "${INSTROOT}\lib\xosql\LICENSE"
+SectionEnd
+
 SectionGroup "XOTcl ${XOTCL_VERSION}" xotcl
 Section "XOTcl base" xotcl-base
-  Sectionin 1 2
+  Sectionin 1 2 RO
   SetOutPath $INSTDIR\doc\licenses
   File /oname=XOTcl-license "${INSTROOT}\lib\xotcl${XOTCL_VERSION}\COPYRIGHT"
   SetOutPath $INSTDIR\doc\packages\files\xotcl
@@ -3983,6 +4011,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\Trf-license.txt"
   Delete "$INSTDIR\doc\licenses\TWAPI-license.lnk"
   Delete "$INSTDIR\doc\licenses\Winico-license.txt"
+  Delete "$INSTDIR\doc\licenses\XOSql-license.txt"
   Delete "$INSTDIR\doc\licenses\XOTcl-license"
   Delete "$INSTDIR\doc\licenses\XOTclIDE-license"
   Delete "$INSTDIR\doc\licenses\zlib-license.txt"
@@ -4007,6 +4036,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\Trf Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TWAPI Documentation.lnk"
   Delete "$INSTDIR\doc\packages\Winico Documentation.lnk"
+  Delete "$INSTDIR\doc\packages\XOSql Documentation.lnk"
   Delete "$INSTDIR\doc\packages\XOTcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\XOTclIDE Documentation.lnk"
   Delete "$INSTDIR\doc\packages\files\BWidget\ArrowButton.html"
@@ -4258,6 +4288,12 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\twapi\readme.txt"
   Delete "$INSTDIR\doc\packages\files\twapi\twapi.chm"
   Delete "$INSTDIR\doc\packages\files\winico\index.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\index.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\xdobry_mysql.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\xdobry_odbc.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\xdobry_pgsql.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\xdobry_sql.html"
+  Delete "$INSTDIR\doc\packages\files\xosql\xdobry_sqlite.html"
   Delete "$INSTDIR\doc\packages\files\xotcl\adapter-xotcl.html"
   Delete "$INSTDIR\doc\packages\files\xotcl\adapterExample-xotcl.html"
   Delete "$INSTDIR\doc\packages\files\xotcl\cascaded-message-filter.gif"
@@ -5434,6 +5470,17 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\vfs${TCLVFS_VERSION}\vfs${TCLVFS_LIBVER}.dll"
   Delete "$INSTDIR\lib\Winico${WINICO_VERSION}\Winico${WINICO_LIBVER}.dll"
   Delete "$INSTDIR\lib\Winico${WINICO_VERSION}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\xosql\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_access.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_mssql.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_mysql.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_odbc.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_oratcl.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_pgsql.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_sql.xotcl"
+  Delete "$INSTDIR\lib\xosql\xdobry_sqlite.xotcl"
+  Delete "$INSTDIR\lib\xosql\xosql.cfmap"
+  Delete "$INSTDIR\lib\xosql\xosql.tcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\Agent.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\AgentManagement.xotcl"
   Delete "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb\HtmlPlace.xotcl"
@@ -5650,6 +5697,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\apps"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}\actiweb"
   RMDir "$INSTDIR\lib\xotcl${XOTCL_VERSION}"
+  RMDir "$INSTDIR\lib\xosql"
   RMDir "$INSTDIR\lib\Winico${WINICO_VERSION}"
   RMDir "$INSTDIR\lib\vfs${TCLVFS_VERSION}"
   RMDir "$INSTDIR\lib\twapi${TWAPI_VERSION}\tests"
@@ -5798,6 +5846,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\include"
   RMDir "$INSTDIR\doc\packages\files\xotclIDE"
   RMDir "$INSTDIR\doc\packages\files\xotcl"
+  RMDir "$INSTDIR\doc\packages\files\xosql"
   RMDir "$INSTDIR\doc\packages\files\winico"
   RMDir "$INSTDIR\doc\packages\files\twapi"
   RMDir "$INSTDIR\doc\packages\files\trf\capi"
@@ -5926,6 +5975,7 @@ LangString DESC_xotclide ${LANG_ENGLISH} "Integrated Development Environment for
 LangString DESC_regext ${LANG_ENGLISH} "Register .tcl file extension"
 LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
 LangString DESC_sqlite ${LANG_ENGLISH} "Embeddable SQL database engine"
+LangString DESC_xosql ${LANG_ENGLISH} "XOTcl library for uniform sql-database access"
 
 !insertmacro MUI_FUNCTION_DESCRIPTION_BEGIN
   !insertmacro MUI_DESCRIPTION_TEXT ${packages} $(DESC_packages)
@@ -5979,6 +6029,7 @@ LangString DESC_sqlite ${LANG_ENGLISH} "Embeddable SQL database engine"
   !insertmacro MUI_DESCRIPTION_TEXT ${regext} $(DESC_regext)
   !insertmacro MUI_DESCRIPTION_TEXT ${tls} $(DESC_tls)
   !insertmacro MUI_DESCRIPTION_TEXT ${sqlite} $(DESC_sqlite)
+  !insertmacro MUI_DESCRIPTION_TEXT ${xosql} $(DESC_xosql)
 !insertmacro MUI_FUNCTION_DESCRIPTION_END
 
 Function .onInit
@@ -6021,15 +6072,19 @@ Function .onSelChange
    IntCmp $2 17 0 +3 0
    IntOp $0 $2 - 16 
    SectionSetFlags ${tklib} $0   
-   
+
    SectionGetFlags ${xotclide} $1
-   SectionGetFlags ${xotcl-base} $2
+   SectionGetFlags ${xosql} $2
+   SectionGetFlags ${xotcl-base} $3
    IntCmp $1 1 0 +3 0
    SectionSetFlags ${xotcl-base} 17
+   Goto +7
+   IntCmp $2 1 0 +3 0
+   SectionSetFlags ${xotcl-base} 17
    Goto +4
-   IntCmp $2 17 0 +3 0
-   IntOp $0 $2 - 16 
-   SectionSetFlags ${xotcl-base} $0
+   IntCmp $3 17 0 +3 0
+   IntOp $0 $3 - 16 
+   SectionSetFlags ${xotcl-base} $0   
 
    SectionGetFlags ${xotcl-base} $1
    SectionGetFlags ${tgdbm} $2

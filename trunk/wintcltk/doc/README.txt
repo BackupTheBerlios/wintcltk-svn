@@ -39,6 +39,7 @@ tls        1.5.0
 Trf	   2.1p2
 TWAPI	   1.1.5
 Winico     0.6
+XOSql      0.61
 XOTcl	   1.5.3
 XOTclIDE   0.82
 
@@ -82,6 +83,7 @@ TkTreectrl: http://tktreectrl.sourceforge.net/
 Tls: http://www.sensus.org/tcl
 Trf: http://tcltrf.sourceforge.net
 TWAPI: http://twapi.sourceforge.net
+XOSql: http://www.xdobry.de/xosql
 XOTcl: http://media.wu-wien.ac.at
 XOTclIDE: http://www.xdobry.de/xotclIDE
 
