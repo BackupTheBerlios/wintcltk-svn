@@ -60,6 +60,9 @@ http://www.vogel-nest.de/wiki/uploads/Main/tgdbm0.5.zip
 Tktable:
 http://prdownloads.sourceforge.net/tktable/Tktable2.9.tar.gz
 
+Tile:
+http://prdownloads.sourceforge.net/tktable/tile-0.7.8.tar.gz
+
 TclVfs:
 http://prdownload.berlios.de/wintcltk/tclvfs-20070412-src.tar.gz
 

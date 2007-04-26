@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-winico install-twapi install-tkcon install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-winico uninstall-twapi uninstall-tkcon uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-winico clean-twapi clean-tkcon clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-winico distclean-twapi distclean-tkcon distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-winico install-tile install-twapi install-tkcon install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-winico uninstall-tile uninstall-twapi uninstall-tkcon uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-winico clean-tile clean-twapi clean-tkcon clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-winico distclean-tile distclean-twapi distclean-tkcon distclean-ased
 
 # directories
 ${DISTFILES}:
@@ -858,3 +858,36 @@ clean-tktable:
 
 distclean-tktable:
 	@-rm -rf ${BUILDDIR}/Tktable${TKTABLE_VERSION}
+		
+# tile
+fetch-tile: ${DISTFILES} ${DISTFILES}/tile-$(TILE_VERSION).tar.gz
+${DISTFILES}/tile-$(TILE_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://${SOURCEFORGE_MIRROR}.dl.sourceforge.net/tktable/tile-$(TILE_VERSION).tar.gz"
+
+extract-tile: fetch-tile ${BUILDDIR} ${BUILDDIR}/tile-${TILE_VERSION}
+${BUILDDIR}/tile-${TILE_VERSION}:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/tile-$(TILE_VERSION).tar.gz.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/tile-$(TILE_VERSION).tar.gz
+
+configure-tile: install-tk extract-tile ${BUILDDIR}/tile-${TILE_VERSION}/Makefile
+${BUILDDIR}/tile-${TILE_VERSION}/Makefile:
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && ./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-tile: configure-tile ${BUILDDIR}/tile-${TILE_VERSION}/tile${subst .,,$(TILE_VERSION)}.dll 
+${BUILDDIR}/tile-${TILE_VERSION}/tile${subst .,,$(TILE_VERSION)}.dll :
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && make && strip *.dll
+
+install-tile: build-tile ${PREFIX}/lib/tile${TILE_VERSION}
+${PREFIX}/lib/tile${TILE_VERSION}:
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && make install
+	@cd ${BUILDDIR}/tile-${TILE_VERSION} && cp -rf license.terms doc/html ${PREFIX}/lib/tile${TILE_VERSION}
+	
+uninstall-tile:
+	@-cd ${PREFIX} && rm -rf lib/tile${TILE_VERSION}
+
+clean-tile:
+	@-cd ${BUILDDIR}/tile-${TILE_VERSION} && make clean
+
+distclean-tile:
+	@-rm -rf ${BUILDDIR}/tile-${TILE_VERSION}
