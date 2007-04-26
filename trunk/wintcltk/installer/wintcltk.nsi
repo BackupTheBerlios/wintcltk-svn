@@ -36,6 +36,7 @@
 !define WINICO_VERSION "0.6"
 !define TKTABLE_VERSION "2.9"
 !define TILE_VERSION "0.7.8"
+!define SNACK_VERSION "2.2.10"
 
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
@@ -53,6 +54,7 @@
 !define TKLIB_SHORTVER "0.4"
 !define MKZIPLIB_SHORTVER "10"
 !define TCLVFS_LIBVER "13"
+!define SNACK_SHORTVER "2.2"
 
 !ifndef OUTFILE
   !define OUTFILE "WinTclTk-MinGW-${VERSION}.exe"
@@ -1801,6 +1803,20 @@ Section "Winico ${WINICO_VERSION}" winico
   CreateShortCut "$INSTDIR\doc\packages\Winico Documentation.lnk" "$INSTDIR\doc\packages\files\winico\index.html" "" "$INSTDIR\doc\packages\files\winico\index.html" 0
   SetOutPath $INSTDIR\doc\licenses
   File /oname=winico-license.txt "${INSTROOT}\lib\Winico${WINICO_VERSION}\license.terms"
+SectionEnd
+
+Section "Snack ${SNACK_VERSION}" snack
+  SectionIn 1 2
+  SetOutPath $INSTDIR\doc\licenses
+  CreateShortCut "$INSTDIR\doc\licenses\snack-license.lnk" "$INSTDIR\doc\licenses\GPL.txt" "" "$INSTDIR\doc\licenses\GPL.txt" 0
+  SetOutPath $INSTDIR\doc\packages\files\snack
+  File /oname=index.html "${INSTROOT}\lib\snack${SNACK_SHORTVER}\tcl-man.html"
+  CreateShortCut "$INSTDIR\doc\packages\Snack Documentation.lnk" "$INSTDIR\doc\packages\files\snack\index.html" "" "$INSTDIR\doc\packages\files\snack\index.html" 0
+  SetOutPath $INSTDIR\lib\snack${SNACK_SHORTVER}
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsnack.dll"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\libsound.dll"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
+  File "${INSTROOT}\lib\snack${SNACK_SHORTVER}\snack.tcl"
 SectionEnd
 
 Section "mysqltcl ${MYSQLTCL_VERSION}" mysqltcl
@@ -3919,6 +3935,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\licenses\PostgreSQL-license.txt"
   Delete "$INSTDIR\doc\licenses\pgtcl-license.txt"
   Delete "$INSTDIR\doc\licenses\pthreads-license.lnk"
+  Delete "$INSTDIR\doc\licenses\snack-license.lnk"
   Delete "$INSTDIR\doc\licenses\tcllib-license.txt"
   Delete "$INSTDIR\doc\licenses\TclTk-license.txt"
   Delete "$INSTDIR\doc\licenses\TclVfs-license.txt"
@@ -3942,6 +3959,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\mkZiplib Documentation.lnk"
   Delete "$INSTDIR\doc\packages\pgtcl Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TclVfs Homepage.lnk"
+  Delete "$INSTDIR\doc\packages\snack Documentation.lnk"
   Delete "$INSTDIR\doc\packages\tDOM Documentation.lnk"
   Delete "$INSTDIR\doc\packages\TGDBM Homepage.lnk"
   Delete "$INSTDIR\doc\packages\thread Documentation.lnk"
@@ -4069,6 +4087,7 @@ Section "Uninstall"
   Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref-query.html"
   Delete "$INSTDIR\doc\packages\files\pgtcl\pgtcl-ref.html"
   Delete "$INSTDIR\doc\packages\files\pgtcl\stylesheet.css"
+  Delete "$INSTDIR\doc\packages\files\snack\index.html"
   Delete "$INSTDIR\doc\packages\files\tdom\category-index.html"
   Delete "$INSTDIR\doc\packages\files\tdom\dom.html"
   Delete "$INSTDIR\doc\packages\files\tdom\domDoc.html"
@@ -4538,6 +4557,10 @@ Section "Uninstall"
   Delete "$INSTDIR\lib\pgtcl${PGTCL_VERSION}\pkgIndex.tcl"
   Delete "$INSTDIR\lib\reg1.1\pkgIndex.tcl"
   Delete "$INSTDIR\lib\reg1.1\tclreg11.dll"
+  Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\libsnack.dll"
+  Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\libsound.dll"
+  Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\pkgIndex.tcl"
+  Delete "$INSTDIR\lib\snack${SNACK_SHORTVER}\snack.tcl"
   Delete "$INSTDIR\lib\tcl8.4\auto.tcl"
   Delete "$INSTDIR\lib\tcl8.4\encoding\ascii.enc"
   Delete "$INSTDIR\lib\tcl8.4\encoding\big5.enc"
@@ -5706,6 +5729,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\lib\tcl8.4\http1.0"
   RMDir "$INSTDIR\lib\tcl8.4\encoding"
   RMDir "$INSTDIR\lib\tcl8.4"
+  RMDir "$INSTDIR\lib\snack${SNACK_SHORTVER}"
   RMDir "$INSTDIR\lib\reg1.1"
   RMDir "$INSTDIR\lib\pgtcl${PGTCL_VERSION}"
   RMDir "$INSTDIR\lib\mysqltcl${MYSQLTCL_VERSION}"
@@ -5735,6 +5759,7 @@ Section "Uninstall"
   RMDir "$INSTDIR\doc\packages\files\tile"
   RMDir "$INSTDIR\doc\packages\files\thread"
   RMDir "$INSTDIR\doc\packages\files\tdom"
+  RMDir "$INSTDIR\doc\packages\files\snack"
   RMDir "$INSTDIR\doc\packages\files\pgtcl"
   RMDir "$INSTDIR\doc\packages\files\mysqltcl"
   RMDir "$INSTDIR\doc\packages\files\mkZiplib"
@@ -5834,6 +5859,7 @@ LangString DESC_tktable ${LANG_ENGLISH} "Full-featured 2D table widget for Tk"
 LangString DESC_tile ${LANG_ENGLISH} "Tk theme engine"
 LangString DESC_tile-base ${LANG_ENGLISH} "Tile base install"
 LangString DESC_tile-dev ${LANG_ENGLISH} "Tile development headers and libraries"
+LangString DESC_snack ${LANG_ENGLISH} "Sound processing extension"
 LangString DESC_bwidget ${LANG_ENGLISH} "High-level widget set for Tcl/Tk"
 LangString DESC_metakit ${LANG_ENGLISH} "Efficient embeeded database library"
 LangString DESC_mysqltcl ${LANG_ENGLISH} "Simple API for MySQL database"
@@ -5866,6 +5892,7 @@ LangString DESC_tls ${LANG_ENGLISH} "OpenSSL extension"
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl} $(DESC_xotcl)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-base} $(DESC_xotcl-base)
   !insertmacro MUI_DESCRIPTION_TEXT ${xotcl-dev} $(DESC_xotcl-dev)
+  !insertmacro MUI_DESCRIPTION_TEXT ${snack} $(DESC_snack)
   !insertmacro MUI_DESCRIPTION_TEXT ${thread} $(DESC_thread)
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom} $(DESC_tdom)
   !insertmacro MUI_DESCRIPTION_TEXT ${tdom-base} $(DESC_tdom-base)

@@ -95,6 +95,9 @@ http://pgfoundry.org/frs/download.php/1228/pgtcldocs-20070115.zip
 mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
 
+snack:
+http://www.speech.kth.se/snack/dist/snack2.2.10.tar.gz
+
 TWAPI:
 http://prdownloads.sourceforge.net/twapi/twapi-1.1.5.zip
 

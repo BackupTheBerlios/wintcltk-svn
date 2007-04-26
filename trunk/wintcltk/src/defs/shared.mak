@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-winico install-tile install-twapi install-tkcon install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-winico uninstall-tile uninstall-twapi uninstall-tkcon uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-winico clean-tile clean-twapi clean-tkcon clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-winico distclean-tile distclean-twapi distclean-tkcon distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-mkziplib install-winico install-tile install-snack install-twapi install-tkcon install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-mkziplib uninstall-zlib uninstall-winico uninstall-tile uninstall-snack uninstall-twapi uninstall-tkcon uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-mkziplib clean-zlib clean-winico clean-tile clean-snack clean-twapi clean-tkcon clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-mkziplib distclean-zlib distclean-winico distclean-tile distclean-snack distclean-twapi distclean-tkcon distclean-ased
 
 # directories
 ${DISTFILES}:
@@ -891,3 +891,45 @@ clean-tile:
 
 distclean-tile:
 	@-rm -rf ${BUILDDIR}/tile-${TILE_VERSION}
+
+# snack
+fetch-snack: ${DISTFILES} ${DISTFILES}/snack$(SNACK_VERSION).tar.gz ${DISTFILES}/ming.zip
+${DISTFILES}/snack$(SNACK_VERSION).tar.gz:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://www.speech.kth.se/snack/dist/snack${SNACK_VERSION}.tar.gz"
+${DISTFILES}/ming.zip:
+	@[ -x "${WGET}" ] || ( echo "$(MESSAGE_WGET)"; exit 1 ) 
+	@cd ${DISTFILES} && ${WGET} ${WGET_FLAGS} "http://people.montana.com/%7Ebowman/Software/ming.zip"
+			
+extract-snack: fetch-snack ${BUILDDIR} ${BUILDDIR}/snack${SNACK_VERSION}/win/i386-mingw32
+${BUILDDIR}/snack${SNACK_VERSION}/win/i386-mingw32:
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/snack$(SNACK_VERSION).tar.gz.md5 || exit 1
+	@cd ${DISTFILES} && md5sum -c ${MD5SUMS}/ming.zip.md5 || exit 1
+	@-cd ${BUILDDIR} && tar xfz ${DISTFILES}/snack$(SNACK_VERSION).tar.gz
+	@-cd ${BUILDDIR}/snack${SNACK_VERSION} && patch -p0 < $(PATCHDIR)/snack.patch
+	@-cd ${BUILDDIR}/snack$(SNACK_VERSION)/win && $(UNZIP) ${DISTFILES}/ming.zip
+	
+configure-snack: install-tk extract-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/Makefile
+${BUILDDIR}/snack${SNACK_VERSION}/win/Makefile:
+	@cd ${BUILDDIR}/snack${SNACK_VERSION}/win && \
+		CFLAGS="$(CFLAGS) -I./i386-mingw32/include" \
+		LDFLAGS="$(LDFLAGS) -L./i386-mingw32/lib" \
+		./configure --prefix=${PREFIX} --enable-threads --enable-shared --with-tcl=${PREFIX}/lib --with-tk=${PREFIX}/lib
+
+build-snack: configure-snack ${BUILDDIR}/snack${SNACK_VERSION}/win/snack${subst .,,$(SNACK_VERSION)}.dll 
+${BUILDDIR}/snack${SNACK_VERSION}/win/snack${subst .,,$(SNACK_VERSION)}.dll :
+	@cd ${BUILDDIR}/snack${SNACK_VERSION}/win && make && strip *.dll
+
+install-snack: build-snack ${PREFIX}/lib/snack${SNACK_VERSION}
+${PREFIX}/lib/snack$(SNACK_VERSION):
+	@cd $(BUILDDIR)/snack$(SNACK_VERSION)/win && make install
+	@cd $(BUILDDIR)/snack$(SNACK_VERSION) && cp -f doc/tcl-man.html $(PREFIX)/lib/snack$(SNACK_SHORT)
+	
+uninstall-snack:
+	@-cd ${PREFIX} && rm -rf lib/snack$(SNACK_SHORT)
+
+clean-snack:
+	@-cd ${BUILDDIR}/snack${SNACK_VERSION} && make clean
+
+distclean-snack:
+	@-rm -rf ${BUILDDIR}/snack${SNACK_VERSION}
