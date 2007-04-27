@@ -79,6 +79,7 @@ Tgdbm: http://www.vogel-nest.de/wiki/Main/TgdbmPage
 thread: http://wiki.tcl.tk/2770
 Tile,Tktable,Winico: http://tktable.sourceforge.net
 tkcon: http://tkcon.sourceforge.net
+Tkhtml: http://www.hwaci.com/sw/tkhtml
 TkTreectrl: http://tktreectrl.sourceforge.net/
 Tls: http://www.sensus.org/tcl
 Trf: http://tcltrf.sourceforge.net
