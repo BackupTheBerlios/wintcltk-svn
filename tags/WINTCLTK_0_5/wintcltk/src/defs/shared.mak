@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-sqlite install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xotclide install-tcllib install-tklib install-bwidget install-tkhtml install-mkziplib install-tktable install-tktreectrl install-winico install-tile install-snack install-twapi install-tkcon install-ased
-uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-sqlite uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-tkhtml uninstall-mkziplib uninstall-zlib uninstall-tktable uninstall-tktreectrl uninstall-winico uninstall-tile uninstall-snack uninstall-twapi uninstall-tkcon uninstall-ased 
-clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-sqlite clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-tkhtml clean-mkziplib clean-zlib clean-tktable clean-tktreectrl clean-winico clean-tile clean-snack clean-twapi clean-tkcon clean-ased
-distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-sqlite distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-tkhtml distclean-mkziplib distclean-zlib distclean-tktable distclean-tktreectrl distclean-winico distclean-tile distclean-snack distclean-twapi distclean-tkcon distclean-ased
+install: install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-memchan install-tls install-sqlite install-metakit install-mysqltcl install-pgtcl install-memchan install-trf install-tclvfs install-xosql install-xotclide install-tcllib install-tklib install-bwidget install-tkhtml install-mkziplib install-tktable install-tktreectrl install-winico install-tile install-snack install-twapi install-tkcon install-ased
+uninstall: uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-memchan uninstall-tls uninstall-openssl uninstall-sqlite uninstall-metakit uninstall-mysqlctl uninstall-pgtcl uninstall-memchan uninstall-trf uninstall-tclvfs uninstall-postgresql uninstall-pthreads uninstall-xosql uninstall-xotclide uninstall-tcllib uninstall-tklib uninstall-bwidget uninstall-tkhtml uninstall-mkziplib uninstall-zlib uninstall-tktable uninstall-tktreectrl uninstall-winico uninstall-tile uninstall-snack uninstall-twapi uninstall-tkcon uninstall-ased 
+clean: clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-memchan clean-tls clean-openssl clean-sqlite clean-metakit clean-mysqltcl clean-pgtcl clean-postgresql clean-pthreads clean-memchan clean-trf clean-tclvfs clean-xosql clean-xotclide clean-tcllib clean-tklib clean-bwidget clean-tkhtml clean-mkziplib clean-zlib clean-tktable clean-tktreectrl clean-winico clean-tile clean-snack clean-twapi clean-tkcon clean-ased
+distclean: distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-memchan distclean-tls distclean-openssl distclean-sqlite distclean-metakit distclean-mysqltcl distclean-pgtcl distclean-postgresql distclean-pthreads distclean-memchan distclean-trf distclean-tclvfs distclean-xosql distclean-xotclide distclean-tcllib distclean-tklib distclean-bwidget distclean-tkhtml distclean-mkziplib distclean-zlib distclean-tktable distclean-tktreectrl distclean-winico distclean-tile distclean-snack distclean-twapi distclean-tkcon distclean-ased
 
 # directories
 ${DISTFILES}:
@@ -986,8 +986,8 @@ build-tktreectrl: configure-tktreectrl ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSI
 ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/treectrl$(TKTREECTRL_LIBVER).dll :
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && make && strip *.dll
 
-install-tktreectrl: build-tktreectrl ${PREFIX}/lib/tktreectrl${TKTREECTRL_VERSION}
-${PREFIX}/lib/tktreectrl${TKTREECTRL_VERSION}:
+install-tktreectrl: build-tktreectrl ${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}
+${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}:
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && make install
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && cp -f license.terms ${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}
 	
