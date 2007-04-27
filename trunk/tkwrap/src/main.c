@@ -267,7 +267,7 @@ int main(int argc, char **argv){
 #endif
 
 #ifndef WITHOUT_TKHTML
-  if (Tktable_Init(interp) == TCL_ERROR) {
+  if (Tkhtml_Init(interp) == TCL_ERROR) {
       return TCL_ERROR;
      }
   Tcl_StaticPackage(interp, "Tkhtml", Tkhtml_Init, Tkhtml_SafeInit);

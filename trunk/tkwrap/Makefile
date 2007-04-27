@@ -96,14 +96,12 @@ WRAPNAME=	tclwrap
 endif
 
 ifdef XOTCL
-PROGNAME=	XoWrap
 PRODUCTNAME=	TkWrap for Windows (XOTcl ${XOTCL_VERSION})
 WRAPNAME=	xowrap
 endif
 ifdef FULL
-PROGNAME=	TkWrap (full)
 PRODUCTNAME=	TkWrap for Windows (full)
-WRAPNAME=	tkwrapfull
+WRAPNAME=	fullwrap
 endif
 
 ifdef TKCON
@@ -139,10 +137,11 @@ CC = gcc -DSTATIC_BUILD=1 -D__WIN32 -D_MBCS -DWIN32 -DWINDOWS
 CFLAGS= -O2 -Wall -DSTATIC_BUILD -DUSE_ZLIB -DWRAPNAME=\"$(WRAPNAME)\" $(X11_INCLUDES)
 
 ifndef FULL
-OPT_SEL+= -DWITHOUT_TDOM -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_MKZIPLIB -DWITHOUT_MEMCHAN -DWITHOUT_SNACK -DWITHOUT_TKTABLE -DWITHOUT_TKHTML
+OPT_SEL+= -DWITHOUT_TLS -DWITHOUT_MK4TCL -DWITHOUT_SNACK -DWITHOUT_TKTABLE -DWITHOUT_TKHTML -DWITHOUT_SQLITE
 endif
+
 ifndef XOTCL
-OPT_SEL+= -DWITHOUT_XOTCL -DWITHOUT_TGDBM
+OPT_SEL+= -DWITHOUT_XOTCL -DWITHOUT_TDOM
 endif
 
 ###### Add these options to CFLAGS when linking object files into
@@ -204,29 +203,32 @@ endif
 LIB_GDBM = $(INSTALLDIR)/libgdbm-static.a
 LIB_WINICO = $(INSTALLDIR)/Winico$(WINICO_VERSION)/Winico$(subst .,,$(WINICO_VERSION)).a
 LIB_THREAD = $(INSTALLDIR)/thread$(THREAD_VERSION)/thread$(THREAD_LIBVER).a
-LIB_Z = $(INSTALLDIR)/libz.a
-INDEXES= zipdir/lib/base/pkgIndex.tcl zipdir/lib/thread/pkgIndex.tcl
-ifdef FULL
-LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
-LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
-LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
-LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_MKZIPLIB = $(INSTALLDIR)/Mkziplib$(MKZIPLIB_VERSION)/Mkziplib$(MKZIPLIB_SHORT).a
 LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
+LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
+LIB_Z = $(INSTALLDIR)/libz.a
+INDEXES= zipdir/lib/base/pkgIndex.tcl zipdir/lib/thread/pkgIndex.tcl \
+	zipdir/lib/tgdbm/pkgIndex.tcl mkZiplib-pkgindex memchan-pkgindex
+	
+ifdef FULL
+LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
+LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
+LIB_MK4TCL = $(INSTALLDIR)/Mk4tcl/Mk4tcl.lib
 LIB_TKTABLE = $(INSTALLDIR)/Tktable$(TKTABLE_VERSION)/Tktable$(subst .,,$(TKTABLE_VERSION)).a
 LIB_TKHTML = $(INSTALLDIR)/Tkhtml$(TKHTML_VERSION)/Tkhtml$(TKHTML_LIBVER).a
 LIB_SQLITE = $(INSTALLDIR)/sqlite$(SQLITE_VERSION)/sqlite$(SQLITE_LIBVER).a
 LIB_SNACK = $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnack.a $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnackstub22.a
-INDEXES += metakit-pkgindex memchan-pkgindex mkZiplib-pkgindex \
+INDEXES += metakit-pkgindex \
 	snack-pkgindex tls-pkgindex tkhtml-pkgindex sqlite-pkgindex \
-	zipdir/lib/tdom/pkgIndex.tcl \
 	zipdir/lib/Tktable/pkgIndex.tcl
 XOTCL = 1
+DB = 1
 endif
+
 ifdef XOTCL
 LIB_XOTCL = $(INSTALLDIR)/xotcl$(XOTCL_LIBVER).a 
-LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
-INDEXES += zipdir/lib/tgdbm/pkgIndex.tcl
+LIB_TDOM = $(INSTALLDIR)/tdom$(TDOM_VERSION)/tdom$(TDOM_LIBVER).a
+INDEXES += zipdir/lib/tdom/pkgIndex.tcl
 endif
 XODIR = $(INSTALLDIR)/xotcl$(XOTCL_VERSION)
 	
@@ -492,7 +494,7 @@ resmanifest:
 
 wrap: all $(DISTDIR)/$(WRAPNAME)$(EXE)
 		
-full:
+fullwrap:
 	@make clean wrap FULL=1
 
 xowrap:
