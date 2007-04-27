@@ -323,7 +323,7 @@ ifdef TKCON
 SCRIPTS += zipdir/lib/ctext zipdir/lib/tkcon
 endif
 ifdef XOTCLIDE
-SCRIPTS += zipdir/lib/xotclide
+SCRIPTS += zipdir/lib/xotclide zipdir/lib/xosql/pkgIndex.tcl
 endif
 
 all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/$(WRAPNAME)$(EXE)
@@ -393,7 +393,13 @@ zipdir/lib/xotclide: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/xotclIDE
 	@$(CP) -rf $(INSTALLDIR)/xotclIDE/* zipdir/lib/xotclIDE
 	@echo "lappend auto_path /lib/xotclIDE" >> zipdir/lib/tcl/init-pkgs.tcl
-
+	
+zipdir/lib/xosql/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
+	@$(DELTREE) zipdir/lib/xosql
+	@$(MKDIR) zipdir/lib/xosql
+	@cd $(INSTALLDIR)/xosql && $(CP) -rf *.xotcl *.tcl $(CURDIR)/zipdir/lib/xosql
+	@echo "lappend auto_path /lib/xosql" >> zipdir/lib/tcl/init-pkgs.tcl
+	
 zipdir/lib/base/pkgIndex.tcl: zipdir/lib/tcl/init-pkgs.tcl
 	@$(MKDIR) zipdir/lib/base
 	@echo "package ifneeded dde 1.2.4 [list load \"\" dde]" > zipdir/lib/base/pkgIndex.tcl
