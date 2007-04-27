@@ -22,7 +22,7 @@ XOTCL=1
 endif
 
 # WinTclTk source dir
-SRCDIR?=	$(CURDIR)/../src
+SRCDIR?=	$(CURDIR)/../wintcltk/src
 
 # Include WinTclTk version defs
 include $(SRCDIR)/defs/defs.mak
