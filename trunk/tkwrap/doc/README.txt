@@ -51,9 +51,8 @@ and use it as a standard shell.
 For more information on packages please visit the WinTclTk homepage.
 http://wintcltk.berlios.de
 
-The wrappers are based on freeWrap and support all freeWrap command-line flags.
-Please refer to the freeWrap documentation for more details:
-http://freewrap.sourceforge.net/freeWrapDocs.pdf
+TkWrap is based on source code from the freeWrap project. Please see the freeWrap homepage for more information.
+http://freewrap.sourceforge.net
 
 Used icons are from the Tulliana 2.0 iconset by M.Umut Pulat, licensed under LGPL 2.1
 
