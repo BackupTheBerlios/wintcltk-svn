@@ -43,10 +43,12 @@ Tkhtml  2.0
 Tktable 2.9
 tls	1.5
 
+For in-file help and command line arguments please execute one of the wrapper files.
+
 You can rename the exe files to any other filename (e.g. "wish.exe")
 and use it as a standard shell.
 
-Please refer to WinTclTk Project documentation for more information.
+For more information on packages please visit the WinTclTk homepage.
 http://wintcltk.berlios.de
 
 The wrappers are based on freeWrap and support all freeWrap command-line flags.

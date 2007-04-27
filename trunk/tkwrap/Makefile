@@ -493,7 +493,8 @@ resmanifest:
 
 dist: tkwrap xowrap fullwrap $(DISTDIR)/tkwrap-$(TKWRAP_VERSION).zip
 $(DISTDIR)/tkwrap-$(TKWRAP_VERSION).zip:
-	@cd $(DISTDIR) && $(ZIP) -j9 tkwrap-$(TKWRAP_VERSION).zip tkwrap.exe xowrap.exe fullwrap.exe ../doc/README.htm
+	@cd $(DISTDIR) && $(ZIP) -9 tkwrap-$(TKWRAP_VERSION).zip tkwrap.exe xowrap.exe fullwrap.exe
+	@$(ZIP) -u9 $(DISTDIR)/tkwrap-$(TKWRAP_VERSION).zip doc/ChangeLog.txt doc/README.txt doc/README.htm
 	
 fullwrap: $(DISTDIR)/fullwrap.exe
 $(DISTDIR)/fullwrap.exe:
