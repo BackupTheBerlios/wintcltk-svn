@@ -4,10 +4,10 @@
 # $Id$
 #
 all: install
-install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-winico install-tklib install-tkhtml install-sqlite install-tktable install-snack install-tkcon install-xotclide
-uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-winico uninstall-tklib uninstall-tkhtml uninstall-sqlite uninstall-tktable uninstall-snack uninstall-tkcon uninstall-xotclide
-clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-winico clean-tklib clean-tkhtml clean-sqlite clean-tktable clean-snack clean-tkcon clean-xotclide
-distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-winico distclean-tklib distclean-tkhtml distclean-sqlite distclean-tktable distclean-snack distclean-tkcon distclean-xotclide
+install: ${PREFIX} install-zip-static install-tcl install-tk install-gdbm install-thread install-tdom install-xotcl install-tgdbm install-tls install-metakit install-memchan install-trf install-mkziplib install-winico install-tklib install-tkhtml install-sqlite install-tktable install-snack install-tkcon install-xosql install-xotclide
+uninstall: uninstall-zip-static uninstall-tcl uninstall-tk uninstall-thread uninstall-tdom uninstall-xotcl uninstall-tgdbm uninstall-gdbm uninstall-tls uninstall-openssl uninstall-metakit uninstall-memchan uninstall-trf uninstall-mkziplib uninstall-winico uninstall-tklib uninstall-tkhtml uninstall-sqlite uninstall-tktable uninstall-snack uninstall-tkcon uninstall-xosql uninstall-xotclide
+clean: clean-zip-static clean-tcl clean-tk clean-thread clean-tdom clean-xotcl clean-tgdbm clean-gdbm clean-tls clean-openssl clean-metakit clean-memchan clean-trf clean-mkziplib clean-winico clean-tklib clean-tkhtml clean-sqlite clean-tktable clean-snack clean-tkcon clean-xosql clean-xotclide
+distclean: distclean-zip-static distclean-tcl distclean-tk distclean-thread distclean-tdom distclean-xotcl distclean-tgdbm distclean-gdbm distclean-tls distclean-openssl distclean-metakit distclean-memchan distclean-trf distclean-mkziplib distclean-winico distclean-tklib distclean-tkhtml distclean-sqlite distclean-tktable distclean-snack distclean-tkcon distclean-xosql distclean-xotclide
 
 # directories
 ${DISTFILES}:
