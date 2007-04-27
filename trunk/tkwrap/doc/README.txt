@@ -9,7 +9,7 @@
 WinTclTk TkWrap - Tcl/Tk wrapper for Microsoft Windows
 Version 0.2
 
-With these files, Tcl/Tk scripts can be wrapped into single-file executables
+Tcl/Tk scripts can be wrapped into single-file executables
 that do not require any Tcl/Tk distributions installed.
 
 Included wrapper files:
@@ -22,21 +22,26 @@ The following extensions from WinTclTk are included:
 
 tkwrap.exe:
 
-Tcl/Tk	8.4.14
-Winico	0.5
-thread	2.6.5
+Tcl/Tk	 8.4.14
+memchan	2.2.1
+mkZiplib 1.0
+Tgdbm    0.5
+thread	 2.6.5
+Winico	 0.5
 
 xowrap.exe: = all tkwrap.exe packages +
 
-Tgdbm	0.5
+tDOM	0.8.1
 XOTcl	1.5.3
 
 fullwrap.exe: = all xowrap.exe packages +
 
-tls	1.5
-tDOM	0.8.1
-memchan	2.2.1
 Metakit 2.4.9.6
+snack   2.2.10
+SQLite  3.3.17
+Tkhtml  2.0
+Tktable 2.9
+tls	1.5
 
 You can rename the exe files to any other filename (e.g. "wish.exe")
 and use it as a standard shell.

@@ -208,8 +208,8 @@ LIB_MEMCHAN = $(INSTALLDIR)/Memchan$(MEMCHAN_VERSION)/memchan$(MEMCHAN_LIBVER).a
 LIB_TGDBM = $(INSTALLDIR)/tgdbm$(TGDBM_VERSION)/tgdbm.a
 LIB_Z = $(INSTALLDIR)/libz.a
 INDEXES= zipdir/lib/base/pkgIndex.tcl zipdir/lib/thread/pkgIndex.tcl \
-	zipdir/lib/tgdbm/pkgIndex.tcl mkZiplib-pkgindex memchan-pkgindex
-	
+	zipdir/lib/tgdbm/pkgIndex.tcl mkZiplib-pkgindex memchan-pkgindex	
+		
 ifdef FULL
 LIB_OPENSSL = $(INSTALLDIR)/libssl.a $(INSTALLDIR)/libcrypto.a
 LIB_TLS = $(INSTALLDIR)/tls$(TLS_VERSION)/tls$(TLS_LIBVER)s.a
@@ -218,8 +218,9 @@ LIB_TKTABLE = $(INSTALLDIR)/Tktable$(TKTABLE_VERSION)/Tktable$(subst .,,$(TKTABL
 LIB_TKHTML = $(INSTALLDIR)/Tkhtml$(TKHTML_VERSION)/Tkhtml$(TKHTML_LIBVER).a
 LIB_SQLITE = $(INSTALLDIR)/sqlite$(SQLITE_VERSION)/sqlite$(SQLITE_LIBVER).a
 LIB_SNACK = $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnack.a $(INSTALLDIR)/snack$(SNACK_SHORT)/libsnackstub22.a
-INDEXES += metakit-pkgindex \
-	snack-pkgindex tls-pkgindex tkhtml-pkgindex sqlite-pkgindex \
+INDEXES += metakit-pkgindex sqlite-pkgindex \
+	zipdir/lib/xosql/pkgIndex.tcl \
+	snack-pkgindex tls-pkgindex tkhtml-pkgindex \
 	zipdir/lib/Tktable/pkgIndex.tcl
 XOTCL = 1
 DB = 1
@@ -325,7 +326,7 @@ ifdef TKCON
 SCRIPTS += zipdir/lib/ctext zipdir/lib/tkcon
 endif
 ifdef XOTCLIDE
-SCRIPTS += zipdir/lib/xotclide zipdir/lib/xosql/pkgIndex.tcl
+SCRIPTS += zipdir/lib/xotclide
 endif
 
 all: static $(FBUILD) $(DISTDIR) $(FBUILD)/null.zip $(FBUILD)/$(WRAPNAME)$(EXE)
@@ -346,9 +347,6 @@ zipdir/freewrap.tcl: $(FBSRC)/freewrap.tcl
 zipdir/freewrapCmds.tcl: $(FBSRC)/freewrapCmds.tcl
 	@$(CP) $(FBSRC)/freewrapCmds.tcl zipdir/freewrapCmds.tcl
 
-$(DISTDIR)/$(WRAPNAME)$(EXE): $(FBUILD)/$(WRAPNAME)$(EXE)
-	@cp $(FBUILD)/$(WRAPNAME)$(EXE) $(DISTDIR)/$(WRAPNAME)$(EXE)
-
 $(FBUILD)/$(WRAPNAME)$(EXE): $(FBUILD)/$(WRAPNAME)_bare$(EXE) zipdir/freewrap.tcl zipdir/freewrapCmds.tcl $(ZSCRIPTS) $(XOTCL_SCRIPTS) $(INDEXES) $(SCRIPTS)
 	@$(RM) $(FBUILD)/$(WRAPNAME)$(EXE)
 	@$(CP) $(FBUILD)/$(WRAPNAME)_bare$(EXE) $(FBUILD)/tkwrap.zip
@@ -357,6 +355,7 @@ $(FBUILD)/$(WRAPNAME)$(EXE): $(FBUILD)/$(WRAPNAME)_bare$(EXE) zipdir/freewrap.tc
 	@$(CP) -f $(FBSRC)/$(ICONFILE) zipdir
 	@cd zipdir; pwd; rm -f tk/pkgIndex.tcl; $(ZIP) -rA9 -P `cat $(FBSRC)/currentPWD.txt` $(FBUILD)/tkwrap.zip *; cd ..
 	@$(RENAME) $(FBUILD)/tkwrap.zip $(FBUILD)/$(WRAPNAME)$(EXE)
+	@cp $(FBUILD)/$(WRAPNAME)$(EXE) $(DISTDIR)/$(WRAPNAME)$(EXE)
 
 $(FBUILD)/null.zip:
 	@echo . | $(ZIP) $(FBUILD)/null.zip -
@@ -492,27 +491,34 @@ resmanifest:
 	@$(SED) -e 's|%%VERSION%%|$(DOTVERSION)|g' -e 's|%%NAME%%|$(MANIFESTNAME)|g' \
 		$(FBSRC)/tkwrap.manifest.in > $(FBSRC)/tkwrap.manifest
 
-wrap: all $(DISTDIR)/$(WRAPNAME)$(EXE)
-		
-fullwrap:
-	@make clean wrap FULL=1
+dist: tkwrap xowrap fullwrap $(DISTDIR)/tkwrap-$(TKWRAP_VERSION).zip
+$(DISTDIR)/tkwrap-$(TKWRAP_VERSION).zip:
+	@cd $(DISTDIR) && $(ZIP) -j9 tkwrap-$(TKWRAP_VERSION).zip tkwrap.exe xowrap.exe fullwrap.exe ../doc/README.htm
+	
+fullwrap: $(DISTDIR)/fullwrap.exe
+$(DISTDIR)/fullwrap.exe:
+	@make clean all FULL=1
 
-xowrap:
-	@make clean wrap XOTCL=1
+xowrap: $(DISTDIR)/xowrap.exe
+$(DISTDIR)/xowrap.exe:
+	@make clean all XOTCL=1
 
-tkwrap:
-	@make clean wrap
+tkwrap: $(DISTDIR)/tkwrap.exe
+$(DISTDIR)/tkwrap.exe:
+	@make clean all
 
 tclwrap:
-	@make clean wrap WITHOUT_TK=1
+	@make clean all WITHOUT_TK=1
 	
-tkcon:
+tkcon: $(DISTDIR)/tkcon.exe
+$(DISTDIR)/tkcon.exe:
 	@make clean all FULL=1 TKCON=1
 	@cp $(FSCRIPTS)/tkcon.tcl $(FBUILD)
 	@cd $(FBUILD) && $(WRAPNAME)$(EXE) tkcon.tcl
 	@mv $(FBUILD)/tkcon$(EXE) $(DISTDIR)/tkcon$(EXE)
 
-xotclide:
+xotclide: $(DISTDIR)/xotclide.exe
+$(DISTDIR)/xotclide.exe:
 	@make clean all FULL=1 XOTCLIDE=1
 	@cp $(FSCRIPTS)/XOTclIDE.tcl $(FBUILD)
 	@cd $(FBUILD) && $(WRAPNAME)$(EXE) XOTclIDE.tcl
