@@ -986,8 +986,8 @@ build-tktreectrl: configure-tktreectrl ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSI
 ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION}/treectrl$(TKTREECTRL_LIBVER).dll :
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && make && strip *.dll
 
-install-tktreectrl: build-tktreectrl ${PREFIX}/lib/tktreectrl${TKTREECTRL_VERSION}
-${PREFIX}/lib/tktreectrl${TKTREECTRL_VERSION}:
+install-tktreectrl: build-tktreectrl ${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}
+${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}:
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && make install
 	@cd ${BUILDDIR}/tktreectrl-${TKTREECTRL_VERSION} && cp -f license.terms ${PREFIX}/lib/treectrl${TKTREECTRL_VERSION}
 	
