@@ -1,0 +1,74 @@
+--- configure.orig	2007-03-30 15:24:09.437500000 +0200
++++ configure	2007-03-30 15:26:01.578125000 +0200
+@@ -7029,13 +7029,13 @@
+ 
+   else
+ 
+-echo "$as_me:$LINENO: checking for CRYPTO_new_ex_data in -leay32" >&5
+-echo $ECHO_N "checking for CRYPTO_new_ex_data in -leay32... $ECHO_C" >&6
++echo "$as_me:$LINENO: checking for CRYPTO_new_ex_data in -lcrypto.dll" >&5
++echo $ECHO_N "checking for CRYPTO_new_ex_data in -lcrypto.dll... $ECHO_C" >&6
+ if test "${ac_cv_lib_eay32_CRYPTO_new_ex_data+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-leay32  $LIBS"
++LIBS="-lcrypto.dll  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -7098,22 +7098,22 @@
+ #define HAVE_LIBEAY32 1
+ _ACEOF
+ 
+-  LIBS="-leay32 $LIBS"
++  LIBS="-lcrypto.dll $LIBS"
+ 
+ else
+-  { { echo "$as_me:$LINENO: error: library 'eay32' is required for OpenSSL" >&5
+-echo "$as_me: error: library 'eay32' is required for OpenSSL" >&2;}
++  { { echo "$as_me:$LINENO: error: library 'crypto.dll' is required for OpenSSL" >&5
++echo "$as_me: error: library 'crypto.dll' is required for OpenSSL" >&2;}
+    { (exit 1); exit 1; }; }
+ fi
+ 
+ 
+-echo "$as_me:$LINENO: checking for SSL_library_init in -lssleay32" >&5
+-echo $ECHO_N "checking for SSL_library_init in -lssleay32... $ECHO_C" >&6
++echo "$as_me:$LINENO: checking for SSL_library_init in -lssl.dll" >&5
++echo $ECHO_N "checking for SSL_library_init in -lssl.dll... $ECHO_C" >&6
+ if test "${ac_cv_lib_ssleay32_SSL_library_init+set}" = set; then
+   echo $ECHO_N "(cached) $ECHO_C" >&6
+ else
+   ac_check_lib_save_LIBS=$LIBS
+-LIBS="-lssleay32  $LIBS"
++LIBS="-lssl.dll  $LIBS"
+ cat >conftest.$ac_ext <<_ACEOF
+ /* confdefs.h.  */
+ _ACEOF
+@@ -7176,11 +7176,11 @@
+ #define HAVE_LIBSSLEAY32 1
+ _ACEOF
+ 
+-  LIBS="-lssleay32 $LIBS"
++  LIBS="-lssl.dll $LIBS"
+ 
+ else
+-  { { echo "$as_me:$LINENO: error: library 'ssleay32' is required for OpenSSL" >&5
+-echo "$as_me: error: library 'ssleay32' is required for OpenSSL" >&2;}
++  { { echo "$as_me:$LINENO: error: library 'ssl.dll' is required for OpenSSL" >&5
++echo "$as_me: error: library 'ssl.dll' is required for OpenSSL" >&2;}
+    { (exit 1); exit 1; }; }
+ fi
+ 
+--- src/interfaces/libpq/Makefile.orig	2007-03-30 15:53:37.828125000 +0200
++++ src/interfaces/libpq/Makefile	2007-03-30 16:00:24.265625000 +0200
+@@ -62,7 +62,7 @@
+ SHLIB_LINK += $(filter -lcrypt -ldes -lcom_err -lcrypto -lk5crypto -lkrb5 -lssl -lsocket -lnsl -lresolv -lintl $(PTHREAD_LIBS), $(LIBS)) $(LDAP_LIBS_FE)
+ endif
+ ifeq ($(PORTNAME), win32)
+-SHLIB_LINK += -lshfolder -lwsock32 -lws2_32 $(filter -leay32 -lssleay32 -lcomerr32 -lkrb5_32, $(LIBS))
++SHLIB_LINK += -lshfolder -lwsock32 -lws2_32 $(filter -lcrypto.dll -lssl.dll -lcomerr32 -lkrb5_32, $(LIBS))
+ endif
+ 
+ 
