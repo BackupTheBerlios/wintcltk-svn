@@ -45,7 +45,7 @@
 !define GDBM_VERSION "1.8.3"
 !define OPENSSL_VERSION "0.9.8e"
 !define ZLIB_VERSION "1.2.3"
-!define POSTGRESQL_VERSION "8.2.3"
+!define POSTGRESQL_VERSION "8.2.4"
 
 !define XOTCL_LIBVER "153"
 !define THREAD_LIBVER "265"

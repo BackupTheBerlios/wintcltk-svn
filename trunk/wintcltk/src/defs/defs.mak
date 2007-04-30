@@ -60,7 +60,7 @@ GDBM_LIVBER=		$(subst .,,$(GDBM_VERSION))
 OPENSSL_VERSION=	0.9.8e
 OPENSSL_LIBVER=		0.9.8
 ZLIB_VERSION=		1.2.3
-POSTGRESQL_VERSION=	8.2.3
+POSTGRESQL_VERSION=	8.2.4
 PTHREADS_VERSION=	2-8-0
 
 ZIP_VERSION=		2.32
@@ -71,7 +71,7 @@ BZIP2_VERSION=		1.0.4
 
 SOURCEFORGE_MIRROR?=	heanet
 GNU_MIRROR?=		ftp.gnu.org/pub/gnu
-POSTGRESQL_MIRROR?=	ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v8.2.3/
+POSTGRESQL_MIRROR?=	ftp://ftp.us.postgresql.org/pub/mirrors/postgresql/source/v${POSTGRESQL_VERSION}/
 
 TOOLSDIR=	$(SRCDIR)/tools
 
