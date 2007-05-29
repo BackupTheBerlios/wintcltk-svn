@@ -3,7 +3,7 @@
 # WinTclTk Building Instructions using MinGW
 # Copyright (c) 2006 Martin Matuska
 # 
-# $Id: BUILD-MinGW.txt 9 2006-11-03 13:33:50Z mmatuska $
+# $Id$
 #
 -------------------------------------------------------------
 Compilation requirements:

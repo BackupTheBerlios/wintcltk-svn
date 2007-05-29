@@ -3,7 +3,7 @@
 # WinTclTk Source Downloading Instructions
 # Copyright (c) 2006 Martin Matuska
 #
-# $Id: SOURCES.txt 50 2006-12-13 16:25:14Z mmatuska $
+# $Id$
 # 
 ----------------------------------------------------------------------
 Downloading sources automatically:
