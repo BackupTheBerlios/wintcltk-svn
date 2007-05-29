@@ -20,7 +20,7 @@ BWidget	   1.8.0
 memchan    2.2.1
 Metakit    2.4.9.6
 mkZiplib   1.0
-mysqltcl   3.02
+mysqltcl   3.03
 pgtcl	   1.6.0
 snack      2.2.10
 SQLite     3.3.17

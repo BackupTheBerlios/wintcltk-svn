@@ -47,7 +47,7 @@ mkZiplib:
 http://mkextensions.sourceforge.net/mkZiplib10.zip
 
 mysqltcl:
-http://www.xdobry.de/mysqltcl/mysqltcl-3.02.zip
+http://www.xdobry.de/mysqltcl/mysqltcl-3.03.zip
 
 pgtcl:
 http://pgfoundry.org/frs/download.php/1229/pgtcl1.6.0.tar.gz

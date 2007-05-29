@@ -26,7 +26,7 @@
 !define MKZIPLIB_VERSION "1.0"
 !define TGDBM_VERSION "0.5"
 !define METAKIT_VERSION "2.4.9.6"
-!define MYSQLTCL_VERSION "3.02"
+!define MYSQLTCL_VERSION "3.03"
 !define PGTCL_VERSION "1.6.0"
 !define TLS_VERSION "1.5.0"
 !define MEMCHAN_VERSION "2.2.1"
