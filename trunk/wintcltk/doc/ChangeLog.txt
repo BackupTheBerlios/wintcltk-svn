@@ -7,6 +7,9 @@
 	* updated Tcl/Tk to 8.4.15
 	* updated mysqltcl to 3.03
 
+2007-04-30 Martin Matuska <martin at matuska.org>
+	* updated PostgreSQL library to 8.2.4
+
 2007-04-27 Martin Matuska <martin at matuska.org>
 	* added package XOSql 0.61
 	* release 0.5
