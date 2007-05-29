@@ -13,7 +13,7 @@
 	!define VERSION "0.x-dev"
 !endif
 !define TCL_BUILD "MinGW"
-!define TCLTK_VERSION "8.4.14"
+!define TCLTK_VERSION "8.4.15"
 !define THREAD_VERSION "2.6.5"
 !define TDOM_VERSION "0.8.1"
 !define XOTCL_VERSION "1.5.3"

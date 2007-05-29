@@ -3,6 +3,9 @@
 #
 # $Id$
 #
+2007-05-29 Martin Matuska <martin at matuska.org>
+	* updated Tcl/Tk to 8.4.15
+
 2007-04-27 Martin Matuska <martin at matuska.org>
 	* added package XOSql 0.61
 	* release 0.5

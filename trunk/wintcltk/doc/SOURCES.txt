@@ -28,8 +28,8 @@ Download sources from the URL's below and place them to the src/
 subdirectory.
 
 Tcl/Tk:
-http://prdownloads.sourceforge.net/tcl/tcl8.4.14-src.tar.gz
-http://prdownloads.sourceforge.net/tcl/tk8.4.14-src.tar.gz
+http://prdownloads.sourceforge.net/tcl/tcl8.4.15-src.tar.gz
+http://prdownloads.sourceforge.net/tcl/tk8.4.15-src.tar.gz
 
 ASED:
 http://www.mms-forum.de/ased/ased3.0b16.zip

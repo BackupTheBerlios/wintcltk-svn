@@ -13,7 +13,7 @@ This is a Tcl/Tk distribution for 32-bit Microsoft Windows operating systems.
 
 It includes the following packages:
 
-Tcl/Tk	   8.4.14
+Tcl/Tk	   8.4.15
 
 ASED	   3.0.b16
 BWidget	   1.8.0
