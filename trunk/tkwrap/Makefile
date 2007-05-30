@@ -9,7 +9,7 @@
 #
 
 # TkWrap version
-TKWRAP_VERSION?=	0.2
+TKWRAP_VERSION?=	0.2.1
 
 # Where are we?
 CURDIR=$(shell pwd)
