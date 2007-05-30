@@ -12,7 +12,7 @@ include $(SRCDIR)/defs/tools.mak
 #
 WINTCLTK_VERSION=0.5.1
 #
-INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
+INSTALLER=WinTclTk-${WINTCLTK_VERSION}.exe
 #
 MAKENSIS?=	"${PROGRAMFILES}/NSIS/makensis.exe"
 #
