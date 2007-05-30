@@ -1,0 +1,54 @@
+--- tkwinico.rc.orig	Tue Sep 27 11:54:04 2005
++++ tkwinico.rc	Wed Apr 25 13:57:35 2007
+@@ -12,8 +12,8 @@
+ #include <winver.h>
+ 
+ VS_VERSION_INFO VERSIONINFO
+- FILEVERSION	COMMAVERSION
+- PRODUCTVERSION	COMMAVERSION
++ FILEVERSION	PACKAGE_RC_VERSION
++ PRODUCTVERSION	PACKAGE_RC_VERSION
+  FILEFLAGSMASK	0x3fL
+ #ifdef DEBUG
+  FILEFLAGS	VS_FF_DEBUG
+@@ -29,11 +29,11 @@
+         BLOCK "040904b0"   /* LANG_ENGLISH/SUBLANG_ENGLISH_US, Unicode CP */
+         BEGIN
+             VALUE "FileDescription",  "Winico extension\0"
+-            VALUE "OriginalFilename", "winico" VERSION ".dll\0"
+-            VALUE "FileVersion",      DOTVERSION "\0"
++            VALUE "OriginalFilename", "winico" LIBVERSION ".dll\0"
++            VALUE "FileVersion",      PACKAGE_VERSION "\0"
+             VALUE "LegalCopyright",   "Copyright \251 Brueckner & Jarosch and others\0"
+-            VALUE "ProductName",      "Winico " DOTVERSION "\0"
+-            VALUE "ProductVersion",   DOTVERSION "\0"
++            VALUE "ProductName",      "Winico " PACKAGE_VERSION "\0"
++            VALUE "ProductVersion",   PACKAGE_VERSION "\0"
+             VALUE "Comments",         "http://tktable.sourceforge.net/\0"
+         END
+     END
+--- Makefile.in.orig	Wed Apr 25 14:10:25 2007
++++ Makefile.in	Wed Apr 25 14:10:54 2007
+@@ -99,7 +99,8 @@
+ CC		= @CC@
+ RC              = @RC@
+ RES             = @RES@
+-RC_DEFINES      = @RC_DEFINES@ @RC_DEFINE@ PACKAGE_NAME="${PACKAGE_NAME}" @RC_DEFINE@ PACKAGE_VERSION="${PACKAGE_VERSION}"
++LIBVERSION	= $(subst .,,$(PACKAGE_VERSION))
++RC_DEFINES      = @RC_DEFINES@ @RC_DEFINE@ PACKAGE_NAME="${PACKAGE_NAME}" @RC_DEFINE@ PACKAGE_VERSION=\\\"${PACKAGE_VERSION}\\\" @RC_DEFINE@ LIBVERSION=\\\"${LIBVERSION}\\\"
+ CFLAGS_DEFAULT	= @CFLAGS_DEFAULT@
+ CFLAGS_WARNING	= @CFLAGS_WARNING@
+ CLEANFILES	= @CLEANFILES@
+@@ -278,10 +279,10 @@
+ 
+ .SUFFIXES: .man .html .n
+ .man.html:
+-	mpexpand html "`@CYGPATH@ $<`" "$@"
++	$(MPEXPAND) html "`@CYGPATH@ $<`" "$@"
+ 
+ .man.n:
+-	mpexpand nroff "`@CYGPATH@ $<`" "$@"
++	$(MPEXPAND) nroff "`@CYGPATH@ $<`" "$@"
+ 
+ #========================================================================
+ # Create the pkgIndex.tcl file.

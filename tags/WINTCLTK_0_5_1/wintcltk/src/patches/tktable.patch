@@ -1,0 +1,11 @@
+--- configure.orig	Wed Apr 25 15:21:28 2007
++++ configure	Wed Apr 25 15:21:46 2007
+@@ -6539,7 +6539,7 @@
+ 
+     CLEANFILES="pkgIndex.tcl tkTable.tcl.h *.lib *.dll *.exp *.ilk *.pdb *.pch"
+ 
+-    vars="gdi32.lib user32.lib"
++    vars="-lgdi32 -luser32"
+     for i in $vars; do
+ 	PKG_LIBS="$PKG_LIBS $i"
+     done
