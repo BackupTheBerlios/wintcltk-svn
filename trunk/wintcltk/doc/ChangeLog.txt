@@ -3,6 +3,9 @@
 #
 # $Id$
 #
+2007-05-30 Martin Matuska <martin at matuska.org>
+	* release 0.5.1
+
 2007-05-29 Martin Matuska <martin at matuska.org>
 	* updated Tcl/Tk to 8.4.15
 	* updated mysqltcl to 3.03

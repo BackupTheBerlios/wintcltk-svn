@@ -10,7 +10,7 @@ FREEWRAPDIR=	$(CURDIR)/freewrap
 include $(SRCDIR)/defs/defs.mak
 include $(SRCDIR)/defs/tools.mak
 #
-WINTCLTK_VERSION=0.5
+WINTCLTK_VERSION=0.5.1
 #
 INSTALLER=WinTclTk-MinGW-${WINTCLTK_VERSION}.exe
 #
