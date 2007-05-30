@@ -301,7 +301,6 @@ Section "!Tcl/Tk base" tcltk-base
   File "${INSTROOT}\lib\tk8.4\msgs\en_gb.msg"
   File "${INSTROOT}\lib\tk8.4\msgs\eo.msg"
   File "${INSTROOT}\lib\tk8.4\msgs\es.msg"
-  File "${INSTROOT}\lib\tk8.4\msgs\es_ES.msg"
   File "${INSTROOT}\lib\tk8.4\msgs\fr.msg"
   File "${INSTROOT}\lib\tk8.4\msgs\it.msg"
   File "${INSTROOT}\lib\tk8.4\msgs\nl.msg"
