@@ -36,7 +36,7 @@ clean:
 buildclean:
 	@cd src && make buildclean ${MAKE_ENV}
 sourceclean:
-	@rm -rf wintcltk-${WINTCLTK_VERSION} wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
+	@rm -rf dist wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 installerclean:
 	@rm -f ${INSTALLER} 
 releaseclean: sourceclean installerclean
@@ -72,20 +72,20 @@ wintcltk-fw-$(WINTCLTK_FW_VERSION).zip: $(FREEWRAPDIR)/dist/std/freewrap.exe $(F
 		
 release: installer wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}-src.zip
 
-wintcltk-${WINTCLTK_VERSION}:
-	@mkdir -p wintcltk-${WINTCLTK_VERSION}
-	@cd wintcltk-${WINTCLTK_VERSION} && mkdir -p src/patches src/defs src/md5sums doc/licenses
-	@cp Makefile wintcltk-${WINTCLTK_VERSION}
-	@cp -rf src/Makefile wintcltk-${WINTCLTK_VERSION}/src
-	@cp -rf src/defs/*.mak wintcltk-${WINTCLTK_VERSION}/src/defs
-	@cp -rf src/md5sums/*.md5 wintcltk-${WINTCLTK_VERSION}/src/md5sums
-	@cp -rf src/patches/*.patch wintcltk-${WINTCLTK_VERSION}/src/patches
-	@cp doc/*.txt doc/*.htm wintcltk-${WINTCLTK_VERSION}/doc
-	@cp doc/licenses/*.txt wintcltk-${WINTCLTK_VERSION}/doc/licenses
+dist/wintcltk-${WINTCLTK_VERSION}:
+	@mkdir -p dist/wintcltk-${WINTCLTK_VERSION}
+	@cd dist/wintcltk-${WINTCLTK_VERSION} && mkdir -p src/patches src/defs src/md5sums doc/licenses
+	@cp Makefile dist/wintcltk-${WINTCLTK_VERSION}
+	@cp -rf src/Makefile dist/wintcltk-${WINTCLTK_VERSION}/src
+	@cp -rf src/defs/*.mak dist/wintcltk-${WINTCLTK_VERSION}/src/defs
+	@cp -rf src/md5sums/*.md5 dist/wintcltk-${WINTCLTK_VERSION}/src/md5sums
+	@cp -rf src/patches/*.patch dist/wintcltk-${WINTCLTK_VERSION}/src/patches
+	@cp doc/*.txt doc/*.htm dist/wintcltk-${WINTCLTK_VERSION}/doc
+	@cp doc/licenses/*.txt dist/wintcltk-${WINTCLTK_VERSION}/doc/licenses
 
-wintcltk-${WINTCLTK_VERSION}-src.tar.gz: wintcltk-${WINTCLTK_VERSION}
-	@tar cz --exclude CVS -f wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}
+wintcltk-${WINTCLTK_VERSION}-src.tar.gz: dist/wintcltk-${WINTCLTK_VERSION}
+	@cd dist && tar cz --exclude CVS -f ../wintcltk-${WINTCLTK_VERSION}-src.tar.gz wintcltk-${WINTCLTK_VERSION}
 
-wintcltk-${WINTCLTK_VERSION}-src.zip: wintcltk-${WINTCLTK_VERSION} install-zip
-	@zip -r wintcltk-${WINTCLTK_VERSION}-src.zip wintcltk-${WINTCLTK_VERSION} -x '*/CVS/*' > /dev/null 2>&1
+wintcltk-${WINTCLTK_VERSION}-src.zip: dist/wintcltk-${WINTCLTK_VERSION} install-zip
+	@cd dist && zip -r ../wintcltk-${WINTCLTK_VERSION}-src.zip wintcltk-${WINTCLTK_VERSION} -x '*/CVS/*' > /dev/null 2>&1
 
